@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:money_note/extensions/extensions.dart';
-import 'package:money_note/screens/components/_money_dialog.dart';
-import 'package:money_note/screens/components/daily_money_display_alert.dart';
-import 'package:money_note/state/holiday/holiday_notifier.dart';
-import 'package:money_note/utilities/utilities.dart';
 
+import '../extensions/extensions.dart';
 import '../state/calendar/calendar_notifier.dart';
+import '../state/holiday/holiday_notifier.dart';
+import '../utilities/utilities.dart';
+import 'components/_money_dialog.dart';
+import 'components/bank_setting_alert.dart';
+import 'components/daily_money_display_alert.dart';
 
 // ignore: must_be_immutable
 class HomeScreen extends ConsumerWidget {
@@ -38,28 +39,68 @@ class HomeScreen extends ConsumerWidget {
     final calendarState = ref.watch(calendarProvider);
 
     return Scaffold(
+      appBar: AppBar(
+        title: Text(calendarState.baseYearMonth),
+        leading: Row(
+          children: [
+            const SizedBox(width: 10),
+            GestureDetector(
+              onTap: _goPrevMonth,
+              child: Icon(Icons.arrow_back_ios, color: Colors.white.withOpacity(0.8), size: 14),
+            ),
+            const SizedBox(width: 10),
+            GestureDetector(
+              onTap: _goNextMonth,
+              child: Icon(Icons.arrow_forward_ios, color: Colors.white.withOpacity(0.8), size: 14),
+            ),
+          ],
+        ),
+        backgroundColor: Colors.transparent,
+      ),
       body: SafeArea(
         child: Column(
           children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                IconButton(
-                  onPressed: _goPrevMonth,
-                  icon: Icon(Icons.arrow_back_ios, color: Colors.white.withOpacity(0.8), size: 14),
-                ),
-                Text(calendarState.baseYearMonth),
-                IconButton(
-                  onPressed: _goNextMonth,
-                  icon: Icon(Icons.arrow_forward_ios, color: Colors.white.withOpacity(0.8), size: 14),
-                ),
-              ],
-            ),
             ConstrainedBox(
               constraints: BoxConstraints(minHeight: _context.screenSize.height / 3),
               child: _getCalendar(),
             ),
           ],
+        ),
+      ),
+      endDrawer: dispDrawer(context),
+    );
+  }
+
+  ///
+  Widget dispDrawer(BuildContext context) {
+    return Drawer(
+      backgroundColor: Colors.yellowAccent.withOpacity(0.1),
+      child: SingleChildScrollView(
+        child: Container(
+          padding: const EdgeInsets.only(left: 10),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const SizedBox(height: 60),
+              GestureDetector(
+                onTap: () {
+                  MoneyDialog(
+                    context: context,
+                    widget: BankSettingAlert(),
+                  );
+                },
+                child: Container(
+                  width: double.infinity,
+                  padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 3),
+                  margin: const EdgeInsets.all(5),
+                  decoration: BoxDecoration(
+                    border: Border.all(color: Colors.white.withOpacity(0.4)),
+                  ),
+                  child: const Text('Bank & E-Money Setting'),
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );

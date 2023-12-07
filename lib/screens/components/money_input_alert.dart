@@ -142,9 +142,6 @@ class MoneyInputAlert extends ConsumerWidget {
           fontSize: 13,
           color: Colors.white,
         ),
-        onChanged: (value) {
-//          setMoneyInputStateKind(kind: kind, value: value);
-        },
       ),
     );
   }
