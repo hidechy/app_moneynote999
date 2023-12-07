@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:money_note/extensions/extensions.dart';
+import 'package:money_note/screens/components/_money_dialog.dart';
+import 'package:money_note/screens/components/daily_money_display_alert.dart';
 import 'package:money_note/state/holiday/holiday_notifier.dart';
 import 'package:money_note/utilities/utilities.dart';
 
@@ -121,7 +123,14 @@ class HomeScreen extends ConsumerWidget {
       list.add(
         Expanded(
           child: GestureDetector(
-            onTap: () {},
+            onTap: () {
+              MoneyDialog(
+                context: _context,
+                widget: DailyMoneyDisplayAlert(
+                  date: DateTime.parse('$dispDate 00:00:00'),
+                ),
+              );
+            },
             child: Container(
               margin: const EdgeInsets.all(1),
               padding: const EdgeInsets.all(2),
