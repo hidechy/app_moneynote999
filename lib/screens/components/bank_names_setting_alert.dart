@@ -1,15 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:money_note/enums/account_type.dart';
-import 'package:money_note/enums/deposit_type.dart';
-import 'package:money_note/state/bank_names/bank_names_notifier.dart';
+import 'package:money_note/extensions/extensions.dart';
 
-import '../../extensions/extensions.dart';
+import '../../enums/account_type.dart';
+import '../../state/bank_names_setting/bank_names_setting_notifier.dart';
 
-// ignore: must_be_immutable
-class BankSettingAlert extends ConsumerWidget {
-  BankSettingAlert({super.key});
+class BankNamesSettingAlert extends ConsumerStatefulWidget {
+  const BankNamesSettingAlert({super.key});
 
+  @override
+  ConsumerState<BankNamesSettingAlert> createState() => _BankNamesSettingAlertState();
+}
+
+class _BankNamesSettingAlertState extends ConsumerState<BankNamesSettingAlert> {
   TextEditingController bankNumController = TextEditingController();
 
   List<TextEditingController> bankNumberTecs = [];
@@ -20,14 +23,20 @@ class BankSettingAlert extends ConsumerWidget {
 
   List<TextEditingController> accountNumberTecs = [];
 
-  late WidgetRef _ref;
+  ///
+  @override
+  void initState() {
+    super.initState();
+
+    WidgetsBinding.instance.addPostFrameCallback(
+      (_) => ref.read(bankNamesSettingProvider.notifier).setBankNum(num: 3),
+    );
+  }
 
   ///
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    _ref = ref;
-
-    bankNumController.text = ref.watch(bankNamesProvider.select((value) => value.addBankNum)).toString();
+  Widget build(BuildContext context) {
+    bankNumController.text = ref.watch(bankNamesSettingProvider.select((value) => value.addBankNum)).toString();
 
     makeTecs();
 
@@ -64,7 +73,7 @@ class BankSettingAlert extends ConsumerWidget {
                   const SizedBox(width: 10),
                   ElevatedButton(
                     onPressed: () {
-                      ref.read(bankNamesProvider.notifier).setBankNum(num: bankNumController.text.toInt());
+                      ref.read(bankNamesSettingProvider.notifier).setBankNum(num: bankNumController.text.toInt());
 
                       primaryFocus?.unfocus();
                     },
@@ -72,7 +81,7 @@ class BankSettingAlert extends ConsumerWidget {
                   ),
                 ],
               ),
-              Expanded(child: _displayBankSettings()),
+              Expanded(child: _displayBankNameSettings()),
             ],
           ),
         ),
@@ -81,12 +90,25 @@ class BankSettingAlert extends ConsumerWidget {
   }
 
   ///
-  Widget _displayBankSettings() {
-    final addBankNum = _ref.watch(bankNamesProvider.select((value) => value.addBankNum));
+  void makeTecs() {
+    final addBankNum = ref.watch(bankNamesSettingProvider.select((value) => value.addBankNum));
+
+    for (var i = 0; i < addBankNum; i++) {
+      bankNumberTecs.add(TextEditingController(text: ''));
+      bankNameTecs.add(TextEditingController(text: ''));
+      branchNumberTecs.add(TextEditingController(text: ''));
+      branchNameTecs.add(TextEditingController(text: ''));
+      accountNumberTecs.add(TextEditingController(text: ''));
+    }
+  }
+
+  ///
+  Widget _displayBankNameSettings() {
+    final bankNamesSettingState = ref.watch(bankNamesSettingProvider);
 
     final list = <Widget>[];
 
-    for (var i = 0; i < addBankNum; i++) {
+    for (var i = 0; i < bankNamesSettingState.addBankNum; i++) {
       list.add(
         Container(
           padding: const EdgeInsets.all(10),
@@ -94,38 +116,43 @@ class BankSettingAlert extends ConsumerWidget {
           decoration: BoxDecoration(color: Colors.white.withOpacity(0.1)),
           child: Column(
             children: [
-              Row(
-                children: [
-                  Expanded(
-                    child: DropdownButton(
-                      dropdownColor: Colors.pinkAccent.withOpacity(0.1),
-                      iconEnabledColor: Colors.white,
-                      items: DepositType.values.map((e) {
-                        return DropdownMenuItem(
-                          value: e,
-                          child: Text(e.japanName, style: const TextStyle(fontSize: 12)),
-                        );
-                      }).toList(),
-                      value: DepositType.blank,
-                      onChanged: (value) async {
-//                      return await _ref.watch(latLngTempleProvider.notifier).setSelectedRadius(radius: value
-//                      .toString().toInt());
-                      },
-                    ),
-                  ),
-                  Expanded(
-                      flex: 2,
-                      child: Container(
-                        alignment: Alignment.topRight,
-                        child: Checkbox(
-                          value: true,
-                          onChanged: (value) {},
-                          checkColor: Colors.white.withOpacity(0.6),
-                          activeColor: Colors.black.withOpacity(0.6),
-                        ),
-                      )),
-                ],
-              ),
+//               Row(
+//                 children: [
+//                   Expanded(
+//                     child: DropdownButton(
+//                       dropdownColor: Colors.pinkAccent.withOpacity(0.1),
+//                       iconEnabledColor: Colors.white,
+//                       items: DepositType.values.map((e) {
+//                         return DropdownMenuItem(
+//                           value: e,
+//                           child: Text(e.japanName, style: const TextStyle(fontSize: 12)),
+//                         );
+//                       }).toList(),
+//                       value: bankNamesSettingState.depositTypes[i],
+//                       //                      value: DepositType.blank,
+//                       onChanged: (value) async {
+// //                      return await _ref.watch(latLngTempleProvider.notifier).setSelectedRadius(radius: value
+// //                      .toString().toInt());
+//
+//                         ref
+//                             .read(bankNamesSettingProvider.notifier)
+//                             .setDepositType(pos: i, depositType: value as DepositType);
+//                       },
+//                     ),
+//                   ),
+//                   Expanded(
+//                       flex: 2,
+//                       child: Container(
+//                         alignment: Alignment.topRight,
+//                         child: Checkbox(
+//                           value: true,
+//                           onChanged: (value) {},
+//                           checkColor: Colors.white.withOpacity(0.6),
+//                           activeColor: Colors.black.withOpacity(0.6),
+//                         ),
+//                       )),
+//                 ],
+//               ),
               Row(
                 children: [
                   Expanded(
@@ -210,18 +237,5 @@ class BankSettingAlert extends ConsumerWidget {
     }
 
     return SingleChildScrollView(child: Column(children: list));
-  }
-
-  ///
-  void makeTecs() {
-    final addBankNum = _ref.watch(bankNamesProvider.select((value) => value.addBankNum));
-
-    for (var i = 0; i < addBankNum; i++) {
-      bankNumberTecs.add(TextEditingController(text: ''));
-      bankNameTecs.add(TextEditingController(text: ''));
-      branchNumberTecs.add(TextEditingController(text: ''));
-      branchNameTecs.add(TextEditingController(text: ''));
-      accountNumberTecs.add(TextEditingController(text: ''));
-    }
   }
 }

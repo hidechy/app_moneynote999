@@ -1,7 +1,7 @@
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import '../models/bank_name.dart';
-import '../state/bank_names/bank_names_notifier.dart';
+import '../state/bank_names_setting/bank_names_setting_notifier.dart';
 import 'money_repository.dart';
 
 // ignore: avoid_classes_with_only_static_members
@@ -25,6 +25,6 @@ class BankNameRepository {
       );
     });
 
-    await ref.read(bankNamesProvider.notifier).setBankNameList(bankNameList: bankNameList);
+    await ref.read(bankNamesSettingProvider.notifier).setBankNameList(bankNameList: bankNameList);
   }
 }

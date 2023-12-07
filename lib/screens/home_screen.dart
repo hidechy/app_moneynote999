@@ -6,7 +6,7 @@ import '../state/calendar/calendar_notifier.dart';
 import '../state/holiday/holiday_notifier.dart';
 import '../utilities/utilities.dart';
 import 'components/_money_dialog.dart';
-import 'components/bank_names_alert.dart';
+import 'components/bank_names_setting_alert.dart';
 import 'components/daily_money_display_alert.dart';
 
 // ignore: must_be_immutable
@@ -86,7 +86,7 @@ class HomeScreen extends ConsumerWidget {
                 onTap: () {
                   MoneyDialog(
                     context: context,
-                    widget: BankSettingAlert(),
+                    widget: BankNamesSettingAlert(),
                   );
                 },
                 child: Container(
@@ -96,7 +96,7 @@ class HomeScreen extends ConsumerWidget {
                   decoration: BoxDecoration(
                     border: Border.all(color: Colors.white.withOpacity(0.4)),
                   ),
-                  child: const Text('Bank & E-Money Setting'),
+                  child: const Text('Bank Setting'),
                 ),
               ),
             ],
