@@ -6,7 +6,7 @@ import '../state/calendar/calendar_notifier.dart';
 import '../state/holiday/holiday_notifier.dart';
 import '../utilities/utilities.dart';
 import 'components/_money_dialog.dart';
-import 'components/bank_setting_alert.dart';
+import 'components/bank_names_alert.dart';
 import 'components/daily_money_display_alert.dart';
 
 // ignore: must_be_immutable

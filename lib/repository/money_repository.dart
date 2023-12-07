@@ -10,7 +10,7 @@ class MoneyRepository {
   static const _dbName = 'money_data.db';
 
   ///
-  static Future<Database> _database() async {
+  static Future<Database> database() async {
     final database = openDatabase(
       join(await getDatabasesPath(), _dbName),
       onCreate: (db, version) async {
@@ -41,13 +41,13 @@ class MoneyRepository {
 
   ///
   static Future<void> insertMoney({required Money money}) async {
-    final db = await _database();
+    final db = await database();
     await db.insert('moneies', money.toMap(), conflictAlgorithm: ConflictAlgorithm.replace);
   }
 
   ///
   static Future<void> getSingleMoney({required String date, required WidgetRef ref}) async {
-    final db = await _database();
+    final db = await database();
 
     final List<Map<String, dynamic>> maps = await db.query('moneies', where: 'date = ?', whereArgs: [date]);
 
@@ -71,7 +71,7 @@ class MoneyRepository {
 
   ///
   static Future<void> updateMoney({required Money money, required WidgetRef ref}) async {
-    final db = await _database();
+    final db = await database();
     await db.update('moneies', money.toMap(), where: 'id = ?', whereArgs: [money.id]);
     await ref.read(moneySingleProvider.notifier).setMoney(money: money);
   }
