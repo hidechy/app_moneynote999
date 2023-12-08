@@ -1,4 +1,5 @@
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:sqflite/sqflite.dart';
 
 import '../models/bank_name.dart';
 import '../state/bank_names_setting/bank_names_setting_notifier.dart';
@@ -26,5 +27,18 @@ class BankNameRepository {
     });
 
     await ref.read(bankNamesSettingProvider.notifier).setBankNameList(bankNameList: bankNameList);
+  }
+
+  ///
+  static Future<void> insertBankNames({required List<BankName> bankNameList}) async {
+    final db = await MoneyRepository.database();
+
+    for (var i = 0; i < bankNameList.length; i++) {
+      await db.insert(
+        'bank_names',
+        bankNameList[i].toMap(),
+        conflictAlgorithm: ConflictAlgorithm.replace,
+      );
+    }
   }
 }

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:money_note/repository/bank_name_repository.dart';
 
 import '../../enums/account_type.dart';
 import '../../extensions/extensions.dart';
@@ -7,7 +8,9 @@ import '../../models/bank_name.dart';
 import '../../state/bank_names_setting/bank_names_setting_notifier.dart';
 
 class BankNamesSettingAlert extends ConsumerStatefulWidget {
-  const BankNamesSettingAlert({super.key});
+  const BankNamesSettingAlert({super.key, this.bankNameList});
+
+  final List<BankName>? bankNameList;
 
   @override
   ConsumerState<BankNamesSettingAlert> createState() => _BankNamesSettingAlertState();
@@ -30,13 +33,17 @@ class _BankNamesSettingAlertState extends ConsumerState<BankNamesSettingAlert> {
     super.initState();
 
     WidgetsBinding.instance.addPostFrameCallback(
-      (_) => ref.read(bankNamesSettingProvider.notifier).setBankNum(num: 3),
+      (_) => ref
+          .read(bankNamesSettingProvider.notifier)
+          .setBankNum(num: (widget.bankNameList != null) ? widget.bankNameList!.length : 3),
     );
   }
 
   ///
   @override
   Widget build(BuildContext context) {
+    Future(() => BankNameRepository.getBankNames(ref: ref));
+
     bankNumController.text = ref.watch(bankNamesSettingProvider.select((value) => value.addBankNum)).toString();
 
     makeTecs();
@@ -245,6 +252,8 @@ class _BankNamesSettingAlertState extends ConsumerState<BankNamesSettingAlert> {
 
     final list = <BankName>[];
 
+    final passNumber = <int>[];
+
     for (var i = 0; i < bankNamesSettingState.addBankNum; i++) {
       if (bankNumberTecs[i].text == '' ||
           bankNameTecs[i].text == '' ||
@@ -252,6 +261,8 @@ class _BankNamesSettingAlertState extends ConsumerState<BankNamesSettingAlert> {
           branchNameTecs[i].text == '' ||
           accountNumberTecs[i].text == '' ||
           bankNamesSettingState.accountTypes[i] == AccountType.blank) {
+        passNumber.add(i);
+
         continue;
       }
 
@@ -266,27 +277,44 @@ class _BankNamesSettingAlertState extends ConsumerState<BankNamesSettingAlert> {
       ));
     }
 
+    if (passNumber.isNotEmpty) {
+      Future.delayed(
+        Duration.zero,
+        () {
+          return showDialog(
+            context: context,
+            builder: (context) {
+              return AlertDialog(
+                title: const Text('不完全データあり'),
+                content: Text('以下のデータが不完全ですが、登録しますか？\n$passNumber'),
+                actions: [
+                  GestureDetector(
+                    child: const Text('はい'),
+                    onTap: () async {
+                      await BankNameRepository.insertBankNames(bankNameList: list);
 
-
-
-
-
-    /*
-    print(list);
-
-    I/flutter ( 8996): [
-    Instance of 'BankName',
-    Instance of 'BankName',
-    Instance of 'BankName',
-    Instance of 'BankName',
-    Instance of 'BankName']
-
-
-
-
-    */
-
-
+                      if (mounted) {
+                        Navigator.pop(context);
+                        Navigator.pop(context);
+                        Navigator.pop(context);
+                      }
+                    },
+                  ),
+                  GestureDetector(
+                    child: const Text('いいえ'),
+                    onTap: () {
+                      Navigator.pop(context);
+                      Navigator.pop(context);
+                      Navigator.pop(context);
+                    },
+                  ),
+                ],
+              );
+            },
+          );
+        },
+      );
+    }
   }
 
   ///
@@ -326,6 +354,6 @@ class _BankNamesSettingAlertState extends ConsumerState<BankNamesSettingAlert> {
     branchNumberTecs[4].text = '226';
     branchNameTecs[4].text = 'ギター支店';
     ref.read(bankNamesSettingProvider.notifier).setAccountType(pos: 4, accountType: AccountType.normal);
-    accountNumberTecs[4].text = '2994905';
+//    accountNumberTecs[4].text = '2994905';
   }
 }

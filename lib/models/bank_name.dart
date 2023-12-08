@@ -25,13 +25,13 @@ class BankName {
 
   Map<String, dynamic> toMap() {
     return {
-      'bankNumber': bankNumber,
-      'bankName': bankName,
-      'branchNumber': branchNumber,
-      'branchName': branchName,
-      'accountType': accountType,
-      'accountNumber': accountNumber,
-      'deposit': depositType,
+      'bank_number': bankNumber,
+      'bank_name': bankName,
+      'branch_number': branchNumber,
+      'branch_name': branchName,
+      'account_type': accountType,
+      'account_number': accountNumber,
+      'deposit_type': depositType,
     };
   }
 }
