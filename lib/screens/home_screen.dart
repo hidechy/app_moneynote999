@@ -86,7 +86,7 @@ class HomeScreen extends ConsumerWidget {
                 onTap: () {
                   MoneyDialog(
                     context: context,
-                    widget: BankNamesSettingAlert(),
+                    widget: const BankNamesSettingAlert(),
                   );
                 },
                 child: Container(
