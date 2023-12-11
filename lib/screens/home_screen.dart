@@ -8,7 +8,7 @@ import '../state/calendar/calendar_notifier.dart';
 import '../state/holiday/holiday_notifier.dart';
 import '../utilities/utilities.dart';
 import 'components/_money_dialog.dart';
-import 'components/bank_names_setting_alert.dart';
+import 'components/bank_names_list_alert.dart';
 import 'components/daily_money_display_alert.dart';
 
 // ignore: must_be_immutable
@@ -75,7 +75,14 @@ class HomeScreen extends ConsumerWidget {
 
   ///
   Widget dispDrawer(BuildContext context) {
-    Future(() => BankNameRepository.getBankNames(ref: _ref));
+    // Future(() => BankNameRepository.getBankNames(ref: _ref));
+    //
+    //
+    //
+    //
+
+
+
 
     final bankNameList = _ref.watch(bankNamesSettingProvider.select((value) => value.bankNameList));
 
@@ -90,9 +97,18 @@ class HomeScreen extends ConsumerWidget {
               const SizedBox(height: 60),
               GestureDetector(
                 onTap: () async {
+                  // await _ref.read(bankNamesSettingProvider.notifier).setup();
+                  //
+                  //
+
+
+
+
+
                   await MoneyDialog(
                     context: context,
-                    widget: BankNamesSettingAlert(bankNameList: bankNameList.value),
+//                    widget: BankNamesSettingAlert(bankNameList: bankNameList.value),
+                    widget: BankNamesListAlert(),
                   );
                 },
                 child: Container(

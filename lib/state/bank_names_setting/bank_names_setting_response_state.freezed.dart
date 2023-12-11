@@ -16,11 +16,8 @@ final _privateConstructorUsedError = UnsupportedError(
 
 /// @nodoc
 mixin _$BankNamesSettingResponseState {
-  int get addBankNum => throw _privateConstructorUsedError;
   AsyncValue<List<BankName>> get bankNameList =>
       throw _privateConstructorUsedError;
-  List<bool> get checkBoxes => throw _privateConstructorUsedError;
-  List<AccountType> get accountTypes => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $BankNamesSettingResponseStateCopyWith<BankNamesSettingResponseState>
@@ -35,11 +32,7 @@ abstract class $BankNamesSettingResponseStateCopyWith<$Res> {
       _$BankNamesSettingResponseStateCopyWithImpl<$Res,
           BankNamesSettingResponseState>;
   @useResult
-  $Res call(
-      {int addBankNum,
-      AsyncValue<List<BankName>> bankNameList,
-      List<bool> checkBoxes,
-      List<AccountType> accountTypes});
+  $Res call({AsyncValue<List<BankName>> bankNameList});
 }
 
 /// @nodoc
@@ -56,28 +49,13 @@ class _$BankNamesSettingResponseStateCopyWithImpl<$Res,
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? addBankNum = null,
     Object? bankNameList = null,
-    Object? checkBoxes = null,
-    Object? accountTypes = null,
   }) {
     return _then(_value.copyWith(
-      addBankNum: null == addBankNum
-          ? _value.addBankNum
-          : addBankNum // ignore: cast_nullable_to_non_nullable
-              as int,
       bankNameList: null == bankNameList
           ? _value.bankNameList
           : bankNameList // ignore: cast_nullable_to_non_nullable
               as AsyncValue<List<BankName>>,
-      checkBoxes: null == checkBoxes
-          ? _value.checkBoxes
-          : checkBoxes // ignore: cast_nullable_to_non_nullable
-              as List<bool>,
-      accountTypes: null == accountTypes
-          ? _value.accountTypes
-          : accountTypes // ignore: cast_nullable_to_non_nullable
-              as List<AccountType>,
     ) as $Val);
   }
 }
@@ -91,11 +69,7 @@ abstract class _$$BankNamesSettingResponseStateImplCopyWith<$Res>
       __$$BankNamesSettingResponseStateImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call(
-      {int addBankNum,
-      AsyncValue<List<BankName>> bankNameList,
-      List<bool> checkBoxes,
-      List<AccountType> accountTypes});
+  $Res call({AsyncValue<List<BankName>> bankNameList});
 }
 
 /// @nodoc
@@ -111,28 +85,13 @@ class __$$BankNamesSettingResponseStateImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? addBankNum = null,
     Object? bankNameList = null,
-    Object? checkBoxes = null,
-    Object? accountTypes = null,
   }) {
     return _then(_$BankNamesSettingResponseStateImpl(
-      addBankNum: null == addBankNum
-          ? _value.addBankNum
-          : addBankNum // ignore: cast_nullable_to_non_nullable
-              as int,
       bankNameList: null == bankNameList
           ? _value.bankNameList
           : bankNameList // ignore: cast_nullable_to_non_nullable
               as AsyncValue<List<BankName>>,
-      checkBoxes: null == checkBoxes
-          ? _value._checkBoxes
-          : checkBoxes // ignore: cast_nullable_to_non_nullable
-              as List<bool>,
-      accountTypes: null == accountTypes
-          ? _value._accountTypes
-          : accountTypes // ignore: cast_nullable_to_non_nullable
-              as List<AccountType>,
     ));
   }
 }
@@ -142,40 +101,15 @@ class __$$BankNamesSettingResponseStateImplCopyWithImpl<$Res>
 class _$BankNamesSettingResponseStateImpl
     implements _BankNamesSettingResponseState {
   const _$BankNamesSettingResponseStateImpl(
-      {this.addBankNum = 3,
-      this.bankNameList = const AsyncValue<List<BankName>>.loading(),
-      final List<bool> checkBoxes = const [],
-      final List<AccountType> accountTypes = const []})
-      : _checkBoxes = checkBoxes,
-        _accountTypes = accountTypes;
+      {this.bankNameList = const AsyncValue<List<BankName>>.loading()});
 
-  @override
-  @JsonKey()
-  final int addBankNum;
   @override
   @JsonKey()
   final AsyncValue<List<BankName>> bankNameList;
-  final List<bool> _checkBoxes;
-  @override
-  @JsonKey()
-  List<bool> get checkBoxes {
-    if (_checkBoxes is EqualUnmodifiableListView) return _checkBoxes;
-    // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_checkBoxes);
-  }
-
-  final List<AccountType> _accountTypes;
-  @override
-  @JsonKey()
-  List<AccountType> get accountTypes {
-    if (_accountTypes is EqualUnmodifiableListView) return _accountTypes;
-    // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_accountTypes);
-  }
 
   @override
   String toString() {
-    return 'BankNamesSettingResponseState(addBankNum: $addBankNum, bankNameList: $bankNameList, checkBoxes: $checkBoxes, accountTypes: $accountTypes)';
+    return 'BankNamesSettingResponseState(bankNameList: $bankNameList)';
   }
 
   @override
@@ -183,23 +117,12 @@ class _$BankNamesSettingResponseStateImpl
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$BankNamesSettingResponseStateImpl &&
-            (identical(other.addBankNum, addBankNum) ||
-                other.addBankNum == addBankNum) &&
             (identical(other.bankNameList, bankNameList) ||
-                other.bankNameList == bankNameList) &&
-            const DeepCollectionEquality()
-                .equals(other._checkBoxes, _checkBoxes) &&
-            const DeepCollectionEquality()
-                .equals(other._accountTypes, _accountTypes));
+                other.bankNameList == bankNameList));
   }
 
   @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      addBankNum,
-      bankNameList,
-      const DeepCollectionEquality().hash(_checkBoxes),
-      const DeepCollectionEquality().hash(_accountTypes));
+  int get hashCode => Object.hash(runtimeType, bankNameList);
 
   @JsonKey(ignore: true)
   @override
@@ -213,20 +136,11 @@ class _$BankNamesSettingResponseStateImpl
 abstract class _BankNamesSettingResponseState
     implements BankNamesSettingResponseState {
   const factory _BankNamesSettingResponseState(
-          {final int addBankNum,
-          final AsyncValue<List<BankName>> bankNameList,
-          final List<bool> checkBoxes,
-          final List<AccountType> accountTypes}) =
+          {final AsyncValue<List<BankName>> bankNameList}) =
       _$BankNamesSettingResponseStateImpl;
 
   @override
-  int get addBankNum;
-  @override
   AsyncValue<List<BankName>> get bankNameList;
-  @override
-  List<bool> get checkBoxes;
-  @override
-  List<AccountType> get accountTypes;
   @override
   @JsonKey(ignore: true)
   _$$BankNamesSettingResponseStateImplCopyWith<
