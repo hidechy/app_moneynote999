@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:money_note/state/bank_names_setting/bank_names_setting_notifier.dart';
 
 import '../extensions/extensions.dart';
-import '../repository/bank_name_repository.dart';
 import '../state/calendar/calendar_notifier.dart';
 import '../state/holiday/holiday_notifier.dart';
 import '../utilities/utilities.dart';
@@ -75,17 +73,6 @@ class HomeScreen extends ConsumerWidget {
 
   ///
   Widget dispDrawer(BuildContext context) {
-    // Future(() => BankNameRepository.getBankNames(ref: _ref));
-    //
-    //
-    //
-    //
-
-
-
-
-    final bankNameList = _ref.watch(bankNamesSettingProvider.select((value) => value.bankNameList));
-
     return Drawer(
       backgroundColor: Colors.yellowAccent.withOpacity(0.1),
       child: SingleChildScrollView(
@@ -97,17 +84,8 @@ class HomeScreen extends ConsumerWidget {
               const SizedBox(height: 60),
               GestureDetector(
                 onTap: () async {
-                  // await _ref.read(bankNamesSettingProvider.notifier).setup();
-                  //
-                  //
-
-
-
-
-
                   await MoneyDialog(
                     context: context,
-//                    widget: BankNamesSettingAlert(bankNameList: bankNameList.value),
                     widget: BankNamesListAlert(),
                   );
                 },

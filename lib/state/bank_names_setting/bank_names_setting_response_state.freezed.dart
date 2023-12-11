@@ -16,6 +16,7 @@ final _privateConstructorUsedError = UnsupportedError(
 
 /// @nodoc
 mixin _$BankNamesSettingResponseState {
+  AccountType get accountType => throw _privateConstructorUsedError;
   AsyncValue<List<BankName>> get bankNameList =>
       throw _privateConstructorUsedError;
 
@@ -32,7 +33,7 @@ abstract class $BankNamesSettingResponseStateCopyWith<$Res> {
       _$BankNamesSettingResponseStateCopyWithImpl<$Res,
           BankNamesSettingResponseState>;
   @useResult
-  $Res call({AsyncValue<List<BankName>> bankNameList});
+  $Res call({AccountType accountType, AsyncValue<List<BankName>> bankNameList});
 }
 
 /// @nodoc
@@ -49,9 +50,14 @@ class _$BankNamesSettingResponseStateCopyWithImpl<$Res,
   @pragma('vm:prefer-inline')
   @override
   $Res call({
+    Object? accountType = null,
     Object? bankNameList = null,
   }) {
     return _then(_value.copyWith(
+      accountType: null == accountType
+          ? _value.accountType
+          : accountType // ignore: cast_nullable_to_non_nullable
+              as AccountType,
       bankNameList: null == bankNameList
           ? _value.bankNameList
           : bankNameList // ignore: cast_nullable_to_non_nullable
@@ -69,7 +75,7 @@ abstract class _$$BankNamesSettingResponseStateImplCopyWith<$Res>
       __$$BankNamesSettingResponseStateImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({AsyncValue<List<BankName>> bankNameList});
+  $Res call({AccountType accountType, AsyncValue<List<BankName>> bankNameList});
 }
 
 /// @nodoc
@@ -85,9 +91,14 @@ class __$$BankNamesSettingResponseStateImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
+    Object? accountType = null,
     Object? bankNameList = null,
   }) {
     return _then(_$BankNamesSettingResponseStateImpl(
+      accountType: null == accountType
+          ? _value.accountType
+          : accountType // ignore: cast_nullable_to_non_nullable
+              as AccountType,
       bankNameList: null == bankNameList
           ? _value.bankNameList
           : bankNameList // ignore: cast_nullable_to_non_nullable
@@ -101,15 +112,19 @@ class __$$BankNamesSettingResponseStateImplCopyWithImpl<$Res>
 class _$BankNamesSettingResponseStateImpl
     implements _BankNamesSettingResponseState {
   const _$BankNamesSettingResponseStateImpl(
-      {this.bankNameList = const AsyncValue<List<BankName>>.loading()});
+      {this.accountType = AccountType.blank,
+      this.bankNameList = const AsyncValue<List<BankName>>.loading()});
 
+  @override
+  @JsonKey()
+  final AccountType accountType;
   @override
   @JsonKey()
   final AsyncValue<List<BankName>> bankNameList;
 
   @override
   String toString() {
-    return 'BankNamesSettingResponseState(bankNameList: $bankNameList)';
+    return 'BankNamesSettingResponseState(accountType: $accountType, bankNameList: $bankNameList)';
   }
 
   @override
@@ -117,12 +132,14 @@ class _$BankNamesSettingResponseStateImpl
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$BankNamesSettingResponseStateImpl &&
+            (identical(other.accountType, accountType) ||
+                other.accountType == accountType) &&
             (identical(other.bankNameList, bankNameList) ||
                 other.bankNameList == bankNameList));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, bankNameList);
+  int get hashCode => Object.hash(runtimeType, accountType, bankNameList);
 
   @JsonKey(ignore: true)
   @override
@@ -136,9 +153,12 @@ class _$BankNamesSettingResponseStateImpl
 abstract class _BankNamesSettingResponseState
     implements BankNamesSettingResponseState {
   const factory _BankNamesSettingResponseState(
-          {final AsyncValue<List<BankName>> bankNameList}) =
+          {final AccountType accountType,
+          final AsyncValue<List<BankName>> bankNameList}) =
       _$BankNamesSettingResponseStateImpl;
 
+  @override
+  AccountType get accountType;
   @override
   AsyncValue<List<BankName>> get bankNameList;
   @override
