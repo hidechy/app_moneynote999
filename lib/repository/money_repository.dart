@@ -23,7 +23,9 @@ class MoneyRepository {
         await db.execute(
           'CREATE TABLE if not exists bank_names(id integer PRIMARY KEY, bank_number TEXT, bank_name TEXT, branch_number TEXT, branch_name TEXT, account_type TEXT, account_number TEXT, deposit_type TEXT)',
         );
-        await db.execute('CREATE TABLE if not exists emoney_names(id integer PRIMARY KEY, emoney_name TEXT)');
+        await db.execute(
+          'CREATE TABLE if not exists emoney_names(id integer PRIMARY KEY, deposit_type TEXT, emoney_name TEXT)',
+        );
         await db.execute(
           'CREATE TABLE if not exists incomes(id integer PRIMARY KEY, date TEXT, source_name TEXT, price integer)',
         );

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:money_note/screens/components/parts/error_dialog.dart';
 
 import '../../extensions/extensions.dart';
 import '../../models/emoney_name.dart';
@@ -39,6 +40,16 @@ class EmoneyNameInputAlert extends ConsumerWidget {
                 color: Colors.white.withOpacity(0.4),
                 thickness: 5,
               ),
+
+              ///
+
+              IconButton(
+                onPressed: _setDummyEmoney,
+                icon: const Icon(Icons.ac_unit),
+              ),
+
+              ///
+
               Container(
                 padding: const EdgeInsets.all(10),
                 margin: const EdgeInsets.symmetric(vertical: 5, horizontal: 3),
@@ -67,15 +78,6 @@ class EmoneyNameInputAlert extends ConsumerWidget {
                   ),
                 ],
               ),
-              const SizedBox(height: 20),
-              Container(
-                alignment: Alignment.center,
-                child: ElevatedButton(
-                  onPressed: setDummyData,
-                  child: const Text('dummy'),
-                ),
-              ),
-              const SizedBox(height: 20),
             ],
           ),
         ),
@@ -85,7 +87,19 @@ class EmoneyNameInputAlert extends ConsumerWidget {
 
   ///
   Future<void> _inputEmoneyName() async {
-    final emoneyName = EmoneyName(emoneyName: emoneyNameEditingController.text);
+    if (emoneyNameEditingController.text == '') {
+      Future.delayed(
+        Duration.zero,
+        () => error_dialog(context: _context, title: '不完全データあり', content: '入力値に不備があります。'),
+      );
+
+      return;
+    }
+
+    final emoneyName = EmoneyName(
+      emoneyName: emoneyNameEditingController.text,
+      depositType: 'emoney',
+    );
 
     await EmoneyNameRepository.insertEmoneyName(emoneyName: emoneyName).then((value) {
       Navigator.pop(_context);
@@ -93,11 +107,23 @@ class EmoneyNameInputAlert extends ConsumerWidget {
   }
 
   ///
-  void setDummyData() {
-//    emoneyNameEditingController.text = 'Suica1';
-//    emoneyNameEditingController.text = 'PayPay';
-//    emoneyNameEditingController.text = 'PASMO';
-//    emoneyNameEditingController.text = 'Suica2';
-    emoneyNameEditingController.text = 'メルカリ';
+  Future<void> _setDummyEmoney() async {
+    final emoneyName1 = EmoneyName(emoneyName: 'Suica1', depositType: 'emoney');
+    await EmoneyNameRepository.insertEmoneyName(emoneyName: emoneyName1);
+
+    final emoneyName2 = EmoneyName(emoneyName: 'PayPay', depositType: 'emoney');
+    await EmoneyNameRepository.insertEmoneyName(emoneyName: emoneyName2);
+
+    final emoneyName3 = EmoneyName(emoneyName: 'PASMO', depositType: 'emoney');
+    await EmoneyNameRepository.insertEmoneyName(emoneyName: emoneyName3);
+
+    final emoneyName4 = EmoneyName(emoneyName: 'Suica2', depositType: 'emoney');
+    await EmoneyNameRepository.insertEmoneyName(emoneyName: emoneyName4);
+
+    final emoneyName5 = EmoneyName(emoneyName: 'メルカリ', depositType: 'emoney');
+    await EmoneyNameRepository.insertEmoneyName(emoneyName: emoneyName5);
+
+    // ignore: use_build_context_synchronously
+    Navigator.pop(_context);
   }
 }

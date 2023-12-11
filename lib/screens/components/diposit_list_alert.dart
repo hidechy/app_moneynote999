@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:money_note/repository/emoney_name_repository.dart';
-import 'package:money_note/screens/components/emoney_name_input_alert.dart';
-import 'package:money_note/state/emoney_names_setting/emoney_names_setting_notifier.dart';
 
 import '../../enums/diposit_type.dart';
 import '../../extensions/extensions.dart';
 import '../../repository/bank_name_repository.dart';
+import '../../repository/emoney_name_repository.dart';
 import '../../state/bank_names_setting/bank_names_setting_notifier.dart';
+import '../../state/emoney_names_setting/emoney_names_setting_notifier.dart';
 import '_money_dialog.dart';
 import 'bank_name_input_alert.dart';
+import 'emoney_name_input_alert.dart';
 
 // ignore: must_be_immutable
 class DipositListAlert extends ConsumerWidget {
@@ -44,51 +44,30 @@ class DipositListAlert extends ConsumerWidget {
               const SizedBox(height: 20),
               Container(width: context.screenSize.width),
               const Text('銀行口座'),
-              Divider(
-                color: Colors.white.withOpacity(0.4),
-                thickness: 5,
-              ),
+              Divider(color: Colors.white.withOpacity(0.4), thickness: 5),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Container(),
                   TextButton(
-                    onPressed: () {
-                      MoneyDialog(context: context, widget: BankNameInputAlert(dipositType: DipositType.bank));
-                    },
-                    child: const Text(
-                      '銀行口座を追加する',
-                      style: TextStyle(fontSize: 12),
-                    ),
+                    onPressed: () =>
+                        MoneyDialog(context: context, widget: BankNameInputAlert(dipositType: DipositType.bank)),
+                    child: const Text('銀行口座を追加する', style: TextStyle(fontSize: 12)),
                   ),
                 ],
               ),
-              SizedBox(
-                height: context.screenSize.height * 0.35,
-                child: _displayBankList(),
-              ),
+              SizedBox(height: context.screenSize.height * 0.35, child: _displayBankList()),
               const SizedBox(height: 20),
               Container(width: context.screenSize.width),
               const Text('電子マネー'),
-              Divider(
-                color: Colors.white.withOpacity(0.4),
-                thickness: 5,
-              ),
+              Divider(color: Colors.white.withOpacity(0.4), thickness: 5),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Container(),
                   TextButton(
-                    onPressed: () {
-                      MoneyDialog(
-                        context: context,
-                        widget: EmoneyNameInputAlert(),
-                      );
-                    },
-                    child: const Text(
-                      '電子マネーを追加する',
-                      style: TextStyle(fontSize: 12),
-                    ),
+                    onPressed: () => MoneyDialog(context: context, widget: EmoneyNameInputAlert()),
+                    child: const Text('電子マネーを追加する', style: TextStyle(fontSize: 12)),
                   ),
                 ],
               ),
@@ -119,7 +98,7 @@ class DipositListAlert extends ConsumerWidget {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text('${element.id}: ${element.bankName} (${element.bankNumber}) '),
+                      Text('${element.depositType}-${element.id}: ${element.bankName} (${element.bankNumber}) '),
                       Text('${element.branchName} (${element.branchNumber})'),
                       Text('${element.accountType} ${element.accountNumber}'),
                     ],
@@ -148,12 +127,7 @@ class DipositListAlert extends ConsumerWidget {
                   margin: const EdgeInsets.all(3),
                   padding: const EdgeInsets.all(3),
                   decoration: BoxDecoration(border: Border.all(color: Colors.white.withOpacity(0.4))),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(element.emoneyName),
-                    ],
-                  ),
+                  child: Text('${element.depositType}-${element.id}: ${element.emoneyName}'),
                 ),
               );
             });

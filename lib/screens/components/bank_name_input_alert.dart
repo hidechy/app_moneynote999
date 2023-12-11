@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:money_note/screens/components/parts/error_dialog.dart';
 
 import '../../enums/account_type.dart';
 import '../../enums/diposit_type.dart';
@@ -48,11 +49,19 @@ class BankNameInputAlert extends ConsumerWidget {
               const SizedBox(height: 20),
               Container(width: context.screenSize.width),
               const Text('銀行口座追加'),
-
               Divider(
                 color: Colors.white.withOpacity(0.4),
                 thickness: 5,
               ),
+
+              ///
+
+              IconButton(
+                onPressed: _setDummyBank,
+                icon: const Icon(Icons.ac_unit),
+              ),
+
+              ///
 
               Container(
                 padding: const EdgeInsets.all(10),
@@ -137,7 +146,6 @@ class BankNameInputAlert extends ConsumerWidget {
                   ],
                 ),
               ),
-
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -151,16 +159,6 @@ class BankNameInputAlert extends ConsumerWidget {
                   ),
                 ],
               ),
-
-              // const SizedBox(height: 20),
-              // Container(
-              //   alignment: Alignment.center,
-              //   child: ElevatedButton(
-              //     onPressed: setDummyData,
-              //     child: const Text('dummy'),
-              //   ),
-              // ),
-              // const SizedBox(height: 20),
             ],
           ),
         ),
@@ -171,6 +169,20 @@ class BankNameInputAlert extends ConsumerWidget {
   ///
   Future<void> _inputBankName() async {
     final accountType = _ref.watch(bankNamesSettingProvider.select((value) => value.accountType));
+
+    if (bankNumberEditingController.text == '' ||
+        bankNameEditingController.text == '' ||
+        branchNumberEditingController.text == '' ||
+        branchNameEditingController.text == '' ||
+        accountNumberEditingController.text == '' ||
+        (accountType == AccountType.blank)) {
+      Future.delayed(
+        Duration.zero,
+        () => error_dialog(context: _context, title: '不完全データあり', content: '入力値に不備があります。'),
+      );
+
+      return;
+    }
 
     final bankName = BankName(
       bankNumber: bankNumberEditingController.text,
@@ -188,40 +200,68 @@ class BankNameInputAlert extends ConsumerWidget {
   }
 
   ///
-  void setDummyData() {
-    // bankNumberEditingController.text = '0001';
-    // bankNameEditingController.text = 'みずほ銀行';
-    // branchNumberEditingController.text = '046';
-    // branchNameEditingController.text = '虎ノ門支店';
-    // _ref.read(bankNamesSettingProvider.notifier).setAccountType(accountType: AccountType.normal);
-    // accountNumberEditingController.text = '2961375';
+  Future<void> _setDummyBank() async {
+    final bankName1 = BankName(
+      bankNumber: '0001',
+      bankName: 'みずほ銀行',
+      branchNumber: '046',
+      branchName: '虎ノ門支店',
+      accountType: '普通預金',
+      accountNumber: '2961375',
+      depositType: 'bank',
+    );
 
-    // bankNumberEditingController.text = '0009';
-    // bankNameEditingController.text = '三井住友銀行';
-    // branchNumberEditingController.text = '547';
-    // branchNameEditingController.text = '横浜駅前支店';
-    // _ref.read(bankNamesSettingProvider.notifier).setAccountType(accountType: AccountType.normal);
-    // accountNumberEditingController.text = '8981660';
+    await BankNameRepository.insertBankName(bankName: bankName1);
 
-    // bankNumberEditingController.text = '0009';
-    // bankNameEditingController.text = '三井住友銀行';
-    // branchNumberEditingController.text = '259';
-    // branchNameEditingController.text = '新宿西口支店';
-    // _ref.read(bankNamesSettingProvider.notifier).setAccountType(accountType: AccountType.normal);
-    // accountNumberEditingController.text = '2967733';
+    final bankName2 = BankName(
+      bankNumber: '0009',
+      bankName: '三井住友銀行',
+      branchNumber: '547',
+      branchName: '横浜駅前支店',
+      accountType: '普通預金',
+      accountNumber: '8981660',
+      depositType: 'bank',
+    );
 
-    // bankNumberEditingController.text = '0005';
-    // bankNameEditingController.text = '三菱UFJ銀行';
-    // branchNumberEditingController.text = '271';
-    // branchNameEditingController.text = '船橋支店';
-    // _ref.read(bankNamesSettingProvider.notifier).setAccountType(accountType: AccountType.normal);
-    // accountNumberEditingController.text = '0782619';
+    await BankNameRepository.insertBankName(bankName: bankName2);
 
-    // bankNumberEditingController.text = '0036';
-    // bankNameEditingController.text = '楽天銀行';
-    // branchNumberEditingController.text = '226';
-    // branchNameEditingController.text = 'ギター支店';
-    // _ref.read(bankNamesSettingProvider.notifier).setAccountType(accountType: AccountType.normal);
-    // accountNumberEditingController.text = '2994905';
+    final bankName3 = BankName(
+      bankNumber: '0009',
+      bankName: '三井住友銀行',
+      branchNumber: '259',
+      branchName: '新宿西口支店',
+      accountType: '普通預金',
+      accountNumber: '2967733',
+      depositType: 'bank',
+    );
+
+    await BankNameRepository.insertBankName(bankName: bankName3);
+
+    final bankName4 = BankName(
+      bankNumber: '0005',
+      bankName: '三菱UFJ銀行',
+      branchNumber: '271',
+      branchName: '船橋支店',
+      accountType: '普通預金',
+      accountNumber: '0782619',
+      depositType: 'bank',
+    );
+
+    await BankNameRepository.insertBankName(bankName: bankName4);
+
+    final bankName5 = BankName(
+      bankNumber: '0036',
+      bankName: '楽天銀行',
+      branchNumber: '226',
+      branchName: 'ギター支店',
+      accountType: '普通預金',
+      accountNumber: '2994905',
+      depositType: 'bank',
+    );
+
+    await BankNameRepository.insertBankName(bankName: bankName5);
+
+    // ignore: use_build_context_synchronously
+    Navigator.pop(_context);
   }
 }

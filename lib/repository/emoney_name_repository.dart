@@ -14,7 +14,11 @@ class EmoneyNameRepository {
     final List<Map<String, dynamic>> maps = await db.query('emoney_names');
 
     final emoneyNameList = List.generate(maps.length, (index) {
-      return EmoneyName(emoneyName: maps[index]['emoney_name'] as String);
+      return EmoneyName(
+        id: maps[index]['id'] as int,
+        emoneyName: maps[index]['emoney_name'] as String,
+        depositType: maps[index]['deposit_type'] as String,
+      );
     });
 
     await ref.read(emoneyNamesSettingProvider.notifier).setEmoneyNameList(emoneyNameList: emoneyNameList);
