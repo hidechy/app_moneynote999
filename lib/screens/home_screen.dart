@@ -6,8 +6,8 @@ import '../state/calendar/calendar_notifier.dart';
 import '../state/holiday/holiday_notifier.dart';
 import '../utilities/utilities.dart';
 import 'components/_money_dialog.dart';
-import 'components/bank_names_list_alert.dart';
 import 'components/daily_money_display_alert.dart';
+import 'components/diposit_list_alert.dart';
 
 // ignore: must_be_immutable
 class HomeScreen extends ConsumerWidget {
@@ -74,7 +74,7 @@ class HomeScreen extends ConsumerWidget {
   ///
   Widget dispDrawer(BuildContext context) {
     return Drawer(
-      backgroundColor: Colors.yellowAccent.withOpacity(0.1),
+      backgroundColor: Colors.blueGrey.withOpacity(0.2),
       child: SingleChildScrollView(
         child: Container(
           padding: const EdgeInsets.only(left: 10),
@@ -86,7 +86,7 @@ class HomeScreen extends ConsumerWidget {
                 onTap: () async {
                   await MoneyDialog(
                     context: context,
-                    widget: BankNamesListAlert(),
+                    widget: DipositListAlert(),
                   );
                 },
                 child: Container(
@@ -96,7 +96,7 @@ class HomeScreen extends ConsumerWidget {
                   decoration: BoxDecoration(
                     border: Border.all(color: Colors.white.withOpacity(0.4)),
                   ),
-                  child: const Text('Bank Setting'),
+                  child: const Text('銀行口座、電子マネー管理'),
                 ),
               ),
             ],

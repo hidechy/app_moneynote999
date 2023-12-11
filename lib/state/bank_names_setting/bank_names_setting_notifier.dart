@@ -13,12 +13,10 @@ class BankNamesSettingNotifier extends StateNotifier<BankNamesSettingResponseSta
   BankNamesSettingNotifier(super.state);
 
   ///
-  Future<void> setAccountType({required AccountType accountType}) async {
-    state = state.copyWith(accountType: accountType);
-  }
+  Future<void> setAccountType({required AccountType accountType}) async =>
+      state = state.copyWith(accountType: accountType);
 
   ///
-  Future<void> setBankNameList({required List<BankName> bankNameList}) async {
-    state = state.copyWith(bankNameList: AsyncValue.data(bankNameList));
-  }
+  Future<void> setBankNameList({required List<BankName> bankNameList}) async =>
+      state = state.copyWith(bankNameList: AsyncValue.data(bankNameList));
 }

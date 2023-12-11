@@ -1,0 +1,1 @@
+enum DipositType { bank, emoney }

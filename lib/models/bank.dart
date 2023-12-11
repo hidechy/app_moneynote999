@@ -1,15 +1,19 @@
+import '../enums/diposit_type.dart';
+
 class Bank {
-  Bank({this.id, required this.date, required this.bankId, required this.price});
+  Bank({this.id, required this.date, this.depositType, required this.bankId, required this.price});
 
   int? id;
 
   String date;
+
+  DipositType? depositType;
 
   int bankId;
 
   int price;
 
   Map<String, dynamic> toMap() {
-    return {'date': date, 'bankId': bankId, 'price': price};
+    return {'date': date, 'deposit_type': depositType, 'bankId': bankId, 'price': price};
   }
 }
