@@ -4,14 +4,20 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import '../../extensions/extensions.dart';
 import '../../models/money.dart';
 import '../../repository/money_repository.dart';
+import 'parts/error_dialog.dart';
 
 // ignore: must_be_immutable
-class MoneyInputAlert extends ConsumerWidget {
+class MoneyInputAlert extends ConsumerStatefulWidget {
   MoneyInputAlert({super.key, required this.date, this.money});
 
   final DateTime date;
   Money? money;
 
+  @override
+  ConsumerState<MoneyInputAlert> createState() => _MoneyInputAlertState();
+}
+
+class _MoneyInputAlertState extends ConsumerState<MoneyInputAlert> {
   TextEditingController tecYen10000 = TextEditingController();
   TextEditingController tecYen5000 = TextEditingController();
   TextEditingController tecYen2000 = TextEditingController();
@@ -23,25 +29,31 @@ class MoneyInputAlert extends ConsumerWidget {
   TextEditingController tecYen5 = TextEditingController();
   TextEditingController tecYen1 = TextEditingController();
 
-  late WidgetRef _ref;
+  late BuildContext _context;
 
   ///
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    _ref = ref;
+  void initState() {
+    super.initState();
 
-    if (money != null) {
-      tecYen10000.text = money!.yen_10000.toString();
-      tecYen5000.text = money!.yen_5000.toString();
-      tecYen2000.text = money!.yen_2000.toString();
-      tecYen1000.text = money!.yen_1000.toString();
-      tecYen500.text = money!.yen_500.toString();
-      tecYen100.text = money!.yen_100.toString();
-      tecYen50.text = money!.yen_50.toString();
-      tecYen10.text = money!.yen_10.toString();
-      tecYen5.text = money!.yen_5.toString();
-      tecYen1.text = money!.yen_1.toString();
+    if (widget.money != null) {
+      tecYen10000.text = widget.money!.yen_10000.toString();
+      tecYen5000.text = widget.money!.yen_5000.toString();
+      tecYen2000.text = widget.money!.yen_2000.toString();
+      tecYen1000.text = widget.money!.yen_1000.toString();
+      tecYen500.text = widget.money!.yen_500.toString();
+      tecYen100.text = widget.money!.yen_100.toString();
+      tecYen50.text = widget.money!.yen_50.toString();
+      tecYen10.text = widget.money!.yen_10.toString();
+      tecYen5.text = widget.money!.yen_5.toString();
+      tecYen1.text = widget.money!.yen_1.toString();
     }
+  }
+
+  ///
+  @override
+  Widget build(BuildContext context) {
+    _context = context;
 
     return AlertDialog(
       titlePadding: EdgeInsets.zero,
@@ -59,7 +71,11 @@ class MoneyInputAlert extends ConsumerWidget {
             children: [
               const SizedBox(height: 20),
               Container(width: context.screenSize.width),
-              Text(date.yyyymmdd),
+              Text(widget.date.yyyymmdd),
+              Divider(
+                color: Colors.white.withOpacity(0.4),
+                thickness: 5,
+              ),
               SizedBox(
                 height: context.screenSize.height * 0.45,
                 child: displayMoneyInput(),
@@ -67,19 +83,37 @@ class MoneyInputAlert extends ConsumerWidget {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Container(),
-                  ElevatedButton(
-                    onPressed: () {
-                      (money != null) ? _updateMoney() : _insertMoney();
+                  ///
 
-                      MoneyRepository.getSingleMoney(date: date.yyyymmdd, ref: ref);
+//                  Container(),
 
-                      if (context.mounted) {
-                        Navigator.pop(context);
-                      }
+                  GestureDetector(
+                    onTap: () {
+                      tecYen10000.text = '9';
+                      tecYen5000.text = '9';
+                      tecYen2000.text = '9';
+                      tecYen1000.text = '9';
+                      tecYen500.text = '9';
+                      tecYen100.text = '9';
+                      tecYen50.text = '9';
+                      tecYen10.text = '9';
+                      tecYen5.text = '9';
+                      tecYen1.text = '9';
                     },
-                    child: const Text('input'),
+                    child: const Icon(Icons.ac_unit),
                   ),
+
+                  ///
+
+                  (widget.money != null)
+                      ? TextButton(
+                          onPressed: _updateMoney,
+                          child: const Text('マネーデータを更新する', style: TextStyle(fontSize: 12)),
+                        )
+                      : TextButton(
+                          onPressed: _insertMoney,
+                          child: const Text('マネーデータを追加する', style: TextStyle(fontSize: 12)),
+                        ),
                 ],
               ),
             ],
@@ -138,18 +172,33 @@ class MoneyInputAlert extends ConsumerWidget {
         controller: tec,
         textAlign: TextAlign.end,
         decoration: InputDecoration(labelText: name),
-        style: const TextStyle(
-          fontSize: 13,
-          color: Colors.white,
-        ),
+        style: const TextStyle(fontSize: 13, color: Colors.white),
       ),
     );
   }
 
   ///
   void _insertMoney() {
+    if (tecYen10000.text == '' ||
+        tecYen5000.text == '' ||
+        tecYen2000.text == '' ||
+        tecYen1000.text == '' ||
+        tecYen500.text == '' ||
+        tecYen100.text == '' ||
+        tecYen50.text == '' ||
+        tecYen10.text == '' ||
+        tecYen5.text == '' ||
+        tecYen1.text == '') {
+      Future.delayed(
+        Duration.zero,
+        () => error_dialog(context: _context, title: '不完全データあり', content: '入力値に不備があります。'),
+      );
+
+      return;
+    }
+
     final money = Money(
-      date: date.yyyymmdd,
+      date: widget.date.yyyymmdd,
       yen_10000: (tecYen10000.text == '') ? 0 : tecYen10000.text.toInt(),
       yen_5000: (tecYen5000.text == '') ? 0 : tecYen5000.text.toInt(),
       yen_2000: (tecYen2000.text == '') ? 0 : tecYen2000.text.toInt(),
@@ -162,14 +211,27 @@ class MoneyInputAlert extends ConsumerWidget {
       yen_1: (tecYen1.text == '') ? 0 : tecYen1.text.toInt(),
     );
 
-    MoneyRepository.insertMoney(money: money);
+    MoneyRepository.insertMoney(money: money).then((value) {
+      tecYen10000.clear();
+      tecYen5000.clear();
+      tecYen2000.clear();
+      tecYen1000.clear();
+      tecYen500.clear();
+      tecYen100.clear();
+      tecYen50.clear();
+      tecYen10.clear();
+      tecYen5.clear();
+      tecYen1.clear();
+
+      Navigator.pop(context);
+    });
   }
 
   ///
   void _updateMoney() {
     final updateMoney = Money(
-      id: money!.id,
-      date: date.yyyymmdd,
+      id: widget.money!.id,
+      date: widget.date.yyyymmdd,
       yen_10000: (tecYen10000.text == '') ? 0 : tecYen10000.text.toInt(),
       yen_5000: (tecYen5000.text == '') ? 0 : tecYen5000.text.toInt(),
       yen_2000: (tecYen2000.text == '') ? 0 : tecYen2000.text.toInt(),
@@ -182,6 +244,19 @@ class MoneyInputAlert extends ConsumerWidget {
       yen_1: (tecYen1.text == '') ? 0 : tecYen1.text.toInt(),
     );
 
-    MoneyRepository.updateMoney(money: updateMoney, ref: _ref);
+    MoneyRepository.updateMoney(money: updateMoney, ref: ref).then((value) {
+      tecYen10000.clear();
+      tecYen5000.clear();
+      tecYen2000.clear();
+      tecYen1000.clear();
+      tecYen500.clear();
+      tecYen100.clear();
+      tecYen50.clear();
+      tecYen10.clear();
+      tecYen5.clear();
+      tecYen1.clear();
+
+      Navigator.pop(context);
+    });
   }
 }

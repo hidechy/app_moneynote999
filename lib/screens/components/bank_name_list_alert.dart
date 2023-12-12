@@ -92,14 +92,14 @@ class BankNameListAlert extends ConsumerWidget {
                                 widget: BankNameInputAlert(depositType: DepositType.bank, bankName: element),
                               );
                             },
-                            child: Icon(Icons.edit, size: 16, color: Colors.white.withOpacity(0.4)),
+                            child: Icon(Icons.edit, size: 16, color: Colors.greenAccent.withOpacity(0.6)),
                           ),
                           const SizedBox(width: 10),
                           GestureDetector(
                             onTap: () {
                               BankNameRepository.deleteBankName(bankName: element, ref: _ref);
                             },
-                            child: Icon(Icons.delete, size: 16, color: Colors.yellowAccent),
+                            child: const Icon(Icons.delete, size: 16, color: Colors.yellowAccent),
                           ),
                         ],
                       ),

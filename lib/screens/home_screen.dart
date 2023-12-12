@@ -144,6 +144,8 @@ class HomeScreen extends ConsumerWidget {
 
   ///
   Widget _getCalendarRow({required int week}) {
+    final calendarState = _ref.watch(calendarProvider);
+
     final list = <Widget>[];
 
     for (var i = week * 7; i < ((week + 1) * 7); i++) {
@@ -169,7 +171,17 @@ class HomeScreen extends ConsumerWidget {
               padding: const EdgeInsets.all(2),
               decoration: BoxDecoration(
                 border: Border.all(
-                  color: (_calendarDays[i] == '') ? Colors.transparent : Colors.white.withOpacity(0.4),
+                  color: (_calendarDays[i] == '')
+                      ? Colors.transparent
+                      : (DateTime(
+                                calendarState.baseYearMonth.split('-')[0].toInt(),
+                                calendarState.baseYearMonth.split('-')[1].toInt(),
+                                _calendarDays[i].toInt(),
+                              ).yyyymmdd ==
+                              DateTime.now().yyyymmdd)
+                          ? Colors.orangeAccent.withOpacity(0.4)
+                          : Colors.white.withOpacity(0.1),
+                  width: 3,
                 ),
                 color: (_calendarDays[i] == '')
                     ? Colors.transparent
