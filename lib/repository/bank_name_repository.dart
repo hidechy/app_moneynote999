@@ -35,4 +35,11 @@ class BankNameRepository {
 
     await db.insert('bank_names', bankName.toMap(), conflictAlgorithm: ConflictAlgorithm.replace);
   }
+
+  ///
+  static Future<void> updateBankName({required BankName bankName, required WidgetRef ref}) async {
+    final db = await MoneyRepository.database();
+    await db.update('bank_names', bankName.toMap(), where: 'id = ?', whereArgs: [bankName.id]);
+    await ref.read(bankNamesSettingProvider.notifier).updateBankNameList(bankName: bankName);
+  }
 }

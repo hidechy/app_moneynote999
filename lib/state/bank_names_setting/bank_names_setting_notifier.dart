@@ -19,4 +19,17 @@ class BankNamesSettingNotifier extends StateNotifier<BankNamesSettingResponseSta
   ///
   Future<void> setBankNameList({required List<BankName> bankNameList}) async =>
       state = state.copyWith(bankNameList: AsyncValue.data(bankNameList));
+
+  ///
+  Future<void> updateBankNameList({required BankName bankName}) async {
+    final bankNameList = state.bankNameList.value!;
+
+    final index = bankNameList.indexWhere((bn) => bn.id == bankName.id);
+
+    if (index != -1) {
+      bankNameList[index] = bankName;
+    }
+
+    state = state.copyWith(bankNameList: AsyncValue.data(bankNameList));
+  }
 }

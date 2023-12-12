@@ -1,34 +1,63 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:money_note/screens/components/parts/error_dialog.dart';
 
 import '../../enums/account_type.dart';
-import '../../enums/diposit_type.dart';
+import '../../enums/deposit_type.dart';
 import '../../extensions/extensions.dart';
 import '../../models/bank_name.dart';
 import '../../repository/bank_name_repository.dart';
 import '../../state/bank_names_setting/bank_names_setting_notifier.dart';
+import 'parts/error_dialog.dart';
 
 // ignore: must_be_immutable
-class BankNameInputAlert extends ConsumerWidget {
-  BankNameInputAlert({super.key, required this.dipositType});
+class BankNameInputAlert extends ConsumerStatefulWidget {
+  BankNameInputAlert({super.key, required this.depositType, this.bankName});
 
-  final DipositType dipositType;
+  final DepositType depositType;
+  BankName? bankName;
 
+  @override
+  ConsumerState<BankNameInputAlert> createState() => _BankNameInputAlertState();
+}
+
+class _BankNameInputAlertState extends ConsumerState<BankNameInputAlert> {
   TextEditingController bankNumberEditingController = TextEditingController();
   TextEditingController bankNameEditingController = TextEditingController();
   TextEditingController branchNumberEditingController = TextEditingController();
   TextEditingController branchNameEditingController = TextEditingController();
   TextEditingController accountNumberEditingController = TextEditingController();
 
+  AccountType selectedAccountType = AccountType.blank;
+
   late BuildContext _context;
-  late WidgetRef _ref;
 
   ///
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  void initState() {
+    super.initState();
+
+    if (widget.bankName != null) {
+      bankNumberEditingController.text = widget.bankName!.bankNumber;
+      bankNameEditingController.text = widget.bankName!.bankName;
+      branchNumberEditingController.text = widget.bankName!.branchNumber;
+      branchNameEditingController.text = widget.bankName!.branchName;
+      accountNumberEditingController.text = widget.bankName!.accountNumber;
+
+      switch (widget.bankName!.accountType) {
+        case '普通預金':
+          selectedAccountType = AccountType.normal;
+          break;
+        case '定期口座':
+          selectedAccountType = AccountType.fixed;
+          break;
+      }
+    }
+  }
+
+  ///
+  @override
+  Widget build(BuildContext context) {
     _context = context;
-    _ref = ref;
 
     final bankNamesSettingState = ref.watch(bankNamesSettingProvider);
 
@@ -125,7 +154,9 @@ class BankNameInputAlert extends ConsumerWidget {
                                 child: Text(e.japanName, style: const TextStyle(fontSize: 12)),
                               );
                             }).toList(),
-                            value: bankNamesSettingState.accountType,
+                            value: (selectedAccountType != AccountType.blank)
+                                ? selectedAccountType
+                                : bankNamesSettingState.accountType,
                             onChanged: (value) {
                               ref.read(bankNamesSettingProvider.notifier).setAccountType(accountType: value!);
                             },
@@ -150,13 +181,15 @@ class BankNameInputAlert extends ConsumerWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Container(),
-                  TextButton(
-                    onPressed: _inputBankName,
-                    child: const Text(
-                      '銀行口座を追加する',
-                      style: TextStyle(fontSize: 12),
-                    ),
-                  ),
+                  (widget.bankName != null)
+                      ? TextButton(
+                          onPressed: _updateBankName,
+                          child: const Text('銀行口座を更新する', style: TextStyle(fontSize: 12)),
+                        )
+                      : TextButton(
+                          onPressed: _inputBankName,
+                          child: const Text('銀行口座を追加する', style: TextStyle(fontSize: 12)),
+                        ),
                 ],
               ),
             ],
@@ -168,7 +201,7 @@ class BankNameInputAlert extends ConsumerWidget {
 
   ///
   Future<void> _inputBankName() async {
-    final accountType = _ref.watch(bankNamesSettingProvider.select((value) => value.accountType));
+    final accountType = ref.watch(bankNamesSettingProvider.select((value) => value.accountType));
 
     if (bankNumberEditingController.text == '' ||
         bankNameEditingController.text == '' ||
@@ -191,12 +224,39 @@ class BankNameInputAlert extends ConsumerWidget {
       branchName: branchNameEditingController.text,
       accountType: accountType.japanName,
       accountNumber: accountNumberEditingController.text,
-      depositType: 'bank',
+      depositType: widget.depositType.japanName,
     );
 
     await BankNameRepository.insertBankName(bankName: bankName).then((value) {
       Navigator.pop(_context);
     });
+  }
+
+  ///
+  Future<void> _updateBankName() async {
+    final accountType = ref.watch(bankNamesSettingProvider.select((value) => value.accountType));
+
+    await BankNameRepository.updateBankName(
+      bankName: BankName(
+        id: widget.bankName!.id,
+        bankNumber: bankNumberEditingController.text,
+        bankName: bankNameEditingController.text,
+        branchNumber: branchNumberEditingController.text,
+        branchName: branchNameEditingController.text,
+        accountType: accountType.japanName,
+        accountNumber: accountNumberEditingController.text,
+        depositType: widget.depositType.japanName,
+      ),
+      ref: ref,
+    ).then((value) {
+      Navigator.pop(_context);
+    });
+
+    bankNumberEditingController.clear();
+    bankNameEditingController.clear();
+    branchNumberEditingController.clear();
+    branchNameEditingController.clear();
+    accountNumberEditingController.clear();
   }
 
   ///
@@ -208,7 +268,7 @@ class BankNameInputAlert extends ConsumerWidget {
       branchName: '虎ノ門支店',
       accountType: '普通預金',
       accountNumber: '2961375',
-      depositType: 'bank',
+      depositType: widget.depositType.japanName,
     );
 
     await BankNameRepository.insertBankName(bankName: bankName1);
@@ -220,7 +280,7 @@ class BankNameInputAlert extends ConsumerWidget {
       branchName: '横浜駅前支店',
       accountType: '普通預金',
       accountNumber: '8981660',
-      depositType: 'bank',
+      depositType: widget.depositType.japanName,
     );
 
     await BankNameRepository.insertBankName(bankName: bankName2);
@@ -232,7 +292,7 @@ class BankNameInputAlert extends ConsumerWidget {
       branchName: '新宿西口支店',
       accountType: '普通預金',
       accountNumber: '2967733',
-      depositType: 'bank',
+      depositType: widget.depositType.japanName,
     );
 
     await BankNameRepository.insertBankName(bankName: bankName3);
@@ -244,7 +304,7 @@ class BankNameInputAlert extends ConsumerWidget {
       branchName: '船橋支店',
       accountType: '普通預金',
       accountNumber: '0782619',
-      depositType: 'bank',
+      depositType: widget.depositType.japanName,
     );
 
     await BankNameRepository.insertBankName(bankName: bankName4);
@@ -256,7 +316,7 @@ class BankNameInputAlert extends ConsumerWidget {
       branchName: 'ギター支店',
       accountType: '普通預金',
       accountNumber: '2994905',
-      depositType: 'bank',
+      depositType: widget.depositType.japanName,
     );
 
     await BankNameRepository.insertBankName(bankName: bankName5);

@@ -7,7 +7,7 @@ import '../state/holiday/holiday_notifier.dart';
 import '../utilities/utilities.dart';
 import 'components/_money_dialog.dart';
 import 'components/daily_money_display_alert.dart';
-import 'components/diposit_list_alert.dart';
+import 'components/deposit_list_alert.dart';
 
 // ignore: must_be_immutable
 class HomeScreen extends ConsumerWidget {
@@ -39,6 +39,7 @@ class HomeScreen extends ConsumerWidget {
     final calendarState = ref.watch(calendarProvider);
 
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       appBar: AppBar(
         title: Text(calendarState.baseYearMonth),
         leading: Row(
@@ -83,19 +84,12 @@ class HomeScreen extends ConsumerWidget {
             children: [
               const SizedBox(height: 60),
               GestureDetector(
-                onTap: () async {
-                  await MoneyDialog(
-                    context: context,
-                    widget: DipositListAlert(),
-                  );
-                },
+                onTap: () async => await MoneyDialog(context: context, widget: DepositListAlert()),
                 child: Container(
                   width: double.infinity,
                   padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 3),
                   margin: const EdgeInsets.all(5),
-                  decoration: BoxDecoration(
-                    border: Border.all(color: Colors.white.withOpacity(0.4)),
-                  ),
+                  decoration: BoxDecoration(border: Border.all(color: Colors.white.withOpacity(0.4))),
                   child: const Text('銀行口座、電子マネー管理'),
                 ),
               ),
@@ -167,9 +161,7 @@ class HomeScreen extends ConsumerWidget {
             onTap: () {
               MoneyDialog(
                 context: _context,
-                widget: DailyMoneyDisplayAlert(
-                  date: DateTime.parse('$dispDate 00:00:00'),
-                ),
+                widget: DailyMoneyDisplayAlert(date: DateTime.parse('$dispDate 00:00:00')),
               );
             },
             child: Container(

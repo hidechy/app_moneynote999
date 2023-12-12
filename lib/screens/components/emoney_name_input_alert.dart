@@ -1,14 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:money_note/screens/components/parts/error_dialog.dart';
 
+import '../../enums/deposit_type.dart';
 import '../../extensions/extensions.dart';
 import '../../models/emoney_name.dart';
 import '../../repository/emoney_name_repository.dart';
+import 'parts/error_dialog.dart';
 
 // ignore: must_be_immutable
 class EmoneyNameInputAlert extends ConsumerWidget {
-  EmoneyNameInputAlert({super.key});
+  EmoneyNameInputAlert({super.key, required this.depositType});
+
+  final DepositType depositType;
 
   TextEditingController emoneyNameEditingController = TextEditingController();
 
@@ -98,7 +101,7 @@ class EmoneyNameInputAlert extends ConsumerWidget {
 
     final emoneyName = EmoneyName(
       emoneyName: emoneyNameEditingController.text,
-      depositType: 'emoney',
+      depositType: depositType.japanName,
     );
 
     await EmoneyNameRepository.insertEmoneyName(emoneyName: emoneyName).then((value) {
@@ -108,19 +111,19 @@ class EmoneyNameInputAlert extends ConsumerWidget {
 
   ///
   Future<void> _setDummyEmoney() async {
-    final emoneyName1 = EmoneyName(emoneyName: 'Suica1', depositType: 'emoney');
+    final emoneyName1 = EmoneyName(emoneyName: 'Suica1', depositType: depositType.japanName);
     await EmoneyNameRepository.insertEmoneyName(emoneyName: emoneyName1);
 
-    final emoneyName2 = EmoneyName(emoneyName: 'PayPay', depositType: 'emoney');
+    final emoneyName2 = EmoneyName(emoneyName: 'PayPay', depositType: depositType.japanName);
     await EmoneyNameRepository.insertEmoneyName(emoneyName: emoneyName2);
 
-    final emoneyName3 = EmoneyName(emoneyName: 'PASMO', depositType: 'emoney');
+    final emoneyName3 = EmoneyName(emoneyName: 'PASMO', depositType: depositType.japanName);
     await EmoneyNameRepository.insertEmoneyName(emoneyName: emoneyName3);
 
-    final emoneyName4 = EmoneyName(emoneyName: 'Suica2', depositType: 'emoney');
+    final emoneyName4 = EmoneyName(emoneyName: 'Suica2', depositType: depositType.japanName);
     await EmoneyNameRepository.insertEmoneyName(emoneyName: emoneyName4);
 
-    final emoneyName5 = EmoneyName(emoneyName: 'メルカリ', depositType: 'emoney');
+    final emoneyName5 = EmoneyName(emoneyName: 'メルカリ', depositType: depositType.japanName);
     await EmoneyNameRepository.insertEmoneyName(emoneyName: emoneyName5);
 
     // ignore: use_build_context_synchronously
