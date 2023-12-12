@@ -96,7 +96,9 @@ class BankNameListAlert extends ConsumerWidget {
                           ),
                           const SizedBox(width: 10),
                           GestureDetector(
-                            onTap: () {},
+                            onTap: () {
+                              BankNameRepository.deleteBankName(bankName: element, ref: _ref);
+                            },
                             child: Icon(Icons.delete, size: 16, color: Colors.white.withOpacity(0.4)),
                           ),
                         ],

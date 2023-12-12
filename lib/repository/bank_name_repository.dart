@@ -41,4 +41,11 @@ class BankNameRepository {
     await db.update('bank_names', bankName.toMap(), where: 'id = ?', whereArgs: [bankName.id]);
     await ref.read(bankNamesSettingProvider.notifier).updateBankNameList(bankName: bankName);
   }
+
+  ///
+  static Future<void> deleteBankName({required BankName bankName, required WidgetRef ref}) async {
+    final db = await MoneyRepository.database();
+    await db.delete('bank_names', where: 'id = ?', whereArgs: [bankName.id]);
+    await ref.read(bankNamesSettingProvider.notifier).deleteBankNameList(bankName: bankName);
+  }
 }

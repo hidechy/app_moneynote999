@@ -89,7 +89,9 @@ class EmoneyNameListAlert extends ConsumerWidget {
                           ),
                           const SizedBox(width: 10),
                           GestureDetector(
-                            onTap: () {},
+                            onTap: () {
+                              EmoneyNameRepository.deleteEmoneyName(emoneyName: element, ref: _ref);
+                            },
                             child: Icon(Icons.delete, size: 16, color: Colors.white.withOpacity(0.4)),
                           ),
                         ],

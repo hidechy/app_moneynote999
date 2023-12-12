@@ -36,4 +36,11 @@ class EmoneyNameRepository {
     await db.update('emoney_names', emoneyName.toMap(), where: 'id = ?', whereArgs: [emoneyName.id]);
     await ref.read(emoneyNamesSettingProvider.notifier).updateEmoneyNameList(emoneyName: emoneyName);
   }
+
+  ///
+  static Future<void> deleteEmoneyName({required EmoneyName emoneyName, required WidgetRef ref}) async {
+    final db = await MoneyRepository.database();
+    await db.delete('emoney_names', where: 'id = ?', whereArgs: [emoneyName.id]);
+    await ref.read(emoneyNamesSettingProvider.notifier).deleteEmoneyNameList(emoneyName: emoneyName);
+  }
 }
