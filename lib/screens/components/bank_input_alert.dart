@@ -51,7 +51,7 @@ class _BankInputAlertState extends ConsumerState<BankInputAlert> {
 
               IconButton(
                 onPressed: () {},
-                icon: Icon(Icons.ac_unit),
+                icon: const Icon(Icons.ac_unit),
               ),
 
               ///
