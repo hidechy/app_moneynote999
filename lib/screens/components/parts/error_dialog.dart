@@ -12,7 +12,7 @@ Future<void> error_dialog({required BuildContext context, required String title,
         content: KiwiText(text: content),
         actions: [
           GestureDetector(
-            child: KiwiText(text: 'close'),
+            child: const KiwiText(text: 'close'),
             onTap: () async {
               Navigator.pop(context);
               return;

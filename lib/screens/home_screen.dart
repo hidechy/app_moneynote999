@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:money_note/screens/components/parts/kiwi_text.dart';
 
 import '../extensions/extensions.dart';
 import '../state/calendar/calendar_notifier.dart';
@@ -95,7 +94,7 @@ class HomeScreen extends ConsumerWidget {
                   padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 3),
                   margin: const EdgeInsets.all(5),
                   decoration: BoxDecoration(border: Border.all(color: Colors.white.withOpacity(0.4))),
-                  child: KiwiText(text:'銀行口座、電子マネー管理'),
+                  child: Text('銀行口座、電子マネー管理'),
                 ),
               ),
             ],

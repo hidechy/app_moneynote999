@@ -46,7 +46,7 @@ class BankNameListAlert extends ConsumerWidget {
                   TextButton(
                     onPressed: () =>
                         MoneyDialog(context: context, widget: BankNameInputAlert(depositType: DepositType.bank)),
-                    child: Text('銀行口座を追加する'),
+                    child: const Text('銀行口座を追加する'),
                   ),
                 ],
               ),
