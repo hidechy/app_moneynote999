@@ -15,6 +15,8 @@ class BankInputAlert extends ConsumerStatefulWidget {
 class _BankInputAlertState extends ConsumerState<BankInputAlert> {
   Map<String, dynamic> tecs = {};
 
+  List<String> bankAccountsList = [];
+
   ///
   @override
   Widget build(BuildContext context) {
@@ -44,6 +46,15 @@ class _BankInputAlertState extends ConsumerState<BankInputAlert> {
                 thickness: 5,
               ),
               Expanded(child: _displayBankPriceInputParts()),
+
+              ///
+
+              IconButton(
+                onPressed: () {},
+                icon: Icon(Icons.ac_unit),
+              ),
+
+              ///
             ],
           ),
         ),
@@ -58,6 +69,8 @@ class _BankInputAlertState extends ConsumerState<BankInputAlert> {
     if (bankNameList.value != null) {
       bankNameList.value!.forEach((element) {
         tecs['${element.bankName}|${element.branchName}|${element.accountNumber}'] = TextEditingController();
+
+        bankAccountsList.add('${element.bankName}|${element.branchName}|${element.accountNumber}');
       });
     }
   }
