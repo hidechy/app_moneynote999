@@ -2,9 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import '../../extensions/extensions.dart';
+import '../../repository/bank_name_repository.dart';
+import '../../repository/emoney_name_repository.dart';
 import '../../repository/money_repository.dart';
+import '../../state/bank_names_setting/bank_names_setting_notifier.dart';
+import '../../state/emoney_names_setting/emoney_names_setting_notifier.dart';
 import '../../state/money/money_notifier.dart';
 import '_money_dialog.dart';
+import 'bank_input_alert.dart';
 import 'money_input_alert.dart';
 
 // ignore: must_be_immutable
@@ -19,12 +24,19 @@ class DailyMoneyDisplayAlert extends ConsumerWidget {
   late WidgetRef _ref;
 
   ///
+  Future<void> init({required WidgetRef ref}) async {
+    await MoneyRepository.getSingleMoney(date: date.yyyymmdd, ref: ref);
+    await BankNameRepository.getBankNames(ref: ref);
+    await EmoneyNameRepository.getEmoneyNames(ref: ref);
+  }
+
+  ///
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     _context = context;
     _ref = ref;
 
-    Future(() => MoneyRepository.getSingleMoney(date: date.yyyymmdd, ref: ref));
+    Future(() => init(ref: ref));
 
     return AlertDialog(
       titlePadding: EdgeInsets.zero,
@@ -37,15 +49,19 @@ class DailyMoneyDisplayAlert extends ConsumerWidget {
         height: double.infinity,
         child: DefaultTextStyle(
           style: const TextStyle(fontSize: 12),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const SizedBox(height: 20),
-              Container(width: context.screenSize.width),
-              Text(date.yyyymmdd),
-              Divider(color: Colors.white.withOpacity(0.4), thickness: 5),
-              Expanded(child: _displaySingleMoney()),
-            ],
+          child: SingleChildScrollView(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const SizedBox(height: 20),
+                Container(width: context.screenSize.width),
+                Text(date.yyyymmdd),
+                Divider(color: Colors.white.withOpacity(0.4), thickness: 5),
+                _displaySingleMoney(),
+                _displayBankMoney(),
+                _displayEmoneyMoney(),
+              ],
+            ),
           ),
         ),
       ),
@@ -148,6 +164,111 @@ class DailyMoneyDisplayAlert extends ConsumerWidget {
         (yen_50 * 50) +
         (yen_10 * 10) +
         (yen_5 * 5) +
-        (yen_1 + 1);
+        (yen_1 * 1);
+  }
+
+  ///
+  Widget _displayBankMoney() {
+    final bankNameList = _ref.watch(bankNamesSettingProvider.select((value) => value.bankNameList));
+
+    return Column(
+      children: [
+        const SizedBox(height: 30),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Expanded(
+              child: Container(
+                padding: const EdgeInsets.all(5),
+                decoration: BoxDecoration(color: Colors.indigo, borderRadius: BorderRadius.circular(20)),
+                alignment: Alignment.center,
+                child: const Text('BANK'),
+              ),
+            ),
+            const SizedBox(width: 10),
+            Expanded(
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  GestureDetector(
+                    onTap: () {
+                      MoneyDialog(
+                        context: _context,
+                        widget: const BankInputAlert(),
+                      );
+                    },
+                    child: Icon(Icons.input, color: Colors.greenAccent.withOpacity(0.6), size: 16),
+                  ),
+                  Container(),
+                ],
+              ),
+            ),
+          ],
+        ),
+        bankNameList.when(
+          data: (value) {
+            final list = <Widget>[];
+
+            value.forEach((element) {
+              list.add(Text('${element.bankName} ${element.branchName}'));
+            });
+
+            return SingleChildScrollView(child: Column(children: list));
+          },
+          error: (error, stackTrace) => Container(),
+          loading: Container.new,
+        ),
+      ],
+    );
+  }
+
+  ///
+  Widget _displayEmoneyMoney() {
+    final emoneyNameList = _ref.watch(emoneyNamesSettingProvider.select((value) => value.emoneyNameList));
+
+    return Column(
+      children: [
+        const SizedBox(height: 30),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Expanded(
+              child: Container(
+                padding: const EdgeInsets.all(5),
+                decoration: BoxDecoration(color: Colors.indigo, borderRadius: BorderRadius.circular(20)),
+                alignment: Alignment.center,
+                child: const Text('E-MONEY'),
+              ),
+            ),
+            const SizedBox(width: 10),
+            Expanded(
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  GestureDetector(
+                    onTap: () {},
+                    child: Icon(Icons.input, color: Colors.greenAccent.withOpacity(0.6), size: 16),
+                  ),
+                  Container(),
+                ],
+              ),
+            ),
+          ],
+        ),
+        emoneyNameList.when(
+          data: (value) {
+            final list = <Widget>[];
+
+            value.forEach((element) {
+              list.add(Text(element.emoneyName));
+            });
+
+            return SingleChildScrollView(child: Column(children: list));
+          },
+          error: (error, stackTrace) => Container(),
+          loading: Container.new,
+        ),
+      ],
+    );
   }
 }
