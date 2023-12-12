@@ -94,7 +94,7 @@ class HomeScreen extends ConsumerWidget {
                   padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 3),
                   margin: const EdgeInsets.all(5),
                   decoration: BoxDecoration(border: Border.all(color: Colors.white.withOpacity(0.4))),
-                  child: Text('銀行口座、電子マネー管理'),
+                  child: const Text('銀行口座、電子マネー管理'),
                 ),
               ),
             ],
