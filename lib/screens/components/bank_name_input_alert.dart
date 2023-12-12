@@ -182,9 +182,22 @@ class _BankNameInputAlertState extends ConsumerState<BankNameInputAlert> {
                 children: [
                   Container(),
                   (widget.bankName != null)
-                      ? TextButton(
-                          onPressed: _updateBankName,
-                          child: const Text('銀行口座を更新する', style: TextStyle(fontSize: 12)),
+                      ? Column(
+                          children: [
+                            GestureDetector(
+                              onTap: _updateBankName,
+                              child: Text(
+                                '銀行口座を更新する',
+                                style: TextStyle(fontSize: 12, color: Theme.of(context).colorScheme.primary),
+                              ),
+                            ),
+                            const SizedBox(height: 10),
+                            GestureDetector(
+                              onTap: _deleteBankName,
+                              child: Text('銀行口座を削除する',
+                                  style: TextStyle(fontSize: 12, color: Theme.of(context).colorScheme.primary)),
+                            ),
+                          ],
                         )
                       : TextButton(
                           onPressed: _inputBankName,
@@ -261,6 +274,13 @@ class _BankNameInputAlertState extends ConsumerState<BankNameInputAlert> {
       branchNameEditingController.clear();
       accountNumberEditingController.clear();
 
+      Navigator.pop(_context);
+    });
+  }
+
+  ///
+  Future<void> _deleteBankName() async {
+    await BankNameRepository.deleteBankName(bankName: widget.bankName!, ref: ref).then((value) {
       Navigator.pop(_context);
     });
   }
