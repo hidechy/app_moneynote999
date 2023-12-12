@@ -79,7 +79,12 @@ class EmoneyNameListAlert extends ConsumerWidget {
                       Row(
                         children: [
                           GestureDetector(
-                            onTap: () {},
+                            onTap: () {
+                              MoneyDialog(
+                                context: _context,
+                                widget: EmoneyNameInputAlert(depositType: DepositType.emoney, emoneyName: element),
+                              );
+                            },
                             child: Icon(Icons.edit, size: 16, color: Colors.white.withOpacity(0.4)),
                           ),
                           const SizedBox(width: 10),

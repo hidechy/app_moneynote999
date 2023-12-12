@@ -27,7 +27,13 @@ class EmoneyNameRepository {
   ///
   static Future<void> insertEmoneyName({required EmoneyName emoneyName}) async {
     final db = await MoneyRepository.database();
-
     await db.insert('emoney_names', emoneyName.toMap(), conflictAlgorithm: ConflictAlgorithm.replace);
+  }
+
+  ///
+  static Future<void> updateEmoneyName({required EmoneyName emoneyName, required WidgetRef ref}) async {
+    final db = await MoneyRepository.database();
+    await db.update('emoney_names', emoneyName.toMap(), where: 'id = ?', whereArgs: [emoneyName.id]);
+    await ref.read(emoneyNamesSettingProvider.notifier).updateEmoneyNameList(emoneyName: emoneyName);
   }
 }

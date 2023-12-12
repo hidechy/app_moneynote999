@@ -84,7 +84,7 @@ class HomeScreen extends ConsumerWidget {
             children: [
               const SizedBox(height: 60),
               GestureDetector(
-                onTap: () async => await MoneyDialog(context: context, widget: DepositListAlert()),
+                onTap: () async => MoneyDialog(context: context, widget: DepositListAlert()),
                 child: Container(
                   width: double.infinity,
                   padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 3),

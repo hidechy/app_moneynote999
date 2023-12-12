@@ -14,4 +14,17 @@ class EmoneyNamesSettingNotifier extends StateNotifier<EmoneyNamesSettingRespons
   ///
   Future<void> setEmoneyNameList({required List<EmoneyName> emoneyNameList}) async =>
       state = state.copyWith(emoneyNameList: AsyncValue.data(emoneyNameList));
+
+  ///
+  Future<void> updateEmoneyNameList({required EmoneyName emoneyName}) async {
+    final emoneyNameList = state.emoneyNameList.value!;
+
+    final index = emoneyNameList.indexWhere((en) => en.id == emoneyName.id);
+
+    if (index != -1) {
+      emoneyNameList[index] = emoneyName;
+    }
+
+    state = state.copyWith(emoneyNameList: AsyncValue.data(emoneyNameList));
+  }
 }

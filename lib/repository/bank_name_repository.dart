@@ -32,7 +32,6 @@ class BankNameRepository {
   ///
   static Future<void> insertBankName({required BankName bankName}) async {
     final db = await MoneyRepository.database();
-
     await db.insert('bank_names', bankName.toMap(), conflictAlgorithm: ConflictAlgorithm.replace);
   }
 

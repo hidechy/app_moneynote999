@@ -249,14 +249,14 @@ class _BankNameInputAlertState extends ConsumerState<BankNameInputAlert> {
       ),
       ref: ref,
     ).then((value) {
+      bankNumberEditingController.clear();
+      bankNameEditingController.clear();
+      branchNumberEditingController.clear();
+      branchNameEditingController.clear();
+      accountNumberEditingController.clear();
+
       Navigator.pop(_context);
     });
-
-    bankNumberEditingController.clear();
-    bankNameEditingController.clear();
-    branchNumberEditingController.clear();
-    branchNameEditingController.clear();
-    accountNumberEditingController.clear();
   }
 
   ///
