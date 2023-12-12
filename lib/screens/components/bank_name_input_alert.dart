@@ -228,6 +228,12 @@ class _BankNameInputAlertState extends ConsumerState<BankNameInputAlert> {
     );
 
     await BankNameRepository.insertBankName(bankName: bankName).then((value) {
+      bankNumberEditingController.clear();
+      bankNameEditingController.clear();
+      branchNumberEditingController.clear();
+      branchNameEditingController.clear();
+      accountNumberEditingController.clear();
+
       Navigator.pop(_context);
     });
   }

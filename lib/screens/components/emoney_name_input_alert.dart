@@ -123,6 +123,8 @@ class _EmoneyNameInputAlertState extends ConsumerState<EmoneyNameInputAlert> {
     );
 
     await EmoneyNameRepository.insertEmoneyName(emoneyName: emoneyName).then((value) {
+      emoneyNameEditingController.clear();
+
       Navigator.pop(_context);
     });
   }
