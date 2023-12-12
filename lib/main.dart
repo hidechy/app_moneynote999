@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import 'screens/home_screen.dart';
@@ -13,9 +14,16 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      theme: ThemeData(
+        appBarTheme: AppBarTheme(
+          titleTextStyle: GoogleFonts.kiwiMaru(textStyle: const TextStyle(fontWeight: FontWeight.bold)),
+        ),
+        useMaterial3: false,
+        colorScheme: ColorScheme.fromSwatch(brightness: Brightness.dark),
+      ),
+      themeMode: ThemeMode.dark,
       title: 'money note',
       debugShowCheckedModeBanner: false,
-      theme: ThemeData.dark(useMaterial3: false),
       home: HomeScreen(),
     );
   }

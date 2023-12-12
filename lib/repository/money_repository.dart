@@ -54,22 +54,24 @@ class MoneyRepository {
 
     final List<Map<String, dynamic>> maps = await db.query('moneies', where: 'date = ?', whereArgs: [date]);
 
-    final money = Money(
-      id: maps[0]['id'],
-      date: date,
-      yen_10000: maps[0]['yen_10000'],
-      yen_5000: maps[0]['yen_5000'],
-      yen_2000: maps[0]['yen_2000'],
-      yen_1000: maps[0]['yen_1000'],
-      yen_500: maps[0]['yen_500'],
-      yen_100: maps[0]['yen_100'],
-      yen_50: maps[0]['yen_50'],
-      yen_10: maps[0]['yen_10'],
-      yen_5: maps[0]['yen_5'],
-      yen_1: maps[0]['yen_1'],
-    );
+    if (maps.isNotEmpty) {
+      final money = Money(
+        id: maps[0]['id'],
+        date: date,
+        yen_10000: maps[0]['yen_10000'],
+        yen_5000: maps[0]['yen_5000'],
+        yen_2000: maps[0]['yen_2000'],
+        yen_1000: maps[0]['yen_1000'],
+        yen_500: maps[0]['yen_500'],
+        yen_100: maps[0]['yen_100'],
+        yen_50: maps[0]['yen_50'],
+        yen_10: maps[0]['yen_10'],
+        yen_5: maps[0]['yen_5'],
+        yen_1: maps[0]['yen_1'],
+      );
 
-    await ref.read(moneySingleProvider.notifier).setMoney(money: money);
+      await ref.read(moneySingleProvider.notifier).setMoney(money: money);
+    }
   }
 
   ///

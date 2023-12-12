@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import '../../extensions/extensions.dart';
@@ -65,7 +66,7 @@ class _MoneyInputAlertState extends ConsumerState<MoneyInputAlert> {
         width: double.infinity,
         height: double.infinity,
         child: DefaultTextStyle(
-          style: const TextStyle(fontSize: 12),
+          style: GoogleFonts.kiwiMaru(fontSize: 12),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [

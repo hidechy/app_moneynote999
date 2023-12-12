@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import '../../extensions/extensions.dart';
@@ -9,7 +10,7 @@ import '../../state/bank_names_setting/bank_names_setting_notifier.dart';
 import '../../state/emoney_names_setting/emoney_names_setting_notifier.dart';
 import '../../state/money/money_notifier.dart';
 import '_money_dialog.dart';
-import 'bank_input_alert.dart';
+import 'bank_price_input_alert.dart';
 import 'money_input_alert.dart';
 
 // ignore: must_be_immutable
@@ -48,7 +49,7 @@ class DailyMoneyDisplayAlert extends ConsumerWidget {
         width: double.infinity,
         height: double.infinity,
         child: DefaultTextStyle(
-          style: const TextStyle(fontSize: 12),
+          style: GoogleFonts.kiwiMaru(fontSize: 12),
           child: SingleChildScrollView(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -186,23 +187,7 @@ class DailyMoneyDisplayAlert extends ConsumerWidget {
               ),
             ),
             const SizedBox(width: 10),
-            Expanded(
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  GestureDetector(
-                    onTap: () {
-                      MoneyDialog(
-                        context: _context,
-                        widget: const BankInputAlert(),
-                      );
-                    },
-                    child: Icon(Icons.input, color: Colors.greenAccent.withOpacity(0.6), size: 16),
-                  ),
-                  Container(),
-                ],
-              ),
-            ),
+            Expanded(child: Container()),
           ],
         ),
         bankNameList.when(
@@ -210,7 +195,37 @@ class DailyMoneyDisplayAlert extends ConsumerWidget {
             final list = <Widget>[];
 
             value.forEach((element) {
-              list.add(Text('${element.bankName} ${element.branchName}'));
+              list.add(Container(
+                padding: const EdgeInsets.all(10),
+                decoration: BoxDecoration(border: Border(bottom: BorderSide(color: Colors.white.withOpacity(0.3)))),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text('${element.bankName} ${element.branchName}'),
+                        Text('${element.accountType} ${element.accountNumber}'),
+                      ],
+                    ),
+                    Row(
+                      children: [
+                        const Text('987'),
+                        const SizedBox(width: 10),
+                        GestureDetector(
+                          onTap: () {
+                            MoneyDialog(
+                              context: _context,
+                              widget: BankPriceInputAlert(date: date, bankName: element),
+                            );
+                          },
+                          child: Icon(Icons.input, color: Colors.greenAccent.withOpacity(0.6), size: 16),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              ));
             });
 
             return SingleChildScrollView(child: Column(children: list));
