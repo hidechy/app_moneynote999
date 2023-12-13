@@ -24,6 +24,8 @@ class HomeScreen extends ConsumerWidget {
 
   final Utility _utility = Utility();
 
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+
   late BuildContext _context;
   late WidgetRef _ref;
 
@@ -40,6 +42,7 @@ class HomeScreen extends ConsumerWidget {
     final calendarState = ref.watch(calendarProvider);
 
     return Scaffold(
+      key: _scaffoldKey,
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
         title: Text(calendarState.baseYearMonth),
@@ -58,6 +61,12 @@ class HomeScreen extends ConsumerWidget {
           ],
         ),
         backgroundColor: Colors.transparent,
+        actions: [
+          IconButton(
+            onPressed: () => _scaffoldKey.currentState!.openEndDrawer(),
+            icon: Icon(Icons.settings, color: Colors.white.withOpacity(0.6), size: 20),
+          )
+        ],
       ),
       body: SafeArea(
         child: DefaultTextStyle(

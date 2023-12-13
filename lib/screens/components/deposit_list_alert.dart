@@ -27,6 +27,7 @@ class DepositListAlert extends StatelessWidget {
     return DefaultTabController(
       length: tabs.length,
       child: Scaffold(
+        backgroundColor: Colors.transparent,
         appBar: PreferredSize(
           preferredSize: const Size.fromHeight(50),
           child: AppBar(
@@ -42,7 +43,9 @@ class DepositListAlert extends StatelessWidget {
             ),
           ),
         ),
-        body: TabBarView(children: tabs.map((tab) => tab.widget).toList()),
+        body: TabBarView(
+          children: tabs.map((tab) => tab.widget).toList(),
+        ),
       ),
     );
   }

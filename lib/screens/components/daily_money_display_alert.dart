@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:money_note/screens/components/deposit_list_alert.dart';
 
 import '../../extensions/extensions.dart';
 import '../../models/bank_price.dart';
@@ -204,19 +205,53 @@ class DailyMoneyDisplayAlert extends ConsumerWidget {
         ),
         bankNameList.when(
           data: (value) {
+            if (value.isEmpty) {
+              return Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const Text('金融機関が設定されていません。'),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      const Text('必要であれば登録してください。'),
+                      GestureDetector(
+                        child:
+                            Text('登録', style: TextStyle(fontSize: 12, color: Theme.of(_context).colorScheme.primary)),
+                        onTap: () {
+                          MoneyDialog(
+                            context: _context,
+                            widget: DepositListAlert(),
+                          );
+                        },
+                      ),
+                    ],
+                  ),
+                ],
+              );
+            }
+
             final list = <Widget>[];
 
             value.forEach((element) {
-              final bankPrice = (bankPriceLastMap?['${element.depositType}-${element.id}'] != null)
+              var bankPrice = (bankPriceLastMap?['${element.depositType}-${element.id}'] != null)
                   ? bankPriceLastMap!['${element.depositType}-${element.id}']!.price
                   : 0;
 
-              final bankPriceLastDate =
+              var bankPriceLastDate =
                   (bankPrice != 0) ? bankPriceLastMap!['${element.depositType}-${element.id}']!.date : '';
 
-              // var bankPriceList = (bankPriceListMap?['${element.depositType}-${element.id}'] != null)
-              //     ? bankPriceListMap!['${element.depositType}-${element.id}']
-              //     : [];
+              //---------------------//前日開き
+              if (bankPrice != 0) {
+                var bankPriceLastDt = DateTime.parse('${bankPriceLastDate} 00:00:00');
+
+                var diff = date.difference(bankPriceLastDt).inDays;
+
+                if (diff < 0) {
+                  bankPrice = 0;
+                  bankPriceLastDate = '';
+                }
+              }
+              //---------------------//前日開き
 
               list.add(Container(
                 padding: const EdgeInsets.all(10),
