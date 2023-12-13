@@ -78,7 +78,7 @@ class _BankNameInputAlertState extends ConsumerState<BankNameInputAlert> {
             children: [
               const SizedBox(height: 20),
               Container(width: context.screenSize.width),
-              const Text('銀行口座追加'),
+              const Text('金融機関追加'),
               Divider(
                 color: Colors.white.withOpacity(0.4),
                 thickness: 5,
@@ -105,7 +105,7 @@ class _BankNameInputAlertState extends ConsumerState<BankNameInputAlert> {
                           child: TextField(
                             keyboardType: TextInputType.number,
                             controller: bankNumberEditingController,
-                            decoration: const InputDecoration(labelText: '銀行番号'),
+                            decoration: const InputDecoration(labelText: '金融機関番号'),
                             style: const TextStyle(fontSize: 13, color: Colors.white),
                           ),
                         ),
@@ -115,7 +115,7 @@ class _BankNameInputAlertState extends ConsumerState<BankNameInputAlert> {
                           child: TextField(
                             keyboardType: TextInputType.number,
                             controller: bankNameEditingController,
-                            decoration: const InputDecoration(labelText: '銀行名'),
+                            decoration: const InputDecoration(labelText: '金融機関名'),
                             style: const TextStyle(fontSize: 13, color: Colors.white),
                           ),
                         )
@@ -188,21 +188,21 @@ class _BankNameInputAlertState extends ConsumerState<BankNameInputAlert> {
                             GestureDetector(
                               onTap: _updateBankName,
                               child: Text(
-                                '銀行口座を更新する',
+                                '金融機関を更新する',
                                 style: TextStyle(fontSize: 12, color: Theme.of(context).colorScheme.primary),
                               ),
                             ),
                             const SizedBox(height: 10),
                             GestureDetector(
                               onTap: _deleteBankName,
-                              child: Text('銀行口座を削除する',
+                              child: Text('金融機関を削除する',
                                   style: TextStyle(fontSize: 12, color: Theme.of(context).colorScheme.primary)),
                             ),
                           ],
                         )
                       : TextButton(
                           onPressed: _inputBankName,
-                          child: const Text('銀行口座を追加する', style: TextStyle(fontSize: 12)),
+                          child: const Text('金融機関を追加する', style: TextStyle(fontSize: 12)),
                         ),
                 ],
               ),

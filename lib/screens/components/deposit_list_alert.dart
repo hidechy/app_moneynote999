@@ -15,7 +15,7 @@ class DepositListAlert extends StatelessWidget {
   DepositListAlert({super.key});
 
   List<TabInfo> tabs = [
-    TabInfo('銀行口座管理', BankNameListAlert()),
+    TabInfo('金融機関管理', BankNameListAlert()),
     TabInfo('電子マネー管理', EmoneyNameListAlert()),
   ];
 
