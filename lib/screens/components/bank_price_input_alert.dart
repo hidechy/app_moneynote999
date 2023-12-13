@@ -1,9 +1,13 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
+import '../../enums/deposit_type.dart';
 import '../../extensions/extensions.dart';
+import '../../models/bank.dart';
 import '../../models/bank_name.dart';
+import 'parts/error_dialog.dart';
 
 class BankPriceInputAlert extends ConsumerStatefulWidget {
   const BankPriceInputAlert({super.key, required this.date, required this.bankName});
@@ -18,9 +22,29 @@ class BankPriceInputAlert extends ConsumerStatefulWidget {
 class _BankPriceInputAlertState extends ConsumerState<BankPriceInputAlert> {
   TextEditingController bankPriceEditingController = TextEditingController();
 
+  late List<int> yearOption;
+
+  List<int> monthOption = List.generate(12, (index) => index + 1);
+
+  late List<int>? dayOption;
+
+  DateTime? selectedDate;
+
+  late BuildContext _context;
+
   ///
   @override
   Widget build(BuildContext context) {
+    _context = context;
+
+    final now = widget.date;
+
+    yearOption = [now.year, now.year + 1];
+
+    dayOption = List.generate(31, (index) => index + 1);
+
+    selectedDate = now;
+
     return AlertDialog(
       titlePadding: EdgeInsets.zero,
       contentPadding: EdgeInsets.zero,
@@ -49,7 +73,7 @@ class _BankPriceInputAlertState extends ConsumerState<BankPriceInputAlert> {
                       ],
                     ),
                   ),
-                  Text(widget.date.yyyymmdd),
+                  Container(),
                 ],
               ),
 
@@ -64,6 +88,73 @@ class _BankPriceInputAlertState extends ConsumerState<BankPriceInputAlert> {
                 decoration: BoxDecoration(color: Colors.white.withOpacity(0.1)),
                 child: Column(
                   children: [
+                    SizedBox(
+                      height: 100,
+                      child: Row(
+                        children: [
+                          Expanded(
+                            child: CupertinoPicker(
+                              itemExtent: 35,
+                              onSelectedItemChanged: (int index) {
+                                selectedDate = DateTime(yearOption[index], selectedDate!.month, selectedDate!.day);
+                              },
+                              scrollController:
+                                  FixedExtentScrollController(initialItem: yearOption.indexOf(selectedDate!.year)),
+                              children: yearOption.map((e) {
+                                return Container(
+                                  height: 35,
+                                  alignment: Alignment.center,
+                                  child: Text(
+                                    e.toString(),
+                                    style: GoogleFonts.kiwiMaru(fontSize: 12),
+                                  ),
+                                );
+                              }).toList(),
+                            ),
+                          ),
+                          Expanded(
+                            child: CupertinoPicker(
+                              itemExtent: 35,
+                              onSelectedItemChanged: (int index) {
+                                selectedDate = DateTime(selectedDate!.year, monthOption[index], selectedDate!.day);
+                              },
+                              scrollController:
+                                  FixedExtentScrollController(initialItem: monthOption.indexOf(selectedDate!.month)),
+                              children: monthOption.map((e) {
+                                return Container(
+                                  height: 35,
+                                  alignment: Alignment.center,
+                                  child: Text(
+                                    e.toString().padLeft(2, '0'),
+                                    style: GoogleFonts.kiwiMaru(fontSize: 12),
+                                  ),
+                                );
+                              }).toList(),
+                            ),
+                          ),
+                          Expanded(
+                            child: CupertinoPicker(
+                              itemExtent: 35,
+                              onSelectedItemChanged: (int index) {
+                                selectedDate = DateTime(selectedDate!.year, selectedDate!.month, dayOption![index]);
+                              },
+                              scrollController:
+                                  FixedExtentScrollController(initialItem: dayOption!.indexOf(selectedDate!.day)),
+                              children: dayOption!.map((e) {
+                                return Container(
+                                  height: 35,
+                                  alignment: Alignment.center,
+                                  child: Text(
+                                    e.toString().padLeft(2, '0'),
+                                    style: GoogleFonts.kiwiMaru(fontSize: 12),
+                                  ),
+                                );
+                              }).toList(),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
                     TextField(
                       keyboardType: TextInputType.number,
                       controller: bankPriceEditingController,
@@ -72,6 +163,17 @@ class _BankPriceInputAlertState extends ConsumerState<BankPriceInputAlert> {
                     )
                   ],
                 ),
+              ),
+
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Container(),
+                  TextButton(
+                    onPressed: _insertBankMoney,
+                    child: const Text('金額を入力する'),
+                  ),
+                ],
               ),
 
               // ///
@@ -201,5 +303,36 @@ class _BankPriceInputAlertState extends ConsumerState<BankPriceInputAlert> {
         ),
       ),
     );
+  }
+
+  ///
+  Future<void> _insertBankMoney() async {
+    if (bankPriceEditingController.text == '') {
+      Future.delayed(
+        Duration.zero,
+        () => error_dialog(context: _context, title: '不完全データあり', content: '入力値に不備があります。'),
+      );
+
+      return;
+    }
+
+    var bank = Bank(
+      date: selectedDate!.yyyymmdd,
+      depositType: widget.bankName.depositType,
+      bankId: widget.bankName.id!,
+      price: bankPriceEditingController.text.toInt(),
+    );
+
+    /*
+    print(bank.date);
+    print(bank.depositType);
+    print(bank.bankId);
+    print(bank.price);
+
+    I/flutter ( 6764): 2023-12-13
+    I/flutter ( 6764): bank
+    I/flutter ( 6764): 1
+    I/flutter ( 6764): 999
+    */
   }
 }
