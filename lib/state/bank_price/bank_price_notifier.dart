@@ -26,31 +26,42 @@ class BankPriceSettingNotifier extends StateNotifier<BankPriceResponseState> {
 
     final map3 = <String, Map<String, int>>{};
 
-    final dt = DateTime.parse('${bankPriceList[0].date} 00:00:00');
-    final now = DateTime.now();
+    if (bankPriceList.isNotEmpty) {
+      //--- (1)
+      final bplMap = <String, int>{};
+      bankPriceList.forEach((element) => bplMap[element.date] = element.price);
+      //--- (1)
 
-    final diff = now.difference(dt).inDays;
+      //--- (2)
+      final dt = DateTime.parse('${bankPriceList[0].date} 00:00:00');
+      final now = DateTime.now();
+      final diff = now.difference(dt).inDays;
 
-    var price = 0;
-    var keepPrice = 0;
+      bankPriceList.forEach((element) {
+        final map4 = <String, int>{};
 
-    bankPriceList.forEach((element) {
-      if (keepPrice != element.price) {
-        price = element.price;
-      }
+        var price = 0;
+        for (var i = 0; i <= diff; i++) {
+          final date = dt.add(Duration(days: i)).yyyymmdd;
 
-      final map4 = <String, int>{};
-      for (var i = 0; i <= diff; i++) {
-        final date = dt.add(Duration(days: i)).yyyymmdd;
-        if (date == element.date) {
+          if (bplMap[date] != null) {
+            price = bplMap[date] ?? 0;
+          }
+
           map4[date] = price;
         }
-      }
 
-      map3['${element.depositType}-${element.bankId}'] = map4;
+        map3['${element.depositType}-${element.bankId}'] = map4;
+      });
+      //--- (2)
+    }
 
-      keepPrice = element.price;
-    });
+/*
+//    print(map3);
+    I/flutter ( 6961): {bank-1: {2023-12-05: 66666, 2023-12-06: 66666, 2023-12-07: 66666, 2023-12-08: 66666, 2023-12-09: 66666, 2023-12-10: 66666,
+    2023-12-11: 99999, 2023-12-12: 99999, 2023-12-13: 99999}}
+
+*/
 
     //=======================//
 
