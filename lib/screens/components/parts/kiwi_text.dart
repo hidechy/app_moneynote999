@@ -9,6 +9,6 @@ class KiwiText extends StatelessWidget {
   ///
   @override
   Widget build(BuildContext context) {
-    return Text(text, style: GoogleFonts.kiwiMaru());
+    return Text(text, style: GoogleFonts.kiwiMaru(fontSize: 12));
   }
 }

@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -9,11 +8,14 @@ import '../../models/bank_price.dart';
 import '../../repository/bank_price_repository.dart';
 import 'parts/error_dialog.dart';
 
+// ignore: must_be_immutable
 class BankPriceInputAlert extends ConsumerStatefulWidget {
-  const BankPriceInputAlert({super.key, required this.date, required this.bankName});
+  BankPriceInputAlert({super.key, required this.date, required this.bankName, this.bankPriceList});
 
   final DateTime date;
   final BankName bankName;
+
+  List<BankPrice>? bankPriceList;
 
   @override
   ConsumerState<BankPriceInputAlert> createState() => _BankPriceInputAlertState();
@@ -22,28 +24,18 @@ class BankPriceInputAlert extends ConsumerStatefulWidget {
 class _BankPriceInputAlertState extends ConsumerState<BankPriceInputAlert> {
   TextEditingController bankPriceEditingController = TextEditingController();
 
-  late List<int> yearOption;
-
-  List<int> monthOption = List.generate(12, (index) => index + 1);
-
-  late List<int>? dayOption;
-
-  DateTime? selectedDate;
-
   late BuildContext _context;
+
+  ///
+  @override
+  void initState() {
+    super.initState();
+  }
 
   ///
   @override
   Widget build(BuildContext context) {
     _context = context;
-
-    final now = widget.date;
-
-    yearOption = [now.year, now.year + 1];
-
-    dayOption = List.generate(31, (index) => index + 1);
-
-    selectedDate = now;
 
     return AlertDialog(
       titlePadding: EdgeInsets.zero,
@@ -61,110 +53,34 @@ class _BankPriceInputAlertState extends ConsumerState<BankPriceInputAlert> {
             children: [
               const SizedBox(height: 20),
               Container(width: context.screenSize.width),
-
               Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text('${widget.bankName.bankName} ${widget.bankName.branchName}'),
-                        Text('${widget.bankName.accountType} ${widget.bankName.accountNumber}'),
-                      ],
-                    ),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text('${widget.bankName.bankName} ${widget.bankName.branchName}'),
+                      Text('${widget.bankName.accountType} ${widget.bankName.accountNumber}'),
+                    ],
                   ),
-                  Container(),
+                  Text(widget.date.yyyymmdd),
                 ],
               ),
-
               Divider(
                 color: Colors.white.withOpacity(0.4),
                 thickness: 5,
               ),
-
               Container(
                 padding: const EdgeInsets.all(10),
                 margin: const EdgeInsets.symmetric(vertical: 5, horizontal: 3),
                 decoration: BoxDecoration(color: Colors.white.withOpacity(0.1)),
-                child: Column(
-                  children: [
-                    SizedBox(
-                      height: 100,
-                      child: Row(
-                        children: [
-                          Expanded(
-                            child: CupertinoPicker(
-                              itemExtent: 35,
-                              onSelectedItemChanged: (int index) {
-                                selectedDate = DateTime(yearOption[index], selectedDate!.month, selectedDate!.day);
-                              },
-                              scrollController:
-                                  FixedExtentScrollController(initialItem: yearOption.indexOf(selectedDate!.year)),
-                              children: yearOption.map((e) {
-                                return Container(
-                                  height: 35,
-                                  alignment: Alignment.center,
-                                  child: Text(
-                                    e.toString(),
-                                    style: GoogleFonts.kiwiMaru(fontSize: 12),
-                                  ),
-                                );
-                              }).toList(),
-                            ),
-                          ),
-                          Expanded(
-                            child: CupertinoPicker(
-                              itemExtent: 35,
-                              onSelectedItemChanged: (int index) {
-                                selectedDate = DateTime(selectedDate!.year, monthOption[index], selectedDate!.day);
-                              },
-                              scrollController:
-                                  FixedExtentScrollController(initialItem: monthOption.indexOf(selectedDate!.month)),
-                              children: monthOption.map((e) {
-                                return Container(
-                                  height: 35,
-                                  alignment: Alignment.center,
-                                  child: Text(
-                                    e.toString().padLeft(2, '0'),
-                                    style: GoogleFonts.kiwiMaru(fontSize: 12),
-                                  ),
-                                );
-                              }).toList(),
-                            ),
-                          ),
-                          Expanded(
-                            child: CupertinoPicker(
-                              itemExtent: 35,
-                              onSelectedItemChanged: (int index) {
-                                selectedDate = DateTime(selectedDate!.year, selectedDate!.month, dayOption![index]);
-                              },
-                              scrollController:
-                                  FixedExtentScrollController(initialItem: dayOption!.indexOf(selectedDate!.day)),
-                              children: dayOption!.map((e) {
-                                return Container(
-                                  height: 35,
-                                  alignment: Alignment.center,
-                                  child: Text(
-                                    e.toString().padLeft(2, '0'),
-                                    style: GoogleFonts.kiwiMaru(fontSize: 12),
-                                  ),
-                                );
-                              }).toList(),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                    TextField(
-                      keyboardType: TextInputType.number,
-                      controller: bankPriceEditingController,
-                      decoration: const InputDecoration(labelText: '金額'),
-                      style: const TextStyle(fontSize: 13, color: Colors.white),
-                    )
-                  ],
+                child: TextField(
+                  keyboardType: TextInputType.number,
+                  controller: bankPriceEditingController,
+                  decoration: const InputDecoration(labelText: '金額'),
+                  style: const TextStyle(fontSize: 13, color: Colors.white),
                 ),
               ),
-
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -175,134 +91,35 @@ class _BankPriceInputAlertState extends ConsumerState<BankPriceInputAlert> {
                   ),
                 ],
               ),
-
-              // ///
-              //
-              // IconButton(
-              //   onPressed: _setDummyBank,
-              //   icon: const Icon(Icons.ac_unit),
-              // ),
-              //
-              // ///
-              //
-              // Container(
-              //   padding: const EdgeInsets.all(10),
-              //   margin: const EdgeInsets.symmetric(vertical: 5, horizontal: 3),
-              //   decoration: BoxDecoration(color: Colors.white.withOpacity(0.1)),
-              //   child: Column(
-              //     children: [
-              //       Row(
-              //         children: [
-              //           Expanded(
-              //             child: TextField(
-              //               keyboardType: TextInputType.number,
-              //               controller: bankNumberEditingController,
-              //               decoration: const InputDecoration(labelText: '金融機関番号'),
-              //               style: const TextStyle(fontSize: 13, color: Colors.white),
-              //             ),
-              //           ),
-              //           const SizedBox(width: 10),
-              //           Expanded(
-              //             flex: 2,
-              //             child: TextField(
-              //               keyboardType: TextInputType.number,
-              //               controller: bankNameEditingController,
-              //               decoration: const InputDecoration(labelText: '金融機関名'),
-              //               style: const TextStyle(fontSize: 13, color: Colors.white),
-              //             ),
-              //           )
-              //         ],
-              //       ),
-              //       Row(
-              //         children: [
-              //           Expanded(
-              //             child: TextField(
-              //               keyboardType: TextInputType.number,
-              //               controller: branchNumberEditingController,
-              //               decoration: const InputDecoration(labelText: '支店番号'),
-              //               style: const TextStyle(fontSize: 13, color: Colors.white),
-              //             ),
-              //           ),
-              //           const SizedBox(width: 10),
-              //           Expanded(
-              //             flex: 2,
-              //             child: TextField(
-              //               keyboardType: TextInputType.number,
-              //               controller: branchNameEditingController,
-              //               decoration: const InputDecoration(labelText: '支店名'),
-              //               style: const TextStyle(fontSize: 13, color: Colors.white),
-              //             ),
-              //           )
-              //         ],
-              //       ),
-              //       Row(
-              //         children: [
-              //           Expanded(
-              //             child: DropdownButton(
-              //               dropdownColor: Colors.pinkAccent.withOpacity(0.1),
-              //               iconEnabledColor: Colors.white,
-              //               items: AccountType.values.map((e) {
-              //                 return DropdownMenuItem(
-              //                   value: e,
-              //                   child: Text(e.japanName, style: const TextStyle(fontSize: 12)),
-              //                 );
-              //               }).toList(),
-              //               value: (selectedAccountType != AccountType.blank)
-              //                   ? selectedAccountType
-              //                   : bankNamesSettingState.accountType,
-              //               onChanged: (value) {
-              //                 ref.read(bankNamesSettingProvider.notifier).setAccountType(accountType: value!);
-              //               },
-              //             ),
-              //           ),
-              //           const SizedBox(width: 10),
-              //           Expanded(
-              //             flex: 2,
-              //             child: TextField(
-              //               keyboardType: TextInputType.number,
-              //               controller: accountNumberEditingController,
-              //               decoration: const InputDecoration(labelText: '口座番号'),
-              //               style: const TextStyle(fontSize: 13, color: Colors.white),
-              //             ),
-              //           ),
-              //         ],
-              //       ),
-              //     ],
-              //   ),
-              // ),
-              // Row(
-              //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              //   children: [
-              //     Container(),
-              //     (widget.bankName != null)
-              //         ? Column(
-              //       children: [
-              //         GestureDetector(
-              //           onTap: _updateBankName,
-              //           child: Text(
-              //             '金融機関を更新する',
-              //             style: TextStyle(fontSize: 12, color: Theme.of(context).colorScheme.primary),
-              //           ),
-              //         ),
-              //         const SizedBox(height: 10),
-              //         GestureDetector(
-              //           onTap: _deleteBankName,
-              //           child: Text('金融機関を削除する',
-              //               style: TextStyle(fontSize: 12, color: Theme.of(context).colorScheme.primary)),
-              //         ),
-              //       ],
-              //     )
-              //         : TextButton(
-              //       onPressed: _inputBankName,
-              //       child: const Text('金融機関を追加する', style: TextStyle(fontSize: 12)),
-              //     ),
-              //   ],
-              // ),
+              Expanded(child: _displayBankPriceList()),
             ],
           ),
         ),
       ),
     );
+  }
+
+  ///
+  Widget _displayBankPriceList() {
+    List<Widget> list = [];
+
+    if (widget.bankPriceList != null) {
+      widget.bankPriceList!.forEach((element) {
+        list.add(Container(
+          padding: const EdgeInsets.all(10),
+          decoration: BoxDecoration(border: Border(bottom: BorderSide(color: Colors.white.withOpacity(0.3)))),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(element.date),
+              Text(element.price.toString().toCurrency()),
+            ],
+          ),
+        ));
+      });
+    }
+
+    return SingleChildScrollView(child: Column(children: list));
   }
 
   ///
@@ -317,7 +134,7 @@ class _BankPriceInputAlertState extends ConsumerState<BankPriceInputAlert> {
     }
 
     final bankPrice = BankPrice(
-      date: selectedDate!.yyyymmdd,
+      date: widget.date.yyyymmdd,
       depositType: widget.bankName.depositType,
       bankId: widget.bankName.id!,
       price: bankPriceEditingController.text.toInt(),

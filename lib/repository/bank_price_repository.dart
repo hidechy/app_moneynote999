@@ -17,7 +17,7 @@ class BankPriceRepository {
   static Future<void> getBankPriceList({required WidgetRef ref}) async {
     final db = await MoneyRepository.database();
 
-    final List<Map<String, dynamic>> maps = await db.query('bank_price');
+    final List<Map<String, dynamic>> maps = await db.query('bank_price', orderBy: 'date asc');
 
     final bankPriceList = List.generate(maps.length, (index) {
       return BankPrice(

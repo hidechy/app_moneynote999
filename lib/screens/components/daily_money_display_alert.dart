@@ -180,6 +180,10 @@ class DailyMoneyDisplayAlert extends ConsumerWidget {
     final bankPriceLastMap =
         (bankPriceState.bankPriceLastMap.value != null) ? bankPriceState.bankPriceLastMap.value : <String, BankPrice>{};
 
+    var bankPriceListMap = (bankPriceState.bankPriceListMap.value != null)
+        ? bankPriceState.bankPriceListMap.value
+        : <String, List<BankPrice>>{};
+
     return Column(
       children: [
         const SizedBox(height: 30),
@@ -210,6 +214,10 @@ class DailyMoneyDisplayAlert extends ConsumerWidget {
               final bankPriceLastDate =
                   (bankPrice != 0) ? bankPriceLastMap!['${element.depositType}-${element.id}']!.date : '';
 
+              // var bankPriceList = (bankPriceListMap?['${element.depositType}-${element.id}'] != null)
+              //     ? bankPriceListMap!['${element.depositType}-${element.id}']
+              //     : [];
+
               list.add(Container(
                 padding: const EdgeInsets.all(10),
                 decoration: BoxDecoration(border: Border(bottom: BorderSide(color: Colors.white.withOpacity(0.3)))),
@@ -234,7 +242,11 @@ class DailyMoneyDisplayAlert extends ConsumerWidget {
                               onTap: () {
                                 MoneyDialog(
                                   context: _context,
-                                  widget: BankPriceInputAlert(date: date, bankName: element),
+                                  widget: BankPriceInputAlert(
+                                    date: date,
+                                    bankName: element,
+                                    bankPriceList: bankPriceListMap?['${element.depositType}-${element.id}'],
+                                  ),
                                 );
                               },
                               child: Icon(Icons.input, color: Colors.greenAccent.withOpacity(0.6), size: 16),
