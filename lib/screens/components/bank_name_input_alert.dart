@@ -83,16 +83,6 @@ class _BankNameInputAlertState extends ConsumerState<BankNameInputAlert> {
                 color: Colors.white.withOpacity(0.4),
                 thickness: 5,
               ),
-
-              ///
-
-              IconButton(
-                onPressed: _setDummyData,
-                icon: const Icon(Icons.ac_unit),
-              ),
-
-              ///
-
               Container(
                 padding: const EdgeInsets.all(10),
                 margin: const EdgeInsets.symmetric(vertical: 5, horizontal: 3),
@@ -225,7 +215,7 @@ class _BankNameInputAlertState extends ConsumerState<BankNameInputAlert> {
         (accountType == AccountType.blank)) {
       Future.delayed(
         Duration.zero,
-            () => error_dialog(context: _context, title: '登録できません。', content: '値を正しく入力してください。'),
+        () => error_dialog(context: _context, title: '登録できません。', content: '値を正しく入力してください。'),
       );
 
       return;
@@ -284,71 +274,5 @@ class _BankNameInputAlertState extends ConsumerState<BankNameInputAlert> {
     await BankNameRepository.deleteBankName(bankName: widget.bankName!, ref: ref).then((value) {
       Navigator.pop(_context);
     });
-  }
-
-  ///
-  Future<void> _setDummyData() async {
-    final bankName1 = BankName(
-      bankNumber: '0001',
-      bankName: 'みずほ銀行',
-      branchNumber: '046',
-      branchName: '虎ノ門支店',
-      accountType: '普通預金',
-      accountNumber: '2961375',
-      depositType: widget.depositType.japanName,
-    );
-
-    await BankNameRepository.insertBankName(bankName: bankName1);
-
-    final bankName2 = BankName(
-      bankNumber: '0009',
-      bankName: '三井住友銀行',
-      branchNumber: '547',
-      branchName: '横浜駅前支店',
-      accountType: '普通預金',
-      accountNumber: '8981660',
-      depositType: widget.depositType.japanName,
-    );
-
-    await BankNameRepository.insertBankName(bankName: bankName2);
-
-    final bankName3 = BankName(
-      bankNumber: '0009',
-      bankName: '三井住友銀行',
-      branchNumber: '259',
-      branchName: '新宿西口支店',
-      accountType: '普通預金',
-      accountNumber: '2967733',
-      depositType: widget.depositType.japanName,
-    );
-
-    await BankNameRepository.insertBankName(bankName: bankName3);
-
-    final bankName4 = BankName(
-      bankNumber: '0005',
-      bankName: '三菱UFJ銀行',
-      branchNumber: '271',
-      branchName: '船橋支店',
-      accountType: '普通預金',
-      accountNumber: '0782619',
-      depositType: widget.depositType.japanName,
-    );
-
-    await BankNameRepository.insertBankName(bankName: bankName4);
-
-    final bankName5 = BankName(
-      bankNumber: '0036',
-      bankName: '楽天銀行',
-      branchNumber: '226',
-      branchName: 'ギター支店',
-      accountType: '普通預金',
-      accountNumber: '2994905',
-      depositType: widget.depositType.japanName,
-    );
-
-    await BankNameRepository.insertBankName(bankName: bankName5);
-
-    // ignore: use_build_context_synchronously
-    Navigator.pop(_context);
   }
 }

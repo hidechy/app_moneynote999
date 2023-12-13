@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:money_note/screens/components/___dummy_data_input_alert.dart';
 
 import '../extensions/extensions.dart';
 import '../state/calendar/calendar_notifier.dart';
@@ -107,6 +108,22 @@ class HomeScreen extends ConsumerWidget {
                   child: const Text('金融機関、電子マネー管理'),
                 ),
               ),
+
+              ///
+
+              const SizedBox(height: 100),
+              GestureDetector(
+                onTap: () async => MoneyDialog(context: context, widget: DummyDataInputAlert()),
+                child: Container(
+                  width: double.infinity,
+                  padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 3),
+                  margin: const EdgeInsets.all(5),
+                  decoration: BoxDecoration(border: Border.all(color: Colors.white.withOpacity(0.4))),
+                  child: const Text('dummy data'),
+                ),
+              ),
+
+              ///
             ],
           ),
         ),

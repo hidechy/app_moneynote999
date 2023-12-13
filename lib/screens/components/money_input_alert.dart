@@ -77,16 +77,6 @@ class _MoneyInputAlertState extends ConsumerState<MoneyInputAlert> {
                 color: Colors.white.withOpacity(0.4),
                 thickness: 5,
               ),
-
-              ///
-
-              IconButton(
-                onPressed: _setDummyData,
-                icon: const Icon(Icons.ac_unit),
-              ),
-
-              ///
-
               Container(
                 padding: const EdgeInsets.all(10),
                 margin: const EdgeInsets.symmetric(vertical: 5, horizontal: 3),
@@ -243,68 +233,5 @@ class _MoneyInputAlertState extends ConsumerState<MoneyInputAlert> {
 
       Navigator.pop(context);
     });
-  }
-
-  ///
-  Future<void> _setDummyData() async {
-    ////////////////////
-
-    final date1 = widget.date;
-
-    final money1 = Money(
-      date: date1.yyyymmdd,
-      yen_10000: 7,
-      yen_5000: 7,
-      yen_2000: 7,
-      yen_1000: 7,
-      yen_500: 7,
-      yen_100: 7,
-      yen_50: 7,
-      yen_10: 7,
-      yen_5: 7,
-      yen_1: 7,
-    );
-
-    await MoneyRepository.insertMoney(money: money1);
-
-    ////////////////////
-
-    final date2 = DateTime(widget.date.year, widget.date.month, widget.date.day - 1);
-
-    final money2 = Money(
-      date: date2.yyyymmdd,
-      yen_10000: 8,
-      yen_5000: 8,
-      yen_2000: 8,
-      yen_1000: 8,
-      yen_500: 8,
-      yen_100: 8,
-      yen_50: 8,
-      yen_10: 8,
-      yen_5: 8,
-      yen_1: 8,
-    );
-
-    await MoneyRepository.insertMoney(money: money2);
-
-    ////////////////////
-
-    final date3 = DateTime(widget.date.year, widget.date.month, widget.date.day - 2);
-
-    final money3 = Money(
-      date: date3.yyyymmdd,
-      yen_10000: 9,
-      yen_5000: 9,
-      yen_2000: 9,
-      yen_1000: 9,
-      yen_500: 9,
-      yen_100: 9,
-      yen_50: 9,
-      yen_10: 9,
-      yen_5: 9,
-      yen_1: 9,
-    );
-
-    await MoneyRepository.insertMoney(money: money3);
   }
 }

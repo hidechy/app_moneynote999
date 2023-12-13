@@ -60,16 +60,6 @@ class _EmoneyNameInputAlertState extends ConsumerState<EmoneyNameInputAlert> {
                 color: Colors.white.withOpacity(0.4),
                 thickness: 5,
               ),
-
-              ///
-
-              IconButton(
-                onPressed: _setDummyData,
-                icon: const Icon(Icons.ac_unit),
-              ),
-
-              ///
-
               Container(
                 padding: const EdgeInsets.all(10),
                 margin: const EdgeInsets.symmetric(vertical: 5, horizontal: 3),
@@ -162,26 +152,5 @@ class _EmoneyNameInputAlertState extends ConsumerState<EmoneyNameInputAlert> {
     await EmoneyNameRepository.deleteEmoneyName(emoneyName: widget.emoneyName!, ref: ref).then((value) {
       Navigator.pop(_context);
     });
-  }
-
-  ///
-  Future<void> _setDummyData() async {
-    final emoneyName1 = EmoneyName(emoneyName: 'Suica1', depositType: widget.depositType.japanName);
-    await EmoneyNameRepository.insertEmoneyName(emoneyName: emoneyName1);
-
-    final emoneyName2 = EmoneyName(emoneyName: 'PayPay', depositType: widget.depositType.japanName);
-    await EmoneyNameRepository.insertEmoneyName(emoneyName: emoneyName2);
-
-    final emoneyName3 = EmoneyName(emoneyName: 'PASMO', depositType: widget.depositType.japanName);
-    await EmoneyNameRepository.insertEmoneyName(emoneyName: emoneyName3);
-
-    final emoneyName4 = EmoneyName(emoneyName: 'Suica2', depositType: widget.depositType.japanName);
-    await EmoneyNameRepository.insertEmoneyName(emoneyName: emoneyName4);
-
-    final emoneyName5 = EmoneyName(emoneyName: 'メルカリ', depositType: widget.depositType.japanName);
-    await EmoneyNameRepository.insertEmoneyName(emoneyName: emoneyName5);
-
-    // ignore: use_build_context_synchronously
-    Navigator.pop(_context);
   }
 }
