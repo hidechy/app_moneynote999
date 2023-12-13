@@ -11,7 +11,14 @@ import 'parts/error_dialog.dart';
 
 // ignore: must_be_immutable
 class BankPriceInputAlert extends ConsumerStatefulWidget {
-  BankPriceInputAlert({super.key, required this.date, this.bankName, this.emoneyName, this.bankPriceList});
+  BankPriceInputAlert({
+    super.key,
+    required this.date,
+    this.bankName,
+    this.emoneyName,
+    this.bankPriceList,
+    required this.bankPrice,
+  });
 
   final DateTime date;
 
@@ -19,6 +26,8 @@ class BankPriceInputAlert extends ConsumerStatefulWidget {
   EmoneyName? emoneyName;
 
   List<BankPrice>? bankPriceList;
+
+  int bankPrice;
 
   @override
   ConsumerState<BankPriceInputAlert> createState() => _BankPriceInputAlertState();
@@ -28,6 +37,14 @@ class _BankPriceInputAlertState extends ConsumerState<BankPriceInputAlert> {
   final TextEditingController _bankPriceEditingController = TextEditingController();
 
   late BuildContext _context;
+
+  ///
+  @override
+  void initState() {
+    super.initState();
+
+    _bankPriceEditingController.text = widget.bankPrice.toString();
+  }
 
   ///
   @override
@@ -86,7 +103,7 @@ class _BankPriceInputAlertState extends ConsumerState<BankPriceInputAlert> {
                   Container(),
                   TextButton(
                     onPressed: _insertBankMoney,
-                    child: const Text('金額を入力する'),
+                    child: const Text('残高を入力する'),
                   ),
                 ],
               ),

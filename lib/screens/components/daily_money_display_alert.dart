@@ -314,6 +314,7 @@ class DailyMoneyDisplayAlert extends ConsumerWidget {
                                 date: date,
                                 bankName: element,
                                 bankPriceList: bankPriceListMap?['${element.depositType}-${element.id}'],
+                                bankPrice: bankPrice,
                               ),
                             );
                           },
@@ -425,6 +426,7 @@ class DailyMoneyDisplayAlert extends ConsumerWidget {
                                 date: date,
                                 emoneyName: element,
                                 bankPriceList: bankPriceListMap?['${element.depositType}-${element.id}'],
+                                bankPrice: bankPrice,
                               ),
                             );
                           },

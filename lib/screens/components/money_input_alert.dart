@@ -158,7 +158,6 @@ class _MoneyInputAlertState extends ConsumerState<MoneyInputAlert> {
       child: TextField(
         keyboardType: TextInputType.number,
         controller: tec,
-        textAlign: TextAlign.end,
         decoration: InputDecoration(labelText: name),
         style: const TextStyle(fontSize: 13, color: Colors.white),
       ),

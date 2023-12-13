@@ -28,38 +28,70 @@ class BankPriceSettingNotifier extends StateNotifier<BankPriceResponseState> {
 
     if (bankPriceList.isNotEmpty) {
       //--- (1)
-      final bplMap = <String, int>{};
-      bankPriceList.forEach((element) => bplMap[element.date] = element.price);
+      final bplMap = <String, Map<String, int>>{};
+      bankPriceList.forEach((element) {
+        bplMap['${element.depositType}-${element.bankId}'] = {element.date: element.price};
+      });
       //--- (1)
+
+// print(bplMap);
+/*
+
+I/flutter ( 4993): {
+bank-1: {2023-12-11: 10000},
+bank-2: {2023-12-11: 20000},
+bank-3: {2023-12-11: 30000},
+bank-4: {2023-12-11: 40000},
+bank-5: {2023-12-11: 50000},
+
+emoney-1: {2023-12-11: 10000},
+emoney-2: {2023-12-11: 20000},
+emoney-3: {2023-12-11: 30000},
+emoney-4: {2023-12-11: 40000},
+emoney-5: {2023-12-11: 50000}}
+
+*/
 
       //--- (2)
       final dt = DateTime.parse('${bankPriceList[0].date} 00:00:00');
       final now = DateTime.now();
       final diff = now.difference(dt).inDays;
 
-      bankPriceList.forEach((element) {
+      bplMap.forEach((deposit, value) {
         final map4 = <String, int>{};
 
         var price = 0;
         for (var i = 0; i <= diff; i++) {
           final date = dt.add(Duration(days: i)).yyyymmdd;
-
-          if (bplMap[date] != null) {
-            price = bplMap[date] ?? 0;
+          if (value[date] != null) {
+            price = value[date] ?? 0;
           }
 
           map4[date] = price;
         }
 
-        map3['${element.depositType}-${element.bankId}'] = map4;
+        map3[deposit] = map4;
       });
+
       //--- (2)
     }
 
+// print(map3);
+
 /*
-//    print(map3);
-    I/flutter ( 6961): {bank-1: {2023-12-05: 66666, 2023-12-06: 66666, 2023-12-07: 66666, 2023-12-08: 66666, 2023-12-09: 66666, 2023-12-10: 66666,
-    2023-12-11: 99999, 2023-12-12: 99999, 2023-12-13: 99999}}
+
+I/flutter ( 4993): {
+bank-1: {2023-12-11: 10000, 2023-12-12: 10000, 2023-12-13: 10000, 2023-12-14: 10000},
+bank-2: {2023-12-11: 20000, 2023-12-12: 20000, 2023-12-13: 20000, 2023-12-14: 20000},
+bank-3: {2023-12-11: 30000, 2023-12-12: 30000, 2023-12-13: 30000, 2023-12-14: 30000},
+bank-4: {2023-12-11: 40000, 2023-12-12: 40000, 2023-12-13: 40000, 2023-12-14: 40000},
+bank-5: {2023-12-11: 50000, 2023-12-12: 50000, 2023-12-13: 50000, 2023-12-14: 50000},
+
+emoney-1: {2023-12-11: 10000, 2023-12-12: 10000, 2023-12-13: 10000, 2023-12-14: 10000},
+emoney-2: {2023-12-11: 20000, 2023-12-12: 20000, 2023-12-13: 20000, 2023-12-14: 20000},
+emoney-3: {2023-12-11: 30000, 2023-12-12: 30000, 2023-12-13: 30000, 2023-12-14: 30000},
+emoney-4: {2023-12-11: 40000, 2023-12-12: 40000, 2023-12-13: 40000, 2023-12-14: 40000},
+emoney-5: {2023-12-11: 50000, 2023-12-12: 50000, 2023-12-13: 50000, 2023-12-14: 50000}}
 
 */
 

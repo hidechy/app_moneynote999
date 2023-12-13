@@ -153,45 +153,85 @@ class DummyDataInputAlert extends StatelessWidget {
 
   ///
   Future<void> _setDummyBankPriceData() async {
-    final bankPrice1 = BankPrice(date: DateTime.now().yyyymmdd, depositType: 'bank', bankId: 1, price: 10000);
+    final bankPrice1 = BankPrice(
+        date: DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day - 3).yyyymmdd,
+        depositType: 'bank',
+        bankId: 1,
+        price: 10000);
 
     await BankPriceRepository.insertBankPrice(bankPrice: bankPrice1);
 
-    final bankPrice2 = BankPrice(date: DateTime.now().yyyymmdd, depositType: 'bank', bankId: 2, price: 20000);
+    final bankPrice2 = BankPrice(
+        date: DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day - 3).yyyymmdd,
+        depositType: 'bank',
+        bankId: 2,
+        price: 20000);
 
     await BankPriceRepository.insertBankPrice(bankPrice: bankPrice2);
 
-    final bankPrice3 = BankPrice(date: DateTime.now().yyyymmdd, depositType: 'bank', bankId: 3, price: 30000);
+    final bankPrice3 = BankPrice(
+        date: DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day - 3).yyyymmdd,
+        depositType: 'bank',
+        bankId: 3,
+        price: 30000);
 
     await BankPriceRepository.insertBankPrice(bankPrice: bankPrice3);
 
-    final bankPrice4 = BankPrice(date: DateTime.now().yyyymmdd, depositType: 'bank', bankId: 4, price: 40000);
+    final bankPrice4 = BankPrice(
+        date: DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day - 3).yyyymmdd,
+        depositType: 'bank',
+        bankId: 4,
+        price: 40000);
 
     await BankPriceRepository.insertBankPrice(bankPrice: bankPrice4);
 
-    final bankPrice5 = BankPrice(date: DateTime.now().yyyymmdd, depositType: 'bank', bankId: 5, price: 50000);
+    final bankPrice5 = BankPrice(
+        date: DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day - 3).yyyymmdd,
+        depositType: 'bank',
+        bankId: 5,
+        price: 50000);
 
     await BankPriceRepository.insertBankPrice(bankPrice: bankPrice5);
 
     //////////////////////////////////
 
-    final bankPrice6 = BankPrice(date: DateTime.now().yyyymmdd, depositType: 'emoney', bankId: 1, price: 10000);
+    final bankPrice6 = BankPrice(
+        date: DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day - 3).yyyymmdd,
+        depositType: 'emoney',
+        bankId: 1,
+        price: 10000);
 
     await BankPriceRepository.insertBankPrice(bankPrice: bankPrice6);
 
-    final bankPrice7 = BankPrice(date: DateTime.now().yyyymmdd, depositType: 'emoney', bankId: 2, price: 20000);
+    final bankPrice7 = BankPrice(
+        date: DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day - 3).yyyymmdd,
+        depositType: 'emoney',
+        bankId: 2,
+        price: 20000);
 
     await BankPriceRepository.insertBankPrice(bankPrice: bankPrice7);
 
-    final bankPrice8 = BankPrice(date: DateTime.now().yyyymmdd, depositType: 'emoney', bankId: 3, price: 30000);
+    final bankPrice8 = BankPrice(
+        date: DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day - 3).yyyymmdd,
+        depositType: 'emoney',
+        bankId: 3,
+        price: 30000);
 
     await BankPriceRepository.insertBankPrice(bankPrice: bankPrice8);
 
-    final bankPrice9 = BankPrice(date: DateTime.now().yyyymmdd, depositType: 'emoney', bankId: 4, price: 40000);
+    final bankPrice9 = BankPrice(
+        date: DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day - 3).yyyymmdd,
+        depositType: 'emoney',
+        bankId: 4,
+        price: 40000);
 
     await BankPriceRepository.insertBankPrice(bankPrice: bankPrice9);
 
-    final bankPrice10 = BankPrice(date: DateTime.now().yyyymmdd, depositType: 'emoney', bankId: 5, price: 50000);
+    final bankPrice10 = BankPrice(
+        date: DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day - 3).yyyymmdd,
+        depositType: 'emoney',
+        bankId: 5,
+        price: 50000);
 
     await BankPriceRepository.insertBankPrice(bankPrice: bankPrice10);
 
