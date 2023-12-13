@@ -33,6 +33,7 @@ class BankPriceSettingNotifier extends StateNotifier<BankPriceResponseState> {
 
     var price = 0;
     var keepPrice = 0;
+
     bankPriceList.forEach((element) {
       if (keepPrice != element.price) {
         price = element.price;
@@ -40,7 +41,10 @@ class BankPriceSettingNotifier extends StateNotifier<BankPriceResponseState> {
 
       final map4 = <String, int>{};
       for (var i = 0; i <= diff; i++) {
-        map4[dt.add(Duration(days: i)).yyyymmdd] = price;
+        final date = dt.add(Duration(days: i)).yyyymmdd;
+        if (date == element.date) {
+          map4[date] = price;
+        }
       }
 
       map3['${element.depositType}-${element.bankId}'] = map4;
