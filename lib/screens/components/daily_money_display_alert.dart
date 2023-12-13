@@ -206,27 +206,30 @@ class DailyMoneyDisplayAlert extends ConsumerWidget {
         bankNameList.when(
           data: (value) {
             if (value.isEmpty) {
-              return Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  const Text('金融機関が設定されていません。'),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      const Text('必要であれば登録してください。'),
-                      GestureDetector(
-                        child:
-                            Text('登録', style: TextStyle(fontSize: 12, color: Theme.of(_context).colorScheme.primary)),
-                        onTap: () {
-                          MoneyDialog(
-                            context: _context,
-                            widget: DepositListAlert(),
-                          );
-                        },
-                      ),
-                    ],
-                  ),
-                ],
+              return DefaultTextStyle(
+                style: TextStyle(color: Colors.grey.withOpacity(0.6), fontSize: 12),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const Text('金融機関が設定されていません。'),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        const Text('必要であれば登録してください。'),
+                        GestureDetector(
+                          child:
+                              Text('登録', style: TextStyle(fontSize: 12, color: Theme.of(_context).colorScheme.primary)),
+                          onTap: () {
+                            MoneyDialog(
+                              context: _context,
+                              widget: DepositListAlert(),
+                            );
+                          },
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
               );
             }
 
@@ -337,27 +340,30 @@ class DailyMoneyDisplayAlert extends ConsumerWidget {
         emoneyNameList.when(
           data: (value) {
             if (value.isEmpty) {
-              return Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  const Text('電子マネーが設定されていません。'),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      const Text('必要であれば登録してください。'),
-                      GestureDetector(
-                        child:
-                            Text('登録', style: TextStyle(fontSize: 12, color: Theme.of(_context).colorScheme.primary)),
-                        onTap: () {
-                          MoneyDialog(
-                            context: _context,
-                            widget: DepositListAlert(),
-                          );
-                        },
-                      ),
-                    ],
-                  ),
-                ],
+              return DefaultTextStyle(
+                style: TextStyle(color: Colors.grey.withOpacity(0.6), fontSize: 12),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const Text('電子マネーが設定されていません。'),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        const Text('必要であれば登録してください。'),
+                        GestureDetector(
+                          child:
+                              Text('登録', style: TextStyle(fontSize: 12, color: Theme.of(_context).colorScheme.primary)),
+                          onTap: () {
+                            MoneyDialog(
+                              context: _context,
+                              widget: DepositListAlert(),
+                            );
+                          },
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
               );
             }
 
