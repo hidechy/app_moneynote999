@@ -1,5 +1,3 @@
-import '../enums/deposit_type.dart';
-
 class Bank {
   Bank({this.id, required this.date, required this.depositType, required this.bankId, required this.price});
 

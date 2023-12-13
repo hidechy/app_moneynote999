@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-import '../../enums/deposit_type.dart';
 import '../../extensions/extensions.dart';
 import '../../models/bank.dart';
 import '../../models/bank_name.dart';
@@ -316,7 +315,7 @@ class _BankPriceInputAlertState extends ConsumerState<BankPriceInputAlert> {
       return;
     }
 
-    var bank = Bank(
+    final bank = Bank(
       date: selectedDate!.yyyymmdd,
       depositType: widget.bankName.depositType,
       bankId: widget.bankName.id!,
