@@ -71,8 +71,8 @@ class DailyMoneyDisplayAlert extends ConsumerWidget {
                 Divider(color: Colors.white.withOpacity(0.4), thickness: 5),
                 Container(
                   width: _context.screenSize.width,
-                  margin: EdgeInsets.all(3),
-                  padding: EdgeInsets.all(3),
+                  margin: const EdgeInsets.all(3),
+                  padding: const EdgeInsets.all(3),
                   decoration: BoxDecoration(border: Border.all(color: Colors.white.withOpacity(0.4))),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
