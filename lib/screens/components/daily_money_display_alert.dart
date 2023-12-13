@@ -242,9 +242,9 @@ class DailyMoneyDisplayAlert extends ConsumerWidget {
 
               //---------------------//前日開き
               if (bankPrice != 0) {
-                var bankPriceLastDt = DateTime.parse('${bankPriceLastDate} 00:00:00');
+                final bankPriceLastDt = DateTime.parse('$bankPriceLastDate 00:00:00');
 
-                var diff = date.difference(bankPriceLastDt).inDays;
+                final diff = date.difference(bankPriceLastDt).inDays;
 
                 if (diff < 0) {
                   bankPrice = 0;
