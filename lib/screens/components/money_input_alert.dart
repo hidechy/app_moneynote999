@@ -19,16 +19,16 @@ class MoneyInputAlert extends ConsumerStatefulWidget {
 }
 
 class _MoneyInputAlertState extends ConsumerState<MoneyInputAlert> {
-  TextEditingController tecYen10000 = TextEditingController();
-  TextEditingController tecYen5000 = TextEditingController();
-  TextEditingController tecYen2000 = TextEditingController();
-  TextEditingController tecYen1000 = TextEditingController();
-  TextEditingController tecYen500 = TextEditingController();
-  TextEditingController tecYen100 = TextEditingController();
-  TextEditingController tecYen50 = TextEditingController();
-  TextEditingController tecYen10 = TextEditingController();
-  TextEditingController tecYen5 = TextEditingController();
-  TextEditingController tecYen1 = TextEditingController();
+  TextEditingController _tecYen10000 = TextEditingController();
+  TextEditingController _tecYen5000 = TextEditingController();
+  TextEditingController _tecYen2000 = TextEditingController();
+  TextEditingController _tecYen1000 = TextEditingController();
+  TextEditingController _tecYen500 = TextEditingController();
+  TextEditingController _tecYen100 = TextEditingController();
+  TextEditingController _tecYen50 = TextEditingController();
+  TextEditingController _tecYen10 = TextEditingController();
+  TextEditingController _tecYen5 = TextEditingController();
+  TextEditingController _tecYen1 = TextEditingController();
 
   late BuildContext _context;
 
@@ -38,16 +38,16 @@ class _MoneyInputAlertState extends ConsumerState<MoneyInputAlert> {
     super.initState();
 
     if (widget.money != null) {
-      tecYen10000.text = widget.money!.yen_10000.toString();
-      tecYen5000.text = widget.money!.yen_5000.toString();
-      tecYen2000.text = widget.money!.yen_2000.toString();
-      tecYen1000.text = widget.money!.yen_1000.toString();
-      tecYen500.text = widget.money!.yen_500.toString();
-      tecYen100.text = widget.money!.yen_100.toString();
-      tecYen50.text = widget.money!.yen_50.toString();
-      tecYen10.text = widget.money!.yen_10.toString();
-      tecYen5.text = widget.money!.yen_5.toString();
-      tecYen1.text = widget.money!.yen_1.toString();
+      _tecYen10000.text = widget.money!.yen_10000.toString();
+      _tecYen5000.text = widget.money!.yen_5000.toString();
+      _tecYen2000.text = widget.money!.yen_2000.toString();
+      _tecYen1000.text = widget.money!.yen_1000.toString();
+      _tecYen500.text = widget.money!.yen_500.toString();
+      _tecYen100.text = widget.money!.yen_100.toString();
+      _tecYen50.text = widget.money!.yen_50.toString();
+      _tecYen10.text = widget.money!.yen_10.toString();
+      _tecYen5.text = widget.money!.yen_5.toString();
+      _tecYen1.text = widget.money!.yen_1.toString();
     }
   }
 
@@ -95,32 +95,32 @@ class _MoneyInputAlertState extends ConsumerState<MoneyInputAlert> {
                   children: [
                     Row(
                       children: [
-                        Expanded(child: displayInputParts(name: '10000', tec: tecYen10000)),
-                        Expanded(child: displayInputParts(name: '100', tec: tecYen100)),
+                        Expanded(child: _displayInputParts(name: '10000', tec: _tecYen10000)),
+                        Expanded(child: _displayInputParts(name: '100', tec: _tecYen100)),
                       ],
                     ),
                     Row(
                       children: [
-                        Expanded(child: displayInputParts(name: '5000', tec: tecYen5000)),
-                        Expanded(child: displayInputParts(name: '50', tec: tecYen50)),
+                        Expanded(child: _displayInputParts(name: '5000', tec: _tecYen5000)),
+                        Expanded(child: _displayInputParts(name: '50', tec: _tecYen50)),
                       ],
                     ),
                     Row(
                       children: [
-                        Expanded(child: displayInputParts(name: '2000', tec: tecYen2000)),
-                        Expanded(child: displayInputParts(name: '10', tec: tecYen10)),
+                        Expanded(child: _displayInputParts(name: '2000', tec: _tecYen2000)),
+                        Expanded(child: _displayInputParts(name: '10', tec: _tecYen10)),
                       ],
                     ),
                     Row(
                       children: [
-                        Expanded(child: displayInputParts(name: '1000', tec: tecYen1000)),
-                        Expanded(child: displayInputParts(name: '5', tec: tecYen5)),
+                        Expanded(child: _displayInputParts(name: '1000', tec: _tecYen1000)),
+                        Expanded(child: _displayInputParts(name: '5', tec: _tecYen5)),
                       ],
                     ),
                     Row(
                       children: [
-                        Expanded(child: displayInputParts(name: '500', tec: tecYen500)),
-                        Expanded(child: displayInputParts(name: '1', tec: tecYen1)),
+                        Expanded(child: _displayInputParts(name: '500', tec: _tecYen500)),
+                        Expanded(child: _displayInputParts(name: '1', tec: _tecYen1)),
                       ],
                     ),
                   ],
@@ -146,6 +146,103 @@ class _MoneyInputAlertState extends ConsumerState<MoneyInputAlert> {
         ),
       ),
     );
+  }
+
+  ///
+  Widget _displayInputParts({required String name, required TextEditingController tec}) {
+    return Container(
+      padding: const EdgeInsets.all(10),
+      child: TextField(
+        keyboardType: TextInputType.number,
+        controller: tec,
+        textAlign: TextAlign.end,
+        decoration: InputDecoration(labelText: name),
+        style: const TextStyle(fontSize: 13, color: Colors.white),
+      ),
+    );
+  }
+
+  ///
+  Future<void> _insertMoney() async {
+    if (_tecYen10000.text == '' ||
+        _tecYen5000.text == '' ||
+        _tecYen2000.text == '' ||
+        _tecYen1000.text == '' ||
+        _tecYen500.text == '' ||
+        _tecYen100.text == '' ||
+        _tecYen50.text == '' ||
+        _tecYen10.text == '' ||
+        _tecYen5.text == '' ||
+        _tecYen1.text == '') {
+      Future.delayed(
+        Duration.zero,
+        () => error_dialog(context: _context, title: '登録できません。', content: '値を正しく入力してください。'),
+      );
+
+      return;
+    }
+
+    final money = Money(
+      date: widget.date.yyyymmdd,
+      yen_10000: (_tecYen10000.text == '') ? 0 : _tecYen10000.text.toInt(),
+      yen_5000: (_tecYen5000.text == '') ? 0 : _tecYen5000.text.toInt(),
+      yen_2000: (_tecYen2000.text == '') ? 0 : _tecYen2000.text.toInt(),
+      yen_1000: (_tecYen1000.text == '') ? 0 : _tecYen1000.text.toInt(),
+      yen_500: (_tecYen500.text == '') ? 0 : _tecYen500.text.toInt(),
+      yen_100: (_tecYen100.text == '') ? 0 : _tecYen100.text.toInt(),
+      yen_50: (_tecYen50.text == '') ? 0 : _tecYen50.text.toInt(),
+      yen_10: (_tecYen10.text == '') ? 0 : _tecYen10.text.toInt(),
+      yen_5: (_tecYen5.text == '') ? 0 : _tecYen5.text.toInt(),
+      yen_1: (_tecYen1.text == '') ? 0 : _tecYen1.text.toInt(),
+    );
+
+    await MoneyRepository.insertMoney(money: money).then((value) {
+      _tecYen10000.clear();
+      _tecYen5000.clear();
+      _tecYen2000.clear();
+      _tecYen1000.clear();
+      _tecYen500.clear();
+      _tecYen100.clear();
+      _tecYen50.clear();
+      _tecYen10.clear();
+      _tecYen5.clear();
+      _tecYen1.clear();
+
+      Navigator.pop(context);
+    });
+  }
+
+  ///
+  Future<void> _updateMoney() async {
+    final updateMoney = Money(
+      id: widget.money!.id,
+      date: widget.date.yyyymmdd,
+      yen_10000: (_tecYen10000.text == '') ? 0 : _tecYen10000.text.toInt(),
+      yen_5000: (_tecYen5000.text == '') ? 0 : _tecYen5000.text.toInt(),
+      yen_2000: (_tecYen2000.text == '') ? 0 : _tecYen2000.text.toInt(),
+      yen_1000: (_tecYen1000.text == '') ? 0 : _tecYen1000.text.toInt(),
+      yen_500: (_tecYen500.text == '') ? 0 : _tecYen500.text.toInt(),
+      yen_100: (_tecYen100.text == '') ? 0 : _tecYen100.text.toInt(),
+      yen_50: (_tecYen50.text == '') ? 0 : _tecYen50.text.toInt(),
+      yen_10: (_tecYen10.text == '') ? 0 : _tecYen10.text.toInt(),
+      yen_5: (_tecYen5.text == '') ? 0 : _tecYen5.text.toInt(),
+      yen_1: (_tecYen1.text == '') ? 0 : _tecYen1.text.toInt(),
+    );
+
+    await MoneyRepository.updateMoney(money: updateMoney, ref: ref).then((value) {
+      _tecYen10000.clear();
+      _tecYen5000.clear();
+      _tecYen2000.clear();
+      _tecYen1000.clear();
+      _tecYen500.clear();
+      _tecYen100.clear();
+      _tecYen50.clear();
+      _tecYen10.clear();
+      _tecYen5.clear();
+      _tecYen1.clear();
+
+      Navigator.pop(context);
+    });
   }
 
   ///
@@ -209,102 +306,5 @@ class _MoneyInputAlertState extends ConsumerState<MoneyInputAlert> {
     );
 
     await MoneyRepository.insertMoney(money: money3);
-  }
-
-  ///
-  Widget displayInputParts({required String name, required TextEditingController tec}) {
-    return Container(
-      padding: const EdgeInsets.all(10),
-      child: TextField(
-        keyboardType: TextInputType.number,
-        controller: tec,
-        textAlign: TextAlign.end,
-        decoration: InputDecoration(labelText: name),
-        style: const TextStyle(fontSize: 13, color: Colors.white),
-      ),
-    );
-  }
-
-  ///
-  void _insertMoney() {
-    if (tecYen10000.text == '' ||
-        tecYen5000.text == '' ||
-        tecYen2000.text == '' ||
-        tecYen1000.text == '' ||
-        tecYen500.text == '' ||
-        tecYen100.text == '' ||
-        tecYen50.text == '' ||
-        tecYen10.text == '' ||
-        tecYen5.text == '' ||
-        tecYen1.text == '') {
-      Future.delayed(
-        Duration.zero,
-        () => error_dialog(context: _context, title: '登録できません。', content: '値を正しく入力してください。'),
-      );
-
-      return;
-    }
-
-    final money = Money(
-      date: widget.date.yyyymmdd,
-      yen_10000: (tecYen10000.text == '') ? 0 : tecYen10000.text.toInt(),
-      yen_5000: (tecYen5000.text == '') ? 0 : tecYen5000.text.toInt(),
-      yen_2000: (tecYen2000.text == '') ? 0 : tecYen2000.text.toInt(),
-      yen_1000: (tecYen1000.text == '') ? 0 : tecYen1000.text.toInt(),
-      yen_500: (tecYen500.text == '') ? 0 : tecYen500.text.toInt(),
-      yen_100: (tecYen100.text == '') ? 0 : tecYen100.text.toInt(),
-      yen_50: (tecYen50.text == '') ? 0 : tecYen50.text.toInt(),
-      yen_10: (tecYen10.text == '') ? 0 : tecYen10.text.toInt(),
-      yen_5: (tecYen5.text == '') ? 0 : tecYen5.text.toInt(),
-      yen_1: (tecYen1.text == '') ? 0 : tecYen1.text.toInt(),
-    );
-
-    MoneyRepository.insertMoney(money: money).then((value) {
-      tecYen10000.clear();
-      tecYen5000.clear();
-      tecYen2000.clear();
-      tecYen1000.clear();
-      tecYen500.clear();
-      tecYen100.clear();
-      tecYen50.clear();
-      tecYen10.clear();
-      tecYen5.clear();
-      tecYen1.clear();
-
-      Navigator.pop(context);
-    });
-  }
-
-  ///
-  void _updateMoney() {
-    final updateMoney = Money(
-      id: widget.money!.id,
-      date: widget.date.yyyymmdd,
-      yen_10000: (tecYen10000.text == '') ? 0 : tecYen10000.text.toInt(),
-      yen_5000: (tecYen5000.text == '') ? 0 : tecYen5000.text.toInt(),
-      yen_2000: (tecYen2000.text == '') ? 0 : tecYen2000.text.toInt(),
-      yen_1000: (tecYen1000.text == '') ? 0 : tecYen1000.text.toInt(),
-      yen_500: (tecYen500.text == '') ? 0 : tecYen500.text.toInt(),
-      yen_100: (tecYen100.text == '') ? 0 : tecYen100.text.toInt(),
-      yen_50: (tecYen50.text == '') ? 0 : tecYen50.text.toInt(),
-      yen_10: (tecYen10.text == '') ? 0 : tecYen10.text.toInt(),
-      yen_5: (tecYen5.text == '') ? 0 : tecYen5.text.toInt(),
-      yen_1: (tecYen1.text == '') ? 0 : tecYen1.text.toInt(),
-    );
-
-    MoneyRepository.updateMoney(money: updateMoney, ref: ref).then((value) {
-      tecYen10000.clear();
-      tecYen5000.clear();
-      tecYen2000.clear();
-      tecYen1000.clear();
-      tecYen500.clear();
-      tecYen100.clear();
-      tecYen50.clear();
-      tecYen10.clear();
-      tecYen5.clear();
-      tecYen1.clear();
-
-      Navigator.pop(context);
-    });
   }
 }

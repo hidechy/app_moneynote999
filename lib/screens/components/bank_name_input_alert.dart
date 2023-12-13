@@ -22,13 +22,13 @@ class BankNameInputAlert extends ConsumerStatefulWidget {
 }
 
 class _BankNameInputAlertState extends ConsumerState<BankNameInputAlert> {
-  TextEditingController bankNumberEditingController = TextEditingController();
-  TextEditingController bankNameEditingController = TextEditingController();
-  TextEditingController branchNumberEditingController = TextEditingController();
-  TextEditingController branchNameEditingController = TextEditingController();
-  TextEditingController accountNumberEditingController = TextEditingController();
+  TextEditingController _bankNumberEditingController = TextEditingController();
+  TextEditingController _bankNameEditingController = TextEditingController();
+  TextEditingController _branchNumberEditingController = TextEditingController();
+  TextEditingController _branchNameEditingController = TextEditingController();
+  TextEditingController _accountNumberEditingController = TextEditingController();
 
-  AccountType selectedAccountType = AccountType.blank;
+  AccountType _selectedAccountType = AccountType.blank;
 
   late BuildContext _context;
 
@@ -38,18 +38,18 @@ class _BankNameInputAlertState extends ConsumerState<BankNameInputAlert> {
     super.initState();
 
     if (widget.bankName != null) {
-      bankNumberEditingController.text = widget.bankName!.bankNumber;
-      bankNameEditingController.text = widget.bankName!.bankName;
-      branchNumberEditingController.text = widget.bankName!.branchNumber;
-      branchNameEditingController.text = widget.bankName!.branchName;
-      accountNumberEditingController.text = widget.bankName!.accountNumber;
+      _bankNumberEditingController.text = widget.bankName!.bankNumber;
+      _bankNameEditingController.text = widget.bankName!.bankName;
+      _branchNumberEditingController.text = widget.bankName!.branchNumber;
+      _branchNameEditingController.text = widget.bankName!.branchName;
+      _accountNumberEditingController.text = widget.bankName!.accountNumber;
 
       switch (widget.bankName!.accountType) {
         case '普通預金':
-          selectedAccountType = AccountType.normal;
+          _selectedAccountType = AccountType.normal;
           break;
         case '定期口座':
-          selectedAccountType = AccountType.fixed;
+          _selectedAccountType = AccountType.fixed;
           break;
       }
     }
@@ -104,7 +104,7 @@ class _BankNameInputAlertState extends ConsumerState<BankNameInputAlert> {
                         Expanded(
                           child: TextField(
                             keyboardType: TextInputType.number,
-                            controller: bankNumberEditingController,
+                            controller: _bankNumberEditingController,
                             decoration: const InputDecoration(labelText: '金融機関番号'),
                             style: const TextStyle(fontSize: 13, color: Colors.white),
                           ),
@@ -114,7 +114,7 @@ class _BankNameInputAlertState extends ConsumerState<BankNameInputAlert> {
                           flex: 2,
                           child: TextField(
                             keyboardType: TextInputType.number,
-                            controller: bankNameEditingController,
+                            controller: _bankNameEditingController,
                             decoration: const InputDecoration(labelText: '金融機関名'),
                             style: const TextStyle(fontSize: 13, color: Colors.white),
                           ),
@@ -126,7 +126,7 @@ class _BankNameInputAlertState extends ConsumerState<BankNameInputAlert> {
                         Expanded(
                           child: TextField(
                             keyboardType: TextInputType.number,
-                            controller: branchNumberEditingController,
+                            controller: _branchNumberEditingController,
                             decoration: const InputDecoration(labelText: '支店番号'),
                             style: const TextStyle(fontSize: 13, color: Colors.white),
                           ),
@@ -136,7 +136,7 @@ class _BankNameInputAlertState extends ConsumerState<BankNameInputAlert> {
                           flex: 2,
                           child: TextField(
                             keyboardType: TextInputType.number,
-                            controller: branchNameEditingController,
+                            controller: _branchNameEditingController,
                             decoration: const InputDecoration(labelText: '支店名'),
                             style: const TextStyle(fontSize: 13, color: Colors.white),
                           ),
@@ -155,8 +155,8 @@ class _BankNameInputAlertState extends ConsumerState<BankNameInputAlert> {
                                 child: Text(e.japanName, style: const TextStyle(fontSize: 12)),
                               );
                             }).toList(),
-                            value: (selectedAccountType != AccountType.blank)
-                                ? selectedAccountType
+                            value: (_selectedAccountType != AccountType.blank)
+                                ? _selectedAccountType
                                 : bankNamesSettingState.accountType,
                             onChanged: (value) {
                               ref.read(bankNamesProvider.notifier).setAccountType(accountType: value!);
@@ -168,7 +168,7 @@ class _BankNameInputAlertState extends ConsumerState<BankNameInputAlert> {
                           flex: 2,
                           child: TextField(
                             keyboardType: TextInputType.number,
-                            controller: accountNumberEditingController,
+                            controller: _accountNumberEditingController,
                             decoration: const InputDecoration(labelText: '口座番号'),
                             style: const TextStyle(fontSize: 13, color: Colors.white),
                           ),
@@ -217,11 +217,11 @@ class _BankNameInputAlertState extends ConsumerState<BankNameInputAlert> {
   Future<void> _inputBankName() async {
     final accountType = ref.watch(bankNamesProvider.select((value) => value.accountType));
 
-    if (bankNumberEditingController.text == '' ||
-        bankNameEditingController.text == '' ||
-        branchNumberEditingController.text == '' ||
-        branchNameEditingController.text == '' ||
-        accountNumberEditingController.text == '' ||
+    if (_bankNumberEditingController.text == '' ||
+        _bankNameEditingController.text == '' ||
+        _branchNumberEditingController.text == '' ||
+        _branchNameEditingController.text == '' ||
+        _accountNumberEditingController.text == '' ||
         (accountType == AccountType.blank)) {
       Future.delayed(
         Duration.zero,
@@ -232,21 +232,21 @@ class _BankNameInputAlertState extends ConsumerState<BankNameInputAlert> {
     }
 
     final bankName = BankName(
-      bankNumber: bankNumberEditingController.text,
-      bankName: bankNameEditingController.text,
-      branchNumber: branchNumberEditingController.text,
-      branchName: branchNameEditingController.text,
+      bankNumber: _bankNumberEditingController.text,
+      bankName: _bankNameEditingController.text,
+      branchNumber: _branchNumberEditingController.text,
+      branchName: _branchNameEditingController.text,
       accountType: accountType.japanName,
-      accountNumber: accountNumberEditingController.text,
+      accountNumber: _accountNumberEditingController.text,
       depositType: widget.depositType.japanName,
     );
 
     await BankNameRepository.insertBankName(bankName: bankName).then((value) {
-      bankNumberEditingController.clear();
-      bankNameEditingController.clear();
-      branchNumberEditingController.clear();
-      branchNameEditingController.clear();
-      accountNumberEditingController.clear();
+      _bankNumberEditingController.clear();
+      _bankNameEditingController.clear();
+      _branchNumberEditingController.clear();
+      _branchNameEditingController.clear();
+      _accountNumberEditingController.clear();
 
       Navigator.pop(_context);
     });
@@ -259,21 +259,21 @@ class _BankNameInputAlertState extends ConsumerState<BankNameInputAlert> {
     await BankNameRepository.updateBankName(
       bankName: BankName(
         id: widget.bankName!.id,
-        bankNumber: bankNumberEditingController.text,
-        bankName: bankNameEditingController.text,
-        branchNumber: branchNumberEditingController.text,
-        branchName: branchNameEditingController.text,
+        bankNumber: _bankNumberEditingController.text,
+        bankName: _bankNameEditingController.text,
+        branchNumber: _branchNumberEditingController.text,
+        branchName: _branchNameEditingController.text,
         accountType: accountType.japanName,
-        accountNumber: accountNumberEditingController.text,
+        accountNumber: _accountNumberEditingController.text,
         depositType: widget.depositType.japanName,
       ),
       ref: ref,
     ).then((value) {
-      bankNumberEditingController.clear();
-      bankNameEditingController.clear();
-      branchNumberEditingController.clear();
-      branchNameEditingController.clear();
-      accountNumberEditingController.clear();
+      _bankNumberEditingController.clear();
+      _bankNameEditingController.clear();
+      _branchNumberEditingController.clear();
+      _branchNameEditingController.clear();
+      _accountNumberEditingController.clear();
 
       Navigator.pop(_context);
     });

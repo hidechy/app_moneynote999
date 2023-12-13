@@ -20,7 +20,7 @@ class EmoneyNameInputAlert extends ConsumerStatefulWidget {
 }
 
 class _EmoneyNameInputAlertState extends ConsumerState<EmoneyNameInputAlert> {
-  TextEditingController emoneyNameEditingController = TextEditingController();
+  TextEditingController _emoneyNameEditingController = TextEditingController();
 
   late BuildContext _context;
 
@@ -30,7 +30,7 @@ class _EmoneyNameInputAlertState extends ConsumerState<EmoneyNameInputAlert> {
     super.initState();
 
     if (widget.emoneyName != null) {
-      emoneyNameEditingController.text = widget.emoneyName!.emoneyName;
+      _emoneyNameEditingController.text = widget.emoneyName!.emoneyName;
     }
   }
 
@@ -78,7 +78,7 @@ class _EmoneyNameInputAlertState extends ConsumerState<EmoneyNameInputAlert> {
                   children: [
                     TextField(
                       keyboardType: TextInputType.number,
-                      controller: emoneyNameEditingController,
+                      controller: _emoneyNameEditingController,
                       decoration: const InputDecoration(labelText: '電子マネー名称'),
                       style: const TextStyle(fontSize: 13, color: Colors.white),
                     ),
@@ -120,22 +120,22 @@ class _EmoneyNameInputAlertState extends ConsumerState<EmoneyNameInputAlert> {
 
   ///
   Future<void> _inputEmoneyName() async {
-    if (emoneyNameEditingController.text == '') {
+    if (_emoneyNameEditingController.text == '') {
       Future.delayed(
         Duration.zero,
-            () => error_dialog(context: _context, title: '登録できません。', content: '値を正しく入力してください。'),
+        () => error_dialog(context: _context, title: '登録できません。', content: '値を正しく入力してください。'),
       );
 
       return;
     }
 
     final emoneyName = EmoneyName(
-      emoneyName: emoneyNameEditingController.text,
+      emoneyName: _emoneyNameEditingController.text,
       depositType: widget.depositType.japanName,
     );
 
     await EmoneyNameRepository.insertEmoneyName(emoneyName: emoneyName).then((value) {
-      emoneyNameEditingController.clear();
+      _emoneyNameEditingController.clear();
 
       Navigator.pop(_context);
     });
@@ -146,20 +146,20 @@ class _EmoneyNameInputAlertState extends ConsumerState<EmoneyNameInputAlert> {
     await EmoneyNameRepository.updateEmoneyName(
       emoneyName: EmoneyName(
         id: widget.emoneyName!.id,
-        emoneyName: emoneyNameEditingController.text,
+        emoneyName: _emoneyNameEditingController.text,
         depositType: widget.depositType.japanName,
       ),
       ref: ref,
     ).then((value) {
-      emoneyNameEditingController.clear();
+      _emoneyNameEditingController.clear();
 
       Navigator.pop(_context);
     });
   }
 
   ///
-  void _deleteEmoneyName() {
-    EmoneyNameRepository.deleteEmoneyName(emoneyName: widget.emoneyName!, ref: ref).then((value) {
+  Future<void> _deleteEmoneyName() async {
+    await EmoneyNameRepository.deleteEmoneyName(emoneyName: widget.emoneyName!, ref: ref).then((value) {
       Navigator.pop(_context);
     });
   }

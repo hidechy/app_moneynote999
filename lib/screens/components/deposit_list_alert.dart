@@ -19,25 +19,25 @@ class DepositListAlert extends HookConsumerWidget {
 
   int? index;
 
-  List<TabInfo> tabs = [
+  List<TabInfo> _tabs = [
     TabInfo('金融機関管理', BankNameListAlert()),
     TabInfo('電子マネー管理', EmoneyNameListAlert()),
   ];
 
-  int selectedIndex = 0;
+  int _selectedIndex = 0;
 
   ///
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     // 最初に開くタブを指定する
-    final tabController = useTabController(initialLength: tabs.length);
+    final tabController = useTabController(initialLength: _tabs.length);
     if (index != null) {
       tabController.index = index!;
     }
     // 最初に開くタブを指定する
 
     return DefaultTabController(
-      length: tabs.length,
+      length: _tabs.length,
       child: Scaffold(
         backgroundColor: Colors.transparent,
         appBar: PreferredSize(
@@ -55,7 +55,7 @@ class DepositListAlert extends HookConsumerWidget {
 
               isScrollable: true,
               indicatorColor: Colors.blueAccent,
-              tabs: tabs.map((TabInfo tab) => Tab(text: tab.label)).toList(),
+              tabs: _tabs.map((TabInfo tab) => Tab(text: tab.label)).toList(),
             ),
           ),
         ),
@@ -64,7 +64,7 @@ class DepositListAlert extends HookConsumerWidget {
           controller: tabController,
           //================================//
 
-          children: tabs.map((tab) => tab.widget).toList(),
+          children: _tabs.map((tab) => tab.widget).toList(),
         ),
       ),
     );

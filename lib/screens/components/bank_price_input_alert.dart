@@ -25,7 +25,7 @@ class BankPriceInputAlert extends ConsumerStatefulWidget {
 }
 
 class _BankPriceInputAlertState extends ConsumerState<BankPriceInputAlert> {
-  TextEditingController bankPriceEditingController = TextEditingController();
+  TextEditingController _bankPriceEditingController = TextEditingController();
 
   late BuildContext _context;
 
@@ -85,7 +85,7 @@ class _BankPriceInputAlertState extends ConsumerState<BankPriceInputAlert> {
                 decoration: BoxDecoration(color: Colors.white.withOpacity(0.1)),
                 child: TextField(
                   keyboardType: TextInputType.number,
-                  controller: bankPriceEditingController,
+                  controller: _bankPriceEditingController,
                   decoration: const InputDecoration(labelText: '金額'),
                   style: const TextStyle(fontSize: 13, color: Colors.white),
                 ),
@@ -133,7 +133,7 @@ class _BankPriceInputAlertState extends ConsumerState<BankPriceInputAlert> {
 
   ///
   Future<void> _insertBankMoney() async {
-    if (bankPriceEditingController.text == '') {
+    if (_bankPriceEditingController.text == '') {
       Future.delayed(
         Duration.zero,
         () => error_dialog(context: _context, title: '登録できません。', content: '値を正しく入力してください。'),
@@ -146,7 +146,7 @@ class _BankPriceInputAlertState extends ConsumerState<BankPriceInputAlert> {
       date: widget.date.yyyymmdd,
       depositType: (widget.bankName != null) ? widget.bankName!.depositType : widget.emoneyName!.depositType,
       bankId: (widget.bankName != null) ? widget.bankName!.id! : widget.emoneyName!.id!,
-      price: bankPriceEditingController.text.toInt(),
+      price: _bankPriceEditingController.text.toInt(),
     );
 
     await BankPriceRepository.insertBankPrice(bankPrice: bankPrice).then((value) {
