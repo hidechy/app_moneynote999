@@ -4,8 +4,9 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import '../../extensions/extensions.dart';
-import '../../models/bank.dart';
 import '../../models/bank_name.dart';
+import '../../models/bank_price.dart';
+import '../../repository/bank_price_repository.dart';
 import 'parts/error_dialog.dart';
 
 class BankPriceInputAlert extends ConsumerStatefulWidget {
@@ -315,23 +316,15 @@ class _BankPriceInputAlertState extends ConsumerState<BankPriceInputAlert> {
       return;
     }
 
-    final bank = Bank(
+    final bankPrice = BankPrice(
       date: selectedDate!.yyyymmdd,
       depositType: widget.bankName.depositType,
       bankId: widget.bankName.id!,
       price: bankPriceEditingController.text.toInt(),
     );
 
-    /*
-    print(bank.date);
-    print(bank.depositType);
-    print(bank.bankId);
-    print(bank.price);
-
-    I/flutter ( 6764): 2023-12-13
-    I/flutter ( 6764): bank
-    I/flutter ( 6764): 1
-    I/flutter ( 6764): 999
-    */
+    await BankPriceRepository.insertBankPrice(bankPrice: bankPrice).then((value) {
+      Navigator.pop(context);
+    });
   }
 }

@@ -24,7 +24,10 @@ class MyApp extends StatelessWidget {
       themeMode: ThemeMode.dark,
       title: 'money note',
       debugShowCheckedModeBanner: false,
-      home: HomeScreen(),
+      home: GestureDetector(
+        onTap: () => primaryFocus?.unfocus(),
+        child: HomeScreen(),
+      ),
     );
   }
 }

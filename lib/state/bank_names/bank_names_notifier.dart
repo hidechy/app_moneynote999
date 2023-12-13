@@ -1,15 +1,15 @@
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:money_note/enums/account_type.dart';
 
+import '../../enums/account_type.dart';
 import '../../models/bank_name.dart';
-import 'bank_names_setting_response_state.dart';
+import 'bank_names_response_state.dart';
 
-final bankNamesSettingProvider =
-    StateNotifierProvider.autoDispose<BankNamesSettingNotifier, BankNamesSettingResponseState>((ref) {
-  return BankNamesSettingNotifier(const BankNamesSettingResponseState());
+final bankNamesProvider =
+    StateNotifierProvider.autoDispose<BankNamesSettingNotifier, BankNamesResponseState>((ref) {
+  return BankNamesSettingNotifier(const BankNamesResponseState());
 });
 
-class BankNamesSettingNotifier extends StateNotifier<BankNamesSettingResponseState> {
+class BankNamesSettingNotifier extends StateNotifier<BankNamesResponseState> {
   BankNamesSettingNotifier(super.state);
 
   ///

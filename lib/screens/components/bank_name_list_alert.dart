@@ -5,7 +5,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import '../../enums/deposit_type.dart';
 import '../../extensions/extensions.dart';
 import '../../repository/bank_name_repository.dart';
-import '../../state/bank_names_setting/bank_names_setting_notifier.dart';
+import '../../state/bank_names/bank_names_notifier.dart';
 import '_money_dialog.dart';
 import 'bank_name_input_alert.dart';
 
@@ -22,7 +22,7 @@ class BankNameListAlert extends ConsumerWidget {
     _context = context;
     _ref = ref;
 
-    Future(() => BankNameRepository.getBankNames(ref: ref));
+    Future(() => BankNameRepository.getBankNamesList(ref: ref));
 
     return AlertDialog(
       titlePadding: EdgeInsets.zero,
@@ -60,7 +60,7 @@ class BankNameListAlert extends ConsumerWidget {
 
   ///
   Widget _displayBankList() {
-    return _ref.watch(bankNamesSettingProvider.select((value) => value.bankNameList)).when(
+    return _ref.watch(bankNamesProvider.select((value) => value.bankNameList)).when(
           data: (value) {
             final list = <Widget>[];
 

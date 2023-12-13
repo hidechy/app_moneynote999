@@ -7,7 +7,7 @@ import '../../enums/deposit_type.dart';
 import '../../extensions/extensions.dart';
 import '../../models/bank_name.dart';
 import '../../repository/bank_name_repository.dart';
-import '../../state/bank_names_setting/bank_names_setting_notifier.dart';
+import '../../state/bank_names/bank_names_notifier.dart';
 import 'parts/error_dialog.dart';
 
 // ignore: must_be_immutable
@@ -60,7 +60,7 @@ class _BankNameInputAlertState extends ConsumerState<BankNameInputAlert> {
   Widget build(BuildContext context) {
     _context = context;
 
-    final bankNamesSettingState = ref.watch(bankNamesSettingProvider);
+    final bankNamesSettingState = ref.watch(bankNamesProvider);
 
     return AlertDialog(
       titlePadding: EdgeInsets.zero,
@@ -159,7 +159,7 @@ class _BankNameInputAlertState extends ConsumerState<BankNameInputAlert> {
                                 ? selectedAccountType
                                 : bankNamesSettingState.accountType,
                             onChanged: (value) {
-                              ref.read(bankNamesSettingProvider.notifier).setAccountType(accountType: value!);
+                              ref.read(bankNamesProvider.notifier).setAccountType(accountType: value!);
                             },
                           ),
                         ),
@@ -215,7 +215,7 @@ class _BankNameInputAlertState extends ConsumerState<BankNameInputAlert> {
 
   ///
   Future<void> _inputBankName() async {
-    final accountType = ref.watch(bankNamesSettingProvider.select((value) => value.accountType));
+    final accountType = ref.watch(bankNamesProvider.select((value) => value.accountType));
 
     if (bankNumberEditingController.text == '' ||
         bankNameEditingController.text == '' ||
@@ -254,7 +254,7 @@ class _BankNameInputAlertState extends ConsumerState<BankNameInputAlert> {
 
   ///
   Future<void> _updateBankName() async {
-    final accountType = ref.watch(bankNamesSettingProvider.select((value) => value.accountType));
+    final accountType = ref.watch(bankNamesProvider.select((value) => value.accountType));
 
     await BankNameRepository.updateBankName(
       bankName: BankName(

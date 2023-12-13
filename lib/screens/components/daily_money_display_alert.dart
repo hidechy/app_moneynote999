@@ -3,11 +3,14 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import '../../extensions/extensions.dart';
+import '../../models/bank_price.dart';
 import '../../repository/bank_name_repository.dart';
+import '../../repository/bank_price_repository.dart';
 import '../../repository/emoney_name_repository.dart';
 import '../../repository/money_repository.dart';
-import '../../state/bank_names_setting/bank_names_setting_notifier.dart';
-import '../../state/emoney_names_setting/emoney_names_setting_notifier.dart';
+import '../../state/bank_names/bank_names_notifier.dart';
+import '../../state/bank_price/bank_price_notifier.dart';
+import '../../state/emoney_names/emoney_names_notifier.dart';
 import '../../state/money/money_notifier.dart';
 import '_money_dialog.dart';
 import 'bank_price_input_alert.dart';
@@ -27,8 +30,9 @@ class DailyMoneyDisplayAlert extends ConsumerWidget {
   ///
   Future<void> init({required WidgetRef ref}) async {
     await MoneyRepository.getSingleMoney(date: date.yyyymmdd, ref: ref);
-    await BankNameRepository.getBankNames(ref: ref);
-    await EmoneyNameRepository.getEmoneyNames(ref: ref);
+    await BankNameRepository.getBankNamesList(ref: ref);
+    await EmoneyNameRepository.getEmoneyNamesList(ref: ref);
+    await BankPriceRepository.getBankPriceList(ref: ref);
   }
 
   ///
@@ -170,7 +174,11 @@ class DailyMoneyDisplayAlert extends ConsumerWidget {
 
   ///
   Widget _displayBankMoney() {
-    final bankNameList = _ref.watch(bankNamesSettingProvider.select((value) => value.bankNameList));
+    final bankNameList = _ref.watch(bankNamesProvider.select((value) => value.bankNameList));
+
+    final bankPriceState = _ref.watch(bankPriceProvider);
+    final bankPriceLastMap =
+        (bankPriceState.bankPriceLastMap.value != null) ? bankPriceState.bankPriceLastMap.value : <String, BankPrice>{};
 
     return Column(
       children: [
@@ -195,6 +203,13 @@ class DailyMoneyDisplayAlert extends ConsumerWidget {
             final list = <Widget>[];
 
             value.forEach((element) {
+              final bankPrice = (bankPriceLastMap?['${element.depositType}-${element.id}'] != null)
+                  ? bankPriceLastMap!['${element.depositType}-${element.id}']!.price
+                  : 0;
+
+              final bankPriceLastDate =
+                  (bankPrice != 0) ? bankPriceLastMap!['${element.depositType}-${element.id}']!.date : '';
+
               list.add(Container(
                 padding: const EdgeInsets.all(10),
                 decoration: BoxDecoration(border: Border(bottom: BorderSide(color: Colors.white.withOpacity(0.3)))),
@@ -208,19 +223,29 @@ class DailyMoneyDisplayAlert extends ConsumerWidget {
                         Text('${element.accountType} ${element.accountNumber}'),
                       ],
                     ),
-                    Row(
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.end,
                       children: [
-                        const Text('987'),
-                        const SizedBox(width: 10),
-                        GestureDetector(
-                          onTap: () {
-                            MoneyDialog(
-                              context: _context,
-                              widget: BankPriceInputAlert(date: date, bankName: element),
-                            );
-                          },
-                          child: Icon(Icons.input, color: Colors.greenAccent.withOpacity(0.6), size: 16),
+                        Row(
+                          children: [
+                            Text(bankPrice.toString().toCurrency()),
+                            const SizedBox(width: 10),
+                            GestureDetector(
+                              onTap: () {
+                                MoneyDialog(
+                                  context: _context,
+                                  widget: BankPriceInputAlert(date: date, bankName: element),
+                                );
+                              },
+                              child: Icon(Icons.input, color: Colors.greenAccent.withOpacity(0.6), size: 16),
+                            ),
+                          ],
                         ),
+                        if (bankPriceLastDate != '')
+                          Text(
+                            bankPriceLastDate,
+                            style: TextStyle(fontSize: 10),
+                          ),
                       ],
                     ),
                   ],
@@ -239,7 +264,7 @@ class DailyMoneyDisplayAlert extends ConsumerWidget {
 
   ///
   Widget _displayEmoneyMoney() {
-    final emoneyNameList = _ref.watch(emoneyNamesSettingProvider.select((value) => value.emoneyNameList));
+    final emoneyNameList = _ref.watch(emoneyNamesProvider.select((value) => value.emoneyNameList));
 
     return Column(
       children: [

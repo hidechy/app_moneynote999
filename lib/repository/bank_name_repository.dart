@@ -2,13 +2,13 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:sqflite/sqflite.dart';
 
 import '../models/bank_name.dart';
-import '../state/bank_names_setting/bank_names_setting_notifier.dart';
+import '../state/bank_names/bank_names_notifier.dart';
 import 'money_repository.dart';
 
 // ignore: avoid_classes_with_only_static_members
 class BankNameRepository {
   ///
-  static Future<void> getBankNames({required WidgetRef ref}) async {
+  static Future<void> getBankNamesList({required WidgetRef ref}) async {
     final db = await MoneyRepository.database();
 
     final List<Map<String, dynamic>> maps = await db.query('bank_names');
@@ -26,7 +26,7 @@ class BankNameRepository {
       );
     });
 
-    await ref.read(bankNamesSettingProvider.notifier).setBankNameList(bankNameList: bankNameList);
+    await ref.read(bankNamesProvider.notifier).setBankNameList(bankNameList: bankNameList);
   }
 
   ///
@@ -39,13 +39,13 @@ class BankNameRepository {
   static Future<void> updateBankName({required BankName bankName, required WidgetRef ref}) async {
     final db = await MoneyRepository.database();
     await db.update('bank_names', bankName.toMap(), where: 'id = ?', whereArgs: [bankName.id]);
-    await ref.read(bankNamesSettingProvider.notifier).updateBankNameList(bankName: bankName);
+    await ref.read(bankNamesProvider.notifier).updateBankNameList(bankName: bankName);
   }
 
   ///
   static Future<void> deleteBankName({required BankName bankName, required WidgetRef ref}) async {
     final db = await MoneyRepository.database();
     await db.delete('bank_names', where: 'id = ?', whereArgs: [bankName.id]);
-    await ref.read(bankNamesSettingProvider.notifier).deleteBankNameList(bankName: bankName);
+    await ref.read(bankNamesProvider.notifier).deleteBankNameList(bankName: bankName);
   }
 }

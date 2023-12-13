@@ -3,7 +3,7 @@
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
-part of 'bank_names_setting_response_state.dart';
+part of 'bank_names_response_state.dart';
 
 // **************************************************************************
 // FreezedGenerator
@@ -15,32 +15,30 @@ final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
 /// @nodoc
-mixin _$BankNamesSettingResponseState {
+mixin _$BankNamesResponseState {
   AccountType get accountType => throw _privateConstructorUsedError;
   AsyncValue<List<BankName>> get bankNameList =>
       throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
-  $BankNamesSettingResponseStateCopyWith<BankNamesSettingResponseState>
-      get copyWith => throw _privateConstructorUsedError;
+  $BankNamesResponseStateCopyWith<BankNamesResponseState> get copyWith =>
+      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class $BankNamesSettingResponseStateCopyWith<$Res> {
-  factory $BankNamesSettingResponseStateCopyWith(
-          BankNamesSettingResponseState value,
-          $Res Function(BankNamesSettingResponseState) then) =
-      _$BankNamesSettingResponseStateCopyWithImpl<$Res,
-          BankNamesSettingResponseState>;
+abstract class $BankNamesResponseStateCopyWith<$Res> {
+  factory $BankNamesResponseStateCopyWith(BankNamesResponseState value,
+          $Res Function(BankNamesResponseState) then) =
+      _$BankNamesResponseStateCopyWithImpl<$Res, BankNamesResponseState>;
   @useResult
   $Res call({AccountType accountType, AsyncValue<List<BankName>> bankNameList});
 }
 
 /// @nodoc
-class _$BankNamesSettingResponseStateCopyWithImpl<$Res,
-        $Val extends BankNamesSettingResponseState>
-    implements $BankNamesSettingResponseStateCopyWith<$Res> {
-  _$BankNamesSettingResponseStateCopyWithImpl(this._value, this._then);
+class _$BankNamesResponseStateCopyWithImpl<$Res,
+        $Val extends BankNamesResponseState>
+    implements $BankNamesResponseStateCopyWith<$Res> {
+  _$BankNamesResponseStateCopyWithImpl(this._value, this._then);
 
   // ignore: unused_field
   final $Val _value;
@@ -67,25 +65,25 @@ class _$BankNamesSettingResponseStateCopyWithImpl<$Res,
 }
 
 /// @nodoc
-abstract class _$$BankNamesSettingResponseStateImplCopyWith<$Res>
-    implements $BankNamesSettingResponseStateCopyWith<$Res> {
-  factory _$$BankNamesSettingResponseStateImplCopyWith(
-          _$BankNamesSettingResponseStateImpl value,
-          $Res Function(_$BankNamesSettingResponseStateImpl) then) =
-      __$$BankNamesSettingResponseStateImplCopyWithImpl<$Res>;
+abstract class _$$BankNamesResponseStateImplCopyWith<$Res>
+    implements $BankNamesResponseStateCopyWith<$Res> {
+  factory _$$BankNamesResponseStateImplCopyWith(
+          _$BankNamesResponseStateImpl value,
+          $Res Function(_$BankNamesResponseStateImpl) then) =
+      __$$BankNamesResponseStateImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call({AccountType accountType, AsyncValue<List<BankName>> bankNameList});
 }
 
 /// @nodoc
-class __$$BankNamesSettingResponseStateImplCopyWithImpl<$Res>
-    extends _$BankNamesSettingResponseStateCopyWithImpl<$Res,
-        _$BankNamesSettingResponseStateImpl>
-    implements _$$BankNamesSettingResponseStateImplCopyWith<$Res> {
-  __$$BankNamesSettingResponseStateImplCopyWithImpl(
-      _$BankNamesSettingResponseStateImpl _value,
-      $Res Function(_$BankNamesSettingResponseStateImpl) _then)
+class __$$BankNamesResponseStateImplCopyWithImpl<$Res>
+    extends _$BankNamesResponseStateCopyWithImpl<$Res,
+        _$BankNamesResponseStateImpl>
+    implements _$$BankNamesResponseStateImplCopyWith<$Res> {
+  __$$BankNamesResponseStateImplCopyWithImpl(
+      _$BankNamesResponseStateImpl _value,
+      $Res Function(_$BankNamesResponseStateImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -94,7 +92,7 @@ class __$$BankNamesSettingResponseStateImplCopyWithImpl<$Res>
     Object? accountType = null,
     Object? bankNameList = null,
   }) {
-    return _then(_$BankNamesSettingResponseStateImpl(
+    return _then(_$BankNamesResponseStateImpl(
       accountType: null == accountType
           ? _value.accountType
           : accountType // ignore: cast_nullable_to_non_nullable
@@ -109,9 +107,8 @@ class __$$BankNamesSettingResponseStateImplCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$BankNamesSettingResponseStateImpl
-    implements _BankNamesSettingResponseState {
-  const _$BankNamesSettingResponseStateImpl(
+class _$BankNamesResponseStateImpl implements _BankNamesResponseState {
+  const _$BankNamesResponseStateImpl(
       {this.accountType = AccountType.blank,
       this.bankNameList = const AsyncValue<List<BankName>>.loading()});
 
@@ -124,14 +121,14 @@ class _$BankNamesSettingResponseStateImpl
 
   @override
   String toString() {
-    return 'BankNamesSettingResponseState(accountType: $accountType, bankNameList: $bankNameList)';
+    return 'BankNamesResponseState(accountType: $accountType, bankNameList: $bankNameList)';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$BankNamesSettingResponseStateImpl &&
+            other is _$BankNamesResponseStateImpl &&
             (identical(other.accountType, accountType) ||
                 other.accountType == accountType) &&
             (identical(other.bankNameList, bankNameList) ||
@@ -144,18 +141,16 @@ class _$BankNamesSettingResponseStateImpl
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$BankNamesSettingResponseStateImplCopyWith<
-          _$BankNamesSettingResponseStateImpl>
-      get copyWith => __$$BankNamesSettingResponseStateImplCopyWithImpl<
-          _$BankNamesSettingResponseStateImpl>(this, _$identity);
+  _$$BankNamesResponseStateImplCopyWith<_$BankNamesResponseStateImpl>
+      get copyWith => __$$BankNamesResponseStateImplCopyWithImpl<
+          _$BankNamesResponseStateImpl>(this, _$identity);
 }
 
-abstract class _BankNamesSettingResponseState
-    implements BankNamesSettingResponseState {
-  const factory _BankNamesSettingResponseState(
+abstract class _BankNamesResponseState implements BankNamesResponseState {
+  const factory _BankNamesResponseState(
           {final AccountType accountType,
           final AsyncValue<List<BankName>> bankNameList}) =
-      _$BankNamesSettingResponseStateImpl;
+      _$BankNamesResponseStateImpl;
 
   @override
   AccountType get accountType;
@@ -163,7 +158,6 @@ abstract class _BankNamesSettingResponseState
   AsyncValue<List<BankName>> get bankNameList;
   @override
   @JsonKey(ignore: true)
-  _$$BankNamesSettingResponseStateImplCopyWith<
-          _$BankNamesSettingResponseStateImpl>
+  _$$BankNamesResponseStateImplCopyWith<_$BankNamesResponseStateImpl>
       get copyWith => throw _privateConstructorUsedError;
 }

@@ -1,14 +1,15 @@
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:money_note/models/emoney_name.dart';
 
-import 'emoney_names_setting_response_state.dart';
+import '../../models/emoney_name.dart';
 
-final emoneyNamesSettingProvider =
-    StateNotifierProvider.autoDispose<EmoneyNamesSettingNotifier, EmoneyNamesSettingResponseState>((ref) {
-  return EmoneyNamesSettingNotifier(const EmoneyNamesSettingResponseState());
+import 'emoney_names_response_state.dart';
+
+final emoneyNamesProvider =
+    StateNotifierProvider.autoDispose<EmoneyNamesSettingNotifier, EmoneyNamesResponseState>((ref) {
+  return EmoneyNamesSettingNotifier(const EmoneyNamesResponseState());
 });
 
-class EmoneyNamesSettingNotifier extends StateNotifier<EmoneyNamesSettingResponseState> {
+class EmoneyNamesSettingNotifier extends StateNotifier<EmoneyNamesResponseState> {
   EmoneyNamesSettingNotifier(super.state);
 
   ///

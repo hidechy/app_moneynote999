@@ -5,7 +5,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import '../../enums/deposit_type.dart';
 import '../../extensions/extensions.dart';
 import '../../repository/emoney_name_repository.dart';
-import '../../state/emoney_names_setting/emoney_names_setting_notifier.dart';
+import '../../state/emoney_names/emoney_names_notifier.dart';
 import '_money_dialog.dart';
 import 'emoney_name_input_alert.dart';
 
@@ -22,7 +22,7 @@ class EmoneyNameListAlert extends ConsumerWidget {
     _context = context;
     _ref = ref;
 
-    Future(() => EmoneyNameRepository.getEmoneyNames(ref: ref));
+    Future(() => EmoneyNameRepository.getEmoneyNamesList(ref: ref));
 
     return AlertDialog(
       titlePadding: EdgeInsets.zero,
@@ -60,7 +60,7 @@ class EmoneyNameListAlert extends ConsumerWidget {
 
   ///
   Widget _displayEmoneyList() {
-    return _ref.watch(emoneyNamesSettingProvider.select((value) => value.emoneyNameList)).when(
+    return _ref.watch(emoneyNamesProvider.select((value) => value.emoneyNameList)).when(
           data: (value) {
             final list = <Widget>[];
 
