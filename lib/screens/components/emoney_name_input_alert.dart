@@ -64,7 +64,7 @@ class _EmoneyNameInputAlertState extends ConsumerState<EmoneyNameInputAlert> {
               ///
 
               IconButton(
-                onPressed: _setDummyEmoney,
+                onPressed: _setDummyData,
                 icon: const Icon(Icons.ac_unit),
               ),
 
@@ -165,7 +165,7 @@ class _EmoneyNameInputAlertState extends ConsumerState<EmoneyNameInputAlert> {
   }
 
   ///
-  Future<void> _setDummyEmoney() async {
+  Future<void> _setDummyData() async {
     final emoneyName1 = EmoneyName(emoneyName: 'Suica1', depositType: widget.depositType.japanName);
     await EmoneyNameRepository.insertEmoneyName(emoneyName: emoneyName1);
 

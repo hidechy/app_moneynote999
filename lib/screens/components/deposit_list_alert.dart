@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+// ignore: depend_on_referenced_packages
+import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import 'bank_name_list_alert.dart';
 import 'emoney_name_list_alert.dart';
@@ -11,8 +14,10 @@ class TabInfo {
 }
 
 // ignore: must_be_immutable
-class DepositListAlert extends StatelessWidget {
-  DepositListAlert({super.key});
+class DepositListAlert extends HookConsumerWidget {
+  DepositListAlert({super.key, this.index});
+
+  int? index;
 
   List<TabInfo> tabs = [
     TabInfo('金融機関管理', BankNameListAlert()),
@@ -23,7 +28,14 @@ class DepositListAlert extends StatelessWidget {
 
   ///
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    // 最初に開くタブを指定する
+    final tabController = useTabController(initialLength: tabs.length);
+    if (index != null) {
+      tabController.index = index!;
+    }
+    // 最初に開くタブを指定する
+
     return DefaultTabController(
       length: tabs.length,
       child: Scaffold(
@@ -37,6 +49,10 @@ class DepositListAlert extends StatelessWidget {
             //-------------------------//これを消すと「←」が出てくる（消さない）
 
             bottom: TabBar(
+              //================================//
+              controller: tabController,
+              //================================//
+
               isScrollable: true,
               indicatorColor: Colors.blueAccent,
               tabs: tabs.map((TabInfo tab) => Tab(text: tab.label)).toList(),
@@ -44,6 +60,10 @@ class DepositListAlert extends StatelessWidget {
           ),
         ),
         body: TabBarView(
+          //================================//
+          controller: tabController,
+          //================================//
+
           children: tabs.map((tab) => tab.widget).toList(),
         ),
       ),

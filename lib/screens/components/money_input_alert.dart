@@ -77,35 +77,59 @@ class _MoneyInputAlertState extends ConsumerState<MoneyInputAlert> {
                 color: Colors.white.withOpacity(0.4),
                 thickness: 5,
               ),
-              SizedBox(
-                height: context.screenSize.height * 0.45,
-                child: displayMoneyInput(),
+
+              ///
+
+              IconButton(
+                onPressed: _setDummyData,
+                icon: const Icon(Icons.ac_unit),
+              ),
+
+              ///
+
+              Container(
+                padding: const EdgeInsets.all(10),
+                margin: const EdgeInsets.symmetric(vertical: 5, horizontal: 3),
+                decoration: BoxDecoration(color: Colors.white.withOpacity(0.1)),
+                child: Column(
+                  children: [
+                    Row(
+                      children: [
+                        Expanded(child: displayInputParts(name: '10000', tec: tecYen10000)),
+                        Expanded(child: displayInputParts(name: '100', tec: tecYen100)),
+                      ],
+                    ),
+                    Row(
+                      children: [
+                        Expanded(child: displayInputParts(name: '5000', tec: tecYen5000)),
+                        Expanded(child: displayInputParts(name: '50', tec: tecYen50)),
+                      ],
+                    ),
+                    Row(
+                      children: [
+                        Expanded(child: displayInputParts(name: '2000', tec: tecYen2000)),
+                        Expanded(child: displayInputParts(name: '10', tec: tecYen10)),
+                      ],
+                    ),
+                    Row(
+                      children: [
+                        Expanded(child: displayInputParts(name: '1000', tec: tecYen1000)),
+                        Expanded(child: displayInputParts(name: '5', tec: tecYen5)),
+                      ],
+                    ),
+                    Row(
+                      children: [
+                        Expanded(child: displayInputParts(name: '500', tec: tecYen500)),
+                        Expanded(child: displayInputParts(name: '1', tec: tecYen1)),
+                      ],
+                    ),
+                  ],
+                ),
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  ///
-
-//                  Container(),
-
-                  GestureDetector(
-                    onTap: () {
-                      tecYen10000.text = '9';
-                      tecYen5000.text = '9';
-                      tecYen2000.text = '9';
-                      tecYen1000.text = '9';
-                      tecYen500.text = '9';
-                      tecYen100.text = '9';
-                      tecYen50.text = '9';
-                      tecYen10.text = '9';
-                      tecYen5.text = '9';
-                      tecYen1.text = '9';
-                    },
-                    child: const Icon(Icons.ac_unit),
-                  ),
-
-                  ///
-
+                  Container(),
                   (widget.money != null)
                       ? TextButton(
                           onPressed: _updateMoney,
@@ -125,43 +149,66 @@ class _MoneyInputAlertState extends ConsumerState<MoneyInputAlert> {
   }
 
   ///
-  Widget displayMoneyInput() {
-    return SingleChildScrollView(
-      child: Column(
-        children: [
-          Row(
-            children: [
-              Expanded(child: displayInputParts(name: '10000', tec: tecYen10000)),
-              Expanded(child: displayInputParts(name: '100', tec: tecYen100)),
-            ],
-          ),
-          Row(
-            children: [
-              Expanded(child: displayInputParts(name: '5000', tec: tecYen5000)),
-              Expanded(child: displayInputParts(name: '50', tec: tecYen50)),
-            ],
-          ),
-          Row(
-            children: [
-              Expanded(child: displayInputParts(name: '2000', tec: tecYen2000)),
-              Expanded(child: displayInputParts(name: '10', tec: tecYen10)),
-            ],
-          ),
-          Row(
-            children: [
-              Expanded(child: displayInputParts(name: '1000', tec: tecYen1000)),
-              Expanded(child: displayInputParts(name: '5', tec: tecYen5)),
-            ],
-          ),
-          Row(
-            children: [
-              Expanded(child: displayInputParts(name: '500', tec: tecYen500)),
-              Expanded(child: displayInputParts(name: '1', tec: tecYen1)),
-            ],
-          ),
-        ],
-      ),
+  Future<void> _setDummyData() async {
+    ////////////////////
+
+    var date1 = widget.date;
+
+    final money1 = Money(
+      date: date1.yyyymmdd,
+      yen_10000: 7,
+      yen_5000: 7,
+      yen_2000: 7,
+      yen_1000: 7,
+      yen_500: 7,
+      yen_100: 7,
+      yen_50: 7,
+      yen_10: 7,
+      yen_5: 7,
+      yen_1: 7,
     );
+
+    MoneyRepository.insertMoney(money: money1);
+
+    ////////////////////
+
+    var date2 = DateTime(widget.date.year, widget.date.month, widget.date.day - 1);
+
+    final money2 = Money(
+      date: date2.yyyymmdd,
+      yen_10000: 8,
+      yen_5000: 8,
+      yen_2000: 8,
+      yen_1000: 8,
+      yen_500: 8,
+      yen_100: 8,
+      yen_50: 8,
+      yen_10: 8,
+      yen_5: 8,
+      yen_1: 8,
+    );
+
+    MoneyRepository.insertMoney(money: money2);
+
+    ////////////////////
+
+    var date3 = DateTime(widget.date.year, widget.date.month, widget.date.day - 2);
+
+    final money3 = Money(
+      date: date3.yyyymmdd,
+      yen_10000: 9,
+      yen_5000: 9,
+      yen_2000: 9,
+      yen_1000: 9,
+      yen_500: 9,
+      yen_100: 9,
+      yen_50: 9,
+      yen_10: 9,
+      yen_5: 9,
+      yen_1: 9,
+    );
+
+    MoneyRepository.insertMoney(money: money3);
   }
 
   ///
@@ -192,7 +239,7 @@ class _MoneyInputAlertState extends ConsumerState<MoneyInputAlert> {
         tecYen1.text == '') {
       Future.delayed(
         Duration.zero,
-            () => error_dialog(context: _context, title: '登録できません。', content: '値を正しく入力してください。'),
+        () => error_dialog(context: _context, title: '登録できません。', content: '値を正しく入力してください。'),
       );
 
       return;

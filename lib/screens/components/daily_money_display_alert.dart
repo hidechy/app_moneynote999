@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:money_note/screens/components/deposit_list_alert.dart';
 
 import '../../extensions/extensions.dart';
 import '../../models/bank_price.dart';
@@ -15,6 +14,7 @@ import '../../state/emoney_names/emoney_names_notifier.dart';
 import '../../state/money/money_notifier.dart';
 import '_money_dialog.dart';
 import 'bank_price_input_alert.dart';
+import 'deposit_list_alert.dart';
 import 'money_input_alert.dart';
 
 // ignore: must_be_immutable
@@ -356,7 +356,7 @@ class DailyMoneyDisplayAlert extends ConsumerWidget {
                           onTap: () {
                             MoneyDialog(
                               context: _context,
-                              widget: DepositListAlert(),
+                              widget: DepositListAlert(index: 1),
                             );
                           },
                         ),

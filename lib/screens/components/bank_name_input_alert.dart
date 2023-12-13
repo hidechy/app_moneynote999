@@ -87,7 +87,7 @@ class _BankNameInputAlertState extends ConsumerState<BankNameInputAlert> {
               ///
 
               IconButton(
-                onPressed: _setDummyBank,
+                onPressed: _setDummyData,
                 icon: const Icon(Icons.ac_unit),
               ),
 
@@ -287,7 +287,7 @@ class _BankNameInputAlertState extends ConsumerState<BankNameInputAlert> {
   }
 
   ///
-  Future<void> _setDummyBank() async {
+  Future<void> _setDummyData() async {
     final bankName1 = BankName(
       bankNumber: '0001',
       bankName: 'みずほ銀行',

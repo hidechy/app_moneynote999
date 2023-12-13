@@ -31,12 +31,6 @@ class _BankPriceInputAlertState extends ConsumerState<BankPriceInputAlert> {
 
   ///
   @override
-  void initState() {
-    super.initState();
-  }
-
-  ///
-  @override
   Widget build(BuildContext context) {
     _context = context;
 
@@ -75,6 +69,16 @@ class _BankPriceInputAlertState extends ConsumerState<BankPriceInputAlert> {
                 color: Colors.white.withOpacity(0.4),
                 thickness: 5,
               ),
+
+              ///
+
+              IconButton(
+                onPressed: _setDummyData,
+                icon: const Icon(Icons.ac_unit),
+              ),
+
+              ///
+
               Container(
                 padding: const EdgeInsets.all(10),
                 margin: const EdgeInsets.symmetric(vertical: 5, horizontal: 3),
@@ -148,5 +152,53 @@ class _BankPriceInputAlertState extends ConsumerState<BankPriceInputAlert> {
     await BankPriceRepository.insertBankPrice(bankPrice: bankPrice).then((value) {
       Navigator.pop(context);
     });
+  }
+
+  ///
+  Future<void> _setDummyData() async {
+    final bankPrice1 = BankPrice(date: widget.date.yyyymmdd, depositType: 'bank', bankId: 1, price: 10000);
+
+    await BankPriceRepository.insertBankPrice(bankPrice: bankPrice1);
+
+    final bankPrice2 = BankPrice(date: widget.date.yyyymmdd, depositType: 'bank', bankId: 2, price: 20000);
+
+    await BankPriceRepository.insertBankPrice(bankPrice: bankPrice2);
+
+    final bankPrice3 = BankPrice(date: widget.date.yyyymmdd, depositType: 'bank', bankId: 3, price: 30000);
+
+    await BankPriceRepository.insertBankPrice(bankPrice: bankPrice3);
+
+    final bankPrice4 = BankPrice(date: widget.date.yyyymmdd, depositType: 'bank', bankId: 4, price: 40000);
+
+    await BankPriceRepository.insertBankPrice(bankPrice: bankPrice4);
+
+    final bankPrice5 = BankPrice(date: widget.date.yyyymmdd, depositType: 'bank', bankId: 5, price: 50000);
+
+    await BankPriceRepository.insertBankPrice(bankPrice: bankPrice5);
+
+    //////////////////////////////////
+
+    final bankPrice6 = BankPrice(date: widget.date.yyyymmdd, depositType: 'emoney', bankId: 1, price: 10000);
+
+    await BankPriceRepository.insertBankPrice(bankPrice: bankPrice6);
+
+    final bankPrice7 = BankPrice(date: widget.date.yyyymmdd, depositType: 'emoney', bankId: 2, price: 20000);
+
+    await BankPriceRepository.insertBankPrice(bankPrice: bankPrice7);
+
+    final bankPrice8 = BankPrice(date: widget.date.yyyymmdd, depositType: 'emoney', bankId: 3, price: 30000);
+
+    await BankPriceRepository.insertBankPrice(bankPrice: bankPrice8);
+
+    final bankPrice9 = BankPrice(date: widget.date.yyyymmdd, depositType: 'emoney', bankId: 4, price: 40000);
+
+    await BankPriceRepository.insertBankPrice(bankPrice: bankPrice9);
+
+    final bankPrice10 = BankPrice(date: widget.date.yyyymmdd, depositType: 'emoney', bankId: 5, price: 50000);
+
+    await BankPriceRepository.insertBankPrice(bankPrice: bankPrice10);
+
+    // ignore: use_build_context_synchronously
+    Navigator.pop(_context);
   }
 }
