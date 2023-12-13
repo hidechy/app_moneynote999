@@ -225,7 +225,7 @@ class _BankNameInputAlertState extends ConsumerState<BankNameInputAlert> {
         (accountType == AccountType.blank)) {
       Future.delayed(
         Duration.zero,
-        () => error_dialog(context: _context, title: '不完全データあり', content: '入力値に不備があります。'),
+            () => error_dialog(context: _context, title: '登録できません。', content: '値を正しく入力してください。'),
       );
 
       return;

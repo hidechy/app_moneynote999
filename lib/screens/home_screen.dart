@@ -42,6 +42,7 @@ class HomeScreen extends ConsumerWidget {
     final calendarState = ref.watch(calendarProvider);
 
     return Scaffold(
+      backgroundColor: Colors.blueGrey.withOpacity(0.3),
       key: _scaffoldKey,
       resizeToAvoidBottomInset: false,
       appBar: AppBar(

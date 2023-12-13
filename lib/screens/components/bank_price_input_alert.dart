@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:money_note/models/emoney_name.dart';
 
 import '../../extensions/extensions.dart';
 import '../../models/bank_name.dart';
@@ -10,10 +11,12 @@ import 'parts/error_dialog.dart';
 
 // ignore: must_be_immutable
 class BankPriceInputAlert extends ConsumerStatefulWidget {
-  BankPriceInputAlert({super.key, required this.date, required this.bankName, this.bankPriceList});
+  BankPriceInputAlert({super.key, required this.date, this.bankName, this.emoneyName, this.bankPriceList});
 
   final DateTime date;
-  final BankName bankName;
+
+  BankName? bankName;
+  EmoneyName? emoneyName;
 
   List<BankPrice>? bankPriceList;
 
@@ -56,13 +59,15 @@ class _BankPriceInputAlertState extends ConsumerState<BankPriceInputAlert> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text('${widget.bankName.bankName} ${widget.bankName.branchName}'),
-                      Text('${widget.bankName.accountType} ${widget.bankName.accountNumber}'),
-                    ],
-                  ),
+                  if (widget.bankName != null)
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text('${widget.bankName!.bankName} ${widget.bankName!.branchName}'),
+                        Text('${widget.bankName!.accountType} ${widget.bankName!.accountNumber}'),
+                      ],
+                    ),
+                  if (widget.emoneyName != null) Text(widget.emoneyName!.emoneyName),
                   Text(widget.date.yyyymmdd),
                 ],
               ),
@@ -127,7 +132,7 @@ class _BankPriceInputAlertState extends ConsumerState<BankPriceInputAlert> {
     if (bankPriceEditingController.text == '') {
       Future.delayed(
         Duration.zero,
-        () => error_dialog(context: _context, title: '不完全データあり', content: '入力値に不備があります。'),
+        () => error_dialog(context: _context, title: '登録できません。', content: '値を正しく入力してください。'),
       );
 
       return;
@@ -135,8 +140,8 @@ class _BankPriceInputAlertState extends ConsumerState<BankPriceInputAlert> {
 
     final bankPrice = BankPrice(
       date: widget.date.yyyymmdd,
-      depositType: widget.bankName.depositType,
-      bankId: widget.bankName.id!,
+      depositType: (widget.bankName != null) ? widget.bankName!.depositType : widget.emoneyName!.depositType,
+      bankId: (widget.bankName != null) ? widget.bankName!.id! : widget.emoneyName!.id!,
       price: bankPriceEditingController.text.toInt(),
     );
 

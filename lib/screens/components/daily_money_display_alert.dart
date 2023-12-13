@@ -66,6 +66,7 @@ class DailyMoneyDisplayAlert extends ConsumerWidget {
                 _displaySingleMoney(),
                 _displayBankMoney(),
                 _displayEmoneyMoney(),
+                const SizedBox(height: 20),
               ],
             ),
           ),
@@ -199,7 +200,6 @@ class DailyMoneyDisplayAlert extends ConsumerWidget {
                 child: const Text('BANK'),
               ),
             ),
-            const SizedBox(width: 10),
             Expanded(child: Container()),
           ],
         ),
@@ -288,11 +288,7 @@ class DailyMoneyDisplayAlert extends ConsumerWidget {
                             ),
                           ],
                         ),
-                        if (bankPriceLastDate != '')
-                          Text(
-                            bankPriceLastDate,
-                            style: const TextStyle(fontSize: 10),
-                          ),
+                        if (bankPriceLastDate != '') Text(bankPriceLastDate, style: const TextStyle(fontSize: 10)),
                       ],
                     ),
                   ],
@@ -313,6 +309,14 @@ class DailyMoneyDisplayAlert extends ConsumerWidget {
   Widget _displayEmoneyMoney() {
     final emoneyNameList = _ref.watch(emoneyNamesProvider.select((value) => value.emoneyNameList));
 
+    final bankPriceState = _ref.watch(bankPriceProvider);
+    final bankPriceLastMap =
+        (bankPriceState.bankPriceLastMap.value != null) ? bankPriceState.bankPriceLastMap.value : <String, BankPrice>{};
+
+    final bankPriceListMap = (bankPriceState.bankPriceListMap.value != null)
+        ? bankPriceState.bankPriceListMap.value
+        : <String, List<BankPrice>>{};
+
     return Column(
       children: [
         const SizedBox(height: 30),
@@ -327,27 +331,94 @@ class DailyMoneyDisplayAlert extends ConsumerWidget {
                 child: const Text('E-MONEY'),
               ),
             ),
-            const SizedBox(width: 10),
-            Expanded(
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  GestureDetector(
-                    onTap: () {},
-                    child: Icon(Icons.input, color: Colors.greenAccent.withOpacity(0.6), size: 16),
-                  ),
-                  Container(),
-                ],
-              ),
-            ),
+            Expanded(child: Container()),
           ],
         ),
         emoneyNameList.when(
           data: (value) {
+            if (value.isEmpty) {
+              return Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const Text('電子マネーが設定されていません。'),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      const Text('必要であれば登録してください。'),
+                      GestureDetector(
+                        child:
+                            Text('登録', style: TextStyle(fontSize: 12, color: Theme.of(_context).colorScheme.primary)),
+                        onTap: () {
+                          MoneyDialog(
+                            context: _context,
+                            widget: DepositListAlert(),
+                          );
+                        },
+                      ),
+                    ],
+                  ),
+                ],
+              );
+            }
+
             final list = <Widget>[];
 
             value.forEach((element) {
-              list.add(Text(element.emoneyName));
+              var bankPrice = (bankPriceLastMap?['${element.depositType}-${element.id}'] != null)
+                  ? bankPriceLastMap!['${element.depositType}-${element.id}']!.price
+                  : 0;
+
+              var bankPriceLastDate =
+                  (bankPrice != 0) ? bankPriceLastMap!['${element.depositType}-${element.id}']!.date : '';
+
+              //---------------------//前日開き
+              if (bankPrice != 0) {
+                final bankPriceLastDt = DateTime.parse('$bankPriceLastDate 00:00:00');
+
+                final diff = date.difference(bankPriceLastDt).inDays;
+
+                if (diff < 0) {
+                  bankPrice = 0;
+                  bankPriceLastDate = '';
+                }
+              }
+              //---------------------//前日開き
+
+              list.add(Container(
+                padding: const EdgeInsets.all(10),
+                decoration: BoxDecoration(border: Border(bottom: BorderSide(color: Colors.white.withOpacity(0.3)))),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(element.emoneyName),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.end,
+                      children: [
+                        Row(
+                          children: [
+                            Text(bankPrice.toString().toCurrency()),
+                            const SizedBox(width: 10),
+                            GestureDetector(
+                              onTap: () {
+                                MoneyDialog(
+                                  context: _context,
+                                  widget: BankPriceInputAlert(
+                                    date: date,
+                                    emoneyName: element,
+                                    bankPriceList: bankPriceListMap?['${element.depositType}-${element.id}'],
+                                  ),
+                                );
+                              },
+                              child: Icon(Icons.input, color: Colors.greenAccent.withOpacity(0.6), size: 16),
+                            ),
+                          ],
+                        ),
+                        if (bankPriceLastDate != '') Text(bankPriceLastDate, style: const TextStyle(fontSize: 10)),
+                      ],
+                    ),
+                  ],
+                ),
+              ));
             });
 
             return SingleChildScrollView(child: Column(children: list));

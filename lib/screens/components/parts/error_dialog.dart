@@ -8,17 +8,9 @@ Future<void> error_dialog({required BuildContext context, required String title,
     context: context,
     builder: (context) {
       return AlertDialog(
+        backgroundColor: Colors.blueGrey.withOpacity(0.3),
         title: KiwiText(text: title),
         content: KiwiText(text: content),
-        actions: [
-          GestureDetector(
-            child: const KiwiText(text: 'close'),
-            onTap: () async {
-              Navigator.pop(context);
-              return;
-            },
-          ),
-        ],
       );
     },
   );
