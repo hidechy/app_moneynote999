@@ -83,4 +83,30 @@ class MoneyRepository {
     await db.update('moneies', money.toMap(), where: 'id = ?', whereArgs: [money.id]);
     await ref.read(moneySingleProvider.notifier).setMoney(money: money);
   }
+
+  ///
+  static Future<void> getBeforeDateMoney({required String date, required WidgetRef ref}) async {
+    final db = await database();
+
+    final List<Map<String, dynamic>> maps = await db.query('moneies', where: 'date = ?', whereArgs: [date]);
+
+    if (maps.isNotEmpty) {
+      final money = Money(
+        id: maps[0]['id'],
+        date: date,
+        yen_10000: maps[0]['yen_10000'],
+        yen_5000: maps[0]['yen_5000'],
+        yen_2000: maps[0]['yen_2000'],
+        yen_1000: maps[0]['yen_1000'],
+        yen_500: maps[0]['yen_500'],
+        yen_100: maps[0]['yen_100'],
+        yen_50: maps[0]['yen_50'],
+        yen_10: maps[0]['yen_10'],
+        yen_5: maps[0]['yen_5'],
+        yen_1: maps[0]['yen_1'],
+      );
+
+      await ref.read(moneySingleProvider.notifier).setBeforeDateMoney(money: money);
+    }
+  }
 }

@@ -8,5 +8,6 @@ part 'money_response_state.freezed.dart';
 class MoneyResponseState with _$MoneyResponseState {
   const factory MoneyResponseState({
     Money? singleMoney,
+    Money? beforeDateMoney,
   }) = _MoneyResponseState;
 }

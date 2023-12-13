@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:money_note/state/money/money_notifier.dart';
 
 import '../../extensions/extensions.dart';
 import '../../models/money.dart';
@@ -49,6 +50,11 @@ class _MoneyInputAlertState extends ConsumerState<MoneyInputAlert> {
       _tecYen5.text = widget.money!.yen_5.toString();
       _tecYen1.text = widget.money!.yen_1.toString();
     }
+
+    //-----
+    final beforeDate = DateTime(widget.date.year, widget.date.month, widget.date.day - 1);
+    Future(() => MoneyRepository.getBeforeDateMoney(date: beforeDate.yyyymmdd, ref: ref));
+    //-----
   }
 
   ///
@@ -78,7 +84,7 @@ class _MoneyInputAlertState extends ConsumerState<MoneyInputAlert> {
                 thickness: 5,
               ),
               Container(
-                padding: const EdgeInsets.all(10),
+                padding: const EdgeInsets.symmetric(horizontal: 10),
                 margin: const EdgeInsets.symmetric(vertical: 5, horizontal: 3),
                 decoration: BoxDecoration(color: Colors.white.withOpacity(0.1)),
                 child: Column(
@@ -116,18 +122,25 @@ class _MoneyInputAlertState extends ConsumerState<MoneyInputAlert> {
                   ],
                 ),
               ),
+              const SizedBox(height: 10),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Container(),
+                  GestureDetector(
+                    onTap: _callBeforeDateData,
+                    child:
+                        Text('前日データ呼び出し', style: TextStyle(fontSize: 12, color: Theme.of(context).colorScheme.primary)),
+                  ),
                   (widget.money != null)
-                      ? TextButton(
-                          onPressed: _updateMoney,
-                          child: const Text('マネーデータを更新する', style: TextStyle(fontSize: 12)),
+                      ? GestureDetector(
+                          onTap: _updateMoney,
+                          child: Text('マネーデータを更新する',
+                              style: TextStyle(fontSize: 12, color: Theme.of(context).colorScheme.primary)),
                         )
-                      : TextButton(
-                          onPressed: _insertMoney,
-                          child: const Text('マネーデータを追加する', style: TextStyle(fontSize: 12)),
+                      : GestureDetector(
+                          onTap: _insertMoney,
+                          child: Text('マネーデータを追加する',
+                              style: TextStyle(fontSize: 12, color: Theme.of(context).colorScheme.primary)),
                         ),
                 ],
               ),
@@ -233,5 +246,23 @@ class _MoneyInputAlertState extends ConsumerState<MoneyInputAlert> {
 
       Navigator.pop(context);
     });
+  }
+
+  ///
+  Future<void> _callBeforeDateData() async {
+    final beforeDateMoney = ref.watch(moneySingleProvider.select((value) => value.beforeDateMoney));
+
+    if (beforeDateMoney != null) {
+      _tecYen10000.text = beforeDateMoney.yen_10000.toString();
+      _tecYen5000.text = beforeDateMoney.yen_5000.toString();
+      _tecYen2000.text = beforeDateMoney.yen_2000.toString();
+      _tecYen1000.text = beforeDateMoney.yen_1000.toString();
+      _tecYen500.text = beforeDateMoney.yen_500.toString();
+      _tecYen100.text = beforeDateMoney.yen_100.toString();
+      _tecYen50.text = beforeDateMoney.yen_50.toString();
+      _tecYen10.text = beforeDateMoney.yen_10.toString();
+      _tecYen5.text = beforeDateMoney.yen_5.toString();
+      _tecYen1.text = beforeDateMoney.yen_1.toString();
+    }
   }
 }

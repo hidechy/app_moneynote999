@@ -17,6 +17,7 @@ final _privateConstructorUsedError = UnsupportedError(
 /// @nodoc
 mixin _$MoneyResponseState {
   Money? get singleMoney => throw _privateConstructorUsedError;
+  Money? get beforeDateMoney => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $MoneyResponseStateCopyWith<MoneyResponseState> get copyWith =>
@@ -29,7 +30,7 @@ abstract class $MoneyResponseStateCopyWith<$Res> {
           MoneyResponseState value, $Res Function(MoneyResponseState) then) =
       _$MoneyResponseStateCopyWithImpl<$Res, MoneyResponseState>;
   @useResult
-  $Res call({Money? singleMoney});
+  $Res call({Money? singleMoney, Money? beforeDateMoney});
 }
 
 /// @nodoc
@@ -46,11 +47,16 @@ class _$MoneyResponseStateCopyWithImpl<$Res, $Val extends MoneyResponseState>
   @override
   $Res call({
     Object? singleMoney = freezed,
+    Object? beforeDateMoney = freezed,
   }) {
     return _then(_value.copyWith(
       singleMoney: freezed == singleMoney
           ? _value.singleMoney
           : singleMoney // ignore: cast_nullable_to_non_nullable
+              as Money?,
+      beforeDateMoney: freezed == beforeDateMoney
+          ? _value.beforeDateMoney
+          : beforeDateMoney // ignore: cast_nullable_to_non_nullable
               as Money?,
     ) as $Val);
   }
@@ -64,7 +70,7 @@ abstract class _$$MoneyResponseStateImplCopyWith<$Res>
       __$$MoneyResponseStateImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({Money? singleMoney});
+  $Res call({Money? singleMoney, Money? beforeDateMoney});
 }
 
 /// @nodoc
@@ -79,11 +85,16 @@ class __$$MoneyResponseStateImplCopyWithImpl<$Res>
   @override
   $Res call({
     Object? singleMoney = freezed,
+    Object? beforeDateMoney = freezed,
   }) {
     return _then(_$MoneyResponseStateImpl(
       singleMoney: freezed == singleMoney
           ? _value.singleMoney
           : singleMoney // ignore: cast_nullable_to_non_nullable
+              as Money?,
+      beforeDateMoney: freezed == beforeDateMoney
+          ? _value.beforeDateMoney
+          : beforeDateMoney // ignore: cast_nullable_to_non_nullable
               as Money?,
     ));
   }
@@ -92,14 +103,16 @@ class __$$MoneyResponseStateImplCopyWithImpl<$Res>
 /// @nodoc
 
 class _$MoneyResponseStateImpl implements _MoneyResponseState {
-  const _$MoneyResponseStateImpl({this.singleMoney});
+  const _$MoneyResponseStateImpl({this.singleMoney, this.beforeDateMoney});
 
   @override
   final Money? singleMoney;
+  @override
+  final Money? beforeDateMoney;
 
   @override
   String toString() {
-    return 'MoneyResponseState(singleMoney: $singleMoney)';
+    return 'MoneyResponseState(singleMoney: $singleMoney, beforeDateMoney: $beforeDateMoney)';
   }
 
   @override
@@ -108,11 +121,13 @@ class _$MoneyResponseStateImpl implements _MoneyResponseState {
         (other.runtimeType == runtimeType &&
             other is _$MoneyResponseStateImpl &&
             (identical(other.singleMoney, singleMoney) ||
-                other.singleMoney == singleMoney));
+                other.singleMoney == singleMoney) &&
+            (identical(other.beforeDateMoney, beforeDateMoney) ||
+                other.beforeDateMoney == beforeDateMoney));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, singleMoney);
+  int get hashCode => Object.hash(runtimeType, singleMoney, beforeDateMoney);
 
   @JsonKey(ignore: true)
   @override
@@ -123,11 +138,14 @@ class _$MoneyResponseStateImpl implements _MoneyResponseState {
 }
 
 abstract class _MoneyResponseState implements MoneyResponseState {
-  const factory _MoneyResponseState({final Money? singleMoney}) =
-      _$MoneyResponseStateImpl;
+  const factory _MoneyResponseState(
+      {final Money? singleMoney,
+      final Money? beforeDateMoney}) = _$MoneyResponseStateImpl;
 
   @override
   Money? get singleMoney;
+  @override
+  Money? get beforeDateMoney;
   @override
   @JsonKey(ignore: true)
   _$$MoneyResponseStateImplCopyWith<_$MoneyResponseStateImpl> get copyWith =>
