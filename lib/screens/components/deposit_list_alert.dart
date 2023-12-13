@@ -19,12 +19,11 @@ class DepositListAlert extends HookConsumerWidget {
 
   int? index;
 
-  List<TabInfo> _tabs = [
+  final List<TabInfo> _tabs = [
     TabInfo('金融機関管理', BankNameListAlert()),
     TabInfo('電子マネー管理', EmoneyNameListAlert()),
   ];
 
-  int _selectedIndex = 0;
 
   ///
   @override

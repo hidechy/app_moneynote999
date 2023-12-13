@@ -19,16 +19,16 @@ class MoneyInputAlert extends ConsumerStatefulWidget {
 }
 
 class _MoneyInputAlertState extends ConsumerState<MoneyInputAlert> {
-  TextEditingController _tecYen10000 = TextEditingController();
-  TextEditingController _tecYen5000 = TextEditingController();
-  TextEditingController _tecYen2000 = TextEditingController();
-  TextEditingController _tecYen1000 = TextEditingController();
-  TextEditingController _tecYen500 = TextEditingController();
-  TextEditingController _tecYen100 = TextEditingController();
-  TextEditingController _tecYen50 = TextEditingController();
-  TextEditingController _tecYen10 = TextEditingController();
-  TextEditingController _tecYen5 = TextEditingController();
-  TextEditingController _tecYen1 = TextEditingController();
+  final TextEditingController _tecYen10000 = TextEditingController();
+  final TextEditingController _tecYen5000 = TextEditingController();
+  final TextEditingController _tecYen2000 = TextEditingController();
+  final TextEditingController _tecYen1000 = TextEditingController();
+  final TextEditingController _tecYen500 = TextEditingController();
+  final TextEditingController _tecYen100 = TextEditingController();
+  final TextEditingController _tecYen50 = TextEditingController();
+  final TextEditingController _tecYen10 = TextEditingController();
+  final TextEditingController _tecYen5 = TextEditingController();
+  final TextEditingController _tecYen1 = TextEditingController();
 
   late BuildContext _context;
 

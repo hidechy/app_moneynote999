@@ -25,7 +25,7 @@ class BankPriceInputAlert extends ConsumerStatefulWidget {
 }
 
 class _BankPriceInputAlertState extends ConsumerState<BankPriceInputAlert> {
-  TextEditingController _bankPriceEditingController = TextEditingController();
+  final TextEditingController _bankPriceEditingController = TextEditingController();
 
   late BuildContext _context;
 

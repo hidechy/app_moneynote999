@@ -36,6 +36,10 @@ class DailyMoneyDisplayAlert extends ConsumerWidget {
     await BankNameRepository.getBankNamesList(ref: ref);
     await EmoneyNameRepository.getEmoneyNamesList(ref: ref);
     await BankPriceRepository.getBankPriceList(ref: ref);
+
+    await _makeCurrencySum();
+
+    await _makeTotalMoney();
   }
 
   ///
@@ -45,10 +49,6 @@ class DailyMoneyDisplayAlert extends ConsumerWidget {
     _ref = ref;
 
     Future(() => init(ref: ref));
-
-    _makeCurrencySum();
-
-    _makeTotalMoney();
 
     return AlertDialog(
       titlePadding: EdgeInsets.zero,
@@ -69,6 +69,23 @@ class DailyMoneyDisplayAlert extends ConsumerWidget {
                 Container(width: context.screenSize.width),
                 Text(date.yyyymmdd),
                 Divider(color: Colors.white.withOpacity(0.4), thickness: 5),
+                Container(
+                  width: _context.screenSize.width,
+                  margin: EdgeInsets.all(3),
+                  padding: EdgeInsets.all(3),
+                  decoration: BoxDecoration(border: Border.all(color: Colors.white.withOpacity(0.4))),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Container(),
+                      Column(
+                        children: [
+                          Text(_totalMoney.toString().toCurrency()),
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
                 _displaySingleMoney(),
                 _displayBankMoney(),
                 _displayEmoneyMoney(),
@@ -153,7 +170,7 @@ class DailyMoneyDisplayAlert extends ConsumerWidget {
 
   ///
   Future<void> _makeCurrencySum() async {
-    final singleMoney = await _ref.watch(moneySingleProvider.select((value) => value.singleMoney));
+    final singleMoney = _ref.watch(moneySingleProvider.select((value) => value.singleMoney));
 
     final yen_10000 = (singleMoney != null) ? singleMoney.yen_10000 : 0;
     final yen_5000 = (singleMoney != null) ? singleMoney.yen_5000 : 0;
@@ -180,9 +197,17 @@ class DailyMoneyDisplayAlert extends ConsumerWidget {
 
   ///
   Future<void> _makeTotalMoney() async {
+    _totalMoney = 0;
+
+    final list = <int>[_currencySum];
+
     final bankPriceState = _ref.watch(bankPriceProvider);
     final bankPriceLastMap =
         (bankPriceState.bankPriceLastMap.value != null) ? bankPriceState.bankPriceLastMap.value : <String, BankPrice>{};
+
+    bankPriceLastMap?.forEach((key, value) => list.add(value.price));
+
+    list.forEach((element) => _totalMoney += element);
   }
 
   ///

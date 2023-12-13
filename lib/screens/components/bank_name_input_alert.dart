@@ -22,11 +22,11 @@ class BankNameInputAlert extends ConsumerStatefulWidget {
 }
 
 class _BankNameInputAlertState extends ConsumerState<BankNameInputAlert> {
-  TextEditingController _bankNumberEditingController = TextEditingController();
-  TextEditingController _bankNameEditingController = TextEditingController();
-  TextEditingController _branchNumberEditingController = TextEditingController();
-  TextEditingController _branchNameEditingController = TextEditingController();
-  TextEditingController _accountNumberEditingController = TextEditingController();
+  final TextEditingController _bankNumberEditingController = TextEditingController();
+  final TextEditingController _bankNameEditingController = TextEditingController();
+  final TextEditingController _branchNumberEditingController = TextEditingController();
+  final TextEditingController _branchNameEditingController = TextEditingController();
+  final TextEditingController _accountNumberEditingController = TextEditingController();
 
   AccountType _selectedAccountType = AccountType.blank;
 

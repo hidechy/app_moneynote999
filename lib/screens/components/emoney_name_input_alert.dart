@@ -20,7 +20,7 @@ class EmoneyNameInputAlert extends ConsumerStatefulWidget {
 }
 
 class _EmoneyNameInputAlertState extends ConsumerState<EmoneyNameInputAlert> {
-  TextEditingController _emoneyNameEditingController = TextEditingController();
+  final TextEditingController _emoneyNameEditingController = TextEditingController();
 
   late BuildContext _context;
 
