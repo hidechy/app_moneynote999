@@ -101,7 +101,7 @@ class _BankPriceInputAlertState extends ConsumerState<BankPriceInputAlert> {
 
   ///
   Widget _displayBankPriceList() {
-    List<Widget> list = [];
+    final list = <Widget>[];
 
     if (widget.bankPriceList != null) {
       widget.bankPriceList!.forEach((element) {

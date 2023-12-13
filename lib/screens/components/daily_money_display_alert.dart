@@ -180,7 +180,7 @@ class DailyMoneyDisplayAlert extends ConsumerWidget {
     final bankPriceLastMap =
         (bankPriceState.bankPriceLastMap.value != null) ? bankPriceState.bankPriceLastMap.value : <String, BankPrice>{};
 
-    var bankPriceListMap = (bankPriceState.bankPriceListMap.value != null)
+    final bankPriceListMap = (bankPriceState.bankPriceListMap.value != null)
         ? bankPriceState.bankPriceListMap.value
         : <String, List<BankPrice>>{};
 
@@ -256,7 +256,7 @@ class DailyMoneyDisplayAlert extends ConsumerWidget {
                         if (bankPriceLastDate != '')
                           Text(
                             bankPriceLastDate,
-                            style: TextStyle(fontSize: 10),
+                            style: const TextStyle(fontSize: 10),
                           ),
                       ],
                     ),
