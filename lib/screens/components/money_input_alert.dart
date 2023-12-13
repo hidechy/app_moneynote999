@@ -152,7 +152,7 @@ class _MoneyInputAlertState extends ConsumerState<MoneyInputAlert> {
   Future<void> _setDummyData() async {
     ////////////////////
 
-    var date1 = widget.date;
+    final date1 = widget.date;
 
     final money1 = Money(
       date: date1.yyyymmdd,
@@ -168,11 +168,11 @@ class _MoneyInputAlertState extends ConsumerState<MoneyInputAlert> {
       yen_1: 7,
     );
 
-    MoneyRepository.insertMoney(money: money1);
+    await MoneyRepository.insertMoney(money: money1);
 
     ////////////////////
 
-    var date2 = DateTime(widget.date.year, widget.date.month, widget.date.day - 1);
+    final date2 = DateTime(widget.date.year, widget.date.month, widget.date.day - 1);
 
     final money2 = Money(
       date: date2.yyyymmdd,
@@ -188,11 +188,11 @@ class _MoneyInputAlertState extends ConsumerState<MoneyInputAlert> {
       yen_1: 8,
     );
 
-    MoneyRepository.insertMoney(money: money2);
+    await MoneyRepository.insertMoney(money: money2);
 
     ////////////////////
 
-    var date3 = DateTime(widget.date.year, widget.date.month, widget.date.day - 2);
+    final date3 = DateTime(widget.date.year, widget.date.month, widget.date.day - 2);
 
     final money3 = Money(
       date: date3.yyyymmdd,
@@ -208,7 +208,7 @@ class _MoneyInputAlertState extends ConsumerState<MoneyInputAlert> {
       yen_1: 9,
     );
 
-    MoneyRepository.insertMoney(money: money3);
+    await MoneyRepository.insertMoney(money: money3);
   }
 
   ///
