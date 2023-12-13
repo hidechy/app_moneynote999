@@ -18,9 +18,9 @@ final _privateConstructorUsedError = UnsupportedError(
 mixin _$BankPriceResponseState {
   AsyncValue<List<BankPrice>> get bankPriceList =>
       throw _privateConstructorUsedError;
-  AsyncValue<Map<String, BankPrice>> get bankPriceLastMap =>
-      throw _privateConstructorUsedError;
   AsyncValue<Map<String, List<BankPrice>>> get bankPriceListMap =>
+      throw _privateConstructorUsedError;
+  AsyncValue<Map<String, Map<String, int>>> get bankPriceDatePadMap =>
       throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
@@ -36,8 +36,8 @@ abstract class $BankPriceResponseStateCopyWith<$Res> {
   @useResult
   $Res call(
       {AsyncValue<List<BankPrice>> bankPriceList,
-      AsyncValue<Map<String, BankPrice>> bankPriceLastMap,
-      AsyncValue<Map<String, List<BankPrice>>> bankPriceListMap});
+      AsyncValue<Map<String, List<BankPrice>>> bankPriceListMap,
+      AsyncValue<Map<String, Map<String, int>>> bankPriceDatePadMap});
 }
 
 /// @nodoc
@@ -55,22 +55,22 @@ class _$BankPriceResponseStateCopyWithImpl<$Res,
   @override
   $Res call({
     Object? bankPriceList = null,
-    Object? bankPriceLastMap = null,
     Object? bankPriceListMap = null,
+    Object? bankPriceDatePadMap = null,
   }) {
     return _then(_value.copyWith(
       bankPriceList: null == bankPriceList
           ? _value.bankPriceList
           : bankPriceList // ignore: cast_nullable_to_non_nullable
               as AsyncValue<List<BankPrice>>,
-      bankPriceLastMap: null == bankPriceLastMap
-          ? _value.bankPriceLastMap
-          : bankPriceLastMap // ignore: cast_nullable_to_non_nullable
-              as AsyncValue<Map<String, BankPrice>>,
       bankPriceListMap: null == bankPriceListMap
           ? _value.bankPriceListMap
           : bankPriceListMap // ignore: cast_nullable_to_non_nullable
               as AsyncValue<Map<String, List<BankPrice>>>,
+      bankPriceDatePadMap: null == bankPriceDatePadMap
+          ? _value.bankPriceDatePadMap
+          : bankPriceDatePadMap // ignore: cast_nullable_to_non_nullable
+              as AsyncValue<Map<String, Map<String, int>>>,
     ) as $Val);
   }
 }
@@ -86,8 +86,8 @@ abstract class _$$BankPriceResponseStateImplCopyWith<$Res>
   @useResult
   $Res call(
       {AsyncValue<List<BankPrice>> bankPriceList,
-      AsyncValue<Map<String, BankPrice>> bankPriceLastMap,
-      AsyncValue<Map<String, List<BankPrice>>> bankPriceListMap});
+      AsyncValue<Map<String, List<BankPrice>>> bankPriceListMap,
+      AsyncValue<Map<String, Map<String, int>>> bankPriceDatePadMap});
 }
 
 /// @nodoc
@@ -104,22 +104,22 @@ class __$$BankPriceResponseStateImplCopyWithImpl<$Res>
   @override
   $Res call({
     Object? bankPriceList = null,
-    Object? bankPriceLastMap = null,
     Object? bankPriceListMap = null,
+    Object? bankPriceDatePadMap = null,
   }) {
     return _then(_$BankPriceResponseStateImpl(
       bankPriceList: null == bankPriceList
           ? _value.bankPriceList
           : bankPriceList // ignore: cast_nullable_to_non_nullable
               as AsyncValue<List<BankPrice>>,
-      bankPriceLastMap: null == bankPriceLastMap
-          ? _value.bankPriceLastMap
-          : bankPriceLastMap // ignore: cast_nullable_to_non_nullable
-              as AsyncValue<Map<String, BankPrice>>,
       bankPriceListMap: null == bankPriceListMap
           ? _value.bankPriceListMap
           : bankPriceListMap // ignore: cast_nullable_to_non_nullable
               as AsyncValue<Map<String, List<BankPrice>>>,
+      bankPriceDatePadMap: null == bankPriceDatePadMap
+          ? _value.bankPriceDatePadMap
+          : bankPriceDatePadMap // ignore: cast_nullable_to_non_nullable
+              as AsyncValue<Map<String, Map<String, int>>>,
     ));
   }
 }
@@ -129,24 +129,24 @@ class __$$BankPriceResponseStateImplCopyWithImpl<$Res>
 class _$BankPriceResponseStateImpl implements _BankPriceResponseState {
   const _$BankPriceResponseStateImpl(
       {this.bankPriceList = const AsyncValue<List<BankPrice>>.loading(),
-      this.bankPriceLastMap =
-          const AsyncValue<Map<String, BankPrice>>.loading(),
       this.bankPriceListMap =
-          const AsyncValue<Map<String, List<BankPrice>>>.loading()});
+          const AsyncValue<Map<String, List<BankPrice>>>.loading(),
+      this.bankPriceDatePadMap =
+          const AsyncValue<Map<String, Map<String, int>>>.loading()});
 
   @override
   @JsonKey()
   final AsyncValue<List<BankPrice>> bankPriceList;
   @override
   @JsonKey()
-  final AsyncValue<Map<String, BankPrice>> bankPriceLastMap;
+  final AsyncValue<Map<String, List<BankPrice>>> bankPriceListMap;
   @override
   @JsonKey()
-  final AsyncValue<Map<String, List<BankPrice>>> bankPriceListMap;
+  final AsyncValue<Map<String, Map<String, int>>> bankPriceDatePadMap;
 
   @override
   String toString() {
-    return 'BankPriceResponseState(bankPriceList: $bankPriceList, bankPriceLastMap: $bankPriceLastMap, bankPriceListMap: $bankPriceListMap)';
+    return 'BankPriceResponseState(bankPriceList: $bankPriceList, bankPriceListMap: $bankPriceListMap, bankPriceDatePadMap: $bankPriceDatePadMap)';
   }
 
   @override
@@ -156,15 +156,15 @@ class _$BankPriceResponseStateImpl implements _BankPriceResponseState {
             other is _$BankPriceResponseStateImpl &&
             (identical(other.bankPriceList, bankPriceList) ||
                 other.bankPriceList == bankPriceList) &&
-            (identical(other.bankPriceLastMap, bankPriceLastMap) ||
-                other.bankPriceLastMap == bankPriceLastMap) &&
             (identical(other.bankPriceListMap, bankPriceListMap) ||
-                other.bankPriceListMap == bankPriceListMap));
+                other.bankPriceListMap == bankPriceListMap) &&
+            (identical(other.bankPriceDatePadMap, bankPriceDatePadMap) ||
+                other.bankPriceDatePadMap == bankPriceDatePadMap));
   }
 
   @override
   int get hashCode => Object.hash(
-      runtimeType, bankPriceList, bankPriceLastMap, bankPriceListMap);
+      runtimeType, bankPriceList, bankPriceListMap, bankPriceDatePadMap);
 
   @JsonKey(ignore: true)
   @override
@@ -176,17 +176,17 @@ class _$BankPriceResponseStateImpl implements _BankPriceResponseState {
 
 abstract class _BankPriceResponseState implements BankPriceResponseState {
   const factory _BankPriceResponseState(
-          {final AsyncValue<List<BankPrice>> bankPriceList,
-          final AsyncValue<Map<String, BankPrice>> bankPriceLastMap,
-          final AsyncValue<Map<String, List<BankPrice>>> bankPriceListMap}) =
-      _$BankPriceResponseStateImpl;
+      {final AsyncValue<List<BankPrice>> bankPriceList,
+      final AsyncValue<Map<String, List<BankPrice>>> bankPriceListMap,
+      final AsyncValue<Map<String, Map<String, int>>>
+          bankPriceDatePadMap}) = _$BankPriceResponseStateImpl;
 
   @override
   AsyncValue<List<BankPrice>> get bankPriceList;
   @override
-  AsyncValue<Map<String, BankPrice>> get bankPriceLastMap;
-  @override
   AsyncValue<Map<String, List<BankPrice>>> get bankPriceListMap;
+  @override
+  AsyncValue<Map<String, Map<String, int>>> get bankPriceDatePadMap;
   @override
   @JsonKey(ignore: true)
   _$$BankPriceResponseStateImplCopyWith<_$BankPriceResponseStateImpl>

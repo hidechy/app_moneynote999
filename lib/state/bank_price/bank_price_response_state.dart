@@ -9,8 +9,9 @@ part 'bank_price_response_state.freezed.dart';
 class BankPriceResponseState with _$BankPriceResponseState {
   const factory BankPriceResponseState({
     @Default(AsyncValue<List<BankPrice>>.loading()) AsyncValue<List<BankPrice>> bankPriceList,
-    @Default(AsyncValue<Map<String, BankPrice>>.loading()) AsyncValue<Map<String, BankPrice>> bankPriceLastMap,
-    @Default(AsyncValue<Map<String, List<BankPrice>>>.loading()) AsyncValue<Map<String, List<BankPrice>>>
-    bankPriceListMap,
+    @Default(AsyncValue<Map<String, List<BankPrice>>>.loading())
+    AsyncValue<Map<String, List<BankPrice>>> bankPriceListMap,
+    @Default(AsyncValue<Map<String, Map<String, int>>>.loading())
+    AsyncValue<Map<String, Map<String, int>>> bankPriceDatePadMap,
   }) = _BankPriceResponseState;
 }

@@ -202,10 +202,18 @@ class DailyMoneyDisplayAlert extends ConsumerWidget {
     final list = <int>[_currencySum];
 
     final bankPriceState = _ref.watch(bankPriceProvider);
-    final bankPriceLastMap =
-        (bankPriceState.bankPriceLastMap.value != null) ? bankPriceState.bankPriceLastMap.value : <String, BankPrice>{};
 
-    bankPriceLastMap?.forEach((key, value) => list.add(value.price));
+    final bankPriceDatePadMap = (bankPriceState.bankPriceDatePadMap.value != null)
+        ? bankPriceState.bankPriceDatePadMap.value
+        : <String, Map<String, int>>{};
+
+    bankPriceDatePadMap?.forEach((key, value) {
+      value.forEach((key2, value2) {
+        if (date.yyyymmdd == key2) {
+          list.add(value2);
+        }
+      });
+    });
 
     list.forEach((element) => _totalMoney += element);
   }
@@ -215,8 +223,10 @@ class DailyMoneyDisplayAlert extends ConsumerWidget {
     final bankNameList = _ref.watch(bankNamesProvider.select((value) => value.bankNameList));
 
     final bankPriceState = _ref.watch(bankPriceProvider);
-    final bankPriceLastMap =
-        (bankPriceState.bankPriceLastMap.value != null) ? bankPriceState.bankPriceLastMap.value : <String, BankPrice>{};
+
+    final bankPriceDatePadMap = (bankPriceState.bankPriceDatePadMap.value != null)
+        ? bankPriceState.bankPriceDatePadMap.value
+        : <String, Map<String, int>>{};
 
     final bankPriceListMap = (bankPriceState.bankPriceListMap.value != null)
         ? bankPriceState.bankPriceListMap.value
@@ -272,25 +282,12 @@ class DailyMoneyDisplayAlert extends ConsumerWidget {
             final list = <Widget>[];
 
             value.forEach((element) {
-              var bankPrice = (bankPriceLastMap?['${element.depositType}-${element.id}'] != null)
-                  ? bankPriceLastMap!['${element.depositType}-${element.id}']!.price
-                  : 0;
-
-              var bankPriceLastDate =
-                  (bankPrice != 0) ? bankPriceLastMap!['${element.depositType}-${element.id}']!.date : '';
-
-              //---------------------//前日開き
-              if (bankPrice != 0) {
-                final bankPriceLastDt = DateTime.parse('$bankPriceLastDate 00:00:00');
-
-                final diff = date.difference(bankPriceLastDt).inDays;
-
-                if (diff < 0) {
-                  bankPrice = 0;
-                  bankPriceLastDate = '';
+              var bankPrice = 0;
+              if (bankPriceDatePadMap?['${element.depositType}-${element.id}'] != null) {
+                if (bankPriceDatePadMap?['${element.depositType}-${element.id}']?[date.yyyymmdd] != null) {
+                  bankPrice = bankPriceDatePadMap!['${element.depositType}-${element.id}']![date.yyyymmdd]!;
                 }
               }
-              //---------------------//前日開き
 
               list.add(Container(
                 padding: const EdgeInsets.all(10),
@@ -305,29 +302,23 @@ class DailyMoneyDisplayAlert extends ConsumerWidget {
                         Text('${element.accountType} ${element.accountNumber}'),
                       ],
                     ),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.end,
+                    Row(
                       children: [
-                        Row(
-                          children: [
-                            Text(bankPrice.toString().toCurrency()),
-                            const SizedBox(width: 10),
-                            GestureDetector(
-                              onTap: () {
-                                MoneyDialog(
-                                  context: _context,
-                                  widget: BankPriceInputAlert(
-                                    date: date,
-                                    bankName: element,
-                                    bankPriceList: bankPriceListMap?['${element.depositType}-${element.id}'],
-                                  ),
-                                );
-                              },
-                              child: Icon(Icons.input, color: Colors.greenAccent.withOpacity(0.6), size: 16),
-                            ),
-                          ],
+                        Text(bankPrice.toString().toCurrency()),
+                        const SizedBox(width: 10),
+                        GestureDetector(
+                          onTap: () {
+                            MoneyDialog(
+                              context: _context,
+                              widget: BankPriceInputAlert(
+                                date: date,
+                                bankName: element,
+                                bankPriceList: bankPriceListMap?['${element.depositType}-${element.id}'],
+                              ),
+                            );
+                          },
+                          child: Icon(Icons.input, color: Colors.greenAccent.withOpacity(0.6), size: 16),
                         ),
-                        if (bankPriceLastDate != '') Text(bankPriceLastDate, style: const TextStyle(fontSize: 10)),
                       ],
                     ),
                   ],
@@ -349,8 +340,10 @@ class DailyMoneyDisplayAlert extends ConsumerWidget {
     final emoneyNameList = _ref.watch(emoneyNamesProvider.select((value) => value.emoneyNameList));
 
     final bankPriceState = _ref.watch(bankPriceProvider);
-    final bankPriceLastMap =
-        (bankPriceState.bankPriceLastMap.value != null) ? bankPriceState.bankPriceLastMap.value : <String, BankPrice>{};
+
+    final bankPriceDatePadMap = (bankPriceState.bankPriceDatePadMap.value != null)
+        ? bankPriceState.bankPriceDatePadMap.value
+        : <String, Map<String, int>>{};
 
     final bankPriceListMap = (bankPriceState.bankPriceListMap.value != null)
         ? bankPriceState.bankPriceListMap.value
@@ -406,25 +399,12 @@ class DailyMoneyDisplayAlert extends ConsumerWidget {
             final list = <Widget>[];
 
             value.forEach((element) {
-              var bankPrice = (bankPriceLastMap?['${element.depositType}-${element.id}'] != null)
-                  ? bankPriceLastMap!['${element.depositType}-${element.id}']!.price
-                  : 0;
-
-              var bankPriceLastDate =
-                  (bankPrice != 0) ? bankPriceLastMap!['${element.depositType}-${element.id}']!.date : '';
-
-              //---------------------//前日開き
-              if (bankPrice != 0) {
-                final bankPriceLastDt = DateTime.parse('$bankPriceLastDate 00:00:00');
-
-                final diff = date.difference(bankPriceLastDt).inDays;
-
-                if (diff < 0) {
-                  bankPrice = 0;
-                  bankPriceLastDate = '';
+              var bankPrice = 0;
+              if (bankPriceDatePadMap?['${element.depositType}-${element.id}'] != null) {
+                if (bankPriceDatePadMap?['${element.depositType}-${element.id}']?[date.yyyymmdd] != null) {
+                  bankPrice = bankPriceDatePadMap!['${element.depositType}-${element.id}']![date.yyyymmdd]!;
                 }
               }
-              //---------------------//前日開き
 
               list.add(Container(
                 padding: const EdgeInsets.all(10),
@@ -433,29 +413,23 @@ class DailyMoneyDisplayAlert extends ConsumerWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(element.emoneyName),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.end,
+                    Row(
                       children: [
-                        Row(
-                          children: [
-                            Text(bankPrice.toString().toCurrency()),
-                            const SizedBox(width: 10),
-                            GestureDetector(
-                              onTap: () {
-                                MoneyDialog(
-                                  context: _context,
-                                  widget: BankPriceInputAlert(
-                                    date: date,
-                                    emoneyName: element,
-                                    bankPriceList: bankPriceListMap?['${element.depositType}-${element.id}'],
-                                  ),
-                                );
-                              },
-                              child: Icon(Icons.input, color: Colors.greenAccent.withOpacity(0.6), size: 16),
-                            ),
-                          ],
+                        Text(bankPrice.toString().toCurrency()),
+                        const SizedBox(width: 10),
+                        GestureDetector(
+                          onTap: () {
+                            MoneyDialog(
+                              context: _context,
+                              widget: BankPriceInputAlert(
+                                date: date,
+                                emoneyName: element,
+                                bankPriceList: bankPriceListMap?['${element.depositType}-${element.id}'],
+                              ),
+                            );
+                          },
+                          child: Icon(Icons.input, color: Colors.greenAccent.withOpacity(0.6), size: 16),
                         ),
-                        if (bankPriceLastDate != '') Text(bankPriceLastDate, style: const TextStyle(fontSize: 10)),
                       ],
                     ),
                   ],
