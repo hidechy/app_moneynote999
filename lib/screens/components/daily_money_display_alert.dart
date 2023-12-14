@@ -1,3 +1,4 @@
+import 'package:bubble/bubble.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -121,7 +122,7 @@ class DailyMoneyDisplayAlert extends ConsumerWidget {
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            const Text('本日開始時'),
+                            const Text('Start'),
                             Text(_totalMoneyBeforeDate.toString().toCurrency()),
                           ],
                         ),
@@ -133,14 +134,39 @@ class DailyMoneyDisplayAlert extends ConsumerWidget {
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            const Text('本日終了時'),
+                            const Text('End'),
                             Text(_totalMoney.toString().toCurrency()),
+                          ],
+                        ),
+                      ),
+                      Container(
+                        padding: const EdgeInsets.all(10),
+                        decoration:
+                            BoxDecoration(border: Border(bottom: BorderSide(color: Colors.white.withOpacity(0.3)))),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            const Text('Spend'),
+                            Row(
+                              children: [
+                                if ((_totalMoneyBeforeDate - _totalMoney) < 0) ...[
+                                  Bubble(
+                                    color: Colors.indigoAccent.withOpacity(0.6),
+                                    nip: BubbleNip.rightTop,
+                                    child: const Text('増えた！'),
+                                  ),
+                                  const SizedBox(width: 10),
+                                ],
+                                Text((_totalMoneyBeforeDate - _totalMoney).toString().toCurrency()),
+                              ],
+                            ),
                           ],
                         ),
                       ),
                     ],
                   ),
                 ),
+                const SizedBox(height: 10),
                 _displaySingleMoney(),
                 _displayBankMoney(),
                 _displayEmoneyMoney(),
