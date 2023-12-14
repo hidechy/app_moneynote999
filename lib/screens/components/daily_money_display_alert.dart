@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:money_note/models/bank_name.dart';
-import 'package:money_note/models/emoney_name.dart';
 
 import '../../extensions/extensions.dart';
+import '../../models/bank_name.dart';
 import '../../models/bank_price.dart';
+import '../../models/emoney_name.dart';
 import '../../repository/bank_name_repository.dart';
 import '../../repository/bank_price_repository.dart';
 import '../../repository/emoney_name_repository.dart';
@@ -14,6 +14,7 @@ import '../../state/bank_names/bank_names_notifier.dart';
 import '../../state/bank_price/bank_price_notifier.dart';
 import '../../state/emoney_names/emoney_names_notifier.dart';
 import '../../state/money/money_notifier.dart';
+import '../../utilities/utilities.dart';
 import '_money_dialog.dart';
 import 'bank_price_input_alert.dart';
 import 'money_input_alert.dart';
@@ -29,6 +30,8 @@ class DailyMoneyDisplayAlert extends ConsumerWidget {
 
   int _totalMoney = 0;
 
+  final Utility _utility = Utility();
+
   late BuildContext _context;
   late WidgetRef _ref;
 
@@ -38,10 +41,6 @@ class DailyMoneyDisplayAlert extends ConsumerWidget {
     await BankNameRepository.getBankNamesList(ref: ref);
     await EmoneyNameRepository.getEmoneyNamesList(ref: ref);
     await BankPriceRepository.getBankPriceList(ref: ref);
-
-    await _makeCurrencySum();
-
-    await _makeTotalMoney();
   }
 
   ///
@@ -51,6 +50,12 @@ class DailyMoneyDisplayAlert extends ConsumerWidget {
     _ref = ref;
 
     Future(() => init(ref: ref));
+
+    final singleMoney = _ref.watch(moneySingleProvider.select((value) => value.singleMoney));
+
+    _currencySum = _utility.makeCurrencySum(money: singleMoney);
+
+    _totalMoney = _utility.makeTotalMoney(currencySum: _currencySum, ref: ref, date: date);
 
     return AlertDialog(
       titlePadding: EdgeInsets.zero,
@@ -171,56 +176,6 @@ class DailyMoneyDisplayAlert extends ConsumerWidget {
   }
 
   ///
-  Future<void> _makeCurrencySum() async {
-    final singleMoney = _ref.watch(moneySingleProvider.select((value) => value.singleMoney));
-
-    final yen_10000 = (singleMoney != null) ? singleMoney.yen_10000 : 0;
-    final yen_5000 = (singleMoney != null) ? singleMoney.yen_5000 : 0;
-    final yen_2000 = (singleMoney != null) ? singleMoney.yen_2000 : 0;
-    final yen_1000 = (singleMoney != null) ? singleMoney.yen_1000 : 0;
-    final yen_500 = (singleMoney != null) ? singleMoney.yen_500 : 0;
-    final yen_100 = (singleMoney != null) ? singleMoney.yen_100 : 0;
-    final yen_50 = (singleMoney != null) ? singleMoney.yen_50 : 0;
-    final yen_10 = (singleMoney != null) ? singleMoney.yen_10 : 0;
-    final yen_5 = (singleMoney != null) ? singleMoney.yen_5 : 0;
-    final yen_1 = (singleMoney != null) ? singleMoney.yen_1 : 0;
-
-    _currencySum = (yen_10000 * 10000) +
-        (yen_5000 * 5000) +
-        (yen_2000 * 2000) +
-        (yen_1000 * 1000) +
-        (yen_500 * 500) +
-        (yen_100 * 100) +
-        (yen_50 * 50) +
-        (yen_10 * 10) +
-        (yen_5 * 5) +
-        (yen_1 * 1);
-  }
-
-  ///
-  Future<void> _makeTotalMoney() async {
-    _totalMoney = 0;
-
-    final list = <int>[_currencySum];
-
-    final bankPriceState = _ref.watch(bankPriceProvider);
-
-    final bankPriceDatePadMap = (bankPriceState.bankPriceDatePadMap.value != null)
-        ? bankPriceState.bankPriceDatePadMap.value
-        : <String, Map<String, int>>{};
-
-    bankPriceDatePadMap?.forEach((key, value) {
-      value.forEach((key2, value2) {
-        if (date.yyyymmdd == key2) {
-          list.add(value2);
-        }
-      });
-    });
-
-    list.forEach((element) => _totalMoney += element);
-  }
-
-  ///
   Widget _displayBankMoney() {
     final bankNameList = _ref.watch(bankNamesProvider.select((value) => value.bankNameList));
 
@@ -299,7 +254,7 @@ class DailyMoneyDisplayAlert extends ConsumerWidget {
                         if (bankPriceList != null)
                           Text(
                             bankPriceList.last.date,
-                            style: const TextStyle(fontSize: 10,color: Colors.grey),
+                            style: const TextStyle(fontSize: 10, color: Colors.grey),
                           ),
                       ],
                     ),
