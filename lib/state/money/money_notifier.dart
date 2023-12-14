@@ -15,4 +15,8 @@ class MoneySingleNotifier extends StateNotifier<MoneyResponseState> {
 
   ///
   Future<void> setBeforeDateMoney({required Money money}) async => state = state.copyWith(beforeDateMoney: money);
+
+  ///
+  Future<void> setBeforeDateMoneyForSum({required Money money}) async =>
+      state = state.copyWith(beforeDateMoneyForSum: money);
 }

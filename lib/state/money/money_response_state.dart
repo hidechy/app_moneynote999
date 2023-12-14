@@ -9,5 +9,6 @@ class MoneyResponseState with _$MoneyResponseState {
   const factory MoneyResponseState({
     Money? singleMoney,
     Money? beforeDateMoney,
+    Money? beforeDateMoneyForSum,
   }) = _MoneyResponseState;
 }

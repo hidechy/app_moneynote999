@@ -86,6 +86,7 @@ class MoneyRepository {
               await ref.read(moneySingleProvider.notifier).setMoney(money: money);
               break;
             case GetSingleMoneyWhen.yesterday:
+              await ref.read(moneySingleProvider.notifier).setBeforeDateMoneyForSum(money: money);
               break;
           }
           break;

@@ -32,6 +32,8 @@ class DailyMoneyDisplayAlert extends ConsumerWidget {
 
   int _totalMoney = 0;
 
+  int _totalMoneyBeforeDate = 0;
+
   final Utility _utility = Utility();
 
   late BuildContext _context;
@@ -46,6 +48,18 @@ class DailyMoneyDisplayAlert extends ConsumerWidget {
       when: GetSingleMoneyWhen.today,
     );
 
+    //-----
+    final beforeDate = DateTime(date.year, date.month, date.day - 1);
+    await Future(
+      () => MoneyRepository.getSingleMoney(
+        date: beforeDate.yyyymmdd,
+        ref: ref,
+        from: GetSingleMoneyFrom.dailyMoneyDisplayAlert,
+        when: GetSingleMoneyWhen.yesterday,
+      ),
+    );
+    //-----
+
     await BankNameRepository.getBankNamesList(ref: ref);
     await EmoneyNameRepository.getEmoneyNamesList(ref: ref);
     await BankPriceRepository.getBankPriceList(ref: ref);
@@ -59,11 +73,20 @@ class DailyMoneyDisplayAlert extends ConsumerWidget {
 
     Future(() => init(ref: ref));
 
-    final singleMoney = _ref.watch(moneySingleProvider.select((value) => value.singleMoney));
-
+    //================
+    final singleMoney = ref.watch(moneySingleProvider.select((value) => value.singleMoney));
     _currencySum = _utility.makeCurrencySum(money: singleMoney);
-
     _totalMoney = _utility.makeTotalMoney(currencySum: _currencySum, ref: ref, date: date);
+    //================
+
+    //================
+    final beforeDateMoneyForSum = ref.watch(moneySingleProvider.select((value) => value.beforeDateMoneyForSum));
+    if (beforeDateMoneyForSum != null) {
+      final beforeDate = DateTime(date.year, date.month, date.day - 1);
+      final beforeDateSum = _utility.makeCurrencySum(money: beforeDateMoneyForSum);
+      _totalMoneyBeforeDate = _utility.makeTotalMoney(currencySum: beforeDateSum, ref: ref, date: beforeDate);
+    }
+    //================
 
     return AlertDialog(
       titlePadding: EdgeInsets.zero,
@@ -89,14 +112,31 @@ class DailyMoneyDisplayAlert extends ConsumerWidget {
                   margin: const EdgeInsets.all(3),
                   padding: const EdgeInsets.all(3),
                   decoration: BoxDecoration(border: Border.all(color: Colors.white.withOpacity(0.4))),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  child: Column(
                     children: [
-                      Container(),
-                      Column(
-                        children: [
-                          Text(_totalMoney.toString().toCurrency()),
-                        ],
+                      Container(
+                        padding: const EdgeInsets.all(10),
+                        decoration:
+                            BoxDecoration(border: Border(bottom: BorderSide(color: Colors.white.withOpacity(0.3)))),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            const Text('本日開始時'),
+                            Text(_totalMoneyBeforeDate.toString().toCurrency()),
+                          ],
+                        ),
+                      ),
+                      Container(
+                        padding: const EdgeInsets.all(10),
+                        decoration:
+                            BoxDecoration(border: Border(bottom: BorderSide(color: Colors.white.withOpacity(0.3)))),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            const Text('本日終了時'),
+                            Text(_totalMoney.toString().toCurrency()),
+                          ],
+                        ),
                       ),
                     ],
                   ),
