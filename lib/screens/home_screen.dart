@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:money_note/screens/components/___dummy_data_input_alert.dart';
 
 import '../extensions/extensions.dart';
+import '../state/app_param/app_param_notifier.dart';
 import '../state/calendar/calendar_notifier.dart';
 import '../state/holiday/holiday_notifier.dart';
 import '../utilities/utilities.dart';
+import 'components/___dummy_data_input_alert.dart';
 import 'components/_money_dialog.dart';
 import 'components/daily_money_display_alert.dart';
 import 'components/deposit_list_alert.dart';
@@ -175,12 +176,14 @@ class HomeScreen extends ConsumerWidget {
 
   ///
   Widget _getCalendarRow({required int week}) {
+    var appParamState = _ref.watch(appParamProvider);
+
     final calendarState = _ref.watch(calendarProvider);
 
     final list = <Widget>[];
 
     for (var i = week * 7; i < ((week + 1) * 7); i++) {
-      final dispDate = (_calendarDays[i] == '')
+      final generateYmd = (_calendarDays[i] == '')
           ? ''
           : DateTime(_calendarMonthFirst.year, _calendarMonthFirst.month, _calendarDays[i].toInt()).yyyymmdd;
 
@@ -189,7 +192,7 @@ class HomeScreen extends ConsumerWidget {
           : DateTime(_calendarMonthFirst.year, _calendarMonthFirst.month, _calendarDays[i].toInt()).youbiStr;
 
       var diff = 0;
-      if (dispDate != '') {
+      if (generateYmd != '') {
         final genDate = DateTime(_calendarMonthFirst.year, _calendarMonthFirst.month, _calendarDays[i].toInt());
         diff = genDate.difference(DateTime.now()).inSeconds;
       }
@@ -197,12 +200,16 @@ class HomeScreen extends ConsumerWidget {
       list.add(
         Expanded(
           child: GestureDetector(
-            onTap: (diff > 0)
+            onTap: (_calendarDays[i] == '' || diff > 0)
                 ? null
                 : () {
+                    _ref
+                        .read(appParamProvider.notifier)
+                        .setCalendarSelectedDate(date: DateTime.parse('$generateYmd 00:00:00'));
+
                     MoneyDialog(
                       context: _context,
-                      widget: DailyMoneyDisplayAlert(date: DateTime.parse('$dispDate 00:00:00')),
+                      widget: DailyMoneyDisplayAlert(date: DateTime.parse('$generateYmd 00:00:00')),
                     );
                   },
             child: Container(
@@ -212,12 +219,7 @@ class HomeScreen extends ConsumerWidget {
                 border: Border.all(
                   color: (_calendarDays[i] == '')
                       ? Colors.transparent
-                      : (DateTime(
-                                calendarState.baseYearMonth.split('-')[0].toInt(),
-                                calendarState.baseYearMonth.split('-')[1].toInt(),
-                                _calendarDays[i].toInt(),
-                              ).yyyymmdd ==
-                              DateTime.now().yyyymmdd)
+                      : (generateYmd == DateTime.now().yyyymmdd)
                           ? Colors.orangeAccent.withOpacity(0.4)
                           : Colors.white.withOpacity(0.1),
                   width: 3,
@@ -226,7 +228,10 @@ class HomeScreen extends ConsumerWidget {
                     ? Colors.transparent
                     : (diff > 0)
                         ? Colors.white.withOpacity(0.1)
-                        : _utility.getYoubiColor(date: dispDate, youbiStr: youbiStr, holidayMap: _holidayMap),
+                        : (appParamState.calendarSelectedDate != null &&
+                                generateYmd == appParamState.calendarSelectedDate!.yyyymmdd)
+                            ? Colors.yellowAccent.withOpacity(0.1)
+                            : _utility.getYoubiColor(date: generateYmd, youbiStr: youbiStr, holidayMap: _holidayMap),
               ),
               child: (_calendarDays[i] == '')
                   ? const Text('')

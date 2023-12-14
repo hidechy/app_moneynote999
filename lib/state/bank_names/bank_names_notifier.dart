@@ -4,13 +4,12 @@ import '../../enums/account_type.dart';
 import '../../models/bank_name.dart';
 import 'bank_names_response_state.dart';
 
-final bankNamesProvider =
-    StateNotifierProvider.autoDispose<BankNamesSettingNotifier, BankNamesResponseState>((ref) {
-  return BankNamesSettingNotifier(const BankNamesResponseState());
+final bankNamesProvider = StateNotifierProvider.autoDispose<BankNamesNotifier, BankNamesResponseState>((ref) {
+  return BankNamesNotifier(const BankNamesResponseState());
 });
 
-class BankNamesSettingNotifier extends StateNotifier<BankNamesResponseState> {
-  BankNamesSettingNotifier(super.state);
+class BankNamesNotifier extends StateNotifier<BankNamesResponseState> {
+  BankNamesNotifier(super.state);
 
   ///
   Future<void> setAccountType({required AccountType accountType}) async =>
