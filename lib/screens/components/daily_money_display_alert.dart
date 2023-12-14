@@ -2,6 +2,9 @@ import 'package:bubble/bubble.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:money_note/screens/components/income_list_alert.dart';
+import 'package:money_note/screens/components/spend_list_alert.dart';
+import 'package:money_note/screens/components/timeplace_list_alert.dart';
 
 import '../../enums/get_single_money_from.dart';
 import '../../enums/get_single_money_when.dart';
@@ -230,7 +233,12 @@ class DailyMoneyDisplayAlert extends ConsumerWidget {
             const Text('使用金額内容画面'),
             const SizedBox(width: 10),
             GestureDetector(
-              onTap: () {},
+              onTap: () {
+                MoneyDialog(
+                  context: _context,
+                  widget: const SpendListAlert(),
+                );
+              },
               child: Text('OPEN', style: TextStyle(color: Theme.of(_context).colorScheme.primary)),
             ),
           ],
@@ -242,7 +250,12 @@ class DailyMoneyDisplayAlert extends ConsumerWidget {
             const Text('使用場所内容画面'),
             const SizedBox(width: 10),
             GestureDetector(
-              onTap: () {},
+              onTap: () {
+                MoneyDialog(
+                  context: _context,
+                  widget: const TimeplaceListAlert(),
+                );
+              },
               child: Text('OPEN', style: TextStyle(color: Theme.of(_context).colorScheme.primary)),
             ),
           ],
@@ -254,7 +267,12 @@ class DailyMoneyDisplayAlert extends ConsumerWidget {
             const Text('収入履歴画面'),
             const SizedBox(width: 10),
             GestureDetector(
-              onTap: () {},
+              onTap: () {
+                MoneyDialog(
+                  context: _context,
+                  widget: const IncomeListAlert(),
+                );
+              },
               child: Text('OPEN', style: TextStyle(color: Theme.of(_context).colorScheme.primary)),
             ),
           ],

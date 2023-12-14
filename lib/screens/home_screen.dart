@@ -205,6 +205,8 @@ class HomeScreen extends ConsumerWidget {
                         .read(appParamProvider.notifier)
                         .setCalendarSelectedDate(date: DateTime.parse('$generateYmd 00:00:00'));
 
+                    _ref.read(appParamProvider.notifier).setMenuNumber(menuNumber: 0);
+
                     MoneyDialog(
                       context: _context,
                       widget: DailyMoneyDisplayAlert(date: DateTime.parse('$generateYmd 00:00:00')),
