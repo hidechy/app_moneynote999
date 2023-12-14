@@ -10,7 +10,7 @@ import '../utilities/utilities.dart';
 import 'components/___dummy_data_input_alert.dart';
 import 'components/_money_dialog.dart';
 import 'components/daily_money_display_alert.dart';
-import 'components/deposit_list_alert.dart';
+import 'components/deposit_tab_alert.dart';
 
 // ignore: must_be_immutable
 class HomeScreen extends ConsumerWidget {
@@ -100,7 +100,7 @@ class HomeScreen extends ConsumerWidget {
             children: [
               const SizedBox(height: 60),
               GestureDetector(
-                onTap: () async => MoneyDialog(context: context, widget: DepositListAlert()),
+                onTap: () async => MoneyDialog(context: context, widget: DepositTabAlert()),
                 child: Container(
                   width: double.infinity,
                   padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 3),

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../_money_dialog.dart';
-import '../deposit_list_alert.dart';
+import '../deposit_tab_alert.dart';
 
 // ignore: must_be_immutable
 class BankEmoneyBlankMessage extends StatelessWidget {
@@ -28,7 +28,7 @@ class BankEmoneyBlankMessage extends StatelessWidget {
                 onTap: () {
                   MoneyDialog(
                     context: context,
-                    widget: (index != null) ? DepositListAlert(index: 1) : DepositListAlert(),
+                    widget: (index != null) ? DepositTabAlert(index: 1) : DepositTabAlert(),
                   );
                 },
               ),

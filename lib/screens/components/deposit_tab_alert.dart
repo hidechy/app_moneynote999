@@ -14,8 +14,8 @@ class TabInfo {
 }
 
 // ignore: must_be_immutable
-class DepositListAlert extends HookConsumerWidget {
-  DepositListAlert({super.key, this.index});
+class DepositTabAlert extends HookConsumerWidget {
+  DepositTabAlert({super.key, this.index});
 
   int? index;
 
