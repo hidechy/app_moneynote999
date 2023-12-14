@@ -1,1 +1,1 @@
-enum GetSingleMoneyFrom { dailyMoneyDisplayAlert, MoneyInputAlert }
+enum GetSingleMoneyFrom { dailyMoneyDisplayAlert, moneyInputAlert }

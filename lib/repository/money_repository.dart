@@ -90,7 +90,7 @@ class MoneyRepository {
           }
           break;
 
-        case GetSingleMoneyFrom.MoneyInputAlert:
+        case GetSingleMoneyFrom.moneyInputAlert:
           switch (when) {
             case GetSingleMoneyWhen.today:
               break;

@@ -59,7 +59,7 @@ class _MoneyInputAlertState extends ConsumerState<MoneyInputAlert> {
       () => MoneyRepository.getSingleMoney(
         date: beforeDate.yyyymmdd,
         ref: ref,
-        from: GetSingleMoneyFrom.MoneyInputAlert,
+        from: GetSingleMoneyFrom.moneyInputAlert,
         when: GetSingleMoneyWhen.yesterday,
       ),
     );
