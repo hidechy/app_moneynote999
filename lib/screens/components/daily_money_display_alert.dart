@@ -2,9 +2,6 @@ import 'package:bubble/bubble.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:money_note/screens/components/income_list_alert.dart';
-import 'package:money_note/screens/components/spend_input_alert.dart';
-import 'package:money_note/screens/components/timeplace_input_alert.dart';
 
 import '../../enums/get_single_money_from.dart';
 import '../../enums/get_single_money_when.dart';
@@ -24,8 +21,11 @@ import '../../state/money/money_notifier.dart';
 import '../../utilities/utilities.dart';
 import '_money_dialog.dart';
 import 'bank_price_input_alert.dart';
+import 'income_list_alert.dart';
 import 'money_input_alert.dart';
 import 'parts/bank_emoney_blank_message.dart';
+import 'spend_input_alert.dart';
+import 'timeplace_input_alert.dart';
 
 // ignore: must_be_immutable
 class DailyMoneyDisplayAlert extends ConsumerWidget {

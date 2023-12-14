@@ -28,9 +28,9 @@ enum SpendType {
   plus,
 }
 
-extension on SpendType {
+extension SpendTypeExtension on SpendType {
   // ignore: unused_element
-  String? get value {
+  String? get japanName {
     switch (this) {
       case SpendType.food:
         return '食費';
