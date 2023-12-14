@@ -188,15 +188,23 @@ class HomeScreen extends ConsumerWidget {
           ? ''
           : DateTime(_calendarMonthFirst.year, _calendarMonthFirst.month, _calendarDays[i].toInt()).youbiStr;
 
+      var diff = 0;
+      if (dispDate != '') {
+        final genDate = DateTime(_calendarMonthFirst.year, _calendarMonthFirst.month, _calendarDays[i].toInt());
+        diff = genDate.difference(DateTime.now()).inSeconds;
+      }
+
       list.add(
         Expanded(
           child: GestureDetector(
-            onTap: () {
-              MoneyDialog(
-                context: _context,
-                widget: DailyMoneyDisplayAlert(date: DateTime.parse('$dispDate 00:00:00')),
-              );
-            },
+            onTap: (diff > 0)
+                ? null
+                : () {
+                    MoneyDialog(
+                      context: _context,
+                      widget: DailyMoneyDisplayAlert(date: DateTime.parse('$dispDate 00:00:00')),
+                    );
+                  },
             child: Container(
               margin: const EdgeInsets.all(1),
               padding: const EdgeInsets.all(2),
@@ -216,7 +224,9 @@ class HomeScreen extends ConsumerWidget {
                 ),
                 color: (_calendarDays[i] == '')
                     ? Colors.transparent
-                    : _utility.getYoubiColor(date: dispDate, youbiStr: youbiStr, holidayMap: _holidayMap),
+                    : (diff > 0)
+                        ? Colors.white.withOpacity(0.1)
+                        : _utility.getYoubiColor(date: dispDate, youbiStr: youbiStr, holidayMap: _holidayMap),
               ),
               child: (_calendarDays[i] == '')
                   ? const Text('')
