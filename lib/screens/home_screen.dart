@@ -176,9 +176,7 @@ class HomeScreen extends ConsumerWidget {
 
   ///
   Widget _getCalendarRow({required int week}) {
-    var appParamState = _ref.watch(appParamProvider);
-
-    final calendarState = _ref.watch(calendarProvider);
+    final appParamState = _ref.watch(appParamProvider);
 
     final list = <Widget>[];
 
