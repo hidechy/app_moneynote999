@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:money_note/models/bank_name.dart';
+import 'package:money_note/models/emoney_name.dart';
 
 import '../../extensions/extensions.dart';
 import '../../models/bank_price.dart';
@@ -224,10 +226,6 @@ class DailyMoneyDisplayAlert extends ConsumerWidget {
 
     final bankPriceState = _ref.watch(bankPriceProvider);
 
-    final bankPriceDatePadMap = (bankPriceState.bankPriceDatePadMap.value != null)
-        ? bankPriceState.bankPriceDatePadMap.value
-        : <String, Map<String, int>>{};
-
     final bankPriceListMap = (bankPriceState.bankPriceListMap.value != null)
         ? bankPriceState.bankPriceListMap.value
         : <String, List<BankPrice>>{};
@@ -258,12 +256,7 @@ class DailyMoneyDisplayAlert extends ConsumerWidget {
             final list = <Widget>[];
 
             value.forEach((element) {
-              var bankPrice = 0;
-              if (bankPriceDatePadMap?['${element.depositType}-${element.id}'] != null) {
-                if (bankPriceDatePadMap?['${element.depositType}-${element.id}']?[date.yyyymmdd] != null) {
-                  bankPrice = bankPriceDatePadMap!['${element.depositType}-${element.id}']![date.yyyymmdd]!;
-                }
-              }
+              final bankPrice = getBankPrice(bankName: element);
 
               list.add(Container(
                 padding: const EdgeInsets.all(10),
@@ -318,10 +311,6 @@ class DailyMoneyDisplayAlert extends ConsumerWidget {
 
     final bankPriceState = _ref.watch(bankPriceProvider);
 
-    final bankPriceDatePadMap = (bankPriceState.bankPriceDatePadMap.value != null)
-        ? bankPriceState.bankPriceDatePadMap.value
-        : <String, Map<String, int>>{};
-
     final bankPriceListMap = (bankPriceState.bankPriceListMap.value != null)
         ? bankPriceState.bankPriceListMap.value
         : <String, List<BankPrice>>{};
@@ -352,12 +341,7 @@ class DailyMoneyDisplayAlert extends ConsumerWidget {
             final list = <Widget>[];
 
             value.forEach((element) {
-              var bankPrice = 0;
-              if (bankPriceDatePadMap?['${element.depositType}-${element.id}'] != null) {
-                if (bankPriceDatePadMap?['${element.depositType}-${element.id}']?[date.yyyymmdd] != null) {
-                  bankPrice = bankPriceDatePadMap!['${element.depositType}-${element.id}']![date.yyyymmdd]!;
-                }
-              }
+              final bankPrice = getBankPrice(emoneyName: element);
 
               list.add(Container(
                 padding: const EdgeInsets.all(10),
@@ -398,5 +382,32 @@ class DailyMoneyDisplayAlert extends ConsumerWidget {
         ),
       ],
     );
+  }
+
+  ///
+  int getBankPrice({BankName? bankName, EmoneyName? emoneyName}) {
+    var bankPrice = 0;
+
+    final bankPriceState = _ref.watch(bankPriceProvider);
+
+    final bankPriceDatePadMap = (bankPriceState.bankPriceDatePadMap.value != null)
+        ? bankPriceState.bankPriceDatePadMap.value
+        : <String, Map<String, int>>{};
+
+    if (bankName != null) {
+      if (bankPriceDatePadMap?['${bankName.depositType}-${bankName.id}'] != null) {
+        if (bankPriceDatePadMap?['${bankName.depositType}-${bankName.id}']?[date.yyyymmdd] != null) {
+          bankPrice = bankPriceDatePadMap!['${bankName.depositType}-${bankName.id}']![date.yyyymmdd]!;
+        }
+      }
+    } else if (emoneyName != null) {
+      if (bankPriceDatePadMap?['${emoneyName.depositType}-${emoneyName.id}'] != null) {
+        if (bankPriceDatePadMap?['${emoneyName.depositType}-${emoneyName.id}']?[date.yyyymmdd] != null) {
+          bankPrice = bankPriceDatePadMap!['${emoneyName.depositType}-${emoneyName.id}']![date.yyyymmdd]!;
+        }
+      }
+    }
+
+    return bankPrice;
   }
 }
