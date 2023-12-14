@@ -11,4 +11,7 @@ class AppParamNotifier extends StateNotifier<AppParamResponseState> {
   ///
   Future<void> setCalendarSelectedDate({required DateTime date}) async =>
       state = state.copyWith(calendarSelectedDate: date);
+
+  ///
+  Future<void> setMenuNumber({required int menuNumber}) async => state = state.copyWith(menuNumber: menuNumber);
 }

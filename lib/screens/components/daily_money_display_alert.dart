@@ -13,6 +13,7 @@ import '../../repository/bank_name_repository.dart';
 import '../../repository/bank_price_repository.dart';
 import '../../repository/emoney_name_repository.dart';
 import '../../repository/money_repository.dart';
+import '../../state/app_param/app_param_notifier.dart';
 import '../../state/bank_names/bank_names_notifier.dart';
 import '../../state/bank_price/bank_price_notifier.dart';
 import '../../state/emoney_names/emoney_names_notifier.dart';
@@ -146,7 +147,7 @@ class DailyMoneyDisplayAlert extends ConsumerWidget {
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            const Text('Spend'),
+                            const Text('Difference'),
                             Row(
                               children: [
                                 if ((_totalMoneyBeforeDate - _totalMoney) < 0) ...[
@@ -166,7 +167,46 @@ class DailyMoneyDisplayAlert extends ConsumerWidget {
                     ],
                   ),
                 ),
-                const SizedBox(height: 10),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Row(
+                      children: [
+                        GestureDetector(
+                          onTap: () => _ref.read(appParamProvider.notifier).setMenuNumber(menuNumber: 0),
+                          child: Container(
+                            padding: const EdgeInsets.all(5),
+                            child: Icon(Icons.close, color: Colors.yellowAccent.withOpacity(0.6), size: 16),
+                          ),
+                        ),
+                        GestureDetector(
+                          onTap: () => _ref.read(appParamProvider.notifier).setMenuNumber(menuNumber: 1),
+                          child: Container(
+                            padding: const EdgeInsets.all(5),
+                            child:
+                                Icon(Icons.info_outline_rounded, color: Colors.greenAccent.withOpacity(0.6), size: 16),
+                          ),
+                        ),
+                        GestureDetector(
+                          onTap: () => _ref.read(appParamProvider.notifier).setMenuNumber(menuNumber: 2),
+                          child: Container(
+                            padding: const EdgeInsets.all(5),
+                            child: Icon(Icons.access_time, color: Colors.greenAccent.withOpacity(0.6), size: 16),
+                          ),
+                        ),
+                        GestureDetector(
+                          onTap: () => _ref.read(appParamProvider.notifier).setMenuNumber(menuNumber: 3),
+                          child: Container(
+                            padding: const EdgeInsets.all(5),
+                            child: Icon(Icons.monetization_on, color: Colors.greenAccent.withOpacity(0.6), size: 16),
+                          ),
+                        ),
+                      ],
+                    ),
+                    _getMenuOpenStr(),
+                  ],
+                ),
+                const SizedBox(height: 20),
                 _displaySingleMoney(),
                 _displayBankMoney(),
                 _displayEmoneyMoney(),
@@ -177,6 +217,51 @@ class DailyMoneyDisplayAlert extends ConsumerWidget {
         ),
       ),
     );
+  }
+
+  ///
+  Widget _getMenuOpenStr() {
+    final menuNumber = _ref.watch(appParamProvider.select((value) => value.menuNumber));
+
+    switch (menuNumber) {
+      case 1:
+        return Row(
+          children: [
+            const Text('使用金額内容画面'),
+            const SizedBox(width: 10),
+            GestureDetector(
+              onTap: () {},
+              child: Text('OPEN', style: TextStyle(color: Theme.of(_context).colorScheme.primary)),
+            ),
+          ],
+        );
+
+      case 2:
+        return Row(
+          children: [
+            const Text('使用場所内容画面'),
+            const SizedBox(width: 10),
+            GestureDetector(
+              onTap: () {},
+              child: Text('OPEN', style: TextStyle(color: Theme.of(_context).colorScheme.primary)),
+            ),
+          ],
+        );
+
+      case 3:
+        return Row(
+          children: [
+            const Text('収入履歴画面'),
+            const SizedBox(width: 10),
+            GestureDetector(
+              onTap: () {},
+              child: Text('OPEN', style: TextStyle(color: Theme.of(_context).colorScheme.primary)),
+            ),
+          ],
+        );
+    }
+
+    return Container();
   }
 
   ///

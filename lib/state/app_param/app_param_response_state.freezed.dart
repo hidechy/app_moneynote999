@@ -17,6 +17,7 @@ final _privateConstructorUsedError = UnsupportedError(
 /// @nodoc
 mixin _$AppParamResponseState {
   DateTime? get calendarSelectedDate => throw _privateConstructorUsedError;
+  int get menuNumber => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $AppParamResponseStateCopyWith<AppParamResponseState> get copyWith =>
@@ -29,7 +30,7 @@ abstract class $AppParamResponseStateCopyWith<$Res> {
           $Res Function(AppParamResponseState) then) =
       _$AppParamResponseStateCopyWithImpl<$Res, AppParamResponseState>;
   @useResult
-  $Res call({DateTime? calendarSelectedDate});
+  $Res call({DateTime? calendarSelectedDate, int menuNumber});
 }
 
 /// @nodoc
@@ -47,12 +48,17 @@ class _$AppParamResponseStateCopyWithImpl<$Res,
   @override
   $Res call({
     Object? calendarSelectedDate = freezed,
+    Object? menuNumber = null,
   }) {
     return _then(_value.copyWith(
       calendarSelectedDate: freezed == calendarSelectedDate
           ? _value.calendarSelectedDate
           : calendarSelectedDate // ignore: cast_nullable_to_non_nullable
               as DateTime?,
+      menuNumber: null == menuNumber
+          ? _value.menuNumber
+          : menuNumber // ignore: cast_nullable_to_non_nullable
+              as int,
     ) as $Val);
   }
 }
@@ -66,7 +72,7 @@ abstract class _$$AppParamResponseStateImplCopyWith<$Res>
       __$$AppParamResponseStateImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({DateTime? calendarSelectedDate});
+  $Res call({DateTime? calendarSelectedDate, int menuNumber});
 }
 
 /// @nodoc
@@ -82,12 +88,17 @@ class __$$AppParamResponseStateImplCopyWithImpl<$Res>
   @override
   $Res call({
     Object? calendarSelectedDate = freezed,
+    Object? menuNumber = null,
   }) {
     return _then(_$AppParamResponseStateImpl(
       calendarSelectedDate: freezed == calendarSelectedDate
           ? _value.calendarSelectedDate
           : calendarSelectedDate // ignore: cast_nullable_to_non_nullable
               as DateTime?,
+      menuNumber: null == menuNumber
+          ? _value.menuNumber
+          : menuNumber // ignore: cast_nullable_to_non_nullable
+              as int,
     ));
   }
 }
@@ -95,14 +106,18 @@ class __$$AppParamResponseStateImplCopyWithImpl<$Res>
 /// @nodoc
 
 class _$AppParamResponseStateImpl implements _AppParamResponseState {
-  const _$AppParamResponseStateImpl({this.calendarSelectedDate});
+  const _$AppParamResponseStateImpl(
+      {this.calendarSelectedDate, this.menuNumber = 0});
 
   @override
   final DateTime? calendarSelectedDate;
+  @override
+  @JsonKey()
+  final int menuNumber;
 
   @override
   String toString() {
-    return 'AppParamResponseState(calendarSelectedDate: $calendarSelectedDate)';
+    return 'AppParamResponseState(calendarSelectedDate: $calendarSelectedDate, menuNumber: $menuNumber)';
   }
 
   @override
@@ -111,11 +126,14 @@ class _$AppParamResponseStateImpl implements _AppParamResponseState {
         (other.runtimeType == runtimeType &&
             other is _$AppParamResponseStateImpl &&
             (identical(other.calendarSelectedDate, calendarSelectedDate) ||
-                other.calendarSelectedDate == calendarSelectedDate));
+                other.calendarSelectedDate == calendarSelectedDate) &&
+            (identical(other.menuNumber, menuNumber) ||
+                other.menuNumber == menuNumber));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, calendarSelectedDate);
+  int get hashCode =>
+      Object.hash(runtimeType, calendarSelectedDate, menuNumber);
 
   @JsonKey(ignore: true)
   @override
@@ -126,11 +144,14 @@ class _$AppParamResponseStateImpl implements _AppParamResponseState {
 }
 
 abstract class _AppParamResponseState implements AppParamResponseState {
-  const factory _AppParamResponseState({final DateTime? calendarSelectedDate}) =
-      _$AppParamResponseStateImpl;
+  const factory _AppParamResponseState(
+      {final DateTime? calendarSelectedDate,
+      final int menuNumber}) = _$AppParamResponseStateImpl;
 
   @override
   DateTime? get calendarSelectedDate;
+  @override
+  int get menuNumber;
   @override
   @JsonKey(ignore: true)
   _$$AppParamResponseStateImplCopyWith<_$AppParamResponseStateImpl>

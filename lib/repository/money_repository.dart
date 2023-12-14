@@ -38,7 +38,7 @@ class MoneyRepository {
           'CREATE TABLE if not exists spend(id integer PRIMARY KEY, date TEXT, spend_type TEXT, price integer)',
         );
         await db.execute(
-          'CREATE TABLE if not exists banks(id integer PRIMARY KEY, date TEXT, time TEXT, place TEXT, price integer)',
+          'CREATE TABLE if not exists time_place(id integer PRIMARY KEY, date TEXT, time TEXT, place TEXT, price integer)',
         );
       },
       version: 1,
