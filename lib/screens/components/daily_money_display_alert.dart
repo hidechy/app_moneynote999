@@ -14,8 +14,8 @@ import '../../state/emoney_names/emoney_names_notifier.dart';
 import '../../state/money/money_notifier.dart';
 import '_money_dialog.dart';
 import 'bank_price_input_alert.dart';
-import 'deposit_list_alert.dart';
 import 'money_input_alert.dart';
+import 'parts/bank_emoney_blank_message.dart';
 
 // ignore: must_be_immutable
 class DailyMoneyDisplayAlert extends ConsumerWidget {
@@ -252,31 +252,7 @@ class DailyMoneyDisplayAlert extends ConsumerWidget {
         bankNameList.when(
           data: (value) {
             if (value.isEmpty) {
-              return DefaultTextStyle(
-                style: TextStyle(color: Colors.grey.withOpacity(0.6), fontSize: 12),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    const Text('金融機関が設定されていません。'),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        const Text('必要であれば登録してください。'),
-                        GestureDetector(
-                          child:
-                              Text('登録', style: TextStyle(fontSize: 12, color: Theme.of(_context).colorScheme.primary)),
-                          onTap: () {
-                            MoneyDialog(
-                              context: _context,
-                              widget: DepositListAlert(),
-                            );
-                          },
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
-              );
+              return BankEmoneyBlankMessage(deposit: '金融機関');
             }
 
             final list = <Widget>[];
@@ -370,31 +346,7 @@ class DailyMoneyDisplayAlert extends ConsumerWidget {
         emoneyNameList.when(
           data: (value) {
             if (value.isEmpty) {
-              return DefaultTextStyle(
-                style: TextStyle(color: Colors.grey.withOpacity(0.6), fontSize: 12),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    const Text('電子マネーが設定されていません。'),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        const Text('必要であれば登録してください。'),
-                        GestureDetector(
-                          child:
-                              Text('登録', style: TextStyle(fontSize: 12, color: Theme.of(_context).colorScheme.primary)),
-                          onTap: () {
-                            MoneyDialog(
-                              context: _context,
-                              widget: DepositListAlert(index: 1),
-                            );
-                          },
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
-              );
+              return BankEmoneyBlankMessage(deposit: '電子マネー', index: 1);
             }
 
             final list = <Widget>[];

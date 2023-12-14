@@ -61,7 +61,7 @@ emoney-5: [{2023-12-11: 50000}]}
       //--- (2)
       final dt = DateTime.parse('${bankPriceList[0].date} 00:00:00');
 
-      var now = DateTime.now();
+      final now = DateTime.now();
       final threeDaysAfter = DateTime(now.year, now.month, now.day + 3);
 
       final diff = threeDaysAfter.difference(dt).inDays;
