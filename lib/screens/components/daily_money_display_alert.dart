@@ -258,6 +258,8 @@ class DailyMoneyDisplayAlert extends ConsumerWidget {
             value.forEach((element) {
               final bankPrice = getBankPrice(bankName: element);
 
+              final bankPriceList = bankPriceListMap?['${element.depositType}-${element.id}'];
+
               list.add(Container(
                 padding: const EdgeInsets.all(10),
                 decoration: BoxDecoration(border: Border(bottom: BorderSide(color: Colors.white.withOpacity(0.3)))),
@@ -271,24 +273,34 @@ class DailyMoneyDisplayAlert extends ConsumerWidget {
                         Text('${element.accountType} ${element.accountNumber}'),
                       ],
                     ),
-                    Row(
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.end,
                       children: [
-                        Text(bankPrice.toString().toCurrency()),
-                        const SizedBox(width: 10),
-                        GestureDetector(
-                          onTap: () {
-                            MoneyDialog(
-                              context: _context,
-                              widget: BankPriceInputAlert(
-                                date: date,
-                                bankName: element,
-                                bankPriceList: bankPriceListMap?['${element.depositType}-${element.id}'],
-                                bankPrice: bankPrice,
-                              ),
-                            );
-                          },
-                          child: Icon(Icons.input, color: Colors.greenAccent.withOpacity(0.6), size: 16),
+                        Row(
+                          children: [
+                            Text(bankPrice.toString().toCurrency()),
+                            const SizedBox(width: 10),
+                            GestureDetector(
+                              onTap: () {
+                                MoneyDialog(
+                                  context: _context,
+                                  widget: BankPriceInputAlert(
+                                    date: date,
+                                    bankName: element,
+                                    bankPriceList: bankPriceList,
+                                    bankPrice: bankPrice,
+                                  ),
+                                );
+                              },
+                              child: Icon(Icons.input, color: Colors.greenAccent.withOpacity(0.6), size: 16),
+                            ),
+                          ],
                         ),
+                        if (bankPriceList != null)
+                          Text(
+                            bankPriceList.last.date,
+                            style: const TextStyle(fontSize: 10,color: Colors.grey),
+                          ),
                       ],
                     ),
                   ],
@@ -343,6 +355,8 @@ class DailyMoneyDisplayAlert extends ConsumerWidget {
             value.forEach((element) {
               final bankPrice = getBankPrice(emoneyName: element);
 
+              final bankPriceList = bankPriceListMap?['${element.depositType}-${element.id}'];
+
               list.add(Container(
                 padding: const EdgeInsets.all(10),
                 decoration: BoxDecoration(border: Border(bottom: BorderSide(color: Colors.white.withOpacity(0.3)))),
@@ -350,24 +364,34 @@ class DailyMoneyDisplayAlert extends ConsumerWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(element.emoneyName),
-                    Row(
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.end,
                       children: [
-                        Text(bankPrice.toString().toCurrency()),
-                        const SizedBox(width: 10),
-                        GestureDetector(
-                          onTap: () {
-                            MoneyDialog(
-                              context: _context,
-                              widget: BankPriceInputAlert(
-                                date: date,
-                                emoneyName: element,
-                                bankPriceList: bankPriceListMap?['${element.depositType}-${element.id}'],
-                                bankPrice: bankPrice,
-                              ),
-                            );
-                          },
-                          child: Icon(Icons.input, color: Colors.greenAccent.withOpacity(0.6), size: 16),
+                        Row(
+                          children: [
+                            Text(bankPrice.toString().toCurrency()),
+                            const SizedBox(width: 10),
+                            GestureDetector(
+                              onTap: () {
+                                MoneyDialog(
+                                  context: _context,
+                                  widget: BankPriceInputAlert(
+                                    date: date,
+                                    emoneyName: element,
+                                    bankPriceList: bankPriceList,
+                                    bankPrice: bankPrice,
+                                  ),
+                                );
+                              },
+                              child: Icon(Icons.input, color: Colors.greenAccent.withOpacity(0.6), size: 16),
+                            ),
+                          ],
                         ),
+                        if (bankPriceList != null)
+                          Text(
+                            bankPriceList.last.date,
+                            style: const TextStyle(fontSize: 10, color: Colors.grey),
+                          ),
                       ],
                     ),
                   ],
