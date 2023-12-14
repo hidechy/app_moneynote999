@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:money_note/extensions/extensions.dart';
 
+import '../extensions/extensions.dart';
 import '../models/money.dart';
 import '../state/bank_price/bank_price_notifier.dart';
 

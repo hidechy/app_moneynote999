@@ -2,6 +2,8 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 
+import '../enums/get_single_money_from.dart';
+import '../enums/get_single_money_when.dart';
 import '../models/money.dart';
 import '../state/money/money_notifier.dart';
 
@@ -52,7 +54,11 @@ class MoneyRepository {
   }
 
   ///
-  static Future<void> getSingleMoney({required String date, required WidgetRef ref}) async {
+  static Future<void> getSingleMoney(
+      {required String date,
+      required WidgetRef ref,
+      required GetSingleMoneyFrom from,
+      required GetSingleMoneyWhen when}) async {
     final db = await database();
 
     final List<Map<String, dynamic>> maps = await db.query('moneies', where: 'date = ?', whereArgs: [date]);
@@ -73,7 +79,27 @@ class MoneyRepository {
         yen_1: maps[0]['yen_1'],
       );
 
-      await ref.read(moneySingleProvider.notifier).setMoney(money: money);
+      switch (from) {
+        case GetSingleMoneyFrom.dailyMoneyDisplayAlert:
+          switch (when) {
+            case GetSingleMoneyWhen.today:
+              await ref.read(moneySingleProvider.notifier).setMoney(money: money);
+              break;
+            case GetSingleMoneyWhen.yesterday:
+              break;
+          }
+          break;
+
+        case GetSingleMoneyFrom.MoneyInputAlert:
+          switch (when) {
+            case GetSingleMoneyWhen.today:
+              break;
+            case GetSingleMoneyWhen.yesterday:
+              await ref.read(moneySingleProvider.notifier).setBeforeDateMoney(money: money);
+              break;
+          }
+          break;
+      }
     }
   }
 
@@ -82,31 +108,5 @@ class MoneyRepository {
     final db = await database();
     await db.update('moneies', money.toMap(), where: 'id = ?', whereArgs: [money.id]);
     await ref.read(moneySingleProvider.notifier).setMoney(money: money);
-  }
-
-  ///
-  static Future<void> getBeforeDateMoney({required String date, required WidgetRef ref}) async {
-    final db = await database();
-
-    final List<Map<String, dynamic>> maps = await db.query('moneies', where: 'date = ?', whereArgs: [date]);
-
-    if (maps.isNotEmpty) {
-      final money = Money(
-        id: maps[0]['id'],
-        date: date,
-        yen_10000: maps[0]['yen_10000'],
-        yen_5000: maps[0]['yen_5000'],
-        yen_2000: maps[0]['yen_2000'],
-        yen_1000: maps[0]['yen_1000'],
-        yen_500: maps[0]['yen_500'],
-        yen_100: maps[0]['yen_100'],
-        yen_50: maps[0]['yen_50'],
-        yen_10: maps[0]['yen_10'],
-        yen_5: maps[0]['yen_5'],
-        yen_1: maps[0]['yen_1'],
-      );
-
-      await ref.read(moneySingleProvider.notifier).setBeforeDateMoney(money: money);
-    }
   }
 }

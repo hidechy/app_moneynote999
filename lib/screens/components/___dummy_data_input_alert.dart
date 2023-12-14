@@ -243,23 +243,23 @@ class DummyDataInputAlert extends StatelessWidget {
   Future<void> _setDummyMoneyData() async {
     ////////////////////
 
-    final date1 = DateTime.now();
-
-    final money1 = Money(
-      date: date1.yyyymmdd,
-      yen_10000: 7,
-      yen_5000: 7,
-      yen_2000: 7,
-      yen_1000: 7,
-      yen_500: 7,
-      yen_100: 7,
-      yen_50: 7,
-      yen_10: 7,
-      yen_5: 7,
-      yen_1: 7,
-    );
-
-    await MoneyRepository.insertMoney(money: money1);
+    // final date1 = DateTime.now();
+    //
+    // final money1 = Money(
+    //   date: date1.yyyymmdd,
+    //   yen_10000: 7,
+    //   yen_5000: 7,
+    //   yen_2000: 7,
+    //   yen_1000: 7,
+    //   yen_500: 7,
+    //   yen_100: 7,
+    //   yen_50: 7,
+    //   yen_10: 7,
+    //   yen_5: 7,
+    //   yen_1: 7,
+    // );
+    //
+    // await MoneyRepository.insertMoney(money: money1);
 
     ////////////////////
 

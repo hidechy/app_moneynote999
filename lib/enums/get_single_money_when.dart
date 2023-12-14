@@ -1,0 +1,1 @@
+enum GetSingleMoneyWhen { today, yesterday }
