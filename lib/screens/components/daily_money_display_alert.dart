@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:money_note/screens/components/income_list_alert.dart';
-import 'package:money_note/screens/components/spend_list_alert.dart';
-import 'package:money_note/screens/components/timeplace_list_alert.dart';
+import 'package:money_note/screens/components/spend_input_alert.dart';
+import 'package:money_note/screens/components/timeplace_input_alert.dart';
 
 import '../../enums/get_single_money_from.dart';
 import '../../enums/get_single_money_when.dart';
@@ -182,6 +182,10 @@ class DailyMoneyDisplayAlert extends ConsumerWidget {
                             child: Icon(Icons.close, color: Colors.yellowAccent.withOpacity(0.6), size: 16),
                           ),
                         ),
+                        DecoratedBox(
+                          decoration: BoxDecoration(border: Border.all(color: Colors.white.withOpacity(0.4))),
+                          child: const Text(''),
+                        ),
                         GestureDetector(
                           onTap: () => _ref.read(appParamProvider.notifier).setMenuNumber(menuNumber: 1),
                           child: Container(
@@ -196,6 +200,10 @@ class DailyMoneyDisplayAlert extends ConsumerWidget {
                             padding: const EdgeInsets.all(5),
                             child: Icon(Icons.access_time, color: Colors.greenAccent.withOpacity(0.6), size: 16),
                           ),
+                        ),
+                        DecoratedBox(
+                          decoration: BoxDecoration(border: Border.all(color: Colors.white.withOpacity(0.4))),
+                          child: const Text(''),
                         ),
                         GestureDetector(
                           onTap: () => _ref.read(appParamProvider.notifier).setMenuNumber(menuNumber: 3),
@@ -230,13 +238,13 @@ class DailyMoneyDisplayAlert extends ConsumerWidget {
       case 1:
         return Row(
           children: [
-            const Text('使用金額内容画面'),
+            const Text('使用金額内容登録'),
             const SizedBox(width: 10),
             GestureDetector(
               onTap: () {
                 MoneyDialog(
                   context: _context,
-                  widget: const SpendListAlert(),
+                  widget: SpendInputAlert(date: date, spend: _totalMoneyBeforeDate - _totalMoney),
                 );
               },
               child: Text('OPEN', style: TextStyle(color: Theme.of(_context).colorScheme.primary)),
@@ -247,13 +255,13 @@ class DailyMoneyDisplayAlert extends ConsumerWidget {
       case 2:
         return Row(
           children: [
-            const Text('使用場所内容画面'),
+            const Text('使用場所詳細登録'),
             const SizedBox(width: 10),
             GestureDetector(
               onTap: () {
                 MoneyDialog(
                   context: _context,
-                  widget: const TimeplaceListAlert(),
+                  widget: TimeplaceInputAlert(date: date, spend: _totalMoneyBeforeDate - _totalMoney),
                 );
               },
               child: Text('OPEN', style: TextStyle(color: Theme.of(_context).colorScheme.primary)),

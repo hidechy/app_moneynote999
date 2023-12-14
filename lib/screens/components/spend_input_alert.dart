@@ -3,8 +3,11 @@ import 'package:google_fonts/google_fonts.dart';
 
 import '../../extensions/extensions.dart';
 
-class TimeplaceListAlert extends StatelessWidget {
-  const TimeplaceListAlert({super.key});
+class SpendInputAlert extends StatelessWidget {
+  const SpendInputAlert({super.key, required this.date, required this.spend});
+
+  final DateTime date;
+  final int spend;
 
   ///
   @override
@@ -23,21 +26,19 @@ class TimeplaceListAlert extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              const SizedBox(height: 20),
               Container(width: context.screenSize.width),
 
-              const Text('TimeplaceListAlert'),
+              Text(date.yyyymmdd),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  const Text('Difference'),
+                  Text(spend.toString()),
+                ],
+              ),
+              Divider(color: Colors.white.withOpacity(0.4), thickness: 5),
 
-              // Row(
-              //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              //   children: [
-              //     Container(),
-              //     TextButton(
-              //       onPressed: () =>
-              //           MoneyDialog(context: context, widget: BankNameInputAlert(depositType: DepositType.bank)),
-              //       child: const Text('金融機関を追加する'),
-              //     ),
-              //   ],
-              // ),
               // Expanded(child: _displayBankList()),
             ],
           ),

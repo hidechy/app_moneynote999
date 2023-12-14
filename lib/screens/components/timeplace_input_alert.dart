@@ -3,8 +3,11 @@ import 'package:google_fonts/google_fonts.dart';
 
 import '../../extensions/extensions.dart';
 
-class SpendListAlert extends StatelessWidget {
-  const SpendListAlert({super.key});
+class TimeplaceInputAlert extends StatelessWidget {
+  const TimeplaceInputAlert({super.key, required this.date, required this.spend});
+
+  final DateTime date;
+  final int spend;
 
   ///
   @override
@@ -25,7 +28,8 @@ class SpendListAlert extends StatelessWidget {
             children: [
               Container(width: context.screenSize.width),
 
-              const Text('SpendListAlert'),
+              const Text('TimeplaceListAlert'),
+              Text(spend.toString()),
 
               // Row(
               //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
