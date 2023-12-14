@@ -10,6 +10,15 @@ class BankPriceRepository {
   ///
   static Future<void> insertBankPrice({required BankPrice bankPrice}) async {
     final db = await MoneyRepository.database();
+
+    await db.delete(
+      'bank_price',
+      where: 'deposit_type = ? and bank_id = ? and date = ?',
+      whereArgs: [bankPrice.depositType, bankPrice.bankId, bankPrice.date],
+    );
+
+    //deposit_type TEXT, date TEXT, bank_id integer
+
     await db.insert('bank_price', bankPrice.toMap(), conflictAlgorithm: ConflictAlgorithm.replace);
   }
 
