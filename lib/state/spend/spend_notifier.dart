@@ -1,9 +1,10 @@
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:money_note/models/spend.dart';
 
 import '../../extensions/extensions.dart';
-import 'spend_input_response_state.dart';
+import 'spend_response_state.dart';
 
-final spendInputProvider = StateNotifierProvider.autoDispose<SpendInputNotifier, SpendInputResponseState>((ref) {
+final spendProvider = StateNotifierProvider.autoDispose<SpendNotifier, SpendResponseState>((ref) {
   final list = <String>[];
   final list2 = <int>[];
   final list3 = <bool>[];
@@ -13,11 +14,11 @@ final spendInputProvider = StateNotifierProvider.autoDispose<SpendInputNotifier,
     list3.add(false);
   }
 
-  return SpendInputNotifier(SpendInputResponseState(spendItem: list, spendPrice: list2, minusCheck: list3));
+  return SpendNotifier(SpendResponseState(spendItem: list, spendPrice: list2, minusCheck: list3));
 });
 
-class SpendInputNotifier extends StateNotifier<SpendInputResponseState> {
-  SpendInputNotifier(super.state);
+class SpendNotifier extends StateNotifier<SpendResponseState> {
+  SpendNotifier(super.state);
 
   ///
   Future<void> setBaseDiff({required String baseDiff}) async {
@@ -65,4 +66,8 @@ class SpendInputNotifier extends StateNotifier<SpendInputResponseState> {
 
     state = state.copyWith(spendItem: items);
   }
+
+  ///
+  Future<void> setSpendList({required List<Spend> spendList}) async =>
+      state = state.copyWith(spendList: AsyncValue.data(spendList));
 }

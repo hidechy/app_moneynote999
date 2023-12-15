@@ -10,6 +10,6 @@ class Spend {
   String price;
 
   Map<String, dynamic> toMap() {
-    return {'date': date, 'spendType': spendType, 'price': price};
+    return {'date': date, 'spend_type': spendType, 'price': price};
   }
 }

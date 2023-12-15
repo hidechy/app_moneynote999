@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:money_note/models/spend.dart';
+import 'package:money_note/repository/spend_repository.dart';
 
 import '../../enums/spend_type.dart';
 import '../../extensions/extensions.dart';
-import '../../state/spend_input/spend_input_notifier.dart';
+import '../../state/spend/spend_notifier.dart';
+import 'parts/error_dialog.dart';
 
 // ignore: must_be_immutable
 class SpendInputAlert extends ConsumerWidget {
@@ -26,9 +29,9 @@ class SpendInputAlert extends ConsumerWidget {
     _context = context;
     _ref = ref;
 
-    Future(() => ref.watch(spendInputProvider.notifier).setBaseDiff(baseDiff: spend.toString()));
+    Future(() => ref.watch(spendProvider.notifier).setBaseDiff(baseDiff: spend.toString()));
 
-    final spendInputState = ref.watch(spendInputProvider);
+    final spendInputState = ref.watch(spendProvider);
 
     makeTecs();
 
@@ -66,7 +69,10 @@ class SpendInputAlert extends ConsumerWidget {
                         ),
                       ),
                       const SizedBox(width: 10),
-                      Icon(Icons.input, color: Colors.greenAccent.withOpacity(0.6), size: 16),
+                      GestureDetector(
+                        onTap: _inputSpend,
+                        child: Icon(Icons.input, color: Colors.greenAccent.withOpacity(0.6), size: 16),
+                      ),
                     ],
                   ),
                 ],
@@ -108,7 +114,7 @@ class SpendInputAlert extends ConsumerWidget {
       )
     ];
 
-    final spendInputState = _ref.watch(spendInputProvider);
+    final spendInputState = _ref.watch(spendProvider);
 
     for (var i = 0; i < 10; i++) {
       list.add(
@@ -119,7 +125,7 @@ class SpendInputAlert extends ConsumerWidget {
           child: Row(
             children: [
               GestureDetector(
-                onTap: () => _ref.read(spendInputProvider.notifier).setItemPos(pos: i),
+                onTap: () => _ref.read(spendProvider.notifier).setItemPos(pos: i),
                 child: Icon(
                   Icons.arrow_forward,
                   color: (i == spendInputState.itemPos) ? Colors.greenAccent : Colors.grey,
@@ -145,7 +151,7 @@ class SpendInputAlert extends ConsumerWidget {
               ),
               const SizedBox(width: 20),
               GestureDetector(
-                onTap: () => _ref.read(spendInputProvider.notifier).setMinusCheck(pos: i),
+                onTap: () => _ref.read(spendProvider.notifier).setMinusCheck(pos: i),
                 child: Icon(
                   Icons.remove,
                   color: (spendInputState.minusCheck[i]) ? Colors.redAccent : Colors.white,
@@ -164,7 +170,7 @@ class SpendInputAlert extends ConsumerWidget {
                     contentPadding: EdgeInsets.symmetric(vertical: 4, horizontal: 4),
                   ),
                   style: const TextStyle(fontSize: 12),
-                  onChanged: (value) => _ref.read(spendInputProvider.notifier).setSpendPrice(
+                  onChanged: (value) => _ref.read(spendProvider.notifier).setSpendPrice(
                         pos: i,
                         price: value.toInt(),
                       ),
@@ -182,13 +188,13 @@ class SpendInputAlert extends ConsumerWidget {
 
   ///
   Widget spendItemSetPanel() {
-    final spendInputState = _ref.watch(spendInputProvider);
+    final spendInputState = _ref.watch(spendProvider);
 
     return SingleChildScrollView(
       child: Wrap(
         children: spendItem.map((e) {
           return GestureDetector(
-            onTap: () => _ref.read(spendInputProvider.notifier).setSpendItem(pos: spendInputState.itemPos, item: e),
+            onTap: () => _ref.read(spendProvider.notifier).setSpendItem(pos: spendInputState.itemPos, item: e),
             child: Container(
               margin: const EdgeInsets.all(5),
               padding: const EdgeInsets.all(5),
@@ -213,5 +219,53 @@ class SpendInputAlert extends ConsumerWidget {
     SpendType.values.forEach((element) {
       spendItem.add(element.japanName!);
     });
+  }
+
+  ///
+  Future<void> _inputSpend() async {
+    final spendInputState = _ref.watch(spendProvider);
+
+    final spendItem = spendInputState.spendItem;
+    final spendPrice = spendInputState.spendPrice;
+    final minusCheck = spendInputState.minusCheck;
+
+    final list = <Map<String, dynamic>>[];
+
+    var errFlg = false;
+
+    for (var i = 0; i < 10; i++) {
+      if (spendItem[i] != '' && spendPrice[i] != 0) {
+        final price = (minusCheck[i]) ? spendPrice[i] * -1 : spendPrice[i];
+
+        list.add({'item': spendItem[i], 'price': price});
+      }
+    }
+
+    if (list.isEmpty) {
+      errFlg = true;
+    }
+
+    final diff = spendInputState.diff;
+
+    if (diff != 0 || errFlg) {
+      Future.delayed(
+        Duration.zero,
+        () => error_dialog(context: _context, title: '登録できません。', content: '値を正しく入力してください。'),
+      );
+
+      return;
+    }
+
+    list.forEach((element) {
+      final spend = Spend(
+        date: date.yyyymmdd,
+        spendType: element['item'],
+        price: element['price'].toString(),
+      );
+
+      SpendRepository.insertSpend(spend: spend);
+    });
+
+    Navigator.pop(_context);
   }
 }

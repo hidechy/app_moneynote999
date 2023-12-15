@@ -2,6 +2,8 @@ import 'package:bubble/bubble.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:money_note/state/spend/spend_notifier.dart';
+import 'package:sqflite/sqflite.dart';
 
 import '../../enums/get_single_money_from.dart';
 import '../../enums/get_single_money_when.dart';
@@ -13,6 +15,7 @@ import '../../repository/bank_name_repository.dart';
 import '../../repository/bank_price_repository.dart';
 import '../../repository/emoney_name_repository.dart';
 import '../../repository/money_repository.dart';
+import '../../repository/spend_repository.dart';
 import '../../state/app_param/app_param_notifier.dart';
 import '../../state/bank_names/bank_names_notifier.dart';
 import '../../state/bank_price/bank_price_notifier.dart';
@@ -67,7 +70,10 @@ class DailyMoneyDisplayAlert extends ConsumerWidget {
 
     await BankNameRepository.getBankNamesList(ref: ref);
     await EmoneyNameRepository.getEmoneyNamesList(ref: ref);
+
     await BankPriceRepository.getBankPriceList(ref: ref);
+
+    await SpendRepository.getSingleSpend(date: date.yyyymmdd, ref: ref);
   }
 
   ///
@@ -182,25 +188,27 @@ class DailyMoneyDisplayAlert extends ConsumerWidget {
                             child: Icon(Icons.close, color: Colors.yellowAccent.withOpacity(0.6), size: 16),
                           ),
                         ),
-                        DecoratedBox(
-                          decoration: BoxDecoration(border: Border.all(color: Colors.white.withOpacity(0.4))),
-                          child: const Text(''),
-                        ),
-                        GestureDetector(
-                          onTap: () => _ref.read(appParamProvider.notifier).setMenuNumber(menuNumber: 1),
-                          child: Container(
-                            padding: const EdgeInsets.all(5),
-                            child:
-                                Icon(Icons.info_outline_rounded, color: Colors.greenAccent.withOpacity(0.6), size: 16),
+                        if (_currencySum > 0) ...[
+                          DecoratedBox(
+                            decoration: BoxDecoration(border: Border.all(color: Colors.white.withOpacity(0.4))),
+                            child: const Text(''),
                           ),
-                        ),
-                        GestureDetector(
-                          onTap: () => _ref.read(appParamProvider.notifier).setMenuNumber(menuNumber: 2),
-                          child: Container(
-                            padding: const EdgeInsets.all(5),
-                            child: Icon(Icons.access_time, color: Colors.greenAccent.withOpacity(0.6), size: 16),
+                          GestureDetector(
+                            onTap: () => _ref.read(appParamProvider.notifier).setMenuNumber(menuNumber: 1),
+                            child: Container(
+                              padding: const EdgeInsets.all(5),
+                              child: Icon(Icons.info_outline_rounded,
+                                  color: Colors.greenAccent.withOpacity(0.6), size: 16),
+                            ),
                           ),
-                        ),
+                          GestureDetector(
+                            onTap: () => _ref.read(appParamProvider.notifier).setMenuNumber(menuNumber: 2),
+                            child: Container(
+                              padding: const EdgeInsets.all(5),
+                              child: Icon(Icons.access_time, color: Colors.greenAccent.withOpacity(0.6), size: 16),
+                            ),
+                          ),
+                        ],
                         DecoratedBox(
                           decoration: BoxDecoration(border: Border.all(color: Colors.white.withOpacity(0.4))),
                           child: const Text(''),
@@ -221,6 +229,7 @@ class DailyMoneyDisplayAlert extends ConsumerWidget {
                 _displaySingleMoney(),
                 _displayBankMoney(),
                 _displayEmoneyMoney(),
+                _displaySpend(),
                 const SizedBox(height: 20),
               ],
             ),
@@ -537,6 +546,37 @@ class DailyMoneyDisplayAlert extends ConsumerWidget {
                   ],
                 ),
               ));
+            });
+
+            return SingleChildScrollView(child: Column(children: list));
+          },
+          error: (error, stackTrace) => Container(),
+          loading: Container.new,
+        ),
+      ],
+    );
+  }
+
+  ///
+  Widget _displaySpend() {
+    var spendList = _ref.watch(spendProvider.select((value) => value.spendList));
+
+    return Column(
+      children: [
+
+
+        Text('aaa'),
+
+
+
+
+
+        spendList.when(
+          data: (value) {
+            List<Widget> list = [];
+
+            value.forEach((element) {
+              list.add(Text(element.spendType));
             });
 
             return SingleChildScrollView(child: Column(children: list));

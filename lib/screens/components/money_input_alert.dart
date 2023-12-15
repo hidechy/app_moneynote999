@@ -101,31 +101,25 @@ class _MoneyInputAlertState extends ConsumerState<MoneyInputAlert> {
                     Row(
                       children: [
                         Expanded(child: _displayInputParts(name: '10000', tec: _tecYen10000)),
-                        Expanded(child: _displayInputParts(name: '100', tec: _tecYen100)),
-                      ],
-                    ),
-                    Row(
-                      children: [
                         Expanded(child: _displayInputParts(name: '5000', tec: _tecYen5000)),
-                        Expanded(child: _displayInputParts(name: '50', tec: _tecYen50)),
-                      ],
-                    ),
-                    Row(
-                      children: [
                         Expanded(child: _displayInputParts(name: '2000', tec: _tecYen2000)),
-                        Expanded(child: _displayInputParts(name: '10', tec: _tecYen10)),
-                      ],
-                    ),
-                    Row(
-                      children: [
                         Expanded(child: _displayInputParts(name: '1000', tec: _tecYen1000)),
-                        Expanded(child: _displayInputParts(name: '5', tec: _tecYen5)),
                       ],
                     ),
                     Row(
                       children: [
                         Expanded(child: _displayInputParts(name: '500', tec: _tecYen500)),
+                        Expanded(child: _displayInputParts(name: '100', tec: _tecYen100)),
+                        Expanded(child: _displayInputParts(name: '50', tec: _tecYen50)),
+                        Expanded(child: Container()),
+                      ],
+                    ),
+                    Row(
+                      children: [
+                        Expanded(child: _displayInputParts(name: '10', tec: _tecYen10)),
+                        Expanded(child: _displayInputParts(name: '5', tec: _tecYen5)),
                         Expanded(child: _displayInputParts(name: '1', tec: _tecYen1)),
+                        Expanded(child: Container()),
                       ],
                     ),
                   ],
