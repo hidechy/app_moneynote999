@@ -226,8 +226,11 @@ class DailyMoneyDisplayAlert extends ConsumerWidget {
                 ),
                 const SizedBox(height: 20),
                 _displaySingleMoney(),
+                const SizedBox(height: 20),
                 _displayBankMoney(),
+                const SizedBox(height: 20),
                 _displayEmoneyMoney(),
+                const SizedBox(height: 20),
                 _displaySpend(),
                 const SizedBox(height: 20),
               ],
@@ -302,56 +305,60 @@ class DailyMoneyDisplayAlert extends ConsumerWidget {
   Widget _displaySingleMoney() {
     final singleMoney = _ref.watch(moneySingleProvider.select((value) => value.singleMoney));
 
-    return Column(
+    final openCurrencyArea = _ref.watch(appParamProvider.select((value) => value.openCurrencyArea));
+
+    return ExpansionTile(
+      backgroundColor: Colors.blueGrey.withOpacity(0.1),
+      initiallyExpanded: openCurrencyArea,
+      iconColor: Colors.white,
+      onExpansionChanged: (value) => _ref.read(appParamProvider.notifier).setOpenCurrencyArea(value: value),
+      title: const Text(
+        'CURRENCY',
+        style: TextStyle(fontSize: 12, color: Colors.white),
+      ),
       children: [
-        const SizedBox(height: 10),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Expanded(
-              child: Container(
-                padding: const EdgeInsets.all(5),
-                decoration: BoxDecoration(color: Colors.indigo, borderRadius: BorderRadius.circular(20)),
-                alignment: Alignment.center,
-                child: const Text('CURRENCY'),
-              ),
-            ),
-            const SizedBox(width: 10),
-            Expanded(
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  GestureDetector(
-                    onTap: () {
-                      MoneyDialog(
-                        context: _context,
-                        widget: MoneyInputAlert(date: date, money: singleMoney),
-                      );
-                    },
-                    child: Icon(Icons.input, color: Colors.greenAccent.withOpacity(0.6), size: 16),
-                  ),
-                  Container(
-                    alignment: Alignment.topRight,
-                    child: Text(
-                      _currencySum.toString().toCurrency(),
-                      style: const TextStyle(color: Colors.yellowAccent),
+        Container(
+          padding: const EdgeInsets.symmetric(horizontal: 10),
+          child: Column(
+            children: [
+              Container(
+                padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 10),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    GestureDetector(
+                      onTap: () {
+                        MoneyDialog(
+                          context: _context,
+                          widget: MoneyInputAlert(date: date, money: singleMoney),
+                        );
+                      },
+                      child: Icon(Icons.input, color: Colors.greenAccent.withOpacity(0.6), size: 16),
                     ),
-                  ),
-                ],
+                    Container(
+                      alignment: Alignment.topRight,
+                      child: Text(
+                        _currencySum.toString().toCurrency(),
+                        style: const TextStyle(color: Colors.yellowAccent),
+                      ),
+                    ),
+                  ],
+                ),
               ),
-            ),
-          ],
+              _displayMoneyParts(key: '10000', value: (singleMoney != null) ? singleMoney.yen_10000 : 0),
+              _displayMoneyParts(key: '5000', value: (singleMoney != null) ? singleMoney.yen_5000 : 0),
+              _displayMoneyParts(key: '2000', value: (singleMoney != null) ? singleMoney.yen_2000 : 0),
+              _displayMoneyParts(key: '1000', value: (singleMoney != null) ? singleMoney.yen_1000 : 0),
+              _displayMoneyParts(key: '500', value: (singleMoney != null) ? singleMoney.yen_500 : 0),
+              _displayMoneyParts(key: '100', value: (singleMoney != null) ? singleMoney.yen_100 : 0),
+              _displayMoneyParts(key: '50', value: (singleMoney != null) ? singleMoney.yen_50 : 0),
+              _displayMoneyParts(key: '10', value: (singleMoney != null) ? singleMoney.yen_10 : 0),
+              _displayMoneyParts(key: '5', value: (singleMoney != null) ? singleMoney.yen_5 : 0),
+              _displayMoneyParts(key: '1', value: (singleMoney != null) ? singleMoney.yen_1 : 0),
+              const SizedBox(height: 10),
+            ],
+          ),
         ),
-        _displayMoneyParts(key: '10000', value: (singleMoney != null) ? singleMoney.yen_10000 : 0),
-        _displayMoneyParts(key: '5000', value: (singleMoney != null) ? singleMoney.yen_5000 : 0),
-        _displayMoneyParts(key: '2000', value: (singleMoney != null) ? singleMoney.yen_2000 : 0),
-        _displayMoneyParts(key: '1000', value: (singleMoney != null) ? singleMoney.yen_1000 : 0),
-        _displayMoneyParts(key: '500', value: (singleMoney != null) ? singleMoney.yen_500 : 0),
-        _displayMoneyParts(key: '100', value: (singleMoney != null) ? singleMoney.yen_100 : 0),
-        _displayMoneyParts(key: '50', value: (singleMoney != null) ? singleMoney.yen_50 : 0),
-        _displayMoneyParts(key: '10', value: (singleMoney != null) ? singleMoney.yen_10 : 0),
-        _displayMoneyParts(key: '5', value: (singleMoney != null) ? singleMoney.yen_5 : 0),
-        _displayMoneyParts(key: '1', value: (singleMoney != null) ? singleMoney.yen_1 : 0),
       ],
     );
   }
@@ -378,23 +385,18 @@ class DailyMoneyDisplayAlert extends ConsumerWidget {
         ? bankPriceState.bankPriceListMap.value
         : <String, List<BankPrice>>{};
 
-    return Column(
+    final openBankArea = _ref.watch(appParamProvider.select((value) => value.openBankArea));
+
+    return ExpansionTile(
+      backgroundColor: Colors.blueGrey.withOpacity(0.1),
+      initiallyExpanded: openBankArea,
+      iconColor: Colors.white,
+      onExpansionChanged: (value) => _ref.read(appParamProvider.notifier).setOpenBankArea(value: value),
+      title: const Text(
+        'BANK',
+        style: TextStyle(fontSize: 12, color: Colors.white),
+      ),
       children: [
-        const SizedBox(height: 30),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Expanded(
-              child: Container(
-                padding: const EdgeInsets.all(5),
-                decoration: BoxDecoration(color: Colors.indigo, borderRadius: BorderRadius.circular(20)),
-                alignment: Alignment.center,
-                child: const Text('BANK'),
-              ),
-            ),
-            Expanded(child: Container()),
-          ],
-        ),
         bankNameList.when(
           data: (value) {
             if (value.isEmpty) {
@@ -404,7 +406,7 @@ class DailyMoneyDisplayAlert extends ConsumerWidget {
             final list = <Widget>[];
 
             value.forEach((element) {
-              final bankPrice = getBankPrice(bankName: element);
+              final bankPrice = _getBankPrice(bankName: element);
 
               final bankPriceList = bankPriceListMap?['${element.depositType}-${element.id}'];
 
@@ -475,23 +477,18 @@ class DailyMoneyDisplayAlert extends ConsumerWidget {
         ? bankPriceState.bankPriceListMap.value
         : <String, List<BankPrice>>{};
 
-    return Column(
+    final openEmoneyArea = _ref.watch(appParamProvider.select((value) => value.openEmoneyArea));
+
+    return ExpansionTile(
+      backgroundColor: Colors.blueGrey.withOpacity(0.1),
+      initiallyExpanded: openEmoneyArea,
+      iconColor: Colors.white,
+      onExpansionChanged: (value) => _ref.read(appParamProvider.notifier).setOpenEmoneyArea(value: value),
+      title: const Text(
+        'E-MONEY',
+        style: TextStyle(fontSize: 12, color: Colors.white),
+      ),
       children: [
-        const SizedBox(height: 30),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Expanded(
-              child: Container(
-                padding: const EdgeInsets.all(5),
-                decoration: BoxDecoration(color: Colors.indigo, borderRadius: BorderRadius.circular(20)),
-                alignment: Alignment.center,
-                child: const Text('E-MONEY'),
-              ),
-            ),
-            Expanded(child: Container()),
-          ],
-        ),
         emoneyNameList.when(
           data: (value) {
             if (value.isEmpty) {
@@ -501,7 +498,7 @@ class DailyMoneyDisplayAlert extends ConsumerWidget {
             final list = <Widget>[];
 
             value.forEach((element) {
-              final bankPrice = getBankPrice(emoneyName: element);
+              final bankPrice = _getBankPrice(emoneyName: element);
 
               final bankPriceList = bankPriceListMap?['${element.depositType}-${element.id}'];
 
@@ -560,23 +557,18 @@ class DailyMoneyDisplayAlert extends ConsumerWidget {
   Widget _displaySpend() {
     final spendList = _ref.watch(spendProvider.select((value) => value.spendList));
 
-    return Column(
+    final openSpendArea = _ref.watch(appParamProvider.select((value) => value.openSpendArea));
+
+    return ExpansionTile(
+      backgroundColor: Colors.blueGrey.withOpacity(0.1),
+      initiallyExpanded: openSpendArea,
+      iconColor: Colors.white,
+      onExpansionChanged: (value) => _ref.read(appParamProvider.notifier).setOpenSpendArea(value: value),
+      title: const Text(
+        'SPEND',
+        style: TextStyle(fontSize: 12, color: Colors.white),
+      ),
       children: [
-        const SizedBox(height: 30),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Expanded(
-              child: Container(
-                padding: const EdgeInsets.all(5),
-                decoration: BoxDecoration(color: Colors.indigo, borderRadius: BorderRadius.circular(20)),
-                alignment: Alignment.center,
-                child: const Text('SPEND'),
-              ),
-            ),
-            Expanded(child: Container()),
-          ],
-        ),
         spendList.when(
           data: (value) {
             final list = <Widget>[];
@@ -605,7 +597,7 @@ class DailyMoneyDisplayAlert extends ConsumerWidget {
   }
 
   ///
-  int getBankPrice({BankName? bankName, EmoneyName? emoneyName}) {
+  int _getBankPrice({BankName? bankName, EmoneyName? emoneyName}) {
     var bankPrice = 0;
 
     final bankPriceState = _ref.watch(bankPriceProvider);
