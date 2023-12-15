@@ -1,6 +1,7 @@
 // ignore_for_file: non_constant_identifier_names
 
 import 'package:flutter/material.dart';
+import 'package:money_note/extensions/extensions.dart';
 
 Future<void> MoneyDialog({required BuildContext context, required Widget widget}) {
   return showDialog(

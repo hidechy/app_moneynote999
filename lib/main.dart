@@ -20,9 +20,7 @@ class MyApp extends StatelessWidget {
           backgroundColor: Colors.transparent,
         ),
         useMaterial3: false,
-        colorScheme: ColorScheme.fromSwatch(brightness: Brightness.dark),
       ),
-      themeMode: ThemeMode.dark,
       title: 'money note',
       debugShowCheckedModeBanner: false,
       home: GestureDetector(

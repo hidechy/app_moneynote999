@@ -11,6 +11,8 @@ import 'components/___dummy_data_input_alert.dart';
 import 'components/_money_dialog.dart';
 import 'components/daily_money_display_alert.dart';
 import 'components/deposit_tab_alert.dart';
+import 'components/parts/back_ground_image.dart';
+import 'components/parts/menu_head_icon.dart';
 
 // ignore: must_be_immutable
 class HomeScreen extends ConsumerWidget {
@@ -71,18 +73,28 @@ class HomeScreen extends ConsumerWidget {
           )
         ],
       ),
-      body: SafeArea(
-        child: DefaultTextStyle(
-          style: GoogleFonts.kiwiMaru(fontSize: 12),
-          child: Column(
-            children: [
-              ConstrainedBox(
-                constraints: BoxConstraints(minHeight: _context.screenSize.height / 3),
-                child: _getCalendar(),
-              ),
-            ],
+      body: Stack(
+        children: [
+          const BackGroundImage(),
+          Container(
+            width: context.screenSize.width,
+            height: context.screenSize.height,
+            decoration: BoxDecoration(color: Colors.black.withOpacity(0.7)),
           ),
-        ),
+          SafeArea(
+            child: DefaultTextStyle(
+              style: GoogleFonts.kiwiMaru(fontSize: 12),
+              child: Column(
+                children: [
+                  ConstrainedBox(
+                    constraints: BoxConstraints(minHeight: _context.screenSize.height / 3),
+                    child: _getCalendar(),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ],
       ),
       endDrawer: dispDrawer(context),
     );
@@ -101,12 +113,19 @@ class HomeScreen extends ConsumerWidget {
               const SizedBox(height: 60),
               GestureDetector(
                 onTap: () async => MoneyDialog(context: context, widget: DepositTabAlert()),
-                child: Container(
-                  width: double.infinity,
-                  padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 3),
-                  margin: const EdgeInsets.all(5),
-                  decoration: BoxDecoration(border: Border.all(color: Colors.white.withOpacity(0.4))),
-                  child: const Text('金融機関、電子マネー管理'),
+                child: Row(
+                  children: [
+                    const MenuHeadIcon(),
+                    Expanded(
+                      child: Container(
+                        width: double.infinity,
+                        padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 3),
+                        margin: const EdgeInsets.all(5),
+                        //    decoration: BoxDecoration(border: Border.all(color: Colors.white.withOpacity(0.4))),
+                        child: const Text('金融機関、電子マネー管理'),
+                      ),
+                    ),
+                  ],
                 ),
               ),
 

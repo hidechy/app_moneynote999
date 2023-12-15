@@ -338,15 +338,15 @@ class DummyDataInputAlert extends StatelessWidget {
 
     ////////////////////
 
-    final date3 = DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day - 2);
-
-    <Spend>[
-      Spend(date: date3.yyyymmdd, spendType: '食費', price: '1000'),
-      Spend(date: date3.yyyymmdd, spendType: '交通費', price: '2000'),
-      Spend(date: date3.yyyymmdd, spendType: '遊興費', price: '3000'),
-    ].forEach((element) async {
-      await SpendRepository.insertSpend(spend: element);
-    });
+    // final date3 = DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day - 2);
+    //
+    // <Spend>[
+    //   Spend(date: date3.yyyymmdd, spendType: '食費', price: '1000'),
+    //   Spend(date: date3.yyyymmdd, spendType: '交通費', price: '2000'),
+    //   Spend(date: date3.yyyymmdd, spendType: '遊興費', price: '3000'),
+    // ].forEach((element) async {
+    //   await SpendRepository.insertSpend(spend: element);
+    // });
 
     Navigator.pop(_context);
   }

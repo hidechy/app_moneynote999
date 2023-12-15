@@ -24,6 +24,8 @@ dependencies:
   google_fonts: ^6.1.0
   bubble: ^1.2.1
   path_provider: ^2.1.1
+  flutter_launcher_icons: ^0.13.1
+  flutter_native_splash: ^2.3.8
 
 dev_dependencies:
   flutter_test:
@@ -38,3 +40,18 @@ dev_dependencies:
 flutter:
 
   uses-material-design: true
+
+  assets:
+    - assets/images/
+
+flutter_native_splash:
+  image: "assets/images/coinpig.png"
+  color: "212121"
+
+flutter_icons:
+  android: "launcher_icon"
+  ios: true
+  image_path: "assets/images/ic_launcher.png"
+
+  adaptive_icon_background: "#212121"
+  adaptive_icon_foreground: "assets/images/ic_launcher.png"
