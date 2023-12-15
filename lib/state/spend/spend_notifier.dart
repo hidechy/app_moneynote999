@@ -1,20 +1,15 @@
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:money_note/models/spend.dart';
 
 import '../../extensions/extensions.dart';
+import '../../models/spend.dart';
 import 'spend_response_state.dart';
 
 final spendProvider = StateNotifierProvider.autoDispose<SpendNotifier, SpendResponseState>((ref) {
-  final list = <String>[];
-  final list2 = <int>[];
-  final list3 = <bool>[];
-  for (var i = 0; i < 10; i++) {
-    list.add('');
-    list2.add(0);
-    list3.add(false);
-  }
+  final spendItem = List.generate(10, (index) => '');
+  final spendPrice = List.generate(10, (index) => 0);
+  final minusCheck = List.generate(10, (index) => false);
 
-  return SpendNotifier(SpendResponseState(spendItem: list, spendPrice: list2, minusCheck: list3));
+  return SpendNotifier(SpendResponseState(spendItem: spendItem, spendPrice: spendPrice, minusCheck: minusCheck));
 });
 
 class SpendNotifier extends StateNotifier<SpendResponseState> {
@@ -70,4 +65,35 @@ class SpendNotifier extends StateNotifier<SpendResponseState> {
   ///
   Future<void> setSpendList({required List<Spend> spendList}) async =>
       state = state.copyWith(spendList: AsyncValue.data(spendList));
+
+  ///
+  Future<void> clearInputValue() async {
+    final spendItem = List.generate(10, (index) => '');
+    final spendPrice = List.generate(10, (index) => 0);
+    final minusCheck = List.generate(10, (index) => false);
+
+    state = state.copyWith(
+        spendItem: spendItem, spendPrice: spendPrice, minusCheck: minusCheck, itemPos: 0, baseDiff: '', diff: 0);
+  }
+
+  ///
+  Future<void> deleteSpendList({required String date}) async {
+    final spendList = state.spendList.value!;
+
+    spendList.where((element) => element.date == date).toList().forEach((element) {
+      try {
+        spendList.removeAt(element.id!);
+        // ignore: avoid_catches_without_on_clauses, empty_catches
+      } catch (e) {}
+    });
+
+    state = state.copyWith(spendList: AsyncValue.data(spendList));
+  }
+
+  ///
+  Future<void> setUpdateValue(
+      {required List<String> spendItem, required List<int> spendPrice, required List<bool> minusCheck}) async {
+    state = state.copyWith(
+        spendItem: spendItem, spendPrice: spendPrice, minusCheck: minusCheck, itemPos: 0, baseDiff: '', diff: 0);
+  }
 }

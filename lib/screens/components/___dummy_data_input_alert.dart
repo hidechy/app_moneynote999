@@ -254,9 +254,9 @@ class DummyDataInputAlert extends StatelessWidget {
 
     final money1 = Money(
       date: date1.yyyymmdd,
-      yen_10000: 7,
+      yen_10000: 8,
       yen_5000: 7,
-      yen_2000: 7,
+      yen_2000: 8,
       yen_1000: 7,
       yen_500: 7,
       yen_100: 7,

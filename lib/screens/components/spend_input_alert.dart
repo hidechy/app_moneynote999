@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:money_note/models/spend.dart';
-import 'package:money_note/repository/spend_repository.dart';
 
 import '../../enums/spend_type.dart';
 import '../../extensions/extensions.dart';
+import '../../models/spend.dart';
+import '../../repository/spend_repository.dart';
 import '../../state/spend/spend_notifier.dart';
 import 'parts/error_dialog.dart';
 
@@ -57,9 +57,10 @@ class SpendInputAlert extends ConsumerWidget {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  const Text('Difference'),
                   Row(
                     children: [
+                      const Text('Difference'),
+                      const SizedBox(width: 10),
                       Text(
                         (spendInputState.diff != 0)
                             ? spendInputState.diff.toString().toCurrency()
@@ -68,12 +69,11 @@ class SpendInputAlert extends ConsumerWidget {
                           color: (spendInputState.diff == 0) ? Colors.yellowAccent : Colors.white,
                         ),
                       ),
-                      const SizedBox(width: 10),
-                      GestureDetector(
-                        onTap: _inputSpend,
-                        child: Icon(Icons.input, color: Colors.greenAccent.withOpacity(0.6), size: 16),
-                      ),
                     ],
+                  ),
+                  GestureDetector(
+                    onTap: _inputSpend,
+                    child: Icon(Icons.input, color: Colors.greenAccent.withOpacity(0.6), size: 16),
                   ),
                 ],
               ),
@@ -94,8 +94,11 @@ class SpendInputAlert extends ConsumerWidget {
 
   ///
   void makeTecs() {
+    final spendInputState = _ref.watch(spendProvider);
+
+
     for (var i = 0; i < 10; i++) {
-      tecs.add(TextEditingController(text: ''));
+      tecs.add(TextEditingController(text: spendInputState.spendPrice[i].toString()));
     }
   }
 
@@ -256,6 +259,8 @@ class SpendInputAlert extends ConsumerWidget {
       return;
     }
 
+    await SpendRepository.deleteSpend(date: date.yyyymmdd, ref: _ref);
+
     list.forEach((element) {
       final spend = Spend(
         date: date.yyyymmdd,
@@ -266,6 +271,9 @@ class SpendInputAlert extends ConsumerWidget {
       SpendRepository.insertSpend(spend: spend);
     });
 
+    await _ref.read(spendProvider.notifier).clearInputValue();
+
+    // ignore: use_build_context_synchronously
     Navigator.pop(_context);
   }
 }

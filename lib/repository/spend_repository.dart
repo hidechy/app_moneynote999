@@ -30,4 +30,11 @@ class SpendRepository {
 
     await ref.read(spendProvider.notifier).setSpendList(spendList: spendList);
   }
+
+  ///
+  static Future<void> deleteSpend({required String date, required WidgetRef ref}) async {
+    final db = await MoneyRepository.database();
+    await db.delete('spend', where: 'date = ?', whereArgs: [date]);
+    await ref.read(spendProvider.notifier).deleteSpendList(date: date);
+  }
 }

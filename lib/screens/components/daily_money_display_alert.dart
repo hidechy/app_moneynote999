@@ -243,6 +243,8 @@ class DailyMoneyDisplayAlert extends ConsumerWidget {
 
   ///
   Widget _getMenuOpenStr() {
+    final spendList = _ref.watch(spendProvider.select((value) => value.spendList));
+
     final menuNumber = _ref.watch(appParamProvider.select((value) => value.menuNumber));
 
     switch (menuNumber) {
@@ -252,8 +254,40 @@ class DailyMoneyDisplayAlert extends ConsumerWidget {
             const Text('使用金額内容登録'),
             const SizedBox(width: 10),
             GestureDetector(
-              onTap: () {
-                MoneyDialog(
+              onTap: () async {
+                await _ref.read(spendProvider.notifier).clearInputValue();
+
+                //===========================
+
+                if (spendList.value != null) {
+                  final spendItem = List<String>.generate(10, (index) => '');
+                  final spendPrice = List<int>.generate(10, (index) => 0);
+                  final minusCheck = List<bool>.generate(10, (index) => false);
+
+                  for (var i = 0; i < spendList.value!.length; i++) {
+                    spendItem[i] = spendList.value![i].spendType;
+                    if (spendList.value![i].price.toInt() < 0) {
+                      spendPrice[i] = spendList.value![i].price.toInt() * -1;
+                      minusCheck[i] = true;
+                    } else {
+                      spendPrice[i] = spendList.value![i].price.toInt();
+                      minusCheck[i] = false;
+                    }
+                  }
+
+                  await _ref
+                      .read(spendProvider.notifier)
+                      .setUpdateValue(spendItem: spendItem, spendPrice: spendPrice, minusCheck: minusCheck);
+                }
+
+                //===========================
+
+                await _ref
+                    .read(spendProvider.notifier)
+                    .setBaseDiff(baseDiff: (_totalMoneyBeforeDate - _totalMoney).toString());
+
+                // ignore: use_build_context_synchronously
+                await MoneyDialog(
                   context: _context,
                   widget: SpendInputAlert(date: date, spend: _totalMoneyBeforeDate - _totalMoney),
                 );
