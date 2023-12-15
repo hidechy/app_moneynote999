@@ -100,9 +100,9 @@ class SpendNotifier extends StateNotifier<SpendResponseState> {
   ///
 
   Future<void> clearOneLineItem({required int pos}) async {
-    var spendItem = [...state.spendItem];
-    var spendPrice = [...state.spendPrice];
-    var minusCheck = [...state.minusCheck];
+    final spendItem = [...state.spendItem];
+    final spendPrice = [...state.spendPrice];
+    final minusCheck = [...state.minusCheck];
 
     spendItem[pos] = '';
     spendPrice[pos] = 0;
