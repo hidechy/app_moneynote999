@@ -29,7 +29,7 @@ class BackGroundImage extends StatelessWidget {
                     decoration: const BoxDecoration(
                         image: DecorationImage(image: AssetImage('assets/images/moneynote_title.png'))),
                   ),
-                  SizedBox(width: 5),
+                  const SizedBox(width: 5),
                 ],
               ),
             ],
