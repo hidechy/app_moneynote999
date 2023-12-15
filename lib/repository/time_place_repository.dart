@@ -19,4 +19,28 @@ class TimePlaceRepository {
     final db = await MoneyRepository.database();
     await db.insert('time_place', timePlace.toMap(), conflictAlgorithm: ConflictAlgorithm.replace);
   }
+
+  ///
+  static Future<void> getSingleTimePlace({required String date, required WidgetRef ref}) async {
+    final db = await MoneyRepository.database();
+
+    final List<Map<String, dynamic>> maps = await db.query(
+      'time_place',
+      where: 'date = ?',
+      whereArgs: [date],
+      orderBy: 'time asc',
+    );
+
+    final timePlaceList = List.generate(maps.length, (index) {
+      return TimePlace(
+        id: maps[index]['id'] as int,
+        date: maps[index]['date'] as String,
+        time: maps[index]['time'] as String,
+        place: maps[index]['place'] as String,
+        price: maps[index]['price'],
+      );
+    });
+
+    await ref.read(timePlaceProvider.notifier).setTimePlaceList(timePlaceList: timePlaceList);
+  }
 }

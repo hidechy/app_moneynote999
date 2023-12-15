@@ -17,7 +17,12 @@ class SpendRepository {
   static Future<void> getSingleSpend({required String date, required WidgetRef ref}) async {
     final db = await MoneyRepository.database();
 
-    final List<Map<String, dynamic>> maps = await db.query('spend', where: 'date = ?', whereArgs: [date]);
+    final List<Map<String, dynamic>> maps = await db.query(
+      'spend',
+      where: 'date = ?',
+      whereArgs: [date],
+      orderBy: 'id asc',
+    );
 
     final spendList = List.generate(maps.length, (index) {
       return Spend(

@@ -1,4 +1,5 @@
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:money_note/models/timeplace.dart';
 
 import '../../extensions/extensions.dart';
 import 'time_place_response_state.dart';
@@ -82,4 +83,8 @@ class TimePlaceNotifier extends StateNotifier<TimePlaceResponseState> {
       diff: 0,
     );
   }
+
+  ///
+  Future<void> setTimePlaceList({required List<TimePlace> timePlaceList}) async =>
+      state = state.copyWith(timePlaceList: AsyncValue.data(timePlaceList));
 }

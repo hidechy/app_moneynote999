@@ -22,6 +22,8 @@ mixin _$TimePlaceResponseState {
   String get baseDiff => throw _privateConstructorUsedError;
   int get diff => throw _privateConstructorUsedError;
   List<bool> get minusCheck => throw _privateConstructorUsedError;
+  AsyncValue<List<TimePlace>> get timePlaceList =>
+      throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $TimePlaceResponseStateCopyWith<TimePlaceResponseState> get copyWith =>
@@ -40,7 +42,8 @@ abstract class $TimePlaceResponseStateCopyWith<$Res> {
       List<int> spendPrice,
       String baseDiff,
       int diff,
-      List<bool> minusCheck});
+      List<bool> minusCheck,
+      AsyncValue<List<TimePlace>> timePlaceList});
 }
 
 /// @nodoc
@@ -63,6 +66,7 @@ class _$TimePlaceResponseStateCopyWithImpl<$Res,
     Object? baseDiff = null,
     Object? diff = null,
     Object? minusCheck = null,
+    Object? timePlaceList = null,
   }) {
     return _then(_value.copyWith(
       spendTime: null == spendTime
@@ -89,6 +93,10 @@ class _$TimePlaceResponseStateCopyWithImpl<$Res,
           ? _value.minusCheck
           : minusCheck // ignore: cast_nullable_to_non_nullable
               as List<bool>,
+      timePlaceList: null == timePlaceList
+          ? _value.timePlaceList
+          : timePlaceList // ignore: cast_nullable_to_non_nullable
+              as AsyncValue<List<TimePlace>>,
     ) as $Val);
   }
 }
@@ -108,7 +116,8 @@ abstract class _$$TimePlaceResponseStateImplCopyWith<$Res>
       List<int> spendPrice,
       String baseDiff,
       int diff,
-      List<bool> minusCheck});
+      List<bool> minusCheck,
+      AsyncValue<List<TimePlace>> timePlaceList});
 }
 
 /// @nodoc
@@ -130,6 +139,7 @@ class __$$TimePlaceResponseStateImplCopyWithImpl<$Res>
     Object? baseDiff = null,
     Object? diff = null,
     Object? minusCheck = null,
+    Object? timePlaceList = null,
   }) {
     return _then(_$TimePlaceResponseStateImpl(
       spendTime: null == spendTime
@@ -156,6 +166,10 @@ class __$$TimePlaceResponseStateImplCopyWithImpl<$Res>
           ? _value._minusCheck
           : minusCheck // ignore: cast_nullable_to_non_nullable
               as List<bool>,
+      timePlaceList: null == timePlaceList
+          ? _value.timePlaceList
+          : timePlaceList // ignore: cast_nullable_to_non_nullable
+              as AsyncValue<List<TimePlace>>,
     ));
   }
 }
@@ -169,7 +183,8 @@ class _$TimePlaceResponseStateImpl implements _TimePlaceResponseState {
       final List<int> spendPrice = const [],
       this.baseDiff = '',
       this.diff = 0,
-      final List<bool> minusCheck = const []})
+      final List<bool> minusCheck = const [],
+      this.timePlaceList = const AsyncValue<List<TimePlace>>.loading()})
       : _spendTime = spendTime,
         _spendPlace = spendPlace,
         _spendPrice = spendPrice,
@@ -218,8 +233,12 @@ class _$TimePlaceResponseStateImpl implements _TimePlaceResponseState {
   }
 
   @override
+  @JsonKey()
+  final AsyncValue<List<TimePlace>> timePlaceList;
+
+  @override
   String toString() {
-    return 'TimePlaceResponseState(spendTime: $spendTime, spendPlace: $spendPlace, spendPrice: $spendPrice, baseDiff: $baseDiff, diff: $diff, minusCheck: $minusCheck)';
+    return 'TimePlaceResponseState(spendTime: $spendTime, spendPlace: $spendPlace, spendPrice: $spendPrice, baseDiff: $baseDiff, diff: $diff, minusCheck: $minusCheck, timePlaceList: $timePlaceList)';
   }
 
   @override
@@ -237,7 +256,9 @@ class _$TimePlaceResponseStateImpl implements _TimePlaceResponseState {
                 other.baseDiff == baseDiff) &&
             (identical(other.diff, diff) || other.diff == diff) &&
             const DeepCollectionEquality()
-                .equals(other._minusCheck, _minusCheck));
+                .equals(other._minusCheck, _minusCheck) &&
+            (identical(other.timePlaceList, timePlaceList) ||
+                other.timePlaceList == timePlaceList));
   }
 
   @override
@@ -248,7 +269,8 @@ class _$TimePlaceResponseStateImpl implements _TimePlaceResponseState {
       const DeepCollectionEquality().hash(_spendPrice),
       baseDiff,
       diff,
-      const DeepCollectionEquality().hash(_minusCheck));
+      const DeepCollectionEquality().hash(_minusCheck),
+      timePlaceList);
 
   @JsonKey(ignore: true)
   @override
@@ -260,12 +282,14 @@ class _$TimePlaceResponseStateImpl implements _TimePlaceResponseState {
 
 abstract class _TimePlaceResponseState implements TimePlaceResponseState {
   const factory _TimePlaceResponseState(
-      {final List<String> spendTime,
-      final List<String> spendPlace,
-      final List<int> spendPrice,
-      final String baseDiff,
-      final int diff,
-      final List<bool> minusCheck}) = _$TimePlaceResponseStateImpl;
+          {final List<String> spendTime,
+          final List<String> spendPlace,
+          final List<int> spendPrice,
+          final String baseDiff,
+          final int diff,
+          final List<bool> minusCheck,
+          final AsyncValue<List<TimePlace>> timePlaceList}) =
+      _$TimePlaceResponseStateImpl;
 
   @override
   List<String> get spendTime;
@@ -279,6 +303,8 @@ abstract class _TimePlaceResponseState implements TimePlaceResponseState {
   int get diff;
   @override
   List<bool> get minusCheck;
+  @override
+  AsyncValue<List<TimePlace>> get timePlaceList;
   @override
   @JsonKey(ignore: true)
   _$$TimePlaceResponseStateImplCopyWith<_$TimePlaceResponseStateImpl>

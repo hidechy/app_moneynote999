@@ -2,6 +2,7 @@ import 'package:bubble/bubble.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:money_note/repository/time_place_repository.dart';
 
 import '../../enums/get_single_money_from.dart';
 import '../../enums/get_single_money_when.dart';
@@ -74,6 +75,8 @@ class DailyMoneyDisplayAlert extends ConsumerWidget {
     await BankPriceRepository.getBankPriceList(ref: ref);
 
     await SpendRepository.getSingleSpend(date: date.yyyymmdd, ref: ref);
+
+    await TimePlaceRepository.getSingleTimePlace(date: date.yyyymmdd, ref: ref);
   }
 
   ///
@@ -244,6 +247,8 @@ class DailyMoneyDisplayAlert extends ConsumerWidget {
                 _displayEmoneyMoney(),
                 const SizedBox(height: 20),
                 _displaySpend(),
+                const SizedBox(height: 20),
+                _displayTimePlace(),
                 const SizedBox(height: 20),
               ],
             ),
@@ -512,8 +517,8 @@ class DailyMoneyDisplayAlert extends ConsumerWidget {
 
                   return SingleChildScrollView(child: Column(children: list));
                 },
-                error: (error, stackTrace) => Container(),
-                loading: Container.new,
+                error: (error, stackTrace) => const Center(child: CircularProgressIndicator()),
+                loading: () => const Center(child: CircularProgressIndicator()),
               ),
             ],
           ),
@@ -607,8 +612,8 @@ class DailyMoneyDisplayAlert extends ConsumerWidget {
 
                   return SingleChildScrollView(child: Column(children: list));
                 },
-                error: (error, stackTrace) => Container(),
-                loading: Container.new,
+                error: (error, stackTrace) => const Center(child: CircularProgressIndicator()),
+                loading: () => const Center(child: CircularProgressIndicator()),
               ),
             ],
           ),
@@ -616,6 +621,33 @@ class DailyMoneyDisplayAlert extends ConsumerWidget {
         const SizedBox(height: 10),
       ],
     );
+  }
+
+  ///
+  int _getBankPrice({BankName? bankName, EmoneyName? emoneyName}) {
+    var bankPrice = 0;
+
+    final bankPriceState = _ref.watch(bankPriceProvider);
+
+    final bankPriceDatePadMap = (bankPriceState.bankPriceDatePadMap.value != null)
+        ? bankPriceState.bankPriceDatePadMap.value
+        : <String, Map<String, int>>{};
+
+    if (bankName != null) {
+      if (bankPriceDatePadMap?['${bankName.depositType}-${bankName.id}'] != null) {
+        if (bankPriceDatePadMap?['${bankName.depositType}-${bankName.id}']?[date.yyyymmdd] != null) {
+          bankPrice = bankPriceDatePadMap!['${bankName.depositType}-${bankName.id}']![date.yyyymmdd]!;
+        }
+      }
+    } else if (emoneyName != null) {
+      if (bankPriceDatePadMap?['${emoneyName.depositType}-${emoneyName.id}'] != null) {
+        if (bankPriceDatePadMap?['${emoneyName.depositType}-${emoneyName.id}']?[date.yyyymmdd] != null) {
+          bankPrice = bankPriceDatePadMap!['${emoneyName.depositType}-${emoneyName.id}']![date.yyyymmdd]!;
+        }
+      }
+    }
+
+    return bankPrice;
   }
 
   ///
@@ -661,8 +693,8 @@ class DailyMoneyDisplayAlert extends ConsumerWidget {
 
                   return SingleChildScrollView(child: Column(children: list));
                 },
-                error: (error, stackTrace) => Container(),
-                loading: Container.new,
+                error: (error, stackTrace) => const Center(child: CircularProgressIndicator()),
+                loading: () => const Center(child: CircularProgressIndicator()),
               ),
             ],
           ),
@@ -673,29 +705,63 @@ class DailyMoneyDisplayAlert extends ConsumerWidget {
   }
 
   ///
-  int _getBankPrice({BankName? bankName, EmoneyName? emoneyName}) {
-    var bankPrice = 0;
+  Widget _displayTimePlace() {
+    final timePlaceList = _ref.watch(timePlaceProvider.select((value) => value.timePlaceList));
 
-    final bankPriceState = _ref.watch(bankPriceProvider);
+    final openTimeplaceArea = _ref.watch(appParamProvider.select((value) => value.openTimeplaceArea));
 
-    final bankPriceDatePadMap = (bankPriceState.bankPriceDatePadMap.value != null)
-        ? bankPriceState.bankPriceDatePadMap.value
-        : <String, Map<String, int>>{};
-
-    if (bankName != null) {
-      if (bankPriceDatePadMap?['${bankName.depositType}-${bankName.id}'] != null) {
-        if (bankPriceDatePadMap?['${bankName.depositType}-${bankName.id}']?[date.yyyymmdd] != null) {
-          bankPrice = bankPriceDatePadMap!['${bankName.depositType}-${bankName.id}']![date.yyyymmdd]!;
-        }
-      }
-    } else if (emoneyName != null) {
-      if (bankPriceDatePadMap?['${emoneyName.depositType}-${emoneyName.id}'] != null) {
-        if (bankPriceDatePadMap?['${emoneyName.depositType}-${emoneyName.id}']?[date.yyyymmdd] != null) {
-          bankPrice = bankPriceDatePadMap!['${emoneyName.depositType}-${emoneyName.id}']![date.yyyymmdd]!;
-        }
-      }
+    // TODO エラー修正できない
+    if (timePlaceList.value?.length == 0) {
+      return Container();
     }
 
-    return bankPrice;
+    return ExpansionTile(
+      backgroundColor: Colors.blueGrey.withOpacity(0.1),
+      initiallyExpanded: openTimeplaceArea,
+      iconColor: Colors.white,
+      onExpansionChanged: (value) => _ref.read(appParamProvider.notifier).setOpenTimeplaceArea(value: value),
+      title: const Text(
+        'TIME PLACE',
+        style: TextStyle(fontSize: 12, color: Colors.white),
+      ),
+      children: [
+        Container(
+          padding: const EdgeInsets.symmetric(horizontal: 10),
+          child: Column(
+            children: [
+              timePlaceList.when(
+                data: (value) {
+                  final list = <Widget>[];
+
+                  value.forEach((element) {
+                    list.add(Container(
+                      padding: const EdgeInsets.all(10),
+                      decoration:
+                          BoxDecoration(border: Border(bottom: BorderSide(color: Colors.white.withOpacity(0.3)))),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Row(
+                            children: [
+                              SizedBox(width: 60, child: Text(element.time)),
+                              Text(element.place),
+                            ],
+                          ),
+                          Text(element.price.toString().toCurrency()),
+                        ],
+                      ),
+                    ));
+                  });
+
+                  return SingleChildScrollView(child: Column(children: list));
+                },
+                error: (error, stackTrace) => const Center(child: CircularProgressIndicator()),
+                loading: () => const Center(child: CircularProgressIndicator()),
+              ),
+            ],
+          ),
+        ),
+      ],
+    );
   }
 }

@@ -12,6 +12,6 @@ class TimePlace {
   int price;
 
   Map<String, dynamic> toMap() {
-    return {'date': date, 'time': time, 'place': price, 'price': price};
+    return {'date': date, 'time': time, 'place': place, 'price': price};
   }
 }
