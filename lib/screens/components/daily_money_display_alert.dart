@@ -397,72 +397,81 @@ class DailyMoneyDisplayAlert extends ConsumerWidget {
         style: TextStyle(fontSize: 12, color: Colors.white),
       ),
       children: [
-        bankNameList.when(
-          data: (value) {
-            if (value.isEmpty) {
-              return BankEmoneyBlankMessage(deposit: '金融機関');
-            }
+        Container(
+          padding: const EdgeInsets.symmetric(horizontal: 10),
+          child: Column(
+            children: [
+              bankNameList.when(
+                data: (value) {
+                  if (value.isEmpty) {
+                    return BankEmoneyBlankMessage(deposit: '金融機関');
+                  }
 
-            final list = <Widget>[];
+                  final list = <Widget>[];
 
-            value.forEach((element) {
-              final bankPrice = _getBankPrice(bankName: element);
+                  value.forEach((element) {
+                    final bankPrice = _getBankPrice(bankName: element);
 
-              final bankPriceList = bankPriceListMap?['${element.depositType}-${element.id}'];
+                    final bankPriceList = bankPriceListMap?['${element.depositType}-${element.id}'];
 
-              list.add(Container(
-                padding: const EdgeInsets.all(10),
-                decoration: BoxDecoration(border: Border(bottom: BorderSide(color: Colors.white.withOpacity(0.3)))),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text('${element.bankName} ${element.branchName}'),
-                        Text('${element.accountType} ${element.accountNumber}'),
-                      ],
-                    ),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.end,
-                      children: [
-                        Row(
-                          children: [
-                            Text(bankPrice.toString().toCurrency()),
-                            const SizedBox(width: 10),
-                            GestureDetector(
-                              onTap: () {
-                                MoneyDialog(
-                                  context: _context,
-                                  widget: BankPriceInputAlert(
-                                    date: date,
-                                    bankName: element,
-                                    bankPriceList: bankPriceList,
-                                    bankPrice: bankPrice,
-                                  ),
-                                );
-                              },
-                              child: Icon(Icons.input, color: Colors.greenAccent.withOpacity(0.6), size: 16),
-                            ),
-                          ],
-                        ),
-                        if (bankPriceList != null)
-                          Text(
-                            bankPriceList.last.date,
-                            style: const TextStyle(fontSize: 10, color: Colors.grey),
+                    list.add(Container(
+                      padding: const EdgeInsets.all(10),
+                      decoration:
+                          BoxDecoration(border: Border(bottom: BorderSide(color: Colors.white.withOpacity(0.3)))),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text('${element.bankName} ${element.branchName}'),
+                              Text('${element.accountType} ${element.accountNumber}'),
+                            ],
                           ),
-                      ],
-                    ),
-                  ],
-                ),
-              ));
-            });
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.end,
+                            children: [
+                              Row(
+                                children: [
+                                  Text(bankPrice.toString().toCurrency()),
+                                  const SizedBox(width: 10),
+                                  GestureDetector(
+                                    onTap: () {
+                                      MoneyDialog(
+                                        context: _context,
+                                        widget: BankPriceInputAlert(
+                                          date: date,
+                                          bankName: element,
+                                          bankPriceList: bankPriceList,
+                                          bankPrice: bankPrice,
+                                        ),
+                                      );
+                                    },
+                                    child: Icon(Icons.input, color: Colors.greenAccent.withOpacity(0.6), size: 16),
+                                  ),
+                                ],
+                              ),
+                              if (bankPriceList != null)
+                                Text(
+                                  bankPriceList.last.date,
+                                  style: const TextStyle(fontSize: 10, color: Colors.grey),
+                                ),
+                            ],
+                          ),
+                        ],
+                      ),
+                    ));
+                  });
 
-            return SingleChildScrollView(child: Column(children: list));
-          },
-          error: (error, stackTrace) => Container(),
-          loading: Container.new,
+                  return SingleChildScrollView(child: Column(children: list));
+                },
+                error: (error, stackTrace) => Container(),
+                loading: Container.new,
+              ),
+            ],
+          ),
         ),
+        const SizedBox(height: 10),
       ],
     );
   }
@@ -489,66 +498,75 @@ class DailyMoneyDisplayAlert extends ConsumerWidget {
         style: TextStyle(fontSize: 12, color: Colors.white),
       ),
       children: [
-        emoneyNameList.when(
-          data: (value) {
-            if (value.isEmpty) {
-              return BankEmoneyBlankMessage(deposit: '電子マネー', index: 1);
-            }
+        Container(
+          padding: const EdgeInsets.symmetric(horizontal: 10),
+          child: Column(
+            children: [
+              emoneyNameList.when(
+                data: (value) {
+                  if (value.isEmpty) {
+                    return BankEmoneyBlankMessage(deposit: '電子マネー', index: 1);
+                  }
 
-            final list = <Widget>[];
+                  final list = <Widget>[];
 
-            value.forEach((element) {
-              final bankPrice = _getBankPrice(emoneyName: element);
+                  value.forEach((element) {
+                    final bankPrice = _getBankPrice(emoneyName: element);
 
-              final bankPriceList = bankPriceListMap?['${element.depositType}-${element.id}'];
+                    final bankPriceList = bankPriceListMap?['${element.depositType}-${element.id}'];
 
-              list.add(Container(
-                padding: const EdgeInsets.all(10),
-                decoration: BoxDecoration(border: Border(bottom: BorderSide(color: Colors.white.withOpacity(0.3)))),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(element.emoneyName),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.end,
-                      children: [
-                        Row(
-                          children: [
-                            Text(bankPrice.toString().toCurrency()),
-                            const SizedBox(width: 10),
-                            GestureDetector(
-                              onTap: () {
-                                MoneyDialog(
-                                  context: _context,
-                                  widget: BankPriceInputAlert(
-                                    date: date,
-                                    emoneyName: element,
-                                    bankPriceList: bankPriceList,
-                                    bankPrice: bankPrice,
+                    list.add(Container(
+                      padding: const EdgeInsets.all(10),
+                      decoration:
+                          BoxDecoration(border: Border(bottom: BorderSide(color: Colors.white.withOpacity(0.3)))),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(element.emoneyName),
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.end,
+                            children: [
+                              Row(
+                                children: [
+                                  Text(bankPrice.toString().toCurrency()),
+                                  const SizedBox(width: 10),
+                                  GestureDetector(
+                                    onTap: () {
+                                      MoneyDialog(
+                                        context: _context,
+                                        widget: BankPriceInputAlert(
+                                          date: date,
+                                          emoneyName: element,
+                                          bankPriceList: bankPriceList,
+                                          bankPrice: bankPrice,
+                                        ),
+                                      );
+                                    },
+                                    child: Icon(Icons.input, color: Colors.greenAccent.withOpacity(0.6), size: 16),
                                   ),
-                                );
-                              },
-                              child: Icon(Icons.input, color: Colors.greenAccent.withOpacity(0.6), size: 16),
-                            ),
-                          ],
-                        ),
-                        if (bankPriceList != null)
-                          Text(
-                            bankPriceList.last.date,
-                            style: const TextStyle(fontSize: 10, color: Colors.grey),
+                                ],
+                              ),
+                              if (bankPriceList != null)
+                                Text(
+                                  bankPriceList.last.date,
+                                  style: const TextStyle(fontSize: 10, color: Colors.grey),
+                                ),
+                            ],
                           ),
-                      ],
-                    ),
-                  ],
-                ),
-              ));
-            });
+                        ],
+                      ),
+                    ));
+                  });
 
-            return SingleChildScrollView(child: Column(children: list));
-          },
-          error: (error, stackTrace) => Container(),
-          loading: Container.new,
+                  return SingleChildScrollView(child: Column(children: list));
+                },
+                error: (error, stackTrace) => Container(),
+                loading: Container.new,
+              ),
+            ],
+          ),
         ),
+        const SizedBox(height: 10),
       ],
     );
   }
@@ -558,6 +576,11 @@ class DailyMoneyDisplayAlert extends ConsumerWidget {
     final spendList = _ref.watch(spendProvider.select((value) => value.spendList));
 
     final openSpendArea = _ref.watch(appParamProvider.select((value) => value.openSpendArea));
+
+    // TODO エラー修正できない
+    if (spendList.value?.length == 0) {
+      return Container();
+    }
 
     return ExpansionTile(
       backgroundColor: Colors.blueGrey.withOpacity(0.1),
@@ -569,29 +592,38 @@ class DailyMoneyDisplayAlert extends ConsumerWidget {
         style: TextStyle(fontSize: 12, color: Colors.white),
       ),
       children: [
-        spendList.when(
-          data: (value) {
-            final list = <Widget>[];
+        Container(
+          padding: const EdgeInsets.symmetric(horizontal: 10),
+          child: Column(
+            children: [
+              spendList.when(
+                data: (value) {
+                  final list = <Widget>[];
 
-            value.forEach((element) {
-              list.add(Container(
-                padding: const EdgeInsets.all(10),
-                decoration: BoxDecoration(border: Border(bottom: BorderSide(color: Colors.white.withOpacity(0.3)))),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(element.spendType),
-                    Text(element.price.toCurrency()),
-                  ],
-                ),
-              ));
-            });
+                  value.forEach((element) {
+                    list.add(Container(
+                      padding: const EdgeInsets.all(10),
+                      decoration:
+                          BoxDecoration(border: Border(bottom: BorderSide(color: Colors.white.withOpacity(0.3)))),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(element.spendType),
+                          Text(element.price.toCurrency()),
+                        ],
+                      ),
+                    ));
+                  });
 
-            return SingleChildScrollView(child: Column(children: list));
-          },
-          error: (error, stackTrace) => Container(),
-          loading: Container.new,
+                  return SingleChildScrollView(child: Column(children: list));
+                },
+                error: (error, stackTrace) => Container(),
+                loading: Container.new,
+              ),
+            ],
+          ),
         ),
+        const SizedBox(height: 10),
       ],
     );
   }

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:money_note/models/spend.dart';
+import 'package:money_note/repository/spend_repository.dart';
 
 import '../../extensions/extensions.dart';
 import '../../models/bank_name.dart';
@@ -56,6 +58,11 @@ class DummyDataInputAlert extends StatelessWidget {
               ElevatedButton(
                 onPressed: _setDummyMoneyData,
                 child: const Text('Money'),
+              ),
+              const SizedBox(height: 10),
+              ElevatedButton(
+                onPressed: _setDummySpendData,
+                child: const Text('Spend'),
               ),
             ],
           ),
@@ -243,23 +250,23 @@ class DummyDataInputAlert extends StatelessWidget {
   Future<void> _setDummyMoneyData() async {
     ////////////////////
 
-    // final date1 = DateTime.now();
-    //
-    // final money1 = Money(
-    //   date: date1.yyyymmdd,
-    //   yen_10000: 7,
-    //   yen_5000: 7,
-    //   yen_2000: 7,
-    //   yen_1000: 7,
-    //   yen_500: 7,
-    //   yen_100: 7,
-    //   yen_50: 7,
-    //   yen_10: 7,
-    //   yen_5: 7,
-    //   yen_1: 7,
-    // );
-    //
-    // await MoneyRepository.insertMoney(money: money1);
+    final date1 = DateTime.now();
+
+    final money1 = Money(
+      date: date1.yyyymmdd,
+      yen_10000: 7,
+      yen_5000: 7,
+      yen_2000: 7,
+      yen_1000: 7,
+      yen_500: 7,
+      yen_100: 7,
+      yen_50: 7,
+      yen_10: 7,
+      yen_5: 7,
+      yen_1: 7,
+    );
+
+    await MoneyRepository.insertMoney(money: money1);
 
     ////////////////////
 
@@ -302,6 +309,45 @@ class DummyDataInputAlert extends StatelessWidget {
     await MoneyRepository.insertMoney(money: money3);
 
     // ignore: use_build_context_synchronously
+    Navigator.pop(_context);
+  }
+
+  ///
+  Future<void> _setDummySpendData() async {
+    final date1 = DateTime.now();
+
+    <Spend>[
+      Spend(date: date1.yyyymmdd, spendType: '食費', price: '1000'),
+      Spend(date: date1.yyyymmdd, spendType: '交通費', price: '2000'),
+      Spend(date: date1.yyyymmdd, spendType: '遊興費', price: '3000'),
+    ].forEach((element) async {
+      await SpendRepository.insertSpend(spend: element);
+    });
+
+    ////////////////////
+
+    final date2 = DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day - 1);
+
+    <Spend>[
+      Spend(date: date2.yyyymmdd, spendType: '食費', price: '1000'),
+      Spend(date: date2.yyyymmdd, spendType: '交通費', price: '2000'),
+      Spend(date: date2.yyyymmdd, spendType: '遊興費', price: '3000'),
+    ].forEach((element) async {
+      await SpendRepository.insertSpend(spend: element);
+    });
+
+    ////////////////////
+
+    final date3 = DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day - 2);
+
+    <Spend>[
+      Spend(date: date3.yyyymmdd, spendType: '食費', price: '1000'),
+      Spend(date: date3.yyyymmdd, spendType: '交通費', price: '2000'),
+      Spend(date: date3.yyyymmdd, spendType: '遊興費', price: '3000'),
+    ].forEach((element) async {
+      await SpendRepository.insertSpend(spend: element);
+    });
+
     Navigator.pop(_context);
   }
 }
