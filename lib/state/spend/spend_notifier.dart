@@ -16,14 +16,10 @@ class SpendNotifier extends StateNotifier<SpendResponseState> {
   SpendNotifier(super.state);
 
   ///
-  Future<void> setBaseDiff({required String baseDiff}) async {
-    state = state.copyWith(baseDiff: baseDiff);
-  }
+  Future<void> setBaseDiff({required String baseDiff}) async => state = state.copyWith(baseDiff: baseDiff);
 
   ///
-  Future<void> setItemPos({required int pos}) async {
-    state = state.copyWith(itemPos: pos);
-  }
+  Future<void> setItemPos({required int pos}) async => state = state.copyWith(itemPos: pos);
 
   ///
   Future<void> setMinusCheck({required int pos}) async {
@@ -98,16 +94,13 @@ class SpendNotifier extends StateNotifier<SpendResponseState> {
   }
 
   ///
-
   Future<void> clearOneLineItem({required int pos}) async {
     final spendItem = [...state.spendItem];
-    final spendPrice = [...state.spendPrice];
     final minusCheck = [...state.minusCheck];
 
     spendItem[pos] = '';
-    spendPrice[pos] = 0;
     minusCheck[pos] = false;
 
-    state = state.copyWith(spendItem: spendItem, spendPrice: spendPrice, minusCheck: minusCheck);
+    state = state.copyWith(spendItem: spendItem, minusCheck: minusCheck);
   }
 }

@@ -1,5 +1,5 @@
-class Timeplace {
-  Timeplace({this.id, required this.date, required this.time, required this.place, required this.price});
+class TimePlace {
+  TimePlace({this.id, required this.date, required this.time, required this.place, required this.price});
 
   int? id;
 

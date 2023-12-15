@@ -16,7 +16,9 @@ class SpendInputAlert extends ConsumerWidget {
   final DateTime date;
   final int spend;
 
-  List<String> spendItem = [];
+  final List<TextEditingController> _priceTecs = [];
+
+  List<String> _spendItem = [];
 
   late BuildContext _context;
   late WidgetRef _ref;
@@ -27,11 +29,13 @@ class SpendInputAlert extends ConsumerWidget {
     _context = context;
     _ref = ref;
 
-    Future(() => ref.watch(spendProvider.notifier).setBaseDiff(baseDiff: spend.toString()));
+    Future(() => ref.read(spendProvider.notifier).setBaseDiff(baseDiff: spend.toString()));
 
-    final spendInputState = ref.watch(spendProvider);
+    final spendState = ref.watch(spendProvider);
 
-    makeSpendItem();
+    _makeTecs();
+
+    _makeSpendItem();
 
     return AlertDialog(
       titlePadding: EdgeInsets.zero,
@@ -58,13 +62,13 @@ class SpendInputAlert extends ConsumerWidget {
                       const Text('Difference'),
                       const SizedBox(width: 10),
                       Text(
-                        (spendInputState.diff != 0)
-                            ? spendInputState.diff.toString().toCurrency()
-                            : (spendInputState.baseDiff == '')
+                        (spendState.diff != 0)
+                            ? spendState.diff.toString().toCurrency()
+                            : (spendState.baseDiff == '')
                                 ? ''
-                                : spendInputState.baseDiff.toCurrency(),
+                                : spendState.baseDiff.toCurrency(),
                         style: TextStyle(
-                          color: (spendInputState.diff == 0) ? Colors.yellowAccent : Colors.white,
+                          color: (spendState.diff == 0) ? Colors.yellowAccent : Colors.white,
                         ),
                       ),
                     ],
@@ -76,11 +80,11 @@ class SpendInputAlert extends ConsumerWidget {
                 ],
               ),
               Divider(color: Colors.white.withOpacity(0.4), thickness: 5),
-              Expanded(child: displayInputParts()),
+              Expanded(child: _displayInputParts()),
               Divider(thickness: 2, color: Colors.white.withOpacity(0.4)),
               SizedBox(
                 height: context.screenSize.height * 0.23,
-                child: spendItemSetPanel(),
+                child: _spendItemSetPanel(),
               ),
               const SizedBox(height: 20),
             ],
@@ -91,7 +95,17 @@ class SpendInputAlert extends ConsumerWidget {
   }
 
   ///
-  Widget displayInputParts() {
+  void _makeTecs() {
+    final spendState = _ref.watch(spendProvider);
+
+    for (var i = 0; i < 10; i++) {
+      _priceTecs
+          .add(TextEditingController(text: (spendState.spendPrice[i] == 0) ? '' : spendState.spendPrice[i].toString()));
+    }
+  }
+
+  ///
+  Widget _displayInputParts() {
     final list = <Widget>[
       const DefaultTextStyle(
         style: TextStyle(fontSize: 10, color: Colors.grey),
@@ -105,83 +119,86 @@ class SpendInputAlert extends ConsumerWidget {
       )
     ];
 
-    final spendInputState = _ref.watch(spendProvider);
+    final spendState = _ref.watch(spendProvider);
 
     for (var i = 0; i < 10; i++) {
       list.add(
-        Container(
-          padding: const EdgeInsets.symmetric(vertical: 5),
-          decoration: BoxDecoration(
-              color: (spendInputState.itemPos == i) ? Colors.greenAccent.withOpacity(0.1) : Colors.transparent),
-          child: Row(
-            children: [
-              Column(
-                children: [
-                  GestureDetector(
-                    onTap: () => _ref.read(spendProvider.notifier).setItemPos(pos: i),
-                    child: Icon(
-                      Icons.arrow_forward,
-                      color: (i == spendInputState.itemPos) ? Colors.greenAccent : Colors.grey,
+        Row(
+          children: [
+            Expanded(
+              child: Container(
+                padding: const EdgeInsets.all(10),
+                decoration: BoxDecoration(
+                    color: (spendState.itemPos == i) ? Colors.greenAccent.withOpacity(0.1) : Colors.transparent),
+                child: Row(
+                  children: [
+                    Column(
+                      children: [
+                        GestureDetector(
+                          onTap: () => _ref.read(spendProvider.notifier).setItemPos(pos: i),
+                          child: Icon(
+                            Icons.arrow_forward,
+                            color: (i == spendState.itemPos) ? Colors.greenAccent : Colors.grey,
+                          ),
+                        ),
+                        GestureDetector(
+                          onTap: () {
+                            _ref.read(spendProvider.notifier).clearOneLineItem(pos: i);
+                          },
+                          child: Icon(Icons.close, color: Colors.yellowAccent.withOpacity(0.6), size: 14),
+                        ),
+                      ],
                     ),
-                  ),
-                  GestureDetector(
-                    onTap: () {
-                      _ref.read(spendProvider.notifier).clearOneLineItem(pos: i);
-                    },
-                    child: Icon(Icons.close, color: Colors.yellowAccent.withOpacity(0.6), size: 14),
-                  ),
-                ],
-              ),
-              const SizedBox(width: 10),
-              Expanded(
-                child: SizedBox(
-                  width: _context.screenSize.width * 0.35,
-                  child: TextField(
-                    style: const TextStyle(fontSize: 12),
-                    readOnly: true,
-                    controller: TextEditingController(text: spendInputState.spendItem[i]),
-                    decoration: const InputDecoration(
-                      hintText: '項目名',
-                      filled: true,
-                      border: OutlineInputBorder(),
-                      focusedBorder: OutlineInputBorder(borderSide: BorderSide(color: Colors.white54)),
-                      contentPadding: EdgeInsets.symmetric(vertical: 4, horizontal: 4),
-                    ),
-                  ),
-                ),
-              ),
-              const SizedBox(width: 20),
-              GestureDetector(
-                onTap: () => _ref.read(spendProvider.notifier).setMinusCheck(pos: i),
-                child: Icon(
-                  Icons.remove,
-                  color: (spendInputState.minusCheck[i]) ? Colors.redAccent : Colors.white,
-                ),
-              ),
-              const SizedBox(width: 5),
-              SizedBox(
-                width: _context.screenSize.width * 0.25,
-                child: TextField(
-                  keyboardType: TextInputType.number,
-                  controller: TextEditingController(
-                    text: (spendInputState.spendPrice[i] == 0) ? '' : spendInputState.spendPrice[i].toString(),
-                  ),
-                  decoration: const InputDecoration(
-                    hintText: '金額',
-                    filled: true,
-                    border: OutlineInputBorder(),
-                    contentPadding: EdgeInsets.symmetric(vertical: 4, horizontal: 4),
-                  ),
-                  style: const TextStyle(fontSize: 12),
-                  onChanged: (value) => _ref.read(spendProvider.notifier).setSpendPrice(
-                        pos: i,
-                        price: value.toInt(),
+                    const SizedBox(width: 10),
+                    Expanded(
+                      child: SizedBox(
+                        width: _context.screenSize.width * 0.45,
+                        child: TextField(
+                          style: const TextStyle(fontSize: 12),
+                          readOnly: true,
+                          controller: TextEditingController(text: spendState.spendItem[i]),
+                          decoration: const InputDecoration(
+                            hintText: '項目名',
+                            filled: true,
+                            border: OutlineInputBorder(),
+                            focusedBorder: OutlineInputBorder(borderSide: BorderSide(color: Colors.white54)),
+                            contentPadding: EdgeInsets.symmetric(vertical: 4, horizontal: 4),
+                          ),
+                        ),
                       ),
+                    ),
+                  ],
                 ),
               ),
-              const SizedBox(width: 10),
-            ],
-          ),
+            ),
+            GestureDetector(
+              onTap: () => _ref.read(spendProvider.notifier).setMinusCheck(pos: i),
+              child: Icon(
+                Icons.remove,
+                color: (spendState.minusCheck[i]) ? Colors.redAccent : Colors.white,
+              ),
+            ),
+            const SizedBox(width: 5),
+            SizedBox(
+              width: _context.screenSize.width * 0.25,
+              child: TextField(
+                keyboardType: TextInputType.number,
+                controller: _priceTecs[i],
+                decoration: const InputDecoration(
+                  hintText: '金額',
+                  filled: true,
+                  border: OutlineInputBorder(),
+                  contentPadding: EdgeInsets.symmetric(vertical: 4, horizontal: 4),
+                ),
+                style: const TextStyle(fontSize: 12),
+                onChanged: (value) => _ref.read(spendProvider.notifier).setSpendPrice(
+                      pos: i,
+                      price: value.toInt(),
+                    ),
+              ),
+            ),
+            const SizedBox(width: 10),
+          ],
         ),
       );
     }
@@ -190,19 +207,19 @@ class SpendInputAlert extends ConsumerWidget {
   }
 
   ///
-  Widget spendItemSetPanel() {
-    final spendInputState = _ref.watch(spendProvider);
+  Widget _spendItemSetPanel() {
+    final spendState = _ref.watch(spendProvider);
 
     return SingleChildScrollView(
       child: Wrap(
-        children: spendItem.map((e) {
+        children: _spendItem.map((e) {
           return GestureDetector(
-            onTap: () => _ref.read(spendProvider.notifier).setSpendItem(pos: spendInputState.itemPos, item: e),
+            onTap: () => _ref.read(spendProvider.notifier).setSpendItem(pos: spendState.itemPos, item: e),
             child: Container(
               margin: const EdgeInsets.all(5),
               padding: const EdgeInsets.all(5),
               decoration: BoxDecoration(
-                color: (e == spendInputState.spendItem[spendInputState.itemPos])
+                color: (e == spendState.spendItem[spendState.itemPos])
                     ? Colors.yellowAccent.withOpacity(0.2)
                     : Colors.blueGrey.withOpacity(0.2),
                 borderRadius: BorderRadius.circular(20),
@@ -216,21 +233,18 @@ class SpendInputAlert extends ConsumerWidget {
   }
 
   ///
-  void makeSpendItem() {
-    spendItem = [];
-
-    SpendType.values.forEach((element) {
-      spendItem.add(element.japanName!);
-    });
+  void _makeSpendItem() {
+    _spendItem = [];
+    SpendType.values.forEach((element) => _spendItem.add(element.japanName!));
   }
 
   ///
   Future<void> _inputSpend() async {
-    final spendInputState = _ref.watch(spendProvider);
+    final spendState = _ref.watch(spendProvider);
 
-    final spendItem = spendInputState.spendItem;
-    final spendPrice = spendInputState.spendPrice;
-    final minusCheck = spendInputState.minusCheck;
+    final spendItem = spendState.spendItem;
+    final spendPrice = spendState.spendPrice;
+    final minusCheck = spendState.minusCheck;
 
     final list = <Map<String, dynamic>>[];
 
@@ -248,7 +262,7 @@ class SpendInputAlert extends ConsumerWidget {
       errFlg = true;
     }
 
-    final diff = spendInputState.diff;
+    final diff = spendState.diff;
 
     if (diff != 0 || errFlg) {
       Future.delayed(
@@ -261,14 +275,10 @@ class SpendInputAlert extends ConsumerWidget {
 
     await SpendRepository.deleteSpend(date: date.yyyymmdd, ref: _ref);
 
-    list.forEach((element) {
-      final spend = Spend(
-        date: date.yyyymmdd,
-        spendType: element['item'],
-        price: element['price'].toString(),
-      );
+    list.forEach((element) async {
+      final spend = Spend(date: date.yyyymmdd, spendType: element['item'], price: element['price'].toString());
 
-      SpendRepository.insertSpend(spend: spend);
+      await SpendRepository.insertSpend(spend: spend);
     });
 
     await _ref.read(spendProvider.notifier).clearInputValue();

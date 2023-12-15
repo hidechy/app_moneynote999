@@ -20,6 +20,7 @@ import '../../state/bank_price/bank_price_notifier.dart';
 import '../../state/emoney_names/emoney_names_notifier.dart';
 import '../../state/money/money_notifier.dart';
 import '../../state/spend/spend_notifier.dart';
+import '../../state/time_place/time_place_notifier.dart';
 import '../../utilities/utilities.dart';
 import '_money_dialog.dart';
 import 'bank_price_input_alert.dart';
@@ -312,15 +313,9 @@ class DailyMoneyDisplayAlert extends ConsumerWidget {
 
                 //===========================
 
-                await _ref
-                    .read(spendProvider.notifier)
-                    .setBaseDiff(baseDiff: (_totalMoneyBeforeDate - _totalMoney).toString());
-
                 // ignore: use_build_context_synchronously
                 await MoneyDialog(
-                  context: _context,
-                  widget: SpendInputAlert(date: date, spend: _totalMoneyBeforeDate - _totalMoney),
-                );
+                    context: _context, widget: SpendInputAlert(date: date, spend: _totalMoneyBeforeDate - _totalMoney));
               },
               child: Text('OPEN', style: TextStyle(color: Theme.of(_context).colorScheme.primary)),
             ),
@@ -333,8 +328,13 @@ class DailyMoneyDisplayAlert extends ConsumerWidget {
             const Text('使用場所登録'),
             const SizedBox(width: 10),
             GestureDetector(
-              onTap: () {
-                MoneyDialog(
+              onTap: () async {
+                await _ref
+                    .read(timePlaceProvider.notifier)
+                    .setBaseDiff(baseDiff: (_totalMoneyBeforeDate - _totalMoney).toString());
+
+                // ignore: use_build_context_synchronously
+                await MoneyDialog(
                   context: _context,
                   widget: TimeplaceInputAlert(date: date, spend: _totalMoneyBeforeDate - _totalMoney),
                 );
@@ -351,10 +351,7 @@ class DailyMoneyDisplayAlert extends ConsumerWidget {
             const SizedBox(width: 10),
             GestureDetector(
               onTap: () {
-                MoneyDialog(
-                  context: _context,
-                  widget: const IncomeListAlert(),
-                );
+                MoneyDialog(context: _context, widget: const IncomeListAlert());
               },
               child: Text('OPEN', style: TextStyle(color: Theme.of(_context).colorScheme.primary)),
             ),
@@ -391,10 +388,7 @@ class DailyMoneyDisplayAlert extends ConsumerWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Container(),
-                    Text(
-                      _currencySum.toString().toCurrency(),
-                      style: const TextStyle(color: Colors.yellowAccent),
-                    ),
+                    Text(_currencySum.toString().toCurrency(), style: const TextStyle(color: Colors.yellowAccent)),
                   ],
                 ),
               ),
@@ -660,10 +654,7 @@ class DailyMoneyDisplayAlert extends ConsumerWidget {
                           BoxDecoration(border: Border(bottom: BorderSide(color: Colors.white.withOpacity(0.3)))),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text(element.spendType),
-                          Text(element.price.toCurrency()),
-                        ],
+                        children: [Text(element.spendType), Text(element.price.toCurrency())],
                       ),
                     ));
                   });
