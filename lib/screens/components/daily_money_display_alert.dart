@@ -187,13 +187,24 @@ class DailyMoneyDisplayAlert extends ConsumerWidget {
                             child: Icon(Icons.close, color: Colors.yellowAccent.withOpacity(0.6), size: 16),
                           ),
                         ),
+                        DecoratedBox(
+                          decoration: BoxDecoration(border: Border.all(color: Colors.white.withOpacity(0.4))),
+                          child: const Text(''),
+                        ),
+                        GestureDetector(
+                          onTap: () => _ref.read(appParamProvider.notifier).setMenuNumber(menuNumber: 1),
+                          child: Container(
+                            padding: const EdgeInsets.all(5),
+                            child: Icon(Icons.input, color: Colors.greenAccent.withOpacity(0.6), size: 16),
+                          ),
+                        ),
                         if (_currencySum > 0) ...[
                           DecoratedBox(
                             decoration: BoxDecoration(border: Border.all(color: Colors.white.withOpacity(0.4))),
                             child: const Text(''),
                           ),
                           GestureDetector(
-                            onTap: () => _ref.read(appParamProvider.notifier).setMenuNumber(menuNumber: 1),
+                            onTap: () => _ref.read(appParamProvider.notifier).setMenuNumber(menuNumber: 2),
                             child: Container(
                               padding: const EdgeInsets.all(5),
                               child: Icon(Icons.info_outline_rounded,
@@ -201,7 +212,7 @@ class DailyMoneyDisplayAlert extends ConsumerWidget {
                             ),
                           ),
                           GestureDetector(
-                            onTap: () => _ref.read(appParamProvider.notifier).setMenuNumber(menuNumber: 2),
+                            onTap: () => _ref.read(appParamProvider.notifier).setMenuNumber(menuNumber: 3),
                             child: Container(
                               padding: const EdgeInsets.all(5),
                               child: Icon(Icons.access_time, color: Colors.greenAccent.withOpacity(0.6), size: 16),
@@ -213,7 +224,7 @@ class DailyMoneyDisplayAlert extends ConsumerWidget {
                           child: const Text(''),
                         ),
                         GestureDetector(
-                          onTap: () => _ref.read(appParamProvider.notifier).setMenuNumber(menuNumber: 3),
+                          onTap: () => _ref.read(appParamProvider.notifier).setMenuNumber(menuNumber: 4),
                           child: Container(
                             padding: const EdgeInsets.all(5),
                             child: Icon(Icons.monetization_on, color: Colors.greenAccent.withOpacity(0.6), size: 16),
@@ -243,15 +254,34 @@ class DailyMoneyDisplayAlert extends ConsumerWidget {
 
   ///
   Widget _getMenuOpenStr() {
-    final spendList = _ref.watch(spendProvider.select((value) => value.spendList));
-
     final menuNumber = _ref.watch(appParamProvider.select((value) => value.menuNumber));
+
+    final singleMoney = _ref.watch(moneySingleProvider.select((value) => value.singleMoney));
+
+    final spendList = _ref.watch(spendProvider.select((value) => value.spendList));
 
     switch (menuNumber) {
       case 1:
         return Row(
           children: [
-            const Text('使用金額内容登録'),
+            const Text('金種枚数登録'),
+            const SizedBox(width: 10),
+            GestureDetector(
+              onTap: () {
+                MoneyDialog(
+                  context: _context,
+                  widget: MoneyInputAlert(date: date, money: singleMoney),
+                );
+              },
+              child: Text('OPEN', style: TextStyle(color: Theme.of(_context).colorScheme.primary)),
+            ),
+          ],
+        );
+
+      case 2:
+        return Row(
+          children: [
+            const Text('使用用途登録'),
             const SizedBox(width: 10),
             GestureDetector(
               onTap: () async {
@@ -297,10 +327,10 @@ class DailyMoneyDisplayAlert extends ConsumerWidget {
           ],
         );
 
-      case 2:
+      case 3:
         return Row(
           children: [
-            const Text('使用場所詳細登録'),
+            const Text('使用場所登録'),
             const SizedBox(width: 10),
             GestureDetector(
               onTap: () {
@@ -314,10 +344,10 @@ class DailyMoneyDisplayAlert extends ConsumerWidget {
           ],
         );
 
-      case 3:
+      case 4:
         return Row(
           children: [
-            const Text('収入履歴画面'),
+            const Text('収入履歴登録'),
             const SizedBox(width: 10),
             GestureDetector(
               onTap: () {
@@ -356,25 +386,14 @@ class DailyMoneyDisplayAlert extends ConsumerWidget {
           child: Column(
             children: [
               Container(
-                padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 10),
+                padding: const EdgeInsets.symmetric(horizontal: 10),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    GestureDetector(
-                      onTap: () {
-                        MoneyDialog(
-                          context: _context,
-                          widget: MoneyInputAlert(date: date, money: singleMoney),
-                        );
-                      },
-                      child: Icon(Icons.input, color: Colors.greenAccent.withOpacity(0.6), size: 16),
-                    ),
-                    Container(
-                      alignment: Alignment.topRight,
-                      child: Text(
-                        _currencySum.toString().toCurrency(),
-                        style: const TextStyle(color: Colors.yellowAccent),
-                      ),
+                    Container(),
+                    Text(
+                      _currencySum.toString().toCurrency(),
+                      style: const TextStyle(color: Colors.yellowAccent),
                     ),
                   ],
                 ),

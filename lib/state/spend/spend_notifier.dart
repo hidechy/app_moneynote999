@@ -96,4 +96,18 @@ class SpendNotifier extends StateNotifier<SpendResponseState> {
     state = state.copyWith(
         spendItem: spendItem, spendPrice: spendPrice, minusCheck: minusCheck, itemPos: 0, baseDiff: '', diff: 0);
   }
+
+  ///
+
+  Future<void> clearOneLineItem({required int pos}) async {
+    var spendItem = [...state.spendItem];
+    var spendPrice = [...state.spendPrice];
+    var minusCheck = [...state.minusCheck];
+
+    spendItem[pos] = '';
+    spendPrice[pos] = 0;
+    minusCheck[pos] = false;
+
+    state = state.copyWith(spendItem: spendItem, spendPrice: spendPrice, minusCheck: minusCheck);
+  }
 }

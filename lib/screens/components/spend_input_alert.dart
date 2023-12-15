@@ -16,8 +16,6 @@ class SpendInputAlert extends ConsumerWidget {
   final DateTime date;
   final int spend;
 
-  List<TextEditingController> tecs = [];
-
   List<String> spendItem = [];
 
   late BuildContext _context;
@@ -32,8 +30,6 @@ class SpendInputAlert extends ConsumerWidget {
     Future(() => ref.watch(spendProvider.notifier).setBaseDiff(baseDiff: spend.toString()));
 
     final spendInputState = ref.watch(spendProvider);
-
-    makeTecs();
 
     makeSpendItem();
 
@@ -64,7 +60,9 @@ class SpendInputAlert extends ConsumerWidget {
                       Text(
                         (spendInputState.diff != 0)
                             ? spendInputState.diff.toString().toCurrency()
-                            : spendInputState.baseDiff.toCurrency(),
+                            : (spendInputState.baseDiff == '')
+                                ? ''
+                                : spendInputState.baseDiff.toCurrency(),
                         style: TextStyle(
                           color: (spendInputState.diff == 0) ? Colors.yellowAccent : Colors.white,
                         ),
@@ -93,16 +91,6 @@ class SpendInputAlert extends ConsumerWidget {
   }
 
   ///
-  void makeTecs() {
-    final spendInputState = _ref.watch(spendProvider);
-
-
-    for (var i = 0; i < 10; i++) {
-      tecs.add(TextEditingController(text: spendInputState.spendPrice[i].toString()));
-    }
-  }
-
-  ///
   Widget displayInputParts() {
     final list = <Widget>[
       const DefaultTextStyle(
@@ -127,12 +115,22 @@ class SpendInputAlert extends ConsumerWidget {
               color: (spendInputState.itemPos == i) ? Colors.greenAccent.withOpacity(0.1) : Colors.transparent),
           child: Row(
             children: [
-              GestureDetector(
-                onTap: () => _ref.read(spendProvider.notifier).setItemPos(pos: i),
-                child: Icon(
-                  Icons.arrow_forward,
-                  color: (i == spendInputState.itemPos) ? Colors.greenAccent : Colors.grey,
-                ),
+              Column(
+                children: [
+                  GestureDetector(
+                    onTap: () => _ref.read(spendProvider.notifier).setItemPos(pos: i),
+                    child: Icon(
+                      Icons.arrow_forward,
+                      color: (i == spendInputState.itemPos) ? Colors.greenAccent : Colors.grey,
+                    ),
+                  ),
+                  GestureDetector(
+                    onTap: () {
+                      _ref.read(spendProvider.notifier).clearOneLineItem(pos: i);
+                    },
+                    child: Icon(Icons.close, color: Colors.yellowAccent.withOpacity(0.6), size: 14),
+                  ),
+                ],
               ),
               const SizedBox(width: 10),
               Expanded(
@@ -165,7 +163,9 @@ class SpendInputAlert extends ConsumerWidget {
                 width: _context.screenSize.width * 0.25,
                 child: TextField(
                   keyboardType: TextInputType.number,
-                  controller: tecs[i],
+                  controller: TextEditingController(
+                    text: (spendInputState.spendPrice[i] == 0) ? '' : spendInputState.spendPrice[i].toString(),
+                  ),
                   decoration: const InputDecoration(
                     hintText: '金額',
                     filled: true,

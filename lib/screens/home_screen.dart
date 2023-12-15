@@ -51,6 +51,7 @@ class HomeScreen extends ConsumerWidget {
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
         title: Text(calendarState.baseYearMonth),
+        centerTitle: false,
         leading: Row(
           children: [
             const SizedBox(width: 10),
@@ -60,8 +61,14 @@ class HomeScreen extends ConsumerWidget {
             ),
             const SizedBox(width: 10),
             GestureDetector(
-              onTap: _goNextMonth,
-              child: Icon(Icons.arrow_forward_ios, color: Colors.white.withOpacity(0.8), size: 14),
+              onTap: (DateTime.now().yyyymm == calendarState.baseYearMonth) ? null : _goNextMonth,
+              child: Icon(
+                Icons.arrow_forward_ios,
+                color: (DateTime.now().yyyymm == calendarState.baseYearMonth)
+                    ? Colors.grey.withOpacity(0.6)
+                    : Colors.white.withOpacity(0.8),
+                size: 14,
+              ),
             ),
           ],
         ),
