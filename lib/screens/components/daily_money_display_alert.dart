@@ -562,13 +562,37 @@ class DailyMoneyDisplayAlert extends ConsumerWidget {
 
     return Column(
       children: [
-        const Text('aaa'),
+        const SizedBox(height: 30),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Expanded(
+              child: Container(
+                padding: const EdgeInsets.all(5),
+                decoration: BoxDecoration(color: Colors.indigo, borderRadius: BorderRadius.circular(20)),
+                alignment: Alignment.center,
+                child: const Text('SPEND'),
+              ),
+            ),
+            Expanded(child: Container()),
+          ],
+        ),
         spendList.when(
           data: (value) {
             final list = <Widget>[];
 
             value.forEach((element) {
-              list.add(Text(element.spendType));
+              list.add(Container(
+                padding: const EdgeInsets.all(10),
+                decoration: BoxDecoration(border: Border(bottom: BorderSide(color: Colors.white.withOpacity(0.3)))),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(element.spendType),
+                    Text(element.price.toCurrency()),
+                  ],
+                ),
+              ));
             });
 
             return SingleChildScrollView(child: Column(children: list));
