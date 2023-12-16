@@ -50,12 +50,12 @@ class _SpendTimePlaceInputAlertState extends ConsumerState<SpendTimePlaceInputAl
   final List<TextEditingController> _placeTecs = [];
   final List<TextEditingController> _priceTecs = [];
 
-
+  late BuildContext _context;
 
   ///
   @override
   Widget build(BuildContext context) {
-
+    _context = context;
 
     _makeTecs();
 
@@ -82,26 +82,24 @@ class _SpendTimePlaceInputAlertState extends ConsumerState<SpendTimePlaceInputAl
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  const Row(
+                  Row(
                     children: [
                       Text('Difference'),
                       SizedBox(width: 10),
                       Text(
-                        // (spendState.diff != 0)
-                        //     ? spendState.diff.toString().toCurrency()
-                        //     : (spendState.baseDiff == '')
-                        //     ? ''
-                        //     : spendState.baseDiff.toCurrency(),
-                        '9999',
+                        (spendTimePlaceState.diff != 0)
+                            ? spendTimePlaceState.diff.toString().toCurrency()
+                            : (spendTimePlaceState.baseDiff == '')
+                                ? ''
+                                : spendTimePlaceState.baseDiff.toCurrency(),
                         style: TextStyle(
-//                          color: (spendState.diff == 0) ? Colors.yellowAccent : Colors.white,
-
-                            color: Colors.yellowAccent),
+                          color: (spendTimePlaceState.diff == 0) ? Colors.yellowAccent : Colors.white,
+                        ),
                       ),
                     ],
                   ),
                   GestureDetector(
-//                    onTap: _inputSpend,
+                    onTap: _inputSpend,
                     child: Icon(Icons.input, color: Colors.greenAccent.withOpacity(0.6), size: 16),
                   ),
                 ],
@@ -112,20 +110,26 @@ class _SpendTimePlaceInputAlertState extends ConsumerState<SpendTimePlaceInputAl
                   width: context.screenSize.width,
                   child: Row(
                     children: [
-                      Expanded(
-                        child: _displayInputParts(),
-                      ),
+                      Expanded(child: _displayInputParts()),
                       (spendTimePlaceState.blinkingFlag)
                           ? DecoratedBoxTransition(
                               decoration: _decorationTween.animate(_animationController),
                               child: SizedBox(
-                                width: 80,
-                                child: _spendItemSetPanel(),
+                                width: 90,
+                                child: Container(
+                                  margin: EdgeInsets.all(5),
+                                  decoration: BoxDecoration(color: Colors.black),
+                                  child: _spendItemSetPanel(),
+                                ),
                               ),
                             )
                           : SizedBox(
-                              width: 80,
-                              child: _spendItemSetPanel(),
+                              width: 90,
+                              child: Container(
+                                margin: EdgeInsets.all(5),
+                                decoration: BoxDecoration(color: Colors.transparent),
+                                child: _spendItemSetPanel(),
+                              ),
                             ),
                     ],
                   ),
@@ -155,30 +159,26 @@ class _SpendTimePlaceInputAlertState extends ConsumerState<SpendTimePlaceInputAl
 
   ///
   Widget _spendItemSetPanel() {
-//    final spendState = _ref.watch(spendProvider);
+    var spendTimePlaceState = ref.watch(spendTimePlaceProvider);
 
     return SingleChildScrollView(
       child: Column(
         children: _spendItem.map((e) {
           return GestureDetector(
-            // onTap: () => _ref.read(spendProvider.notifier).setSpendItem(pos: spendState.itemPos, item: e),
-            //
-            //
+            onTap: () {
+              ref.read(spendTimePlaceProvider.notifier).setBlinkingFlag(blinkingFlag: false);
 
+              ref.read(spendTimePlaceProvider.notifier).setSpendItem(pos: spendTimePlaceState.itemPos, item: e);
+            },
             child: Container(
               width: double.infinity,
               margin: const EdgeInsets.all(5),
               padding: const EdgeInsets.all(5),
               alignment: Alignment.center,
               decoration: BoxDecoration(
-                // color: (e == spendState.spendItem[spendState.itemPos])
-                //     ? Colors.yellowAccent.withOpacity(0.2)
-                //     : Colors.blueGrey.withOpacity(0.2),
-                //
-                //
-
-                color: Colors.black,
-
+                color: (e == spendTimePlaceState.spendItem[spendTimePlaceState.itemPos])
+                    ? Colors.yellowAccent.withOpacity(0.2)
+                    : Colors.blueGrey.withOpacity(0.2),
                 borderRadius: BorderRadius.circular(20),
               ),
               child: Text(e, style: const TextStyle(fontSize: 10)),
@@ -193,26 +193,7 @@ class _SpendTimePlaceInputAlertState extends ConsumerState<SpendTimePlaceInputAl
   Widget _displayInputParts() {
     final list = <Widget>[];
 
-    //*****************************
-    // ignore: cascade_invocations
-    list.add(Row(
-      children: [
-        IconButton(
-          onPressed: () {
-            ref.read(spendTimePlaceProvider.notifier).setBlinkingFlag(blinkingFlag: true);
-          },
-          icon: const Icon(Icons.add),
-        ),
-        IconButton(
-          onPressed: () {
-            ref.read(spendTimePlaceProvider.notifier).setBlinkingFlag(blinkingFlag: false);
-          },
-          icon: const Icon(Icons.remove),
-        ),
-      ],
-    ));
-
-    //*****************************
+    var spendTimePlaceState = ref.watch(spendTimePlaceProvider);
 
     for (var i = 0; i < 10; i++) {
       list.add(
@@ -229,17 +210,39 @@ class _SpendTimePlaceInputAlertState extends ConsumerState<SpendTimePlaceInputAl
                 children: [
                   Expanded(
                     flex: 2,
-                    child: DecoratedBox(
-                      decoration: BoxDecoration(color: Colors.yellowAccent.withOpacity(0.2)),
-                      child: const Text('項目名'),
+                    child: GestureDetector(
+                      onTap: () {
+                        ref
+                            .read(spendTimePlaceProvider.notifier)
+                            .setBlinkingFlag(blinkingFlag: !spendTimePlaceState.blinkingFlag);
+
+                        ref.read(spendTimePlaceProvider.notifier).setItemPos(pos: i);
+                      },
+                      child: Container(
+                        padding: EdgeInsets.all(5),
+                        decoration: BoxDecoration(
+                          color: Colors.yellowAccent.withOpacity(0.2),
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        child: Text(spendTimePlaceState.spendItem[i]),
+                      ),
                     ),
                   ),
                   const SizedBox(width: 10),
                   Expanded(
-                      child: DecoratedBox(
-                    decoration: BoxDecoration(color: Colors.greenAccent.withOpacity(0.2)),
-                    child: const Text('時間'),
-                  )),
+                    child: GestureDetector(
+                      onTap: () => showTP(pos: i),
+                      child: Container(
+                        padding: EdgeInsets.all(5),
+                        alignment: Alignment.center,
+                        decoration: BoxDecoration(
+                          color: Colors.greenAccent.withOpacity(0.2),
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        child: Text(spendTimePlaceState.spendTime[i]),
+                      ),
+                    ),
+                  ),
                 ],
               ),
               const SizedBox(height: 10),
@@ -255,11 +258,10 @@ class _SpendTimePlaceInputAlertState extends ConsumerState<SpendTimePlaceInputAl
                   focusedBorder: OutlineInputBorder(borderSide: BorderSide(color: Colors.white54)),
                 ),
                 style: const TextStyle(fontSize: 12),
-                // onChanged: (value) => _ref.read(spendProvider.notifier).setSpendPrice(
-                //   pos: i,
-                //   price: value.toInt(),
-                // ),
-                onChanged: (value) {},
+                onChanged: (value) => ref.read(spendTimePlaceProvider.notifier).setSpendPrice(
+                      pos: i,
+                      price: value.toInt(),
+                    ),
               ),
               const SizedBox(height: 10),
               TextField(
@@ -273,9 +275,7 @@ class _SpendTimePlaceInputAlertState extends ConsumerState<SpendTimePlaceInputAl
                   focusedBorder: OutlineInputBorder(borderSide: BorderSide(color: Colors.white54)),
                 ),
                 style: const TextStyle(fontSize: 12),
-                //   onChanged: (value) => _ref.read(timePlaceProvider.notifier).setPlace(pos: i, place: value),
-
-                onChanged: (value) {},
+                onChanged: (value) => ref.read(spendTimePlaceProvider.notifier).setPlace(pos: i, place: value),
               )
             ],
           ),
@@ -285,4 +285,26 @@ class _SpendTimePlaceInputAlertState extends ConsumerState<SpendTimePlaceInputAl
 
     return SingleChildScrollView(child: Column(children: list));
   }
+
+  ///
+  Future<void> showTP({required int pos}) async {
+    final selectedTime = await showTimePicker(
+      context: _context,
+      initialTime: const TimeOfDay(hour: 8, minute: 0),
+      builder: (context, child) {
+        return MediaQuery(
+          data: MediaQuery.of(context).copyWith(alwaysUse24HourFormat: true),
+          child: child ?? Container(),
+        );
+      },
+    );
+
+    if (selectedTime != null) {
+      final time = '${selectedTime.hour.toString().padLeft(2, '0')}:${selectedTime.minute.toString().padLeft(2, '0')}';
+      await ref.read(spendTimePlaceProvider.notifier).setTime(pos: pos, time: time);
+    }
+  }
+
+  ///
+  void _inputSpend() {}
 }
