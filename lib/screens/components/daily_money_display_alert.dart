@@ -2,7 +2,6 @@ import 'package:bubble/bubble.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:money_note/repository/time_place_repository.dart';
 
 import '../../enums/get_single_money_from.dart';
 import '../../enums/get_single_money_when.dart';
@@ -15,6 +14,7 @@ import '../../repository/bank_price_repository.dart';
 import '../../repository/emoney_name_repository.dart';
 import '../../repository/money_repository.dart';
 import '../../repository/spend_repository.dart';
+import '../../repository/time_place_repository.dart';
 import '../../state/app_param/app_param_notifier.dart';
 import '../../state/bank_names/bank_names_notifier.dart';
 import '../../state/bank_price/bank_price_notifier.dart';
@@ -28,8 +28,7 @@ import 'bank_price_input_alert.dart';
 import 'income_list_alert.dart';
 import 'money_input_alert.dart';
 import 'parts/bank_emoney_blank_message.dart';
-import 'spend_input_alert.dart';
-import 'timeplace_input_alert.dart';
+import 'spend_time_place_input_alert.dart';
 
 // ignore: must_be_immutable
 class DailyMoneyDisplayAlert extends ConsumerWidget {
@@ -211,6 +210,23 @@ class DailyMoneyDisplayAlert extends ConsumerWidget {
                             onTap: () => _ref.read(appParamProvider.notifier).setMenuNumber(menuNumber: 2),
                             child: Container(
                               padding: const EdgeInsets.all(5),
+                              child: Icon(Icons.add,
+                                  color: Colors.greenAccent.withOpacity(0.6), size: 16),
+                            ),
+                          ),
+
+                          /*
+
+
+
+                          DecoratedBox(
+                            decoration: BoxDecoration(border: Border.all(color: Colors.white.withOpacity(0.4))),
+                            child: const Text(''),
+                          ),
+                          GestureDetector(
+                            onTap: () => _ref.read(appParamProvider.notifier).setMenuNumber(menuNumber: 2),
+                            child: Container(
+                              padding: const EdgeInsets.all(5),
                               child: Icon(Icons.info_outline_rounded,
                                   color: Colors.greenAccent.withOpacity(0.6), size: 16),
                             ),
@@ -222,13 +238,16 @@ class DailyMoneyDisplayAlert extends ConsumerWidget {
                               child: Icon(Icons.access_time, color: Colors.greenAccent.withOpacity(0.6), size: 16),
                             ),
                           ),
+
+
+                        */
                         ],
                         DecoratedBox(
                           decoration: BoxDecoration(border: Border.all(color: Colors.white.withOpacity(0.4))),
                           child: const Text(''),
                         ),
                         GestureDetector(
-                          onTap: () => _ref.read(appParamProvider.notifier).setMenuNumber(menuNumber: 4),
+                          onTap: () => _ref.read(appParamProvider.notifier).setMenuNumber(menuNumber: 3),
                           child: Container(
                             padding: const EdgeInsets.all(5),
                             child: Icon(Icons.monetization_on, color: Colors.greenAccent.withOpacity(0.6), size: 16),
@@ -264,7 +283,14 @@ class DailyMoneyDisplayAlert extends ConsumerWidget {
 
     final singleMoney = _ref.watch(moneySingleProvider.select((value) => value.singleMoney));
 
-    final spendList = _ref.watch(spendProvider.select((value) => value.spendList));
+    // final spendList = _ref.watch(spendProvider.select((value) => value.spendList));
+    //
+    //
+    //
+
+
+
+
 
     switch (menuNumber) {
       case 1:
@@ -287,69 +313,89 @@ class DailyMoneyDisplayAlert extends ConsumerWidget {
       case 2:
         return Row(
           children: [
-            const Text('使用用途登録'),
+            const Text('使用詳細登録'),
             const SizedBox(width: 10),
             GestureDetector(
               onTap: () async {
-                await _ref.read(spendProvider.notifier).clearInputValue();
-
-                //===========================
-
-                if (spendList.value != null) {
-                  final spendItem = List<String>.generate(10, (index) => '');
-                  final spendPrice = List<int>.generate(10, (index) => 0);
-                  final minusCheck = List<bool>.generate(10, (index) => false);
-
-                  for (var i = 0; i < spendList.value!.length; i++) {
-                    spendItem[i] = spendList.value![i].spendType;
-                    if (spendList.value![i].price.toInt() < 0) {
-                      spendPrice[i] = spendList.value![i].price.toInt() * -1;
-                      minusCheck[i] = true;
-                    } else {
-                      spendPrice[i] = spendList.value![i].price.toInt();
-                      minusCheck[i] = false;
-                    }
-                  }
-
-                  await _ref
-                      .read(spendProvider.notifier)
-                      .setUpdateValue(spendItem: spendItem, spendPrice: spendPrice, minusCheck: minusCheck);
-                }
-
-                //===========================
-
-                // ignore: use_build_context_synchronously
                 await MoneyDialog(
-                    context: _context, widget: SpendInputAlert(date: date, spend: _totalMoneyBeforeDate - _totalMoney));
+                    context: _context,
+                    widget: SpendTimePlaceInputAlert(date: date, spend: _totalMoneyBeforeDate - _totalMoney));
               },
-              child: Text('OPEN', style: TextStyle(color: Theme.of(_context).colorScheme.primary)),
+              child: Text(
+                'OPEN',
+                style: TextStyle(color: Theme.of(_context).colorScheme.primary),
+              ),
             ),
           ],
         );
+
+      //
+      // return Row(
+      //   children: [
+      //     const Text('使用用途登録'),
+      //     const SizedBox(width: 10),
+      //     GestureDetector(
+      //       onTap: () async {
+      //         await _ref.read(spendProvider.notifier).clearInputValue();
+      //
+      //         //===========================
+      //
+      //         if (spendList.value != null) {
+      //           final spendItem = List<String>.generate(10, (index) => '');
+      //           final spendPrice = List<int>.generate(10, (index) => 0);
+      //           final minusCheck = List<bool>.generate(10, (index) => false);
+      //
+      //           for (var i = 0; i < spendList.value!.length; i++) {
+      //             spendItem[i] = spendList.value![i].spendType;
+      //             if (spendList.value![i].price.toInt() < 0) {
+      //               spendPrice[i] = spendList.value![i].price.toInt() * -1;
+      //               minusCheck[i] = true;
+      //             } else {
+      //               spendPrice[i] = spendList.value![i].price.toInt();
+      //               minusCheck[i] = false;
+      //             }
+      //           }
+      //
+      //           await _ref
+      //               .read(spendProvider.notifier)
+      //               .setUpdateValue(spendItem: spendItem, spendPrice: spendPrice, minusCheck: minusCheck);
+      //         }
+      //
+      //         //===========================
+      //
+      //         // ignore: use_build_context_synchronously
+      //         await MoneyDialog(
+      //             context: _context, widget: SpendInputAlert(date: date, spend: _totalMoneyBeforeDate - _totalMoney));
+      //       },
+      //       child: Text('OPEN', style: TextStyle(color: Theme.of(_context).colorScheme.primary)),
+      //     ),
+      //   ],
+      // );
 
       case 3:
-        return Row(
-          children: [
-            const Text('使用場所登録'),
-            const SizedBox(width: 10),
-            GestureDetector(
-              onTap: () async {
-                await _ref
-                    .read(timePlaceProvider.notifier)
-                    .setBaseDiff(baseDiff: (_totalMoneyBeforeDate - _totalMoney).toString());
-
-                // ignore: use_build_context_synchronously
-                await MoneyDialog(
-                  context: _context,
-                  widget: TimeplaceInputAlert(date: date, spend: _totalMoneyBeforeDate - _totalMoney),
-                );
-              },
-              child: Text('OPEN', style: TextStyle(color: Theme.of(_context).colorScheme.primary)),
-            ),
-          ],
-        );
-
-      case 4:
+        //
+        //   return Row(
+        //     children: [
+        //       const Text('使用場所登録'),
+        //       const SizedBox(width: 10),
+        //       GestureDetector(
+        //         onTap: () async {
+        //           await _ref
+        //               .read(timePlaceProvider.notifier)
+        //               .setBaseDiff(baseDiff: (_totalMoneyBeforeDate - _totalMoney).toString());
+        //
+        //           // ignore: use_build_context_synchronously
+        //           await MoneyDialog(
+        //             context: _context,
+        //             widget: TimeplaceInputAlert(date: date, spend: _totalMoneyBeforeDate - _totalMoney),
+        //           );
+        //         },
+        //         child: Text('OPEN', style: TextStyle(color: Theme.of(_context).colorScheme.primary)),
+        //       ),
+        //     ],
+        //   );
+        //
+        // case 4:
         return Row(
           children: [
             const Text('収入履歴登録'),
