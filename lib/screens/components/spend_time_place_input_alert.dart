@@ -84,8 +84,8 @@ class _SpendTimePlaceInputAlertState extends ConsumerState<SpendTimePlaceInputAl
                 children: [
                   Row(
                     children: [
-                      Text('Difference'),
-                      SizedBox(width: 10),
+                      const Text('Difference'),
+                      const SizedBox(width: 10),
                       Text(
                         (spendTimePlaceState.diff != 0)
                             ? spendTimePlaceState.diff.toString().toCurrency()
@@ -117,8 +117,8 @@ class _SpendTimePlaceInputAlertState extends ConsumerState<SpendTimePlaceInputAl
                               child: SizedBox(
                                 width: 90,
                                 child: Container(
-                                  margin: EdgeInsets.all(5),
-                                  decoration: BoxDecoration(color: Colors.black),
+                                  margin: const EdgeInsets.all(5),
+                                  decoration: const BoxDecoration(color: Colors.black),
                                   child: _spendItemSetPanel(),
                                 ),
                               ),
@@ -126,8 +126,8 @@ class _SpendTimePlaceInputAlertState extends ConsumerState<SpendTimePlaceInputAl
                           : SizedBox(
                               width: 90,
                               child: Container(
-                                margin: EdgeInsets.all(5),
-                                decoration: BoxDecoration(color: Colors.transparent),
+                                margin: const EdgeInsets.all(5),
+                                decoration: const BoxDecoration(color: Colors.transparent),
                                 child: _spendItemSetPanel(),
                               ),
                             ),
@@ -159,7 +159,7 @@ class _SpendTimePlaceInputAlertState extends ConsumerState<SpendTimePlaceInputAl
 
   ///
   Widget _spendItemSetPanel() {
-    var spendTimePlaceState = ref.watch(spendTimePlaceProvider);
+    final spendTimePlaceState = ref.watch(spendTimePlaceProvider);
 
     return SingleChildScrollView(
       child: Column(
@@ -193,7 +193,7 @@ class _SpendTimePlaceInputAlertState extends ConsumerState<SpendTimePlaceInputAl
   Widget _displayInputParts() {
     final list = <Widget>[];
 
-    var spendTimePlaceState = ref.watch(spendTimePlaceProvider);
+    final spendTimePlaceState = ref.watch(spendTimePlaceProvider);
 
     for (var i = 0; i < 10; i++) {
       list.add(
@@ -219,7 +219,7 @@ class _SpendTimePlaceInputAlertState extends ConsumerState<SpendTimePlaceInputAl
                         ref.read(spendTimePlaceProvider.notifier).setItemPos(pos: i);
                       },
                       child: Container(
-                        padding: EdgeInsets.all(5),
+                        padding: const EdgeInsets.all(5),
                         decoration: BoxDecoration(
                           color: Colors.yellowAccent.withOpacity(0.2),
                           borderRadius: BorderRadius.circular(10),
@@ -233,7 +233,7 @@ class _SpendTimePlaceInputAlertState extends ConsumerState<SpendTimePlaceInputAl
                     child: GestureDetector(
                       onTap: () => showTP(pos: i),
                       child: Container(
-                        padding: EdgeInsets.all(5),
+                        padding: const EdgeInsets.all(5),
                         alignment: Alignment.center,
                         decoration: BoxDecoration(
                           color: Colors.greenAccent.withOpacity(0.2),
