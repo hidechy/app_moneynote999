@@ -1,9 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:money_note/models/spend.dart';
-import 'package:money_note/models/timeplace.dart';
-import 'package:money_note/repository/spend_repository.dart';
-import 'package:money_note/repository/time_place_repository.dart';
+
+
+
+
+//
+// import 'package:money_note/models/spend.dart';
+// import 'package:money_note/models/timeplace.dart';
+// import 'package:money_note/repository/spend_repository.dart';
+// import 'package:money_note/repository/time_place_repository.dart';
+//
+
+
+
+
 
 import '../../extensions/extensions.dart';
 import '../../models/bank_name.dart';
@@ -61,16 +71,31 @@ class DummyDataInputAlert extends StatelessWidget {
                 onPressed: _setDummyMoneyData,
                 child: const Text('Money'),
               ),
-              const SizedBox(height: 10),
-              ElevatedButton(
-                onPressed: _setDummySpendData,
-                child: const Text('Spend'),
-              ),
-              const SizedBox(height: 10),
-              ElevatedButton(
-                onPressed: _setDummyTimePlaceData,
-                child: const Text('TimePlace'),
-              ),
+
+
+
+
+              //
+              //
+              //
+              // const SizedBox(height: 10),
+              // ElevatedButton(
+              //   onPressed: _setDummySpendData,
+              //   child: const Text('Spend'),
+              // ),
+              // const SizedBox(height: 10),
+              // ElevatedButton(
+              //   onPressed: _setDummyTimePlaceData,
+              //   child: const Text('TimePlace'),
+              // ),
+              //
+              //
+              //
+
+
+
+
+
             ],
           ),
         ),
@@ -319,81 +344,81 @@ class DummyDataInputAlert extends StatelessWidget {
     Navigator.pop(_context);
   }
 
-  ///
-  Future<void> _setDummySpendData() async {
-    final date1 = DateTime.now();
+  // ///
+  // Future<void> _setDummySpendData() async {
+  //   final date1 = DateTime.now();
+  //
+  //   <Spend>[
+  //     Spend(date: date1.yyyymmdd, spendType: '食費', price: '1000'),
+  //     Spend(date: date1.yyyymmdd, spendType: '交通費', price: '2000'),
+  //     Spend(date: date1.yyyymmdd, spendType: '遊興費', price: '3000'),
+  //   ].forEach((element) async {
+  //     await SpendRepository.insertSpend(spend: element);
+  //   });
+  //
+  //   ////////////////////
+  //
+  //   final date2 = DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day - 1);
+  //
+  //   <Spend>[
+  //     Spend(date: date2.yyyymmdd, spendType: '食費', price: '1000'),
+  //     Spend(date: date2.yyyymmdd, spendType: '交通費', price: '2000'),
+  //     Spend(date: date2.yyyymmdd, spendType: '遊興費', price: '3000'),
+  //   ].forEach((element) async {
+  //     await SpendRepository.insertSpend(spend: element);
+  //   });
+  //
+  //   ////////////////////
+  //
+  //   // final date3 = DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day - 2);
+  //   //
+  //   // <Spend>[
+  //   //   Spend(date: date3.yyyymmdd, spendType: '食費', price: '1000'),
+  //   //   Spend(date: date3.yyyymmdd, spendType: '交通費', price: '2000'),
+  //   //   Spend(date: date3.yyyymmdd, spendType: '遊興費', price: '3000'),
+  //   // ].forEach((element) async {
+  //   //   await SpendRepository.insertSpend(spend: element);
+  //   // });
+  //
+  //   Navigator.pop(_context);
+  // }
 
-    <Spend>[
-      Spend(date: date1.yyyymmdd, spendType: '食費', price: '1000'),
-      Spend(date: date1.yyyymmdd, spendType: '交通費', price: '2000'),
-      Spend(date: date1.yyyymmdd, spendType: '遊興費', price: '3000'),
-    ].forEach((element) async {
-      await SpendRepository.insertSpend(spend: element);
-    });
-
-    ////////////////////
-
-    final date2 = DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day - 1);
-
-    <Spend>[
-      Spend(date: date2.yyyymmdd, spendType: '食費', price: '1000'),
-      Spend(date: date2.yyyymmdd, spendType: '交通費', price: '2000'),
-      Spend(date: date2.yyyymmdd, spendType: '遊興費', price: '3000'),
-    ].forEach((element) async {
-      await SpendRepository.insertSpend(spend: element);
-    });
-
-    ////////////////////
-
-    // final date3 = DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day - 2);
-    //
-    // <Spend>[
-    //   Spend(date: date3.yyyymmdd, spendType: '食費', price: '1000'),
-    //   Spend(date: date3.yyyymmdd, spendType: '交通費', price: '2000'),
-    //   Spend(date: date3.yyyymmdd, spendType: '遊興費', price: '3000'),
-    // ].forEach((element) async {
-    //   await SpendRepository.insertSpend(spend: element);
-    // });
-
-    Navigator.pop(_context);
-  }
-
-  ///
-  Future<void> _setDummyTimePlaceData() async {
-    final date1 = DateTime.now();
-
-    <TimePlace>[
-      TimePlace(date: date1.yyyymmdd, time: '08:00', place: 'AAA', price: 100),
-      TimePlace(date: date1.yyyymmdd, time: '10:00', place: 'BBB', price: 100),
-      TimePlace(date: date1.yyyymmdd, time: '12:00', place: 'CCC', price: 100),
-    ].forEach((element) async {
-      await TimePlaceRepository.insertTimePlace(timePlace: element);
-    });
-
-    ////////////////////
-
-    final date2 = DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day - 1);
-
-    <TimePlace>[
-      TimePlace(date: date2.yyyymmdd, time: '08:00', place: 'AAA', price: 100),
-      TimePlace(date: date2.yyyymmdd, time: '10:00', place: 'BBB', price: 100),
-      TimePlace(date: date2.yyyymmdd, time: '12:00', place: 'CCC', price: 100),
-    ].forEach((element) async {
-      await TimePlaceRepository.insertTimePlace(timePlace: element);
-    });
-
-    ////////////////////
-
-    final date3 = DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day - 2);
-
-    <TimePlace>[
-      TimePlace(date: date3.yyyymmdd, time: '08:00', place: 'AAA', price: 100),
-      TimePlace(date: date3.yyyymmdd, time: '10:00', place: 'BBB', price: 100),
-      TimePlace(date: date3.yyyymmdd, time: '12:00', place: 'CCC', price: 100),
-    ].forEach((element) async {
-      await TimePlaceRepository.insertTimePlace(timePlace: element);
-    });
-
-    Navigator.pop(_context);
-  }
+  // ///
+  // Future<void> _setDummyTimePlaceData() async {
+  //   final date1 = DateTime.now();
+  //
+  //   <TimePlace>[
+  //     TimePlace(date: date1.yyyymmdd, time: '08:00', place: 'AAA', price: 100),
+  //     TimePlace(date: date1.yyyymmdd, time: '10:00', place: 'BBB', price: 100),
+  //     TimePlace(date: date1.yyyymmdd, time: '12:00', place: 'CCC', price: 100),
+  //   ].forEach((element) async {
+  //     await TimePlaceRepository.insertTimePlace(timePlace: element);
+  //   });
+  //
+  //   ////////////////////
+  //
+  //   final date2 = DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day - 1);
+  //
+  //   <TimePlace>[
+  //     TimePlace(date: date2.yyyymmdd, time: '08:00', place: 'AAA', price: 100),
+  //     TimePlace(date: date2.yyyymmdd, time: '10:00', place: 'BBB', price: 100),
+  //     TimePlace(date: date2.yyyymmdd, time: '12:00', place: 'CCC', price: 100),
+  //   ].forEach((element) async {
+  //     await TimePlaceRepository.insertTimePlace(timePlace: element);
+  //   });
+  //
+  //   ////////////////////
+  //
+  //   final date3 = DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day - 2);
+  //
+  //   <TimePlace>[
+  //     TimePlace(date: date3.yyyymmdd, time: '08:00', place: 'AAA', price: 100),
+  //     TimePlace(date: date3.yyyymmdd, time: '10:00', place: 'BBB', price: 100),
+  //     TimePlace(date: date3.yyyymmdd, time: '12:00', place: 'CCC', price: 100),
+  //   ].forEach((element) async {
+  //     await TimePlaceRepository.insertTimePlace(timePlace: element);
+  //   });
+  //
+  //   Navigator.pop(_context);
+  // }
 }

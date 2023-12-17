@@ -5,6 +5,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import '../../enums/spend_type.dart';
 import '../../extensions/extensions.dart';
 import '../../state/spend_time_place/spend_time_place_notifier.dart';
+import 'parts/error_dialog.dart';
 
 class SpendTimePlaceInputAlert extends ConsumerStatefulWidget {
   const SpendTimePlaceInputAlert({super.key, required this.date, required this.spend});
@@ -62,6 +63,8 @@ class _SpendTimePlaceInputAlertState extends ConsumerState<SpendTimePlaceInputAl
     _makeSpendItem();
 
     final spendTimePlaceState = ref.watch(spendTimePlaceProvider);
+
+    Future(() => ref.read(spendTimePlaceProvider.notifier).setBaseDiff(baseDiff: widget.spend.toString()));
 
     return AlertDialog(
       titlePadding: EdgeInsets.zero,
@@ -221,7 +224,9 @@ class _SpendTimePlaceInputAlertState extends ConsumerState<SpendTimePlaceInputAl
                       child: Container(
                         padding: const EdgeInsets.all(5),
                         decoration: BoxDecoration(
-                          color: Colors.yellowAccent.withOpacity(0.2),
+                          color: (spendTimePlaceState.spendItem[i] != '項目名')
+                              ? Colors.yellowAccent.withOpacity(0.2)
+                              : const Color(0xFFfffacd).withOpacity(0.1),
                           borderRadius: BorderRadius.circular(10),
                         ),
                         child: Text(spendTimePlaceState.spendItem[i]),
@@ -236,7 +241,9 @@ class _SpendTimePlaceInputAlertState extends ConsumerState<SpendTimePlaceInputAl
                         padding: const EdgeInsets.all(5),
                         alignment: Alignment.center,
                         decoration: BoxDecoration(
-                          color: Colors.greenAccent.withOpacity(0.2),
+                          color: (spendTimePlaceState.spendTime[i] != '時間')
+                              ? Colors.greenAccent.withOpacity(0.2)
+                              : const Color(0xFF90ee90).withOpacity(0.1),
                           borderRadius: BorderRadius.circular(10),
                         ),
                         child: Text(spendTimePlaceState.spendTime[i]),
@@ -246,22 +253,40 @@ class _SpendTimePlaceInputAlertState extends ConsumerState<SpendTimePlaceInputAl
                 ],
               ),
               const SizedBox(height: 10),
-              TextField(
-                keyboardType: TextInputType.number,
-                controller: _priceTecs[i],
-                decoration: const InputDecoration(
-                  isDense: true,
-                  contentPadding: EdgeInsets.symmetric(vertical: 8, horizontal: 4),
-                  hintText: '金額',
-                  filled: true,
-                  border: OutlineInputBorder(),
-                  focusedBorder: OutlineInputBorder(borderSide: BorderSide(color: Colors.white54)),
-                ),
-                style: const TextStyle(fontSize: 12),
-                onChanged: (value) => ref.read(spendTimePlaceProvider.notifier).setSpendPrice(
-                      pos: i,
-                      price: value.toInt(),
+              Row(
+                children: [
+                  GestureDetector(
+                    onTap: () => ref.read(spendTimePlaceProvider.notifier).setMinusCheck(pos: i),
+                    child: Icon(
+                      Icons.remove,
+                      color: (spendTimePlaceState.minusCheck[i]) ? Colors.redAccent : Colors.white,
                     ),
+                  ),
+                  const SizedBox(width: 10),
+                  Expanded(
+                    child: TextField(
+                      keyboardType: TextInputType.number,
+                      controller: _priceTecs[i],
+                      decoration: const InputDecoration(
+                        isDense: true,
+                        contentPadding: EdgeInsets.symmetric(vertical: 8, horizontal: 4),
+                        hintText: '金額',
+                        filled: true,
+                        border: OutlineInputBorder(),
+                        focusedBorder: OutlineInputBorder(borderSide: BorderSide(color: Colors.white54)),
+                      ),
+                      style: const TextStyle(fontSize: 12),
+                      onChanged: (value) {
+                        if (value != '') {
+                          ref.read(spendTimePlaceProvider.notifier).setSpendPrice(
+                                pos: i,
+                                price: value.toInt(),
+                              );
+                        }
+                      },
+                    ),
+                  ),
+                ],
               ),
               const SizedBox(height: 10),
               TextField(
@@ -306,5 +331,63 @@ class _SpendTimePlaceInputAlertState extends ConsumerState<SpendTimePlaceInputAl
   }
 
   ///
-  void _inputSpend() {}
+  void _inputSpend() {
+    final spendTimePlaceState = ref.watch(spendTimePlaceProvider);
+
+    final list = <Map<String, dynamic>>[];
+
+    var errFlg = false;
+
+    for (var i = 0; i < 10; i++) {
+      if (spendTimePlaceState.spendItem[i] != '項目名' &&
+          spendTimePlaceState.spendTime[i] != '時間' &&
+          spendTimePlaceState.spendPlace[i] != '' &&
+          spendTimePlaceState.spendPrice[i] != 0) {
+        final price = (spendTimePlaceState.minusCheck[i])
+            ? spendTimePlaceState.spendPrice[i] * -1
+            : spendTimePlaceState.spendPrice[i];
+
+        list.add({
+          'item': spendTimePlaceState.spendItem[i],
+          'time': spendTimePlaceState.spendTime[i],
+          'place': spendTimePlaceState.spendPlace[i],
+          'price': price
+        });
+      }
+    }
+
+    if (list.isEmpty) {
+      errFlg = true;
+    }
+
+    final diff = spendTimePlaceState.diff;
+
+    if (diff != 0 || errFlg) {
+      Future.delayed(
+        Duration.zero,
+        () => error_dialog(context: _context, title: '登録できません。', content: '値を正しく入力してください。'),
+      );
+
+      return;
+    }
+
+/*
+    print(spendTimePlaceState.spendItem);
+    print(spendTimePlaceState.spendTime);
+    print(spendTimePlaceState.spendPlace);
+    print(spendTimePlaceState.spendPrice);
+    print(spendTimePlaceState.minusCheck);
+
+
+flutter: [食費, 交通費, 支払い, 項目名, 項目名, 項目名, 項目名, 項目名, 項目名, 項目名]
+flutter: [08:00, 10:00, 12:00, 時間, 時間, 時間, 時間, 時間, 時間, 時間]
+flutter: [あああ, えええ, いいい, , , , , , , ]
+
+flutter: [1000, 4666, 3000, 0, 0, 0, 0, 0, 0, 0]
+flutter: [true, false, false, false, false, false, false, false, false, false]
+///
+
+
+    */
+  }
 }

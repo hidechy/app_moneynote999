@@ -26,6 +26,9 @@ class SpendTimePlaceNotifier extends StateNotifier<SpendTimePlaceResponseState> 
   SpendTimePlaceNotifier(super.state);
 
   ///
+  Future<void> setBaseDiff({required String baseDiff}) async => state = state.copyWith(baseDiff: baseDiff);
+
+  ///
   Future<void> setBlinkingFlag({required bool blinkingFlag}) async =>
       state = state.copyWith(blinkingFlag: blinkingFlag);
 
@@ -46,6 +49,14 @@ class SpendTimePlaceNotifier extends StateNotifier<SpendTimePlaceResponseState> 
     final spendTime = <String>[...state.spendTime];
     spendTime[pos] = time;
     state = state.copyWith(spendTime: spendTime);
+  }
+
+  ///
+  Future<void> setMinusCheck({required int pos}) async {
+    final minusChecks = <bool>[...state.minusCheck];
+    final check = minusChecks[pos];
+    minusChecks[pos] = !check;
+    state = state.copyWith(minusCheck: minusChecks);
   }
 
   ///

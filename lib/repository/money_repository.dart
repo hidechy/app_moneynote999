@@ -64,18 +64,24 @@ class MoneyRepository {
           ')',
         );
 
-        await db.execute(
-          'CREATE TABLE if not exists spend('
-          'id integer PRIMARY KEY,'
-          'date TEXT,'
-          'spend_type TEXT,'
-          'price TEXT'
-          ')',
-        );
+        // await db.execute(
+        //   'CREATE TABLE if not exists spend('
+        //   'id integer PRIMARY KEY,'
+        //   'date TEXT,'
+        //   'spend_type TEXT,'
+        //   'price TEXT'
+        //   ')',
+        // );
+        //
+        // await db.execute(
+        //   'CREATE TABLE if not exists time_place(id integer PRIMARY KEY, date TEXT, time TEXT, place TEXT, price integer)',
+        // );
+        //
+        //
+        //
 
-        await db.execute(
-          'CREATE TABLE if not exists time_place(id integer PRIMARY KEY, date TEXT, time TEXT, place TEXT, price integer)',
-        );
+
+
 
         await db.execute(
           'CREATE TABLE if not exists incomes('

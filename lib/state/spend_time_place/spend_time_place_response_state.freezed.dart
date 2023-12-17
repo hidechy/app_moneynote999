@@ -17,11 +17,11 @@ final _privateConstructorUsedError = UnsupportedError(
 /// @nodoc
 mixin _$SpendTimePlaceResponseState {
   int get itemPos => throw _privateConstructorUsedError; //
-  String get baseDiff => throw _privateConstructorUsedError;
-  int get diff => throw _privateConstructorUsedError; //
+  int get diff => throw _privateConstructorUsedError;
+  String get baseDiff => throw _privateConstructorUsedError; //
+  List<String> get spendItem => throw _privateConstructorUsedError;
   List<String> get spendTime => throw _privateConstructorUsedError;
   List<String> get spendPlace => throw _privateConstructorUsedError;
-  List<String> get spendItem => throw _privateConstructorUsedError;
   List<int> get spendPrice => throw _privateConstructorUsedError;
   List<bool> get minusCheck => throw _privateConstructorUsedError; //
   AsyncValue<List<SpendTimePlace>> get spendTimePlaceList =>
@@ -43,11 +43,11 @@ abstract class $SpendTimePlaceResponseStateCopyWith<$Res> {
   @useResult
   $Res call(
       {int itemPos,
-      String baseDiff,
       int diff,
+      String baseDiff,
+      List<String> spendItem,
       List<String> spendTime,
       List<String> spendPlace,
-      List<String> spendItem,
       List<int> spendPrice,
       List<bool> minusCheck,
       AsyncValue<List<SpendTimePlace>> spendTimePlaceList,
@@ -69,11 +69,11 @@ class _$SpendTimePlaceResponseStateCopyWithImpl<$Res,
   @override
   $Res call({
     Object? itemPos = null,
-    Object? baseDiff = null,
     Object? diff = null,
+    Object? baseDiff = null,
+    Object? spendItem = null,
     Object? spendTime = null,
     Object? spendPlace = null,
-    Object? spendItem = null,
     Object? spendPrice = null,
     Object? minusCheck = null,
     Object? spendTimePlaceList = null,
@@ -84,14 +84,18 @@ class _$SpendTimePlaceResponseStateCopyWithImpl<$Res,
           ? _value.itemPos
           : itemPos // ignore: cast_nullable_to_non_nullable
               as int,
-      baseDiff: null == baseDiff
-          ? _value.baseDiff
-          : baseDiff // ignore: cast_nullable_to_non_nullable
-              as String,
       diff: null == diff
           ? _value.diff
           : diff // ignore: cast_nullable_to_non_nullable
               as int,
+      baseDiff: null == baseDiff
+          ? _value.baseDiff
+          : baseDiff // ignore: cast_nullable_to_non_nullable
+              as String,
+      spendItem: null == spendItem
+          ? _value.spendItem
+          : spendItem // ignore: cast_nullable_to_non_nullable
+              as List<String>,
       spendTime: null == spendTime
           ? _value.spendTime
           : spendTime // ignore: cast_nullable_to_non_nullable
@@ -99,10 +103,6 @@ class _$SpendTimePlaceResponseStateCopyWithImpl<$Res,
       spendPlace: null == spendPlace
           ? _value.spendPlace
           : spendPlace // ignore: cast_nullable_to_non_nullable
-              as List<String>,
-      spendItem: null == spendItem
-          ? _value.spendItem
-          : spendItem // ignore: cast_nullable_to_non_nullable
               as List<String>,
       spendPrice: null == spendPrice
           ? _value.spendPrice
@@ -135,11 +135,11 @@ abstract class _$$SpendTimePlaceResponseStateImplCopyWith<$Res>
   @useResult
   $Res call(
       {int itemPos,
-      String baseDiff,
       int diff,
+      String baseDiff,
+      List<String> spendItem,
       List<String> spendTime,
       List<String> spendPlace,
-      List<String> spendItem,
       List<int> spendPrice,
       List<bool> minusCheck,
       AsyncValue<List<SpendTimePlace>> spendTimePlaceList,
@@ -160,11 +160,11 @@ class __$$SpendTimePlaceResponseStateImplCopyWithImpl<$Res>
   @override
   $Res call({
     Object? itemPos = null,
-    Object? baseDiff = null,
     Object? diff = null,
+    Object? baseDiff = null,
+    Object? spendItem = null,
     Object? spendTime = null,
     Object? spendPlace = null,
-    Object? spendItem = null,
     Object? spendPrice = null,
     Object? minusCheck = null,
     Object? spendTimePlaceList = null,
@@ -175,14 +175,18 @@ class __$$SpendTimePlaceResponseStateImplCopyWithImpl<$Res>
           ? _value.itemPos
           : itemPos // ignore: cast_nullable_to_non_nullable
               as int,
-      baseDiff: null == baseDiff
-          ? _value.baseDiff
-          : baseDiff // ignore: cast_nullable_to_non_nullable
-              as String,
       diff: null == diff
           ? _value.diff
           : diff // ignore: cast_nullable_to_non_nullable
               as int,
+      baseDiff: null == baseDiff
+          ? _value.baseDiff
+          : baseDiff // ignore: cast_nullable_to_non_nullable
+              as String,
+      spendItem: null == spendItem
+          ? _value._spendItem
+          : spendItem // ignore: cast_nullable_to_non_nullable
+              as List<String>,
       spendTime: null == spendTime
           ? _value._spendTime
           : spendTime // ignore: cast_nullable_to_non_nullable
@@ -190,10 +194,6 @@ class __$$SpendTimePlaceResponseStateImplCopyWithImpl<$Res>
       spendPlace: null == spendPlace
           ? _value._spendPlace
           : spendPlace // ignore: cast_nullable_to_non_nullable
-              as List<String>,
-      spendItem: null == spendItem
-          ? _value._spendItem
-          : spendItem // ignore: cast_nullable_to_non_nullable
               as List<String>,
       spendPrice: null == spendPrice
           ? _value._spendPrice
@@ -221,19 +221,19 @@ class _$SpendTimePlaceResponseStateImpl
     implements _SpendTimePlaceResponseState {
   const _$SpendTimePlaceResponseStateImpl(
       {this.itemPos = 0,
-      this.baseDiff = '',
       this.diff = 0,
+      this.baseDiff = '',
+      final List<String> spendItem = const [],
       final List<String> spendTime = const [],
       final List<String> spendPlace = const [],
-      final List<String> spendItem = const [],
       final List<int> spendPrice = const [],
       final List<bool> minusCheck = const [],
       this.spendTimePlaceList =
           const AsyncValue<List<SpendTimePlace>>.loading(),
       this.blinkingFlag = false})
-      : _spendTime = spendTime,
+      : _spendItem = spendItem,
+        _spendTime = spendTime,
         _spendPlace = spendPlace,
-        _spendItem = spendItem,
         _spendPrice = spendPrice,
         _minusCheck = minusCheck;
 
@@ -243,13 +243,22 @@ class _$SpendTimePlaceResponseStateImpl
 //
   @override
   @JsonKey()
-  final String baseDiff;
+  final int diff;
   @override
   @JsonKey()
-  final int diff;
+  final String baseDiff;
 //
+  final List<String> _spendItem;
+//
+  @override
+  @JsonKey()
+  List<String> get spendItem {
+    if (_spendItem is EqualUnmodifiableListView) return _spendItem;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_spendItem);
+  }
+
   final List<String> _spendTime;
-//
   @override
   @JsonKey()
   List<String> get spendTime {
@@ -265,15 +274,6 @@ class _$SpendTimePlaceResponseStateImpl
     if (_spendPlace is EqualUnmodifiableListView) return _spendPlace;
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableListView(_spendPlace);
-  }
-
-  final List<String> _spendItem;
-  @override
-  @JsonKey()
-  List<String> get spendItem {
-    if (_spendItem is EqualUnmodifiableListView) return _spendItem;
-    // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_spendItem);
   }
 
   final List<int> _spendPrice;
@@ -305,7 +305,7 @@ class _$SpendTimePlaceResponseStateImpl
 
   @override
   String toString() {
-    return 'SpendTimePlaceResponseState(itemPos: $itemPos, baseDiff: $baseDiff, diff: $diff, spendTime: $spendTime, spendPlace: $spendPlace, spendItem: $spendItem, spendPrice: $spendPrice, minusCheck: $minusCheck, spendTimePlaceList: $spendTimePlaceList, blinkingFlag: $blinkingFlag)';
+    return 'SpendTimePlaceResponseState(itemPos: $itemPos, diff: $diff, baseDiff: $baseDiff, spendItem: $spendItem, spendTime: $spendTime, spendPlace: $spendPlace, spendPrice: $spendPrice, minusCheck: $minusCheck, spendTimePlaceList: $spendTimePlaceList, blinkingFlag: $blinkingFlag)';
   }
 
   @override
@@ -314,15 +314,15 @@ class _$SpendTimePlaceResponseStateImpl
         (other.runtimeType == runtimeType &&
             other is _$SpendTimePlaceResponseStateImpl &&
             (identical(other.itemPos, itemPos) || other.itemPos == itemPos) &&
+            (identical(other.diff, diff) || other.diff == diff) &&
             (identical(other.baseDiff, baseDiff) ||
                 other.baseDiff == baseDiff) &&
-            (identical(other.diff, diff) || other.diff == diff) &&
+            const DeepCollectionEquality()
+                .equals(other._spendItem, _spendItem) &&
             const DeepCollectionEquality()
                 .equals(other._spendTime, _spendTime) &&
             const DeepCollectionEquality()
                 .equals(other._spendPlace, _spendPlace) &&
-            const DeepCollectionEquality()
-                .equals(other._spendItem, _spendItem) &&
             const DeepCollectionEquality()
                 .equals(other._spendPrice, _spendPrice) &&
             const DeepCollectionEquality()
@@ -337,11 +337,11 @@ class _$SpendTimePlaceResponseStateImpl
   int get hashCode => Object.hash(
       runtimeType,
       itemPos,
-      baseDiff,
       diff,
+      baseDiff,
+      const DeepCollectionEquality().hash(_spendItem),
       const DeepCollectionEquality().hash(_spendTime),
       const DeepCollectionEquality().hash(_spendPlace),
-      const DeepCollectionEquality().hash(_spendItem),
       const DeepCollectionEquality().hash(_spendPrice),
       const DeepCollectionEquality().hash(_minusCheck),
       spendTimePlaceList,
@@ -359,11 +359,11 @@ abstract class _SpendTimePlaceResponseState
     implements SpendTimePlaceResponseState {
   const factory _SpendTimePlaceResponseState(
       {final int itemPos,
-      final String baseDiff,
       final int diff,
+      final String baseDiff,
+      final List<String> spendItem,
       final List<String> spendTime,
       final List<String> spendPlace,
-      final List<String> spendItem,
       final List<int> spendPrice,
       final List<bool> minusCheck,
       final AsyncValue<List<SpendTimePlace>> spendTimePlaceList,
@@ -372,15 +372,15 @@ abstract class _SpendTimePlaceResponseState
   @override
   int get itemPos;
   @override //
-  String get baseDiff;
-  @override
   int get diff;
+  @override
+  String get baseDiff;
   @override //
+  List<String> get spendItem;
+  @override
   List<String> get spendTime;
   @override
   List<String> get spendPlace;
-  @override
-  List<String> get spendItem;
   @override
   List<int> get spendPrice;
   @override

@@ -13,15 +13,29 @@ import '../../repository/bank_name_repository.dart';
 import '../../repository/bank_price_repository.dart';
 import '../../repository/emoney_name_repository.dart';
 import '../../repository/money_repository.dart';
-import '../../repository/spend_repository.dart';
-import '../../repository/time_place_repository.dart';
+// import '../../repository/spend_repository.dart';
+// import '../../repository/time_place_repository.dart';
+//
+//
+//
+
+
+
+
 import '../../state/app_param/app_param_notifier.dart';
 import '../../state/bank_names/bank_names_notifier.dart';
 import '../../state/bank_price/bank_price_notifier.dart';
 import '../../state/emoney_names/emoney_names_notifier.dart';
 import '../../state/money/money_notifier.dart';
-import '../../state/spend/spend_notifier.dart';
-import '../../state/time_place/time_place_notifier.dart';
+// import '../../state/spend/spend_notifier.dart';
+// import '../../state/time_place/time_place_notifier.dart';
+//
+
+
+
+
+
+
 import '../../utilities/utilities.dart';
 import '_money_dialog.dart';
 import 'bank_price_input_alert.dart';
@@ -73,9 +87,9 @@ class DailyMoneyDisplayAlert extends ConsumerWidget {
 
     await BankPriceRepository.getBankPriceList(ref: ref);
 
-    await SpendRepository.getSingleSpend(date: date.yyyymmdd, ref: ref);
-
-    await TimePlaceRepository.getSingleTimePlace(date: date.yyyymmdd, ref: ref);
+    // await SpendRepository.getSingleSpend(date: date.yyyymmdd, ref: ref);
+    //
+    // await TimePlaceRepository.getSingleTimePlace(date: date.yyyymmdd, ref: ref);
   }
 
   ///
@@ -265,10 +279,10 @@ class DailyMoneyDisplayAlert extends ConsumerWidget {
                 const SizedBox(height: 20),
                 _displayEmoneyMoney(),
                 const SizedBox(height: 20),
-                _displaySpend(),
-                const SizedBox(height: 20),
-                _displayTimePlace(),
-                const SizedBox(height: 20),
+                // _displaySpend(),
+                // const SizedBox(height: 20),
+                // _displayTimePlace(),
+                // const SizedBox(height: 20),
               ],
             ),
           ),
@@ -696,118 +710,128 @@ class DailyMoneyDisplayAlert extends ConsumerWidget {
     return bankPrice;
   }
 
-  ///
-  Widget _displaySpend() {
-    final spendList = _ref.watch(spendProvider.select((value) => value.spendList));
+  // ///
+  // Widget _displaySpend() {
+  //   final spendList = _ref.watch(spendProvider.select((value) => value.spendList));
+  //
+  //   final openSpendArea = _ref.watch(appParamProvider.select((value) => value.openSpendArea));
+  //
+  //   // TODO エラー修正できない
+  //   if (spendList.value?.length == 0) {
+  //     return Container();
+  //   }
+  //
+  //   return ExpansionTile(
+  //     backgroundColor: Colors.blueGrey.withOpacity(0.1),
+  //     initiallyExpanded: openSpendArea,
+  //     iconColor: Colors.white,
+  //     onExpansionChanged: (value) => _ref.read(appParamProvider.notifier).setOpenSpendArea(value: value),
+  //     title: const Text(
+  //       'SPEND',
+  //       style: TextStyle(fontSize: 12, color: Colors.white),
+  //     ),
+  //     children: [
+  //       Container(
+  //         padding: const EdgeInsets.symmetric(horizontal: 10),
+  //         child: Column(
+  //           children: [
+  //             spendList.when(
+  //               data: (value) {
+  //                 final list = <Widget>[];
+  //
+  //                 value.forEach((element) {
+  //                   list.add(Container(
+  //                     padding: const EdgeInsets.all(10),
+  //                     decoration:
+  //                         BoxDecoration(border: Border(bottom: BorderSide(color: Colors.white.withOpacity(0.3)))),
+  //                     child: Row(
+  //                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
+  //                       children: [Text(element.spendType), Text(element.price.toCurrency())],
+  //                     ),
+  //                   ));
+  //                 });
+  //
+  //                 return SingleChildScrollView(child: Column(children: list));
+  //               },
+  //               error: (error, stackTrace) => const Center(child: CircularProgressIndicator()),
+  //               loading: () => const Center(child: CircularProgressIndicator()),
+  //             ),
+  //           ],
+  //         ),
+  //       ),
+  //       const SizedBox(height: 10),
+  //     ],
+  //   );
+  // }
 
-    final openSpendArea = _ref.watch(appParamProvider.select((value) => value.openSpendArea));
+  // ///
+  // Widget _displayTimePlace() {
+  //   final timePlaceList = _ref.watch(timePlaceProvider.select((value) => value.timePlaceList));
+  //
+  //   final openTimeplaceArea = _ref.watch(appParamProvider.select((value) => value.openTimeplaceArea));
+  //
+  //   // TODO エラー修正できない
+  //   if (timePlaceList.value?.length == 0) {
+  //     return Container();
+  //   }
+  //
+  //   return ExpansionTile(
+  //     backgroundColor: Colors.blueGrey.withOpacity(0.1),
+  //     initiallyExpanded: openTimeplaceArea,
+  //     iconColor: Colors.white,
+  //     onExpansionChanged: (value) => _ref.read(appParamProvider.notifier).setOpenTimeplaceArea(value: value),
+  //     title: const Text(
+  //       'TIME PLACE',
+  //       style: TextStyle(fontSize: 12, color: Colors.white),
+  //     ),
+  //     children: [
+  //       Container(
+  //         padding: const EdgeInsets.symmetric(horizontal: 10),
+  //         child: Column(
+  //           children: [
+  //             timePlaceList.when(
+  //               data: (value) {
+  //                 final list = <Widget>[];
+  //
+  //                 value.forEach((element) {
+  //                   list.add(Container(
+  //                     padding: const EdgeInsets.all(10),
+  //                     decoration:
+  //                         BoxDecoration(border: Border(bottom: BorderSide(color: Colors.white.withOpacity(0.3)))),
+  //                     child: Row(
+  //                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
+  //                       children: [
+  //                         Row(
+  //                           children: [
+  //                             SizedBox(width: 60, child: Text(element.time)),
+  //                             Text(element.place),
+  //                           ],
+  //                         ),
+  //                         Text(element.price.toString().toCurrency()),
+  //                       ],
+  //                     ),
+  //                   ));
+  //                 });
+  //
+  //                 return SingleChildScrollView(child: Column(children: list));
+  //               },
+  //               error: (error, stackTrace) => const Center(child: CircularProgressIndicator()),
+  //               loading: () => const Center(child: CircularProgressIndicator()),
+  //             ),
+  //           ],
+  //         ),
+  //       ),
+  //     ],
+  //   );
+  // }
+  //
+  //
+  //
 
-    // TODO エラー修正できない
-    if (spendList.value?.length == 0) {
-      return Container();
-    }
 
-    return ExpansionTile(
-      backgroundColor: Colors.blueGrey.withOpacity(0.1),
-      initiallyExpanded: openSpendArea,
-      iconColor: Colors.white,
-      onExpansionChanged: (value) => _ref.read(appParamProvider.notifier).setOpenSpendArea(value: value),
-      title: const Text(
-        'SPEND',
-        style: TextStyle(fontSize: 12, color: Colors.white),
-      ),
-      children: [
-        Container(
-          padding: const EdgeInsets.symmetric(horizontal: 10),
-          child: Column(
-            children: [
-              spendList.when(
-                data: (value) {
-                  final list = <Widget>[];
 
-                  value.forEach((element) {
-                    list.add(Container(
-                      padding: const EdgeInsets.all(10),
-                      decoration:
-                          BoxDecoration(border: Border(bottom: BorderSide(color: Colors.white.withOpacity(0.3)))),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [Text(element.spendType), Text(element.price.toCurrency())],
-                      ),
-                    ));
-                  });
 
-                  return SingleChildScrollView(child: Column(children: list));
-                },
-                error: (error, stackTrace) => const Center(child: CircularProgressIndicator()),
-                loading: () => const Center(child: CircularProgressIndicator()),
-              ),
-            ],
-          ),
-        ),
-        const SizedBox(height: 10),
-      ],
-    );
-  }
 
-  ///
-  Widget _displayTimePlace() {
-    final timePlaceList = _ref.watch(timePlaceProvider.select((value) => value.timePlaceList));
 
-    final openTimeplaceArea = _ref.watch(appParamProvider.select((value) => value.openTimeplaceArea));
 
-    // TODO エラー修正できない
-    if (timePlaceList.value?.length == 0) {
-      return Container();
-    }
-
-    return ExpansionTile(
-      backgroundColor: Colors.blueGrey.withOpacity(0.1),
-      initiallyExpanded: openTimeplaceArea,
-      iconColor: Colors.white,
-      onExpansionChanged: (value) => _ref.read(appParamProvider.notifier).setOpenTimeplaceArea(value: value),
-      title: const Text(
-        'TIME PLACE',
-        style: TextStyle(fontSize: 12, color: Colors.white),
-      ),
-      children: [
-        Container(
-          padding: const EdgeInsets.symmetric(horizontal: 10),
-          child: Column(
-            children: [
-              timePlaceList.when(
-                data: (value) {
-                  final list = <Widget>[];
-
-                  value.forEach((element) {
-                    list.add(Container(
-                      padding: const EdgeInsets.all(10),
-                      decoration:
-                          BoxDecoration(border: Border(bottom: BorderSide(color: Colors.white.withOpacity(0.3)))),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Row(
-                            children: [
-                              SizedBox(width: 60, child: Text(element.time)),
-                              Text(element.place),
-                            ],
-                          ),
-                          Text(element.price.toString().toCurrency()),
-                        ],
-                      ),
-                    ));
-                  });
-
-                  return SingleChildScrollView(child: Column(children: list));
-                },
-                error: (error, stackTrace) => const Center(child: CircularProgressIndicator()),
-                loading: () => const Center(child: CircularProgressIndicator()),
-              ),
-            ],
-          ),
-        ),
-      ],
-    );
-  }
 }

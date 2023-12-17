@@ -10,17 +10,16 @@ class SpendTimePlaceResponseState with _$SpendTimePlaceResponseState {
   const factory SpendTimePlaceResponseState({
     @Default(0) int itemPos,
     //
-    @Default('') String baseDiff,
     @Default(0) int diff,
+    @Default('') String baseDiff,
     //
+    @Default([]) List<String> spendItem,
     @Default([]) List<String> spendTime,
     @Default([]) List<String> spendPlace,
-    @Default([]) List<String> spendItem,
     @Default([]) List<int> spendPrice,
     @Default([]) List<bool> minusCheck,
     //
     @Default(AsyncValue<List<SpendTimePlace>>.loading()) AsyncValue<List<SpendTimePlace>> spendTimePlaceList,
-
     //
     @Default(false) bool blinkingFlag,
   }) = _SpendTimePlaceResponseState;
