@@ -25,8 +25,6 @@ class AppParamNotifier extends StateNotifier<AppParamResponseState> {
   Future<void> setOpenEmoneyArea({required bool value}) async => state = state.copyWith(openEmoneyArea: value);
 
   ///
-  Future<void> setOpenSpendArea({required bool value}) async => state = state.copyWith(openSpendArea: value);
-
-  ///
-  Future<void> setOpenTimeplaceArea({required bool value}) async => state = state.copyWith(openTimeplaceArea: value);
+  Future<void> setOpenSpendTimePlaceArea({required bool value}) async =>
+      state = state.copyWith(openSpendTimePlaceArea: value);
 }

@@ -10,7 +10,6 @@ class AppParamResponseState with _$AppParamResponseState {
     @Default(true) bool openCurrencyArea,
     @Default(true) bool openBankArea,
     @Default(true) bool openEmoneyArea,
-    @Default(true) bool openSpendArea,
-    @Default(true) bool openTimeplaceArea,
+    @Default(true) bool openSpendTimePlaceArea,
   }) = _AppParamResponseState;
 }

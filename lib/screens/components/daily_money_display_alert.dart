@@ -13,29 +13,13 @@ import '../../repository/bank_name_repository.dart';
 import '../../repository/bank_price_repository.dart';
 import '../../repository/emoney_name_repository.dart';
 import '../../repository/money_repository.dart';
-// import '../../repository/spend_repository.dart';
-// import '../../repository/time_place_repository.dart';
-//
-//
-//
-
-
-
-
+import '../../repository/spend_time_place_repository.dart';
 import '../../state/app_param/app_param_notifier.dart';
 import '../../state/bank_names/bank_names_notifier.dart';
 import '../../state/bank_price/bank_price_notifier.dart';
 import '../../state/emoney_names/emoney_names_notifier.dart';
 import '../../state/money/money_notifier.dart';
-// import '../../state/spend/spend_notifier.dart';
-// import '../../state/time_place/time_place_notifier.dart';
-//
-
-
-
-
-
-
+import '../../state/spend_time_place/spend_time_place_notifier.dart';
 import '../../utilities/utilities.dart';
 import '_money_dialog.dart';
 import 'bank_price_input_alert.dart';
@@ -87,9 +71,7 @@ class DailyMoneyDisplayAlert extends ConsumerWidget {
 
     await BankPriceRepository.getBankPriceList(ref: ref);
 
-    // await SpendRepository.getSingleSpend(date: date.yyyymmdd, ref: ref);
-    //
-    // await TimePlaceRepository.getSingleTimePlace(date: date.yyyymmdd, ref: ref);
+    await SpendTimePlaceRepository.getSingleSpendTimePlace(date: date.yyyymmdd, ref: ref);
   }
 
   ///
@@ -224,37 +206,9 @@ class DailyMoneyDisplayAlert extends ConsumerWidget {
                             onTap: () => _ref.read(appParamProvider.notifier).setMenuNumber(menuNumber: 2),
                             child: Container(
                               padding: const EdgeInsets.all(5),
-                              child: Icon(Icons.add,
-                                  color: Colors.greenAccent.withOpacity(0.6), size: 16),
+                              child: Icon(Icons.add, color: Colors.greenAccent.withOpacity(0.6), size: 16),
                             ),
                           ),
-
-                          /*
-
-
-
-                          DecoratedBox(
-                            decoration: BoxDecoration(border: Border.all(color: Colors.white.withOpacity(0.4))),
-                            child: const Text(''),
-                          ),
-                          GestureDetector(
-                            onTap: () => _ref.read(appParamProvider.notifier).setMenuNumber(menuNumber: 2),
-                            child: Container(
-                              padding: const EdgeInsets.all(5),
-                              child: Icon(Icons.info_outline_rounded,
-                                  color: Colors.greenAccent.withOpacity(0.6), size: 16),
-                            ),
-                          ),
-                          GestureDetector(
-                            onTap: () => _ref.read(appParamProvider.notifier).setMenuNumber(menuNumber: 3),
-                            child: Container(
-                              padding: const EdgeInsets.all(5),
-                              child: Icon(Icons.access_time, color: Colors.greenAccent.withOpacity(0.6), size: 16),
-                            ),
-                          ),
-
-
-                        */
                         ],
                         DecoratedBox(
                           decoration: BoxDecoration(border: Border.all(color: Colors.white.withOpacity(0.4))),
@@ -279,10 +233,8 @@ class DailyMoneyDisplayAlert extends ConsumerWidget {
                 const SizedBox(height: 20),
                 _displayEmoneyMoney(),
                 const SizedBox(height: 20),
-                // _displaySpend(),
-                // const SizedBox(height: 20),
-                // _displayTimePlace(),
-                // const SizedBox(height: 20),
+                _displaySpendTimePlace(),
+                const SizedBox(height: 20),
               ],
             ),
           ),
@@ -296,15 +248,6 @@ class DailyMoneyDisplayAlert extends ConsumerWidget {
     final menuNumber = _ref.watch(appParamProvider.select((value) => value.menuNumber));
 
     final singleMoney = _ref.watch(moneySingleProvider.select((value) => value.singleMoney));
-
-    // final spendList = _ref.watch(spendProvider.select((value) => value.spendList));
-    //
-    //
-    //
-
-
-
-
 
     switch (menuNumber) {
       case 1:
@@ -343,73 +286,7 @@ class DailyMoneyDisplayAlert extends ConsumerWidget {
           ],
         );
 
-      //
-      // return Row(
-      //   children: [
-      //     const Text('使用用途登録'),
-      //     const SizedBox(width: 10),
-      //     GestureDetector(
-      //       onTap: () async {
-      //         await _ref.read(spendProvider.notifier).clearInputValue();
-      //
-      //         //===========================
-      //
-      //         if (spendList.value != null) {
-      //           final spendItem = List<String>.generate(10, (index) => '');
-      //           final spendPrice = List<int>.generate(10, (index) => 0);
-      //           final minusCheck = List<bool>.generate(10, (index) => false);
-      //
-      //           for (var i = 0; i < spendList.value!.length; i++) {
-      //             spendItem[i] = spendList.value![i].spendType;
-      //             if (spendList.value![i].price.toInt() < 0) {
-      //               spendPrice[i] = spendList.value![i].price.toInt() * -1;
-      //               minusCheck[i] = true;
-      //             } else {
-      //               spendPrice[i] = spendList.value![i].price.toInt();
-      //               minusCheck[i] = false;
-      //             }
-      //           }
-      //
-      //           await _ref
-      //               .read(spendProvider.notifier)
-      //               .setUpdateValue(spendItem: spendItem, spendPrice: spendPrice, minusCheck: minusCheck);
-      //         }
-      //
-      //         //===========================
-      //
-      //         // ignore: use_build_context_synchronously
-      //         await MoneyDialog(
-      //             context: _context, widget: SpendInputAlert(date: date, spend: _totalMoneyBeforeDate - _totalMoney));
-      //       },
-      //       child: Text('OPEN', style: TextStyle(color: Theme.of(_context).colorScheme.primary)),
-      //     ),
-      //   ],
-      // );
-
       case 3:
-        //
-        //   return Row(
-        //     children: [
-        //       const Text('使用場所登録'),
-        //       const SizedBox(width: 10),
-        //       GestureDetector(
-        //         onTap: () async {
-        //           await _ref
-        //               .read(timePlaceProvider.notifier)
-        //               .setBaseDiff(baseDiff: (_totalMoneyBeforeDate - _totalMoney).toString());
-        //
-        //           // ignore: use_build_context_synchronously
-        //           await MoneyDialog(
-        //             context: _context,
-        //             widget: TimeplaceInputAlert(date: date, spend: _totalMoneyBeforeDate - _totalMoney),
-        //           );
-        //         },
-        //         child: Text('OPEN', style: TextStyle(color: Theme.of(_context).colorScheme.primary)),
-        //       ),
-        //     ],
-        //   );
-        //
-        // case 4:
         return Row(
           children: [
             const Text('収入履歴登録'),
@@ -710,128 +587,56 @@ class DailyMoneyDisplayAlert extends ConsumerWidget {
     return bankPrice;
   }
 
-  // ///
-  // Widget _displaySpend() {
-  //   final spendList = _ref.watch(spendProvider.select((value) => value.spendList));
-  //
-  //   final openSpendArea = _ref.watch(appParamProvider.select((value) => value.openSpendArea));
-  //
-  //   // TODO エラー修正できない
-  //   if (spendList.value?.length == 0) {
-  //     return Container();
-  //   }
-  //
-  //   return ExpansionTile(
-  //     backgroundColor: Colors.blueGrey.withOpacity(0.1),
-  //     initiallyExpanded: openSpendArea,
-  //     iconColor: Colors.white,
-  //     onExpansionChanged: (value) => _ref.read(appParamProvider.notifier).setOpenSpendArea(value: value),
-  //     title: const Text(
-  //       'SPEND',
-  //       style: TextStyle(fontSize: 12, color: Colors.white),
-  //     ),
-  //     children: [
-  //       Container(
-  //         padding: const EdgeInsets.symmetric(horizontal: 10),
-  //         child: Column(
-  //           children: [
-  //             spendList.when(
-  //               data: (value) {
-  //                 final list = <Widget>[];
-  //
-  //                 value.forEach((element) {
-  //                   list.add(Container(
-  //                     padding: const EdgeInsets.all(10),
-  //                     decoration:
-  //                         BoxDecoration(border: Border(bottom: BorderSide(color: Colors.white.withOpacity(0.3)))),
-  //                     child: Row(
-  //                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
-  //                       children: [Text(element.spendType), Text(element.price.toCurrency())],
-  //                     ),
-  //                   ));
-  //                 });
-  //
-  //                 return SingleChildScrollView(child: Column(children: list));
-  //               },
-  //               error: (error, stackTrace) => const Center(child: CircularProgressIndicator()),
-  //               loading: () => const Center(child: CircularProgressIndicator()),
-  //             ),
-  //           ],
-  //         ),
-  //       ),
-  //       const SizedBox(height: 10),
-  //     ],
-  //   );
-  // }
+  ///
+  Widget _displaySpendTimePlace() {
+    final spendTimePlaceList = _ref.watch(spendTimePlaceProvider.select((value) => value.spendTimePlaceList));
 
-  // ///
-  // Widget _displayTimePlace() {
-  //   final timePlaceList = _ref.watch(timePlaceProvider.select((value) => value.timePlaceList));
-  //
-  //   final openTimeplaceArea = _ref.watch(appParamProvider.select((value) => value.openTimeplaceArea));
-  //
-  //   // TODO エラー修正できない
-  //   if (timePlaceList.value?.length == 0) {
-  //     return Container();
-  //   }
-  //
-  //   return ExpansionTile(
-  //     backgroundColor: Colors.blueGrey.withOpacity(0.1),
-  //     initiallyExpanded: openTimeplaceArea,
-  //     iconColor: Colors.white,
-  //     onExpansionChanged: (value) => _ref.read(appParamProvider.notifier).setOpenTimeplaceArea(value: value),
-  //     title: const Text(
-  //       'TIME PLACE',
-  //       style: TextStyle(fontSize: 12, color: Colors.white),
-  //     ),
-  //     children: [
-  //       Container(
-  //         padding: const EdgeInsets.symmetric(horizontal: 10),
-  //         child: Column(
-  //           children: [
-  //             timePlaceList.when(
-  //               data: (value) {
-  //                 final list = <Widget>[];
-  //
-  //                 value.forEach((element) {
-  //                   list.add(Container(
-  //                     padding: const EdgeInsets.all(10),
-  //                     decoration:
-  //                         BoxDecoration(border: Border(bottom: BorderSide(color: Colors.white.withOpacity(0.3)))),
-  //                     child: Row(
-  //                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
-  //                       children: [
-  //                         Row(
-  //                           children: [
-  //                             SizedBox(width: 60, child: Text(element.time)),
-  //                             Text(element.place),
-  //                           ],
-  //                         ),
-  //                         Text(element.price.toString().toCurrency()),
-  //                       ],
-  //                     ),
-  //                   ));
-  //                 });
-  //
-  //                 return SingleChildScrollView(child: Column(children: list));
-  //               },
-  //               error: (error, stackTrace) => const Center(child: CircularProgressIndicator()),
-  //               loading: () => const Center(child: CircularProgressIndicator()),
-  //             ),
-  //           ],
-  //         ),
-  //       ),
-  //     ],
-  //   );
-  // }
-  //
-  //
-  //
+    final openSpendTimePlaceArea = _ref.watch(appParamProvider.select((value) => value.openSpendTimePlaceArea));
 
-
-
-
-
-
-
+    return spendTimePlaceList.when(
+      data: (value) {
+        return ExpansionTile(
+          backgroundColor: Colors.blueGrey.withOpacity(0.1),
+          initiallyExpanded: openSpendTimePlaceArea,
+          iconColor: Colors.white,
+          onExpansionChanged: (value) => _ref.read(appParamProvider.notifier).setOpenSpendTimePlaceArea(value: value),
+          title: const Text(
+            'SPEND',
+            style: TextStyle(fontSize: 12, color: Colors.white),
+          ),
+          children: [
+            Container(
+              padding: const EdgeInsets.symmetric(horizontal: 10),
+              child: Container(
+                padding: const EdgeInsets.all(10),
+                decoration: BoxDecoration(border: Border(bottom: BorderSide(color: Colors.white.withOpacity(0.3)))),
+                child: Column(
+                  children: value.map((e) {
+                    return Column(
+                      children: [
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [Text(e.time), Container()],
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [Text(e.spendType), Text(e.price.toString().toCurrency())],
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [Container(), Text(e.place)],
+                        ),
+                      ],
+                    );
+                  }).toList(),
+                ),
+              ),
+            ),
+          ],
+        );
+      },
+      error: (error, stackTrace) => const Center(child: CircularProgressIndicator()),
+      loading: () => const Center(child: CircularProgressIndicator()),
+    );
+  }
 }

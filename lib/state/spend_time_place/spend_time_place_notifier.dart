@@ -1,5 +1,6 @@
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:money_note/extensions/extensions.dart';
+import 'package:money_note/models/spend_time_place.dart';
 
 import 'spend_time_place_response_state.dart';
 
@@ -85,4 +86,44 @@ class SpendTimePlaceNotifier extends StateNotifier<SpendTimePlaceResponseState> 
 
     state = state.copyWith(spendPrice: prices, diff: diff);
   }
+
+  ///
+  Future<void> deleteSpendTimePlaceList({required String date}) async {
+    if (state.spendTimePlaceList.value != null) {
+      final spendTimePlaceList = state.spendTimePlaceList.value!;
+
+      spendTimePlaceList.where((element) => element.date == date).toList().forEach((element) {
+        try {
+          spendTimePlaceList.removeAt(element.id!);
+          // ignore: avoid_catches_without_on_clauses, empty_catches
+        } catch (e) {}
+      });
+
+      state = state.copyWith(spendTimePlaceList: AsyncValue.data(spendTimePlaceList));
+    }
+  }
+
+  ///
+  Future<void> clearInputValue() async {
+    final spendTime = List.generate(10, (index) => '時間');
+    final spendPlace = List.generate(10, (index) => '');
+    final spendItem = List.generate(10, (index) => '項目名');
+    final spendPrice = List.generate(10, (index) => 0);
+    final minusCheck = List.generate(10, (index) => false);
+
+    state = state.copyWith(
+      spendTime: spendTime,
+      spendPlace: spendPlace,
+      spendItem: spendItem,
+      spendPrice: spendPrice,
+      minusCheck: minusCheck,
+      itemPos: 0,
+      baseDiff: '',
+      diff: 0,
+    );
+  }
+
+  ///
+  Future<void> setSpendTimePlaceList({required List<SpendTimePlace> spendTimePlaceList}) async =>
+      state = state.copyWith(spendTimePlaceList: AsyncValue.data(spendTimePlaceList));
 }

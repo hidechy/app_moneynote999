@@ -21,8 +21,7 @@ mixin _$AppParamResponseState {
   bool get openCurrencyArea => throw _privateConstructorUsedError;
   bool get openBankArea => throw _privateConstructorUsedError;
   bool get openEmoneyArea => throw _privateConstructorUsedError;
-  bool get openSpendArea => throw _privateConstructorUsedError;
-  bool get openTimeplaceArea => throw _privateConstructorUsedError;
+  bool get openSpendTimePlaceArea => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $AppParamResponseStateCopyWith<AppParamResponseState> get copyWith =>
@@ -41,8 +40,7 @@ abstract class $AppParamResponseStateCopyWith<$Res> {
       bool openCurrencyArea,
       bool openBankArea,
       bool openEmoneyArea,
-      bool openSpendArea,
-      bool openTimeplaceArea});
+      bool openSpendTimePlaceArea});
 }
 
 /// @nodoc
@@ -64,8 +62,7 @@ class _$AppParamResponseStateCopyWithImpl<$Res,
     Object? openCurrencyArea = null,
     Object? openBankArea = null,
     Object? openEmoneyArea = null,
-    Object? openSpendArea = null,
-    Object? openTimeplaceArea = null,
+    Object? openSpendTimePlaceArea = null,
   }) {
     return _then(_value.copyWith(
       calendarSelectedDate: freezed == calendarSelectedDate
@@ -88,13 +85,9 @@ class _$AppParamResponseStateCopyWithImpl<$Res,
           ? _value.openEmoneyArea
           : openEmoneyArea // ignore: cast_nullable_to_non_nullable
               as bool,
-      openSpendArea: null == openSpendArea
-          ? _value.openSpendArea
-          : openSpendArea // ignore: cast_nullable_to_non_nullable
-              as bool,
-      openTimeplaceArea: null == openTimeplaceArea
-          ? _value.openTimeplaceArea
-          : openTimeplaceArea // ignore: cast_nullable_to_non_nullable
+      openSpendTimePlaceArea: null == openSpendTimePlaceArea
+          ? _value.openSpendTimePlaceArea
+          : openSpendTimePlaceArea // ignore: cast_nullable_to_non_nullable
               as bool,
     ) as $Val);
   }
@@ -115,8 +108,7 @@ abstract class _$$AppParamResponseStateImplCopyWith<$Res>
       bool openCurrencyArea,
       bool openBankArea,
       bool openEmoneyArea,
-      bool openSpendArea,
-      bool openTimeplaceArea});
+      bool openSpendTimePlaceArea});
 }
 
 /// @nodoc
@@ -136,8 +128,7 @@ class __$$AppParamResponseStateImplCopyWithImpl<$Res>
     Object? openCurrencyArea = null,
     Object? openBankArea = null,
     Object? openEmoneyArea = null,
-    Object? openSpendArea = null,
-    Object? openTimeplaceArea = null,
+    Object? openSpendTimePlaceArea = null,
   }) {
     return _then(_$AppParamResponseStateImpl(
       calendarSelectedDate: freezed == calendarSelectedDate
@@ -160,13 +151,9 @@ class __$$AppParamResponseStateImplCopyWithImpl<$Res>
           ? _value.openEmoneyArea
           : openEmoneyArea // ignore: cast_nullable_to_non_nullable
               as bool,
-      openSpendArea: null == openSpendArea
-          ? _value.openSpendArea
-          : openSpendArea // ignore: cast_nullable_to_non_nullable
-              as bool,
-      openTimeplaceArea: null == openTimeplaceArea
-          ? _value.openTimeplaceArea
-          : openTimeplaceArea // ignore: cast_nullable_to_non_nullable
+      openSpendTimePlaceArea: null == openSpendTimePlaceArea
+          ? _value.openSpendTimePlaceArea
+          : openSpendTimePlaceArea // ignore: cast_nullable_to_non_nullable
               as bool,
     ));
   }
@@ -181,8 +168,7 @@ class _$AppParamResponseStateImpl implements _AppParamResponseState {
       this.openCurrencyArea = true,
       this.openBankArea = true,
       this.openEmoneyArea = true,
-      this.openSpendArea = true,
-      this.openTimeplaceArea = true});
+      this.openSpendTimePlaceArea = true});
 
   @override
   final DateTime? calendarSelectedDate;
@@ -200,14 +186,11 @@ class _$AppParamResponseStateImpl implements _AppParamResponseState {
   final bool openEmoneyArea;
   @override
   @JsonKey()
-  final bool openSpendArea;
-  @override
-  @JsonKey()
-  final bool openTimeplaceArea;
+  final bool openSpendTimePlaceArea;
 
   @override
   String toString() {
-    return 'AppParamResponseState(calendarSelectedDate: $calendarSelectedDate, menuNumber: $menuNumber, openCurrencyArea: $openCurrencyArea, openBankArea: $openBankArea, openEmoneyArea: $openEmoneyArea, openSpendArea: $openSpendArea, openTimeplaceArea: $openTimeplaceArea)';
+    return 'AppParamResponseState(calendarSelectedDate: $calendarSelectedDate, menuNumber: $menuNumber, openCurrencyArea: $openCurrencyArea, openBankArea: $openBankArea, openEmoneyArea: $openEmoneyArea, openSpendTimePlaceArea: $openSpendTimePlaceArea)';
   }
 
   @override
@@ -225,22 +208,13 @@ class _$AppParamResponseStateImpl implements _AppParamResponseState {
                 other.openBankArea == openBankArea) &&
             (identical(other.openEmoneyArea, openEmoneyArea) ||
                 other.openEmoneyArea == openEmoneyArea) &&
-            (identical(other.openSpendArea, openSpendArea) ||
-                other.openSpendArea == openSpendArea) &&
-            (identical(other.openTimeplaceArea, openTimeplaceArea) ||
-                other.openTimeplaceArea == openTimeplaceArea));
+            (identical(other.openSpendTimePlaceArea, openSpendTimePlaceArea) ||
+                other.openSpendTimePlaceArea == openSpendTimePlaceArea));
   }
 
   @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      calendarSelectedDate,
-      menuNumber,
-      openCurrencyArea,
-      openBankArea,
-      openEmoneyArea,
-      openSpendArea,
-      openTimeplaceArea);
+  int get hashCode => Object.hash(runtimeType, calendarSelectedDate, menuNumber,
+      openCurrencyArea, openBankArea, openEmoneyArea, openSpendTimePlaceArea);
 
   @JsonKey(ignore: true)
   @override
@@ -257,8 +231,7 @@ abstract class _AppParamResponseState implements AppParamResponseState {
       final bool openCurrencyArea,
       final bool openBankArea,
       final bool openEmoneyArea,
-      final bool openSpendArea,
-      final bool openTimeplaceArea}) = _$AppParamResponseStateImpl;
+      final bool openSpendTimePlaceArea}) = _$AppParamResponseStateImpl;
 
   @override
   DateTime? get calendarSelectedDate;
@@ -271,9 +244,7 @@ abstract class _AppParamResponseState implements AppParamResponseState {
   @override
   bool get openEmoneyArea;
   @override
-  bool get openSpendArea;
-  @override
-  bool get openTimeplaceArea;
+  bool get openSpendTimePlaceArea;
   @override
   @JsonKey(ignore: true)
   _$$AppParamResponseStateImplCopyWith<_$AppParamResponseStateImpl>
