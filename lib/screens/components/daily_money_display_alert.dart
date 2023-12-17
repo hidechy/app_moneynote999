@@ -593,54 +593,65 @@ class DailyMoneyDisplayAlert extends ConsumerWidget {
 
   ///
   Widget _displaySpendTimePlace() {
-    final spendTimePlaceList = _ref.watch(spendTimePlaceProvider.select((value) => value.spendTimePlaceList));
+    if (_currencySum > 0) {
+      final spendTimePlaceList = _ref.watch(spendTimePlaceProvider.select((value) => value.spendTimePlaceList));
 
-    final openSpendTimePlaceArea = _ref.watch(appParamProvider.select((value) => value.openSpendTimePlaceArea));
+      final openSpendTimePlaceArea = _ref.watch(appParamProvider.select((value) => value.openSpendTimePlaceArea));
 
-    return spendTimePlaceList.when(
-      data: (value) {
-        return ExpansionTile(
-          backgroundColor: Colors.blueGrey.withOpacity(0.1),
-          initiallyExpanded: openSpendTimePlaceArea,
-          iconColor: Colors.white,
-          onExpansionChanged: (value) => _ref.read(appParamProvider.notifier).setOpenSpendTimePlaceArea(value: value),
-          title: const Text(
-            'SPEND',
-            style: TextStyle(fontSize: 12, color: Colors.white),
-          ),
-          children: [
-            Container(
-              padding: const EdgeInsets.symmetric(horizontal: 10),
-              child: Column(
-                children: value.map((e) {
-                  return Container(
-                    padding: const EdgeInsets.all(10),
-                    decoration: BoxDecoration(border: Border(bottom: BorderSide(color: Colors.white.withOpacity(0.3)))),
-                    child: Column(
-                      children: [
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [Text(e.time), Container()],
+      return ExpansionTile(
+        backgroundColor: Colors.blueGrey.withOpacity(0.1),
+        initiallyExpanded: openSpendTimePlaceArea,
+        iconColor: Colors.white,
+        onExpansionChanged: (value) => _ref.read(appParamProvider.notifier).setOpenSpendTimePlaceArea(value: value),
+        title: const Text(
+          'SPEND',
+          style: TextStyle(fontSize: 12, color: Colors.white),
+        ),
+        children: [
+          Container(
+            padding: const EdgeInsets.symmetric(horizontal: 10),
+            child: Column(
+              children: [
+                spendTimePlaceList.when(
+                  data: (value) {
+                    final list = <Widget>[];
+
+                    value.forEach((element) {
+                      list.add(Container(
+                        padding: const EdgeInsets.all(10),
+                        decoration:
+                            BoxDecoration(border: Border(bottom: BorderSide(color: Colors.white.withOpacity(0.3)))),
+                        child: Column(
+                          children: [
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [Text(element.time), Container()],
+                            ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [Text(element.spendType), Text(element.price.toString().toCurrency())],
+                            ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [Container(), Text(element.place)],
+                            ),
+                          ],
                         ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [Text(e.spendType), Text(e.price.toString().toCurrency())],
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [Container(), Text(e.place)],
-                        ),
-                      ],
-                    ),
-                  );
-                }).toList(),
-              ),
+                      ));
+                    });
+
+                    return SingleChildScrollView(child: Column(children: list));
+                  },
+                  error: (error, stackTrace) => const Center(child: CircularProgressIndicator()),
+                  loading: () => const Center(child: CircularProgressIndicator()),
+                ),
+              ],
             ),
-          ],
-        );
-      },
-      error: (error, stackTrace) => const Center(child: CircularProgressIndicator()),
-      loading: () => const Center(child: CircularProgressIndicator()),
-    );
+          ),
+        ],
+      );
+    } else {
+      return Container();
+    }
   }
 }
