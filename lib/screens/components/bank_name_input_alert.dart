@@ -86,7 +86,11 @@ class _BankNameInputAlertState extends ConsumerState<BankNameInputAlert> {
               Container(
                 padding: const EdgeInsets.all(10),
                 margin: const EdgeInsets.symmetric(vertical: 5, horizontal: 3),
-                decoration: BoxDecoration(color: Colors.white.withOpacity(0.1)),
+                decoration: BoxDecoration(
+                  color: Colors.white.withOpacity(0.1),
+                  borderRadius: BorderRadius.circular(10),
+                  border: Border.all(color: Colors.white.withOpacity(0.4)),
+                ),
                 child: Column(
                   children: [
                     Row(
@@ -271,8 +275,7 @@ class _BankNameInputAlertState extends ConsumerState<BankNameInputAlert> {
 
   ///
   Future<void> _deleteBankName() async {
-    await BankNameRepository.deleteBankName(bankName: widget.bankName!, ref: ref).then((value) {
-      Navigator.pop(_context);
-    });
+    await BankNameRepository.deleteBankName(bankName: widget.bankName!, ref: ref)
+        .then((value) => Navigator.pop(_context));
   }
 }

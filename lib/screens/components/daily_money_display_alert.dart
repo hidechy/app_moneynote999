@@ -119,8 +119,11 @@ class DailyMoneyDisplayAlert extends ConsumerWidget {
                 Container(
                   width: _context.screenSize.width,
                   margin: const EdgeInsets.all(3),
-                  padding: const EdgeInsets.all(3),
-                  decoration: BoxDecoration(border: Border.all(color: Colors.white.withOpacity(0.4))),
+                  padding: const EdgeInsets.all(10),
+                  decoration: BoxDecoration(
+                    border: Border.all(color: Colors.white.withOpacity(0.4)),
+                    borderRadius: BorderRadius.circular(10),
+                  ),
                   child: Column(
                     children: [
                       Container(
@@ -206,7 +209,8 @@ class DailyMoneyDisplayAlert extends ConsumerWidget {
                             onTap: () => _ref.read(appParamProvider.notifier).setMenuNumber(menuNumber: 2),
                             child: Container(
                               padding: const EdgeInsets.all(5),
-                              child: Icon(Icons.add, color: Colors.greenAccent.withOpacity(0.6), size: 16),
+                              child: Icon(Icons.info_outline_rounded,
+                                  color: Colors.greenAccent.withOpacity(0.6), size: 16),
                             ),
                           ),
                         ],
@@ -607,12 +611,12 @@ class DailyMoneyDisplayAlert extends ConsumerWidget {
           children: [
             Container(
               padding: const EdgeInsets.symmetric(horizontal: 10),
-              child: Container(
-                padding: const EdgeInsets.all(10),
-                decoration: BoxDecoration(border: Border(bottom: BorderSide(color: Colors.white.withOpacity(0.3)))),
-                child: Column(
-                  children: value.map((e) {
-                    return Column(
+              child: Column(
+                children: value.map((e) {
+                  return Container(
+                    padding: const EdgeInsets.all(10),
+                    decoration: BoxDecoration(border: Border(bottom: BorderSide(color: Colors.white.withOpacity(0.3)))),
+                    child: Column(
                       children: [
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -627,9 +631,9 @@ class DailyMoneyDisplayAlert extends ConsumerWidget {
                           children: [Container(), Text(e.place)],
                         ),
                       ],
-                    );
-                  }).toList(),
-                ),
+                    ),
+                  );
+                }).toList(),
               ),
             ),
           ],

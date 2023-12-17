@@ -95,7 +95,11 @@ class _MoneyInputAlertState extends ConsumerState<MoneyInputAlert> {
               Container(
                 padding: const EdgeInsets.symmetric(horizontal: 10),
                 margin: const EdgeInsets.symmetric(vertical: 5, horizontal: 3),
-                decoration: BoxDecoration(color: Colors.white.withOpacity(0.1)),
+                decoration: BoxDecoration(
+                  color: Colors.white.withOpacity(0.1),
+                  borderRadius: BorderRadius.circular(10),
+                  border: Border.all(color: Colors.white.withOpacity(0.4)),
+                ),
                 child: Column(
                   children: [
                     Row(

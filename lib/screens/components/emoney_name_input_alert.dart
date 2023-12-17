@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:money_note/extensions/extensions.dart';
-import 'package:money_note/screens/components/parts/error_dialog.dart';
 
 import '../../enums/deposit_type.dart';
+import '../../extensions/extensions.dart';
 import '../../models/emoney_name.dart';
 import '../../repository/emoney_name_repository.dart';
+import 'parts/error_dialog.dart';
 
 // ignore: must_be_immutable
 class EmoneyNameInputAlert extends ConsumerStatefulWidget {
@@ -63,7 +63,11 @@ class _EmoneyNameInputAlertState extends ConsumerState<EmoneyNameInputAlert> {
               Container(
                 padding: const EdgeInsets.all(10),
                 margin: const EdgeInsets.symmetric(vertical: 5, horizontal: 3),
-                decoration: BoxDecoration(color: Colors.white.withOpacity(0.1)),
+                decoration: BoxDecoration(
+                  color: Colors.white.withOpacity(0.1),
+                  borderRadius: BorderRadius.circular(10),
+                  border: Border.all(color: Colors.white.withOpacity(0.4)),
+                ),
                 child: Column(
                   children: [
                     TextField(
@@ -149,8 +153,7 @@ class _EmoneyNameInputAlertState extends ConsumerState<EmoneyNameInputAlert> {
 
   ///
   Future<void> _deleteEmoneyName() async {
-    await EmoneyNameRepository.deleteEmoneyName(emoneyName: widget.emoneyName!, ref: ref).then((value) {
-      Navigator.pop(_context);
-    });
+    await EmoneyNameRepository.deleteEmoneyName(emoneyName: widget.emoneyName!, ref: ref)
+        .then((value) => Navigator.pop(_context));
   }
 }

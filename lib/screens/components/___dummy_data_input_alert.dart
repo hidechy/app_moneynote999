@@ -1,29 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-
-
-
-//
-// import 'package:money_note/models/spend.dart';
-// import 'package:money_note/models/timeplace.dart';
-// import 'package:money_note/repository/spend_repository.dart';
-// import 'package:money_note/repository/time_place_repository.dart';
-//
-
-
-
-
-
 import '../../extensions/extensions.dart';
 import '../../models/bank_name.dart';
 import '../../models/bank_price.dart';
 import '../../models/emoney_name.dart';
 import '../../models/money.dart';
+import '../../models/spend_time_place.dart';
 import '../../repository/bank_name_repository.dart';
 import '../../repository/bank_price_repository.dart';
 import '../../repository/emoney_name_repository.dart';
 import '../../repository/money_repository.dart';
+import '../../repository/spend_time_place_repository.dart';
 
 // ignore: must_be_immutable
 class DummyDataInputAlert extends StatelessWidget {
@@ -52,50 +40,15 @@ class DummyDataInputAlert extends StatelessWidget {
             children: [
               const SizedBox(height: 20),
               Container(width: context.screenSize.width),
-              ElevatedButton(
-                onPressed: _setDummyBankNameData,
-                child: const Text('Bank Name'),
-              ),
+              ElevatedButton(onPressed: _setDummyBankNameData, child: const Text('Bank Name')),
               const SizedBox(height: 10),
-              ElevatedButton(
-                onPressed: _setDummyEmoneyNameData,
-                child: const Text('Emoney Name'),
-              ),
+              ElevatedButton(onPressed: _setDummyEmoneyNameData, child: const Text('Emoney Name')),
               const SizedBox(height: 10),
-              ElevatedButton(
-                onPressed: _setDummyBankPriceData,
-                child: const Text('Bank Price'),
-              ),
+              ElevatedButton(onPressed: _setDummyBankPriceData, child: const Text('Bank Price')),
               const SizedBox(height: 10),
-              ElevatedButton(
-                onPressed: _setDummyMoneyData,
-                child: const Text('Money'),
-              ),
-
-
-
-
-              //
-              //
-              //
-              // const SizedBox(height: 10),
-              // ElevatedButton(
-              //   onPressed: _setDummySpendData,
-              //   child: const Text('Spend'),
-              // ),
-              // const SizedBox(height: 10),
-              // ElevatedButton(
-              //   onPressed: _setDummyTimePlaceData,
-              //   child: const Text('TimePlace'),
-              // ),
-              //
-              //
-              //
-
-
-
-
-
+              ElevatedButton(onPressed: _setDummyMoneyData, child: const Text('Money')),
+              const SizedBox(height: 10),
+              ElevatedButton(onPressed: _setDummySpendTimePlaceData, child: const Text('Spend Time Place')),
             ],
           ),
         ),
@@ -344,81 +297,43 @@ class DummyDataInputAlert extends StatelessWidget {
     Navigator.pop(_context);
   }
 
-  // ///
-  // Future<void> _setDummySpendData() async {
-  //   final date1 = DateTime.now();
-  //
-  //   <Spend>[
-  //     Spend(date: date1.yyyymmdd, spendType: '食費', price: '1000'),
-  //     Spend(date: date1.yyyymmdd, spendType: '交通費', price: '2000'),
-  //     Spend(date: date1.yyyymmdd, spendType: '遊興費', price: '3000'),
-  //   ].forEach((element) async {
-  //     await SpendRepository.insertSpend(spend: element);
-  //   });
-  //
-  //   ////////////////////
-  //
-  //   final date2 = DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day - 1);
-  //
-  //   <Spend>[
-  //     Spend(date: date2.yyyymmdd, spendType: '食費', price: '1000'),
-  //     Spend(date: date2.yyyymmdd, spendType: '交通費', price: '2000'),
-  //     Spend(date: date2.yyyymmdd, spendType: '遊興費', price: '3000'),
-  //   ].forEach((element) async {
-  //     await SpendRepository.insertSpend(spend: element);
-  //   });
-  //
-  //   ////////////////////
-  //
-  //   // final date3 = DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day - 2);
-  //   //
-  //   // <Spend>[
-  //   //   Spend(date: date3.yyyymmdd, spendType: '食費', price: '1000'),
-  //   //   Spend(date: date3.yyyymmdd, spendType: '交通費', price: '2000'),
-  //   //   Spend(date: date3.yyyymmdd, spendType: '遊興費', price: '3000'),
-  //   // ].forEach((element) async {
-  //   //   await SpendRepository.insertSpend(spend: element);
-  //   // });
-  //
-  //   Navigator.pop(_context);
-  // }
+  ///
+  void _setDummySpendTimePlaceData() {
+    final date1 = DateTime.now();
 
-  // ///
-  // Future<void> _setDummyTimePlaceData() async {
-  //   final date1 = DateTime.now();
-  //
-  //   <TimePlace>[
-  //     TimePlace(date: date1.yyyymmdd, time: '08:00', place: 'AAA', price: 100),
-  //     TimePlace(date: date1.yyyymmdd, time: '10:00', place: 'BBB', price: 100),
-  //     TimePlace(date: date1.yyyymmdd, time: '12:00', place: 'CCC', price: 100),
-  //   ].forEach((element) async {
-  //     await TimePlaceRepository.insertTimePlace(timePlace: element);
-  //   });
-  //
-  //   ////////////////////
-  //
-  //   final date2 = DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day - 1);
-  //
-  //   <TimePlace>[
-  //     TimePlace(date: date2.yyyymmdd, time: '08:00', place: 'AAA', price: 100),
-  //     TimePlace(date: date2.yyyymmdd, time: '10:00', place: 'BBB', price: 100),
-  //     TimePlace(date: date2.yyyymmdd, time: '12:00', place: 'CCC', price: 100),
-  //   ].forEach((element) async {
-  //     await TimePlaceRepository.insertTimePlace(timePlace: element);
-  //   });
-  //
-  //   ////////////////////
-  //
-  //   final date3 = DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day - 2);
-  //
-  //   <TimePlace>[
-  //     TimePlace(date: date3.yyyymmdd, time: '08:00', place: 'AAA', price: 100),
-  //     TimePlace(date: date3.yyyymmdd, time: '10:00', place: 'BBB', price: 100),
-  //     TimePlace(date: date3.yyyymmdd, time: '12:00', place: 'CCC', price: 100),
-  //   ].forEach((element) async {
-  //     await TimePlaceRepository.insertTimePlace(timePlace: element);
-  //   });
-  //
-  //   Navigator.pop(_context);
-  // }
+    <SpendTimePlace>[
+      SpendTimePlace(date: date1.yyyymmdd, spendType: '食費', time: '08:00', place: 'aaa', price: 100),
+      SpendTimePlace(date: date1.yyyymmdd, spendType: '交通費', time: '09:00', place: 'bbb', price: 200),
+      SpendTimePlace(date: date1.yyyymmdd, spendType: '支払い', time: '10:00', place: 'ccc', price: 300),
+    ].forEach((element) {
+      SpendTimePlaceRepository.insertSpendTimePlace(spendTimePlace: element);
+    });
+
+    ////////////////////
+
+    final date2 = DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day - 1);
+
+    <SpendTimePlace>[
+      SpendTimePlace(date: date2.yyyymmdd, spendType: '食費', time: '08:00', place: 'aaa', price: 100),
+      SpendTimePlace(date: date2.yyyymmdd, spendType: '交通費', time: '09:00', place: 'bbb', price: 200),
+      SpendTimePlace(date: date2.yyyymmdd, spendType: '支払い', time: '10:00', place: 'ccc', price: 300),
+    ].forEach((element) {
+      SpendTimePlaceRepository.insertSpendTimePlace(spendTimePlace: element);
+    });
+
+    ////////////////////
+
+    final date3 = DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day - 2);
+
+    <SpendTimePlace>[
+      SpendTimePlace(date: date3.yyyymmdd, spendType: '食費', time: '08:00', place: 'aaa', price: 100),
+      SpendTimePlace(date: date3.yyyymmdd, spendType: '交通費', time: '09:00', place: 'bbb', price: 200),
+      SpendTimePlace(date: date3.yyyymmdd, spendType: '支払い', time: '10:00', place: 'ccc', price: 300),
+    ].forEach((element) {
+      SpendTimePlaceRepository.insertSpendTimePlace(spendTimePlace: element);
+    });
+
+    // ignore: use_build_context_synchronously
+    Navigator.pop(_context);
+  }
 }
