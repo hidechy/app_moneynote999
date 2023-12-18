@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:money_note/models/spend_time_place.dart';
 
 import '../../enums/spend_type.dart';
 import '../../extensions/extensions.dart';
+import '../../models/spend_time_place.dart';
 import '../../repository/spend_time_place_repository.dart';
 import '../../state/spend_time_place/spend_time_place_notifier.dart';
 import 'parts/error_dialog.dart';
@@ -85,7 +85,7 @@ class _SpendTimePlaceInputAlertState extends ConsumerState<SpendTimePlaceInputAl
                 children: [
                   Row(
                     children: [
-                      const Text('Difference'),
+                      const Text('Spend'),
                       const SizedBox(width: 10),
                       Text(
                         (spendTimePlaceState.diff != 0)

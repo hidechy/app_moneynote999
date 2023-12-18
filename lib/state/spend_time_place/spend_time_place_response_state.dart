@@ -22,5 +22,7 @@ class SpendTimePlaceResponseState with _$SpendTimePlaceResponseState {
     @Default(AsyncValue<List<SpendTimePlace>>.loading()) AsyncValue<List<SpendTimePlace>> spendTimePlaceList,
     //
     @Default(false) bool blinkingFlag,
+    //
+    @Default(AsyncValue<Map<String, int>>.loading()) AsyncValue<Map<String, int>> monthlySpendItemMap,
   }) = _SpendTimePlaceResponseState;
 }

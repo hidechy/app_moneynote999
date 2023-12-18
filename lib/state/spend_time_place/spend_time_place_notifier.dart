@@ -1,6 +1,8 @@
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:money_note/extensions/extensions.dart';
-import 'package:money_note/models/spend_time_place.dart';
+
+import '../../enums/spend_type.dart';
+import '../../extensions/extensions.dart';
+import '../../models/spend_time_place.dart';
 
 import 'spend_time_place_response_state.dart';
 
@@ -126,4 +128,31 @@ class SpendTimePlaceNotifier extends StateNotifier<SpendTimePlaceResponseState> 
   ///
   Future<void> setSpendTimePlaceList({required List<SpendTimePlace> spendTimePlaceList}) async =>
       state = state.copyWith(spendTimePlaceList: AsyncValue.data(spendTimePlaceList));
+
+  ///
+  Future<void> setMonthlySpendItemMap({required List<SpendTimePlace> spendTimePlaceList}) async {
+    final monthlySpendItemMap = <String, int>{};
+
+    final list = <String>[];
+    SpendType.values.forEach((element) => list.add(element.japanName!));
+
+    final map = <String, List<int>>{};
+
+    list.forEach((element) {
+      final filtered = spendTimePlaceList.where((element2) => element2.spendType == element).toList();
+      if (filtered.isNotEmpty) {
+        filtered
+          ..forEach((element3) => map[element3.spendType] = [])
+          ..forEach((element3) => map[element3.spendType]?.add(element3.price));
+      }
+    });
+
+    map.forEach((key, value) {
+      var sum = 0;
+      value.forEach((element) => sum += element);
+      monthlySpendItemMap[key] = sum;
+    });
+
+    state = state.copyWith(monthlySpendItemMap: AsyncValue.data(monthlySpendItemMap));
+  }
 }

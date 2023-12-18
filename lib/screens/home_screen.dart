@@ -3,9 +3,11 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import '../extensions/extensions.dart';
+import '../repository/spend_time_place_repository.dart';
 import '../state/app_param/app_param_notifier.dart';
 import '../state/calendar/calendar_notifier.dart';
 import '../state/holiday/holiday_notifier.dart';
+import '../state/spend_time_place/spend_time_place_notifier.dart';
 import '../utilities/utilities.dart';
 import 'components/___dummy_data_input_alert.dart';
 import 'components/_money_dialog.dart';
@@ -34,6 +36,14 @@ class HomeScreen extends ConsumerWidget {
   late WidgetRef _ref;
 
   ///
+  Future<void> init({required WidgetRef ref}) async {
+    await SpendTimePlaceRepository().getMonthRecord(
+      date: baseYm ?? DateTime.now().yyyymm,
+      ref: ref,
+    );
+  }
+
+  ///
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     _context = context;
@@ -42,6 +52,8 @@ class HomeScreen extends ConsumerWidget {
     if (baseYm != null) {
       Future(() => ref.read(calendarProvider.notifier).setCalendarYearMonth(baseYm: baseYm));
     }
+
+    Future(() => init(ref: ref));
 
     final calendarState = ref.watch(calendarProvider);
 
@@ -94,21 +106,83 @@ class HomeScreen extends ConsumerWidget {
               child: Column(
                 children: [
                   ConstrainedBox(
-                    constraints: BoxConstraints(minHeight: _context.screenSize.height / 3),
+                    constraints: BoxConstraints(minHeight: _context.screenSize.height * 0.3),
                     child: _getCalendar(),
                   ),
+                  Expanded(child: _displaySpendList()),
                 ],
               ),
             ),
           ),
         ],
       ),
-      endDrawer: dispDrawer(context),
+      endDrawer: dispDrawer(),
     );
   }
 
   ///
-  Widget dispDrawer(BuildContext context) {
+  Widget _displaySpendList() {
+    final monthlySpendItemMap = _ref.watch(spendTimePlaceProvider.select((value) => value.monthlySpendItemMap));
+
+    return monthlySpendItemMap.when(
+      data: (value) {
+        final list = <Widget>[];
+
+        var sum = 0;
+        value.forEach((key, value) {
+          sum += value;
+        });
+
+        list.add(
+          Container(
+            padding: const EdgeInsets.all(10),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Container(),
+                Text(
+                  sum.toString().toCurrency(),
+                  style: const TextStyle(color: Colors.yellowAccent),
+                ),
+              ],
+            ),
+          ),
+        );
+
+        value.forEach((key, value) {
+          final percent = value / sum * 100;
+
+          list.add(Container(
+            padding: const EdgeInsets.all(10),
+            decoration: BoxDecoration(border: Border(bottom: BorderSide(color: Colors.white.withOpacity(0.3)))),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(key),
+                Row(
+                  children: [
+                    Text(value.toString().toCurrency()),
+                    Container(
+                      width: 60,
+                      alignment: Alignment.topRight,
+                      child: Text('${percent.toStringAsFixed(1)} %'),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          ));
+        });
+
+        return SingleChildScrollView(child: Column(children: list));
+      },
+      error: (error, stackTrace) => const Center(child: CircularProgressIndicator()),
+      loading: () => const Center(child: CircularProgressIndicator()),
+    );
+  }
+
+  ///
+  Widget dispDrawer() {
     return Drawer(
       backgroundColor: Colors.blueGrey.withOpacity(0.2),
       child: SingleChildScrollView(
@@ -119,7 +193,7 @@ class HomeScreen extends ConsumerWidget {
             children: [
               const SizedBox(height: 60),
               GestureDetector(
-                onTap: () async => MoneyDialog(context: context, widget: DepositTabAlert()),
+                onTap: () async => MoneyDialog(context: _context, widget: DepositTabAlert()),
                 child: Row(
                   children: [
                     const MenuHeadIcon(),
@@ -140,7 +214,7 @@ class HomeScreen extends ConsumerWidget {
 
               const SizedBox(height: 100),
               GestureDetector(
-                onTap: () async => MoneyDialog(context: context, widget: DummyDataInputAlert()),
+                onTap: () async => MoneyDialog(context: _context, widget: DummyDataInputAlert()),
                 child: Container(
                   width: double.infinity,
                   padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 3),

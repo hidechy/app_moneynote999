@@ -109,7 +109,7 @@ class MoneyRepository implements Repository {
   }
 
   ///
-  static Future<void> getSingle(
+  Future<void> getSingle(
       {required String date,
       required WidgetRef ref,
       required GetSingleMoneyFrom from,

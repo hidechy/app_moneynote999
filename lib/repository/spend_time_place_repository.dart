@@ -26,7 +26,7 @@ class SpendTimePlaceRepository implements Repository {
   }
 
   ///
-  static Future<void> getSingle({required String date, required WidgetRef ref}) async {
+  Future<void> getSingle({required String date, required WidgetRef ref}) async {
     final db = await MoneyRepository.database();
 
     final List<Map<String, dynamic>> maps = await db.query(
@@ -46,4 +46,17 @@ class SpendTimePlaceRepository implements Repository {
 
   @override
   Future<void> update({required dynamic param, required WidgetRef ref}) async {}
+
+  ///
+  Future<void> getMonthRecord({required String date, required WidgetRef ref}) async {
+    final db = await MoneyRepository.database();
+    final exDate = date.split('-');
+    final yearmonth = '${exDate[0]}-${exDate[1]}';
+    final List<Map<String, dynamic>> maps = await db.rawQuery(
+      'SELECT * FROM spend_time_place WHERE date LIKE ?;',
+      ['$yearmonth%'],
+    );
+    final spendTimePlaceList = List.generate(maps.length, (index) => SpendTimePlace.fromJson(maps[index]));
+    await ref.read(spendTimePlaceProvider.notifier).setMonthlySpendItemMap(spendTimePlaceList: spendTimePlaceList);
+  }
 }

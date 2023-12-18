@@ -56,7 +56,7 @@ class _MoneyInputAlertState extends ConsumerState<MoneyInputAlert> {
     //-----
     final beforeDate = DateTime(widget.date.year, widget.date.month, widget.date.day - 1);
     Future(
-      () => MoneyRepository.getSingle(
+      () => MoneyRepository().getSingle(
         date: beforeDate.yyyymmdd,
         ref: ref,
         from: GetSingleMoneyFrom.moneyInputAlert,
