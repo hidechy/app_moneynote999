@@ -2,13 +2,13 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import '../../models/income.dart';
 
-import 'income_response_state.dart';
+import 'incomes_response_state.dart';
 
-final incomeProvider = StateNotifierProvider.autoDispose<IncomeNotifier, IncomeResponseState>((ref) {
-  return IncomeNotifier(const IncomeResponseState());
+final incomeProvider = StateNotifierProvider.autoDispose<IncomeNotifier, IncomesResponseState>((ref) {
+  return IncomeNotifier(const IncomesResponseState());
 });
 
-class IncomeNotifier extends StateNotifier<IncomeResponseState> {
+class IncomeNotifier extends StateNotifier<IncomesResponseState> {
   IncomeNotifier(super.state);
 
   ///

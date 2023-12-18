@@ -1,13 +1,13 @@
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import '../../models/money.dart';
-import 'money_response_state.dart';
+import 'moneies_response_state.dart';
 
-final moneySingleProvider = StateNotifierProvider.autoDispose<MoneySingleNotifier, MoneyResponseState>((ref) {
-  return MoneySingleNotifier(const MoneyResponseState());
+final moneySingleProvider = StateNotifierProvider.autoDispose<MoneySingleNotifier, MoneiesResponseState>((ref) {
+  return MoneySingleNotifier(const MoneiesResponseState());
 });
 
-class MoneySingleNotifier extends StateNotifier<MoneyResponseState> {
+class MoneySingleNotifier extends StateNotifier<MoneiesResponseState> {
   MoneySingleNotifier(super.state);
 
   ///

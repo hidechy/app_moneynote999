@@ -6,7 +6,7 @@ import '../../enums/spend_type.dart';
 import '../../extensions/extensions.dart';
 import '../../models/spend_time_place.dart';
 import '../../repository/spend_time_place_repository.dart';
-import '../../state/spend_time_place/spend_time_place_notifier.dart';
+import '../../state/spend_time_places/spend_time_places_notifier.dart';
 import 'parts/error_dialog.dart';
 
 class SpendTimePlaceInputAlert extends ConsumerStatefulWidget {

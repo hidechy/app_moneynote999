@@ -7,7 +7,7 @@ import '../../enums/get_single_money_when.dart';
 import '../../extensions/extensions.dart';
 import '../../models/money.dart';
 import '../../repository/money_repository.dart';
-import '../../state/money/money_notifier.dart';
+import '../../state/moneies/moneies_notifier.dart';
 import 'parts/error_dialog.dart';
 
 // ignore: must_be_immutable

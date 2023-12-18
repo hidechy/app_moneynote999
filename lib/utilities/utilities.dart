@@ -3,7 +3,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import '../extensions/extensions.dart';
 import '../models/money.dart';
-import '../state/bank_price/bank_price_notifier.dart';
+import '../state/bank_prices/bank_prices_notifier.dart';
 
 class Utility {
   Color getYoubiColor({

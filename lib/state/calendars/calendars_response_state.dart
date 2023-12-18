@@ -1,12 +1,12 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 
-part 'calendar_response_state.freezed.dart';
+part 'calendars_response_state.freezed.dart';
 
 @freezed
-class CalendarResponseState with _$CalendarResponseState {
-  const factory CalendarResponseState({
+class CalendarsResponseState with _$CalendarsResponseState {
+  const factory CalendarsResponseState({
     @Default('') String baseYearMonth,
     @Default('') String prevYearMonth,
     @Default('') String nextYearMonth,
-  }) = _CalendarResponseState;
+  }) = _CalendarsResponseState;
 }

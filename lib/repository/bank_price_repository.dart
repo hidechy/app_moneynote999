@@ -2,7 +2,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:sqflite/sqflite.dart';
 
 import '../models/bank_price.dart';
-import '../state/bank_price/bank_price_notifier.dart';
+import '../state/bank_prices/bank_prices_notifier.dart';
 import '_repository.dart';
 import 'money_repository.dart';
 

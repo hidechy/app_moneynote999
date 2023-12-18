@@ -2,7 +2,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:sqflite/sqflite.dart';
 
 import '../models/spend_time_place.dart';
-import '../state/spend_time_place/spend_time_place_notifier.dart';
+import '../state/spend_time_places/spend_time_places_notifier.dart';
 import '_repository.dart';
 import 'money_repository.dart';
 

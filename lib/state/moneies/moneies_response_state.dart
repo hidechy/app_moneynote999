@@ -2,13 +2,13 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 
 import '../../models/money.dart';
 
-part 'money_response_state.freezed.dart';
+part 'moneies_response_state.freezed.dart';
 
 @freezed
-class MoneyResponseState with _$MoneyResponseState {
-  const factory MoneyResponseState({
+class MoneiesResponseState with _$MoneiesResponseState {
+  const factory MoneiesResponseState({
     Money? singleMoney,
     Money? beforeDateMoney,
     Money? beforeDateMoneyForSum,
-  }) = _MoneyResponseState;
+  }) = _MoneiesResponseState;
 }

@@ -3,7 +3,7 @@
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
-part of 'income_response_state.dart';
+part of 'incomes_response_state.dart';
 
 // **************************************************************************
 // FreezedGenerator
@@ -15,27 +15,28 @@ final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
 /// @nodoc
-mixin _$IncomeResponseState {
+mixin _$IncomesResponseState {
   AsyncValue<List<Income>> get incomeList => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
-  $IncomeResponseStateCopyWith<IncomeResponseState> get copyWith =>
+  $IncomesResponseStateCopyWith<IncomesResponseState> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class $IncomeResponseStateCopyWith<$Res> {
-  factory $IncomeResponseStateCopyWith(
-          IncomeResponseState value, $Res Function(IncomeResponseState) then) =
-      _$IncomeResponseStateCopyWithImpl<$Res, IncomeResponseState>;
+abstract class $IncomesResponseStateCopyWith<$Res> {
+  factory $IncomesResponseStateCopyWith(IncomesResponseState value,
+          $Res Function(IncomesResponseState) then) =
+      _$IncomesResponseStateCopyWithImpl<$Res, IncomesResponseState>;
   @useResult
   $Res call({AsyncValue<List<Income>> incomeList});
 }
 
 /// @nodoc
-class _$IncomeResponseStateCopyWithImpl<$Res, $Val extends IncomeResponseState>
-    implements $IncomeResponseStateCopyWith<$Res> {
-  _$IncomeResponseStateCopyWithImpl(this._value, this._then);
+class _$IncomesResponseStateCopyWithImpl<$Res,
+        $Val extends IncomesResponseState>
+    implements $IncomesResponseStateCopyWith<$Res> {
+  _$IncomesResponseStateCopyWithImpl(this._value, this._then);
 
   // ignore: unused_field
   final $Val _value;
@@ -57,22 +58,22 @@ class _$IncomeResponseStateCopyWithImpl<$Res, $Val extends IncomeResponseState>
 }
 
 /// @nodoc
-abstract class _$$IncomeResponseStateImplCopyWith<$Res>
-    implements $IncomeResponseStateCopyWith<$Res> {
-  factory _$$IncomeResponseStateImplCopyWith(_$IncomeResponseStateImpl value,
-          $Res Function(_$IncomeResponseStateImpl) then) =
-      __$$IncomeResponseStateImplCopyWithImpl<$Res>;
+abstract class _$$IncomesResponseStateImplCopyWith<$Res>
+    implements $IncomesResponseStateCopyWith<$Res> {
+  factory _$$IncomesResponseStateImplCopyWith(_$IncomesResponseStateImpl value,
+          $Res Function(_$IncomesResponseStateImpl) then) =
+      __$$IncomesResponseStateImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call({AsyncValue<List<Income>> incomeList});
 }
 
 /// @nodoc
-class __$$IncomeResponseStateImplCopyWithImpl<$Res>
-    extends _$IncomeResponseStateCopyWithImpl<$Res, _$IncomeResponseStateImpl>
-    implements _$$IncomeResponseStateImplCopyWith<$Res> {
-  __$$IncomeResponseStateImplCopyWithImpl(_$IncomeResponseStateImpl _value,
-      $Res Function(_$IncomeResponseStateImpl) _then)
+class __$$IncomesResponseStateImplCopyWithImpl<$Res>
+    extends _$IncomesResponseStateCopyWithImpl<$Res, _$IncomesResponseStateImpl>
+    implements _$$IncomesResponseStateImplCopyWith<$Res> {
+  __$$IncomesResponseStateImplCopyWithImpl(_$IncomesResponseStateImpl _value,
+      $Res Function(_$IncomesResponseStateImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -80,7 +81,7 @@ class __$$IncomeResponseStateImplCopyWithImpl<$Res>
   $Res call({
     Object? incomeList = null,
   }) {
-    return _then(_$IncomeResponseStateImpl(
+    return _then(_$IncomesResponseStateImpl(
       incomeList: null == incomeList
           ? _value.incomeList
           : incomeList // ignore: cast_nullable_to_non_nullable
@@ -91,8 +92,8 @@ class __$$IncomeResponseStateImplCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$IncomeResponseStateImpl implements _IncomeResponseState {
-  const _$IncomeResponseStateImpl(
+class _$IncomesResponseStateImpl implements _IncomesResponseState {
+  const _$IncomesResponseStateImpl(
       {this.incomeList = const AsyncValue<List<Income>>.loading()});
 
   @override
@@ -101,14 +102,14 @@ class _$IncomeResponseStateImpl implements _IncomeResponseState {
 
   @override
   String toString() {
-    return 'IncomeResponseState(incomeList: $incomeList)';
+    return 'IncomesResponseState(incomeList: $incomeList)';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$IncomeResponseStateImpl &&
+            other is _$IncomesResponseStateImpl &&
             (identical(other.incomeList, incomeList) ||
                 other.incomeList == incomeList));
   }
@@ -119,19 +120,20 @@ class _$IncomeResponseStateImpl implements _IncomeResponseState {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$IncomeResponseStateImplCopyWith<_$IncomeResponseStateImpl> get copyWith =>
-      __$$IncomeResponseStateImplCopyWithImpl<_$IncomeResponseStateImpl>(
-          this, _$identity);
+  _$$IncomesResponseStateImplCopyWith<_$IncomesResponseStateImpl>
+      get copyWith =>
+          __$$IncomesResponseStateImplCopyWithImpl<_$IncomesResponseStateImpl>(
+              this, _$identity);
 }
 
-abstract class _IncomeResponseState implements IncomeResponseState {
-  const factory _IncomeResponseState(
-      {final AsyncValue<List<Income>> incomeList}) = _$IncomeResponseStateImpl;
+abstract class _IncomesResponseState implements IncomesResponseState {
+  const factory _IncomesResponseState(
+      {final AsyncValue<List<Income>> incomeList}) = _$IncomesResponseStateImpl;
 
   @override
   AsyncValue<List<Income>> get incomeList;
   @override
   @JsonKey(ignore: true)
-  _$$IncomeResponseStateImplCopyWith<_$IncomeResponseStateImpl> get copyWith =>
-      throw _privateConstructorUsedError;
+  _$$IncomesResponseStateImplCopyWith<_$IncomesResponseStateImpl>
+      get copyWith => throw _privateConstructorUsedError;
 }

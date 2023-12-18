@@ -3,7 +3,7 @@
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
-part of 'bank_price_response_state.dart';
+part of 'bank_prices_response_state.dart';
 
 // **************************************************************************
 // FreezedGenerator
@@ -15,7 +15,7 @@ final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
 /// @nodoc
-mixin _$BankPriceResponseState {
+mixin _$BankPricesResponseState {
   AsyncValue<List<BankPrice>> get bankPriceList =>
       throw _privateConstructorUsedError;
 
@@ -28,15 +28,15 @@ mixin _$BankPriceResponseState {
       throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
-  $BankPriceResponseStateCopyWith<BankPriceResponseState> get copyWith =>
+  $BankPricesResponseStateCopyWith<BankPricesResponseState> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class $BankPriceResponseStateCopyWith<$Res> {
-  factory $BankPriceResponseStateCopyWith(BankPriceResponseState value,
-          $Res Function(BankPriceResponseState) then) =
-      _$BankPriceResponseStateCopyWithImpl<$Res, BankPriceResponseState>;
+abstract class $BankPricesResponseStateCopyWith<$Res> {
+  factory $BankPricesResponseStateCopyWith(BankPricesResponseState value,
+          $Res Function(BankPricesResponseState) then) =
+      _$BankPricesResponseStateCopyWithImpl<$Res, BankPricesResponseState>;
   @useResult
   $Res call(
       {AsyncValue<List<BankPrice>> bankPriceList,
@@ -45,10 +45,10 @@ abstract class $BankPriceResponseStateCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$BankPriceResponseStateCopyWithImpl<$Res,
-        $Val extends BankPriceResponseState>
-    implements $BankPriceResponseStateCopyWith<$Res> {
-  _$BankPriceResponseStateCopyWithImpl(this._value, this._then);
+class _$BankPricesResponseStateCopyWithImpl<$Res,
+        $Val extends BankPricesResponseState>
+    implements $BankPricesResponseStateCopyWith<$Res> {
+  _$BankPricesResponseStateCopyWithImpl(this._value, this._then);
 
   // ignore: unused_field
   final $Val _value;
@@ -80,12 +80,12 @@ class _$BankPriceResponseStateCopyWithImpl<$Res,
 }
 
 /// @nodoc
-abstract class _$$BankPriceResponseStateImplCopyWith<$Res>
-    implements $BankPriceResponseStateCopyWith<$Res> {
-  factory _$$BankPriceResponseStateImplCopyWith(
-          _$BankPriceResponseStateImpl value,
-          $Res Function(_$BankPriceResponseStateImpl) then) =
-      __$$BankPriceResponseStateImplCopyWithImpl<$Res>;
+abstract class _$$BankPricesResponseStateImplCopyWith<$Res>
+    implements $BankPricesResponseStateCopyWith<$Res> {
+  factory _$$BankPricesResponseStateImplCopyWith(
+          _$BankPricesResponseStateImpl value,
+          $Res Function(_$BankPricesResponseStateImpl) then) =
+      __$$BankPricesResponseStateImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
@@ -95,13 +95,13 @@ abstract class _$$BankPriceResponseStateImplCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$BankPriceResponseStateImplCopyWithImpl<$Res>
-    extends _$BankPriceResponseStateCopyWithImpl<$Res,
-        _$BankPriceResponseStateImpl>
-    implements _$$BankPriceResponseStateImplCopyWith<$Res> {
-  __$$BankPriceResponseStateImplCopyWithImpl(
-      _$BankPriceResponseStateImpl _value,
-      $Res Function(_$BankPriceResponseStateImpl) _then)
+class __$$BankPricesResponseStateImplCopyWithImpl<$Res>
+    extends _$BankPricesResponseStateCopyWithImpl<$Res,
+        _$BankPricesResponseStateImpl>
+    implements _$$BankPricesResponseStateImplCopyWith<$Res> {
+  __$$BankPricesResponseStateImplCopyWithImpl(
+      _$BankPricesResponseStateImpl _value,
+      $Res Function(_$BankPricesResponseStateImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -111,7 +111,7 @@ class __$$BankPriceResponseStateImplCopyWithImpl<$Res>
     Object? bankPriceListMap = null,
     Object? bankPriceDatePadMap = null,
   }) {
-    return _then(_$BankPriceResponseStateImpl(
+    return _then(_$BankPricesResponseStateImpl(
       bankPriceList: null == bankPriceList
           ? _value.bankPriceList
           : bankPriceList // ignore: cast_nullable_to_non_nullable
@@ -130,8 +130,8 @@ class __$$BankPriceResponseStateImplCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$BankPriceResponseStateImpl implements _BankPriceResponseState {
-  const _$BankPriceResponseStateImpl(
+class _$BankPricesResponseStateImpl implements _BankPricesResponseState {
+  const _$BankPricesResponseStateImpl(
       {this.bankPriceList = const AsyncValue<List<BankPrice>>.loading(),
       this.bankPriceListMap =
           const AsyncValue<Map<String, List<BankPrice>>>.loading(),
@@ -154,14 +154,14 @@ class _$BankPriceResponseStateImpl implements _BankPriceResponseState {
 
   @override
   String toString() {
-    return 'BankPriceResponseState(bankPriceList: $bankPriceList, bankPriceListMap: $bankPriceListMap, bankPriceDatePadMap: $bankPriceDatePadMap)';
+    return 'BankPricesResponseState(bankPriceList: $bankPriceList, bankPriceListMap: $bankPriceListMap, bankPriceDatePadMap: $bankPriceDatePadMap)';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$BankPriceResponseStateImpl &&
+            other is _$BankPricesResponseStateImpl &&
             (identical(other.bankPriceList, bankPriceList) ||
                 other.bankPriceList == bankPriceList) &&
             (identical(other.bankPriceListMap, bankPriceListMap) ||
@@ -177,17 +177,17 @@ class _$BankPriceResponseStateImpl implements _BankPriceResponseState {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$BankPriceResponseStateImplCopyWith<_$BankPriceResponseStateImpl>
-      get copyWith => __$$BankPriceResponseStateImplCopyWithImpl<
-          _$BankPriceResponseStateImpl>(this, _$identity);
+  _$$BankPricesResponseStateImplCopyWith<_$BankPricesResponseStateImpl>
+      get copyWith => __$$BankPricesResponseStateImplCopyWithImpl<
+          _$BankPricesResponseStateImpl>(this, _$identity);
 }
 
-abstract class _BankPriceResponseState implements BankPriceResponseState {
-  const factory _BankPriceResponseState(
+abstract class _BankPricesResponseState implements BankPricesResponseState {
+  const factory _BankPricesResponseState(
       {final AsyncValue<List<BankPrice>> bankPriceList,
       final AsyncValue<Map<String, List<BankPrice>>> bankPriceListMap,
       final AsyncValue<Map<String, Map<String, int>>>
-          bankPriceDatePadMap}) = _$BankPriceResponseStateImpl;
+          bankPriceDatePadMap}) = _$BankPricesResponseStateImpl;
 
   @override
   AsyncValue<List<BankPrice>> get bankPriceList;
@@ -201,6 +201,6 @@ abstract class _BankPriceResponseState implements BankPriceResponseState {
   AsyncValue<Map<String, Map<String, int>>> get bankPriceDatePadMap;
   @override
   @JsonKey(ignore: true)
-  _$$BankPriceResponseStateImplCopyWith<_$BankPriceResponseStateImpl>
+  _$$BankPricesResponseStateImplCopyWith<_$BankPricesResponseStateImpl>
       get copyWith => throw _privateConstructorUsedError;
 }

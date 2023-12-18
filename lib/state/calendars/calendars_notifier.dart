@@ -2,15 +2,15 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import '../../extensions/extensions.dart';
 
-import 'calendar_response_state.dart';
+import 'calendars_response_state.dart';
 
 ////////////////////////////////////////////////
 
-final calendarProvider = StateNotifierProvider.autoDispose<CalendarNotifier, CalendarResponseState>((ref) {
-  return CalendarNotifier(const CalendarResponseState())..setCalendarYearMonth();
+final calendarProvider = StateNotifierProvider.autoDispose<CalendarNotifier, CalendarsResponseState>((ref) {
+  return CalendarNotifier(const CalendarsResponseState())..setCalendarYearMonth();
 });
 
-class CalendarNotifier extends StateNotifier<CalendarResponseState> {
+class CalendarNotifier extends StateNotifier<CalendarsResponseState> {
   CalendarNotifier(super.state);
 
   Future<void> setCalendarYearMonth({String? baseYm}) async {

@@ -5,7 +5,7 @@ import 'package:sqflite/sqflite.dart';
 import '../enums/get_single_money_from.dart';
 import '../enums/get_single_money_when.dart';
 import '../models/money.dart';
-import '../state/money/money_notifier.dart';
+import '../state/moneies/moneies_notifier.dart';
 import '_repository.dart';
 
 // ignore: avoid_classes_with_only_static_members

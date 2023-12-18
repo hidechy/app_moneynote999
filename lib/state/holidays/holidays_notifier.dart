@@ -2,13 +2,13 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:http/http.dart';
 
 import '../../models/holiday.dart';
-import 'holiday_response_state.dart';
+import 'holidays_response_state.dart';
 
-final holidayProvider = StateNotifierProvider.autoDispose<HolidayNotifier, HolidayResponseState>((ref) {
-  return HolidayNotifier(const HolidayResponseState())..getHoliday();
+final holidayProvider = StateNotifierProvider.autoDispose<HolidayNotifier, HolidaysResponseState>((ref) {
+  return HolidayNotifier(const HolidaysResponseState())..getHoliday();
 });
 
-class HolidayNotifier extends StateNotifier<HolidayResponseState> {
+class HolidayNotifier extends StateNotifier<HolidaysResponseState> {
   HolidayNotifier(super.state);
 
   Future<void> getHoliday() async {

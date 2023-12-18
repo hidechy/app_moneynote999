@@ -2,11 +2,11 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
-part 'holiday_response_state.freezed.dart';
+part 'holidays_response_state.freezed.dart';
 
 @freezed
-class HolidayResponseState with _$HolidayResponseState {
-  const factory HolidayResponseState({
+class HolidaysResponseState with _$HolidaysResponseState {
+  const factory HolidaysResponseState({
     @Default(AsyncValue<Map<String, String>>.loading()) AsyncValue<Map<String, String>> holidayMap,
-  }) = _HolidayResponseState;
+  }) = _HolidaysResponseState;
 }

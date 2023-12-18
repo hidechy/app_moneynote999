@@ -4,10 +4,10 @@ import '../../enums/spend_type.dart';
 import '../../extensions/extensions.dart';
 import '../../models/spend_time_place.dart';
 
-import 'spend_time_place_response_state.dart';
+import 'spend_time_places_response_state.dart';
 
 final spendTimePlaceProvider =
-    StateNotifierProvider.autoDispose<SpendTimePlaceNotifier, SpendTimePlaceResponseState>((ref) {
+    StateNotifierProvider.autoDispose<SpendTimePlaceNotifier, SpendTimePlacesResponseState>((ref) {
   final spendTime = List.generate(10, (index) => '時間');
   final spendPlace = List.generate(10, (index) => '');
   final spendItem = List.generate(10, (index) => '項目名');
@@ -15,7 +15,7 @@ final spendTimePlaceProvider =
   final minusCheck = List.generate(10, (index) => false);
 
   return SpendTimePlaceNotifier(
-    SpendTimePlaceResponseState(
+    SpendTimePlacesResponseState(
       spendTime: spendTime,
       spendPlace: spendPlace,
       spendItem: spendItem,
@@ -25,7 +25,7 @@ final spendTimePlaceProvider =
   );
 });
 
-class SpendTimePlaceNotifier extends StateNotifier<SpendTimePlaceResponseState> {
+class SpendTimePlaceNotifier extends StateNotifier<SpendTimePlacesResponseState> {
   SpendTimePlaceNotifier(super.state);
 
   ///

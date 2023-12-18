@@ -3,7 +3,7 @@
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
-part of 'app_param_response_state.dart';
+part of 'app_params_response_state.dart';
 
 // **************************************************************************
 // FreezedGenerator
@@ -15,7 +15,7 @@ final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
 /// @nodoc
-mixin _$AppParamResponseState {
+mixin _$AppParamsResponseState {
   DateTime? get calendarSelectedDate => throw _privateConstructorUsedError;
   int get menuNumber => throw _privateConstructorUsedError;
   bool get openCurrencyArea => throw _privateConstructorUsedError;
@@ -24,15 +24,15 @@ mixin _$AppParamResponseState {
   bool get openSpendTimePlaceArea => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
-  $AppParamResponseStateCopyWith<AppParamResponseState> get copyWith =>
+  $AppParamsResponseStateCopyWith<AppParamsResponseState> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class $AppParamResponseStateCopyWith<$Res> {
-  factory $AppParamResponseStateCopyWith(AppParamResponseState value,
-          $Res Function(AppParamResponseState) then) =
-      _$AppParamResponseStateCopyWithImpl<$Res, AppParamResponseState>;
+abstract class $AppParamsResponseStateCopyWith<$Res> {
+  factory $AppParamsResponseStateCopyWith(AppParamsResponseState value,
+          $Res Function(AppParamsResponseState) then) =
+      _$AppParamsResponseStateCopyWithImpl<$Res, AppParamsResponseState>;
   @useResult
   $Res call(
       {DateTime? calendarSelectedDate,
@@ -44,10 +44,10 @@ abstract class $AppParamResponseStateCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$AppParamResponseStateCopyWithImpl<$Res,
-        $Val extends AppParamResponseState>
-    implements $AppParamResponseStateCopyWith<$Res> {
-  _$AppParamResponseStateCopyWithImpl(this._value, this._then);
+class _$AppParamsResponseStateCopyWithImpl<$Res,
+        $Val extends AppParamsResponseState>
+    implements $AppParamsResponseStateCopyWith<$Res> {
+  _$AppParamsResponseStateCopyWithImpl(this._value, this._then);
 
   // ignore: unused_field
   final $Val _value;
@@ -94,12 +94,12 @@ class _$AppParamResponseStateCopyWithImpl<$Res,
 }
 
 /// @nodoc
-abstract class _$$AppParamResponseStateImplCopyWith<$Res>
-    implements $AppParamResponseStateCopyWith<$Res> {
-  factory _$$AppParamResponseStateImplCopyWith(
-          _$AppParamResponseStateImpl value,
-          $Res Function(_$AppParamResponseStateImpl) then) =
-      __$$AppParamResponseStateImplCopyWithImpl<$Res>;
+abstract class _$$AppParamsResponseStateImplCopyWith<$Res>
+    implements $AppParamsResponseStateCopyWith<$Res> {
+  factory _$$AppParamsResponseStateImplCopyWith(
+          _$AppParamsResponseStateImpl value,
+          $Res Function(_$AppParamsResponseStateImpl) then) =
+      __$$AppParamsResponseStateImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
@@ -112,12 +112,13 @@ abstract class _$$AppParamResponseStateImplCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$AppParamResponseStateImplCopyWithImpl<$Res>
-    extends _$AppParamResponseStateCopyWithImpl<$Res,
-        _$AppParamResponseStateImpl>
-    implements _$$AppParamResponseStateImplCopyWith<$Res> {
-  __$$AppParamResponseStateImplCopyWithImpl(_$AppParamResponseStateImpl _value,
-      $Res Function(_$AppParamResponseStateImpl) _then)
+class __$$AppParamsResponseStateImplCopyWithImpl<$Res>
+    extends _$AppParamsResponseStateCopyWithImpl<$Res,
+        _$AppParamsResponseStateImpl>
+    implements _$$AppParamsResponseStateImplCopyWith<$Res> {
+  __$$AppParamsResponseStateImplCopyWithImpl(
+      _$AppParamsResponseStateImpl _value,
+      $Res Function(_$AppParamsResponseStateImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -130,7 +131,7 @@ class __$$AppParamResponseStateImplCopyWithImpl<$Res>
     Object? openEmoneyArea = null,
     Object? openSpendTimePlaceArea = null,
   }) {
-    return _then(_$AppParamResponseStateImpl(
+    return _then(_$AppParamsResponseStateImpl(
       calendarSelectedDate: freezed == calendarSelectedDate
           ? _value.calendarSelectedDate
           : calendarSelectedDate // ignore: cast_nullable_to_non_nullable
@@ -161,8 +162,8 @@ class __$$AppParamResponseStateImplCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$AppParamResponseStateImpl implements _AppParamResponseState {
-  const _$AppParamResponseStateImpl(
+class _$AppParamsResponseStateImpl implements _AppParamsResponseState {
+  const _$AppParamsResponseStateImpl(
       {this.calendarSelectedDate,
       this.menuNumber = 0,
       this.openCurrencyArea = true,
@@ -190,14 +191,14 @@ class _$AppParamResponseStateImpl implements _AppParamResponseState {
 
   @override
   String toString() {
-    return 'AppParamResponseState(calendarSelectedDate: $calendarSelectedDate, menuNumber: $menuNumber, openCurrencyArea: $openCurrencyArea, openBankArea: $openBankArea, openEmoneyArea: $openEmoneyArea, openSpendTimePlaceArea: $openSpendTimePlaceArea)';
+    return 'AppParamsResponseState(calendarSelectedDate: $calendarSelectedDate, menuNumber: $menuNumber, openCurrencyArea: $openCurrencyArea, openBankArea: $openBankArea, openEmoneyArea: $openEmoneyArea, openSpendTimePlaceArea: $openSpendTimePlaceArea)';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$AppParamResponseStateImpl &&
+            other is _$AppParamsResponseStateImpl &&
             (identical(other.calendarSelectedDate, calendarSelectedDate) ||
                 other.calendarSelectedDate == calendarSelectedDate) &&
             (identical(other.menuNumber, menuNumber) ||
@@ -219,19 +220,19 @@ class _$AppParamResponseStateImpl implements _AppParamResponseState {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$AppParamResponseStateImplCopyWith<_$AppParamResponseStateImpl>
-      get copyWith => __$$AppParamResponseStateImplCopyWithImpl<
-          _$AppParamResponseStateImpl>(this, _$identity);
+  _$$AppParamsResponseStateImplCopyWith<_$AppParamsResponseStateImpl>
+      get copyWith => __$$AppParamsResponseStateImplCopyWithImpl<
+          _$AppParamsResponseStateImpl>(this, _$identity);
 }
 
-abstract class _AppParamResponseState implements AppParamResponseState {
-  const factory _AppParamResponseState(
+abstract class _AppParamsResponseState implements AppParamsResponseState {
+  const factory _AppParamsResponseState(
       {final DateTime? calendarSelectedDate,
       final int menuNumber,
       final bool openCurrencyArea,
       final bool openBankArea,
       final bool openEmoneyArea,
-      final bool openSpendTimePlaceArea}) = _$AppParamResponseStateImpl;
+      final bool openSpendTimePlaceArea}) = _$AppParamsResponseStateImpl;
 
   @override
   DateTime? get calendarSelectedDate;
@@ -247,6 +248,6 @@ abstract class _AppParamResponseState implements AppParamResponseState {
   bool get openSpendTimePlaceArea;
   @override
   @JsonKey(ignore: true)
-  _$$AppParamResponseStateImplCopyWith<_$AppParamResponseStateImpl>
+  _$$AppParamsResponseStateImplCopyWith<_$AppParamsResponseStateImpl>
       get copyWith => throw _privateConstructorUsedError;
 }

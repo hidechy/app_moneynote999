@@ -2,7 +2,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:sqflite/sqflite.dart';
 
 import '../models/income.dart';
-import '../state/income/income_notifier.dart';
+import '../state/incomes/incomes_notifier.dart';
 import '_repository.dart';
 import 'money_repository.dart';
 

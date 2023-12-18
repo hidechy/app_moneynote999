@@ -3,7 +3,7 @@
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
-part of 'money_response_state.dart';
+part of 'moneies_response_state.dart';
 
 // **************************************************************************
 // FreezedGenerator
@@ -15,21 +15,21 @@ final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
 /// @nodoc
-mixin _$MoneyResponseState {
+mixin _$MoneiesResponseState {
   Money? get singleMoney => throw _privateConstructorUsedError;
   Money? get beforeDateMoney => throw _privateConstructorUsedError;
   Money? get beforeDateMoneyForSum => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
-  $MoneyResponseStateCopyWith<MoneyResponseState> get copyWith =>
+  $MoneiesResponseStateCopyWith<MoneiesResponseState> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class $MoneyResponseStateCopyWith<$Res> {
-  factory $MoneyResponseStateCopyWith(
-          MoneyResponseState value, $Res Function(MoneyResponseState) then) =
-      _$MoneyResponseStateCopyWithImpl<$Res, MoneyResponseState>;
+abstract class $MoneiesResponseStateCopyWith<$Res> {
+  factory $MoneiesResponseStateCopyWith(MoneiesResponseState value,
+          $Res Function(MoneiesResponseState) then) =
+      _$MoneiesResponseStateCopyWithImpl<$Res, MoneiesResponseState>;
   @useResult
   $Res call(
       {Money? singleMoney,
@@ -38,9 +38,10 @@ abstract class $MoneyResponseStateCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$MoneyResponseStateCopyWithImpl<$Res, $Val extends MoneyResponseState>
-    implements $MoneyResponseStateCopyWith<$Res> {
-  _$MoneyResponseStateCopyWithImpl(this._value, this._then);
+class _$MoneiesResponseStateCopyWithImpl<$Res,
+        $Val extends MoneiesResponseState>
+    implements $MoneiesResponseStateCopyWith<$Res> {
+  _$MoneiesResponseStateCopyWithImpl(this._value, this._then);
 
   // ignore: unused_field
   final $Val _value;
@@ -72,11 +73,11 @@ class _$MoneyResponseStateCopyWithImpl<$Res, $Val extends MoneyResponseState>
 }
 
 /// @nodoc
-abstract class _$$MoneyResponseStateImplCopyWith<$Res>
-    implements $MoneyResponseStateCopyWith<$Res> {
-  factory _$$MoneyResponseStateImplCopyWith(_$MoneyResponseStateImpl value,
-          $Res Function(_$MoneyResponseStateImpl) then) =
-      __$$MoneyResponseStateImplCopyWithImpl<$Res>;
+abstract class _$$MoneiesResponseStateImplCopyWith<$Res>
+    implements $MoneiesResponseStateCopyWith<$Res> {
+  factory _$$MoneiesResponseStateImplCopyWith(_$MoneiesResponseStateImpl value,
+          $Res Function(_$MoneiesResponseStateImpl) then) =
+      __$$MoneiesResponseStateImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
@@ -86,11 +87,11 @@ abstract class _$$MoneyResponseStateImplCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$MoneyResponseStateImplCopyWithImpl<$Res>
-    extends _$MoneyResponseStateCopyWithImpl<$Res, _$MoneyResponseStateImpl>
-    implements _$$MoneyResponseStateImplCopyWith<$Res> {
-  __$$MoneyResponseStateImplCopyWithImpl(_$MoneyResponseStateImpl _value,
-      $Res Function(_$MoneyResponseStateImpl) _then)
+class __$$MoneiesResponseStateImplCopyWithImpl<$Res>
+    extends _$MoneiesResponseStateCopyWithImpl<$Res, _$MoneiesResponseStateImpl>
+    implements _$$MoneiesResponseStateImplCopyWith<$Res> {
+  __$$MoneiesResponseStateImplCopyWithImpl(_$MoneiesResponseStateImpl _value,
+      $Res Function(_$MoneiesResponseStateImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -100,7 +101,7 @@ class __$$MoneyResponseStateImplCopyWithImpl<$Res>
     Object? beforeDateMoney = freezed,
     Object? beforeDateMoneyForSum = freezed,
   }) {
-    return _then(_$MoneyResponseStateImpl(
+    return _then(_$MoneiesResponseStateImpl(
       singleMoney: freezed == singleMoney
           ? _value.singleMoney
           : singleMoney // ignore: cast_nullable_to_non_nullable
@@ -119,8 +120,8 @@ class __$$MoneyResponseStateImplCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$MoneyResponseStateImpl implements _MoneyResponseState {
-  const _$MoneyResponseStateImpl(
+class _$MoneiesResponseStateImpl implements _MoneiesResponseState {
+  const _$MoneiesResponseStateImpl(
       {this.singleMoney, this.beforeDateMoney, this.beforeDateMoneyForSum});
 
   @override
@@ -132,14 +133,14 @@ class _$MoneyResponseStateImpl implements _MoneyResponseState {
 
   @override
   String toString() {
-    return 'MoneyResponseState(singleMoney: $singleMoney, beforeDateMoney: $beforeDateMoney, beforeDateMoneyForSum: $beforeDateMoneyForSum)';
+    return 'MoneiesResponseState(singleMoney: $singleMoney, beforeDateMoney: $beforeDateMoney, beforeDateMoneyForSum: $beforeDateMoneyForSum)';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$MoneyResponseStateImpl &&
+            other is _$MoneiesResponseStateImpl &&
             (identical(other.singleMoney, singleMoney) ||
                 other.singleMoney == singleMoney) &&
             (identical(other.beforeDateMoney, beforeDateMoney) ||
@@ -155,16 +156,17 @@ class _$MoneyResponseStateImpl implements _MoneyResponseState {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$MoneyResponseStateImplCopyWith<_$MoneyResponseStateImpl> get copyWith =>
-      __$$MoneyResponseStateImplCopyWithImpl<_$MoneyResponseStateImpl>(
-          this, _$identity);
+  _$$MoneiesResponseStateImplCopyWith<_$MoneiesResponseStateImpl>
+      get copyWith =>
+          __$$MoneiesResponseStateImplCopyWithImpl<_$MoneiesResponseStateImpl>(
+              this, _$identity);
 }
 
-abstract class _MoneyResponseState implements MoneyResponseState {
-  const factory _MoneyResponseState(
+abstract class _MoneiesResponseState implements MoneiesResponseState {
+  const factory _MoneiesResponseState(
       {final Money? singleMoney,
       final Money? beforeDateMoney,
-      final Money? beforeDateMoneyForSum}) = _$MoneyResponseStateImpl;
+      final Money? beforeDateMoneyForSum}) = _$MoneiesResponseStateImpl;
 
   @override
   Money? get singleMoney;
@@ -174,6 +176,6 @@ abstract class _MoneyResponseState implements MoneyResponseState {
   Money? get beforeDateMoneyForSum;
   @override
   @JsonKey(ignore: true)
-  _$$MoneyResponseStateImplCopyWith<_$MoneyResponseStateImpl> get copyWith =>
-      throw _privateConstructorUsedError;
+  _$$MoneiesResponseStateImplCopyWith<_$MoneiesResponseStateImpl>
+      get copyWith => throw _privateConstructorUsedError;
 }

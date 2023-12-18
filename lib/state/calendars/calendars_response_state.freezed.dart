@@ -3,7 +3,7 @@
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
-part of 'calendar_response_state.dart';
+part of 'calendars_response_state.dart';
 
 // **************************************************************************
 // FreezedGenerator
@@ -15,30 +15,30 @@ final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
 /// @nodoc
-mixin _$CalendarResponseState {
+mixin _$CalendarsResponseState {
   String get baseYearMonth => throw _privateConstructorUsedError;
   String get prevYearMonth => throw _privateConstructorUsedError;
   String get nextYearMonth => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
-  $CalendarResponseStateCopyWith<CalendarResponseState> get copyWith =>
+  $CalendarsResponseStateCopyWith<CalendarsResponseState> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class $CalendarResponseStateCopyWith<$Res> {
-  factory $CalendarResponseStateCopyWith(CalendarResponseState value,
-          $Res Function(CalendarResponseState) then) =
-      _$CalendarResponseStateCopyWithImpl<$Res, CalendarResponseState>;
+abstract class $CalendarsResponseStateCopyWith<$Res> {
+  factory $CalendarsResponseStateCopyWith(CalendarsResponseState value,
+          $Res Function(CalendarsResponseState) then) =
+      _$CalendarsResponseStateCopyWithImpl<$Res, CalendarsResponseState>;
   @useResult
   $Res call({String baseYearMonth, String prevYearMonth, String nextYearMonth});
 }
 
 /// @nodoc
-class _$CalendarResponseStateCopyWithImpl<$Res,
-        $Val extends CalendarResponseState>
-    implements $CalendarResponseStateCopyWith<$Res> {
-  _$CalendarResponseStateCopyWithImpl(this._value, this._then);
+class _$CalendarsResponseStateCopyWithImpl<$Res,
+        $Val extends CalendarsResponseState>
+    implements $CalendarsResponseStateCopyWith<$Res> {
+  _$CalendarsResponseStateCopyWithImpl(this._value, this._then);
 
   // ignore: unused_field
   final $Val _value;
@@ -70,24 +70,25 @@ class _$CalendarResponseStateCopyWithImpl<$Res,
 }
 
 /// @nodoc
-abstract class _$$CalendarResponseStateImplCopyWith<$Res>
-    implements $CalendarResponseStateCopyWith<$Res> {
-  factory _$$CalendarResponseStateImplCopyWith(
-          _$CalendarResponseStateImpl value,
-          $Res Function(_$CalendarResponseStateImpl) then) =
-      __$$CalendarResponseStateImplCopyWithImpl<$Res>;
+abstract class _$$CalendarsResponseStateImplCopyWith<$Res>
+    implements $CalendarsResponseStateCopyWith<$Res> {
+  factory _$$CalendarsResponseStateImplCopyWith(
+          _$CalendarsResponseStateImpl value,
+          $Res Function(_$CalendarsResponseStateImpl) then) =
+      __$$CalendarsResponseStateImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call({String baseYearMonth, String prevYearMonth, String nextYearMonth});
 }
 
 /// @nodoc
-class __$$CalendarResponseStateImplCopyWithImpl<$Res>
-    extends _$CalendarResponseStateCopyWithImpl<$Res,
-        _$CalendarResponseStateImpl>
-    implements _$$CalendarResponseStateImplCopyWith<$Res> {
-  __$$CalendarResponseStateImplCopyWithImpl(_$CalendarResponseStateImpl _value,
-      $Res Function(_$CalendarResponseStateImpl) _then)
+class __$$CalendarsResponseStateImplCopyWithImpl<$Res>
+    extends _$CalendarsResponseStateCopyWithImpl<$Res,
+        _$CalendarsResponseStateImpl>
+    implements _$$CalendarsResponseStateImplCopyWith<$Res> {
+  __$$CalendarsResponseStateImplCopyWithImpl(
+      _$CalendarsResponseStateImpl _value,
+      $Res Function(_$CalendarsResponseStateImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -97,7 +98,7 @@ class __$$CalendarResponseStateImplCopyWithImpl<$Res>
     Object? prevYearMonth = null,
     Object? nextYearMonth = null,
   }) {
-    return _then(_$CalendarResponseStateImpl(
+    return _then(_$CalendarsResponseStateImpl(
       baseYearMonth: null == baseYearMonth
           ? _value.baseYearMonth
           : baseYearMonth // ignore: cast_nullable_to_non_nullable
@@ -116,8 +117,8 @@ class __$$CalendarResponseStateImplCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$CalendarResponseStateImpl implements _CalendarResponseState {
-  const _$CalendarResponseStateImpl(
+class _$CalendarsResponseStateImpl implements _CalendarsResponseState {
+  const _$CalendarsResponseStateImpl(
       {this.baseYearMonth = '',
       this.prevYearMonth = '',
       this.nextYearMonth = ''});
@@ -134,14 +135,14 @@ class _$CalendarResponseStateImpl implements _CalendarResponseState {
 
   @override
   String toString() {
-    return 'CalendarResponseState(baseYearMonth: $baseYearMonth, prevYearMonth: $prevYearMonth, nextYearMonth: $nextYearMonth)';
+    return 'CalendarsResponseState(baseYearMonth: $baseYearMonth, prevYearMonth: $prevYearMonth, nextYearMonth: $nextYearMonth)';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$CalendarResponseStateImpl &&
+            other is _$CalendarsResponseStateImpl &&
             (identical(other.baseYearMonth, baseYearMonth) ||
                 other.baseYearMonth == baseYearMonth) &&
             (identical(other.prevYearMonth, prevYearMonth) ||
@@ -157,16 +158,16 @@ class _$CalendarResponseStateImpl implements _CalendarResponseState {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$CalendarResponseStateImplCopyWith<_$CalendarResponseStateImpl>
-      get copyWith => __$$CalendarResponseStateImplCopyWithImpl<
-          _$CalendarResponseStateImpl>(this, _$identity);
+  _$$CalendarsResponseStateImplCopyWith<_$CalendarsResponseStateImpl>
+      get copyWith => __$$CalendarsResponseStateImplCopyWithImpl<
+          _$CalendarsResponseStateImpl>(this, _$identity);
 }
 
-abstract class _CalendarResponseState implements CalendarResponseState {
-  const factory _CalendarResponseState(
+abstract class _CalendarsResponseState implements CalendarsResponseState {
+  const factory _CalendarsResponseState(
       {final String baseYearMonth,
       final String prevYearMonth,
-      final String nextYearMonth}) = _$CalendarResponseStateImpl;
+      final String nextYearMonth}) = _$CalendarsResponseStateImpl;
 
   @override
   String get baseYearMonth;
@@ -176,6 +177,6 @@ abstract class _CalendarResponseState implements CalendarResponseState {
   String get nextYearMonth;
   @override
   @JsonKey(ignore: true)
-  _$$CalendarResponseStateImplCopyWith<_$CalendarResponseStateImpl>
+  _$$CalendarsResponseStateImplCopyWith<_$CalendarsResponseStateImpl>
       get copyWith => throw _privateConstructorUsedError;
 }

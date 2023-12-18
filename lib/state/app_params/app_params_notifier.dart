@@ -1,11 +1,11 @@
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'app_param_response_state.dart';
+import 'app_params_response_state.dart';
 
-final appParamProvider = StateNotifierProvider.autoDispose<AppParamNotifier, AppParamResponseState>((ref) {
-  return AppParamNotifier(const AppParamResponseState());
+final appParamProvider = StateNotifierProvider.autoDispose<AppParamNotifier, AppParamsResponseState>((ref) {
+  return AppParamNotifier(const AppParamsResponseState());
 });
 
-class AppParamNotifier extends StateNotifier<AppParamResponseState> {
+class AppParamNotifier extends StateNotifier<AppParamsResponseState> {
   AppParamNotifier(super.state);
 
   ///

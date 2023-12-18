@@ -3,7 +3,7 @@
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
-part of 'spend_time_place_response_state.dart';
+part of 'spend_time_places_response_state.dart';
 
 // **************************************************************************
 // FreezedGenerator
@@ -15,7 +15,7 @@ final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
 /// @nodoc
-mixin _$SpendTimePlaceResponseState {
+mixin _$SpendTimePlacesResponseState {
   int get itemPos => throw _privateConstructorUsedError; //
   int get diff => throw _privateConstructorUsedError;
   String get baseDiff => throw _privateConstructorUsedError; //
@@ -31,17 +31,17 @@ mixin _$SpendTimePlaceResponseState {
       throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
-  $SpendTimePlaceResponseStateCopyWith<SpendTimePlaceResponseState>
+  $SpendTimePlacesResponseStateCopyWith<SpendTimePlacesResponseState>
       get copyWith => throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class $SpendTimePlaceResponseStateCopyWith<$Res> {
-  factory $SpendTimePlaceResponseStateCopyWith(
-          SpendTimePlaceResponseState value,
-          $Res Function(SpendTimePlaceResponseState) then) =
-      _$SpendTimePlaceResponseStateCopyWithImpl<$Res,
-          SpendTimePlaceResponseState>;
+abstract class $SpendTimePlacesResponseStateCopyWith<$Res> {
+  factory $SpendTimePlacesResponseStateCopyWith(
+          SpendTimePlacesResponseState value,
+          $Res Function(SpendTimePlacesResponseState) then) =
+      _$SpendTimePlacesResponseStateCopyWithImpl<$Res,
+          SpendTimePlacesResponseState>;
   @useResult
   $Res call(
       {int itemPos,
@@ -58,10 +58,10 @@ abstract class $SpendTimePlaceResponseStateCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$SpendTimePlaceResponseStateCopyWithImpl<$Res,
-        $Val extends SpendTimePlaceResponseState>
-    implements $SpendTimePlaceResponseStateCopyWith<$Res> {
-  _$SpendTimePlaceResponseStateCopyWithImpl(this._value, this._then);
+class _$SpendTimePlacesResponseStateCopyWithImpl<$Res,
+        $Val extends SpendTimePlacesResponseState>
+    implements $SpendTimePlacesResponseStateCopyWith<$Res> {
+  _$SpendTimePlacesResponseStateCopyWithImpl(this._value, this._then);
 
   // ignore: unused_field
   final $Val _value;
@@ -133,12 +133,12 @@ class _$SpendTimePlaceResponseStateCopyWithImpl<$Res,
 }
 
 /// @nodoc
-abstract class _$$SpendTimePlaceResponseStateImplCopyWith<$Res>
-    implements $SpendTimePlaceResponseStateCopyWith<$Res> {
-  factory _$$SpendTimePlaceResponseStateImplCopyWith(
-          _$SpendTimePlaceResponseStateImpl value,
-          $Res Function(_$SpendTimePlaceResponseStateImpl) then) =
-      __$$SpendTimePlaceResponseStateImplCopyWithImpl<$Res>;
+abstract class _$$SpendTimePlacesResponseStateImplCopyWith<$Res>
+    implements $SpendTimePlacesResponseStateCopyWith<$Res> {
+  factory _$$SpendTimePlacesResponseStateImplCopyWith(
+          _$SpendTimePlacesResponseStateImpl value,
+          $Res Function(_$SpendTimePlacesResponseStateImpl) then) =
+      __$$SpendTimePlacesResponseStateImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
@@ -156,13 +156,13 @@ abstract class _$$SpendTimePlaceResponseStateImplCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$SpendTimePlaceResponseStateImplCopyWithImpl<$Res>
-    extends _$SpendTimePlaceResponseStateCopyWithImpl<$Res,
-        _$SpendTimePlaceResponseStateImpl>
-    implements _$$SpendTimePlaceResponseStateImplCopyWith<$Res> {
-  __$$SpendTimePlaceResponseStateImplCopyWithImpl(
-      _$SpendTimePlaceResponseStateImpl _value,
-      $Res Function(_$SpendTimePlaceResponseStateImpl) _then)
+class __$$SpendTimePlacesResponseStateImplCopyWithImpl<$Res>
+    extends _$SpendTimePlacesResponseStateCopyWithImpl<$Res,
+        _$SpendTimePlacesResponseStateImpl>
+    implements _$$SpendTimePlacesResponseStateImplCopyWith<$Res> {
+  __$$SpendTimePlacesResponseStateImplCopyWithImpl(
+      _$SpendTimePlacesResponseStateImpl _value,
+      $Res Function(_$SpendTimePlacesResponseStateImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -180,7 +180,7 @@ class __$$SpendTimePlaceResponseStateImplCopyWithImpl<$Res>
     Object? blinkingFlag = null,
     Object? monthlySpendItemMap = null,
   }) {
-    return _then(_$SpendTimePlaceResponseStateImpl(
+    return _then(_$SpendTimePlacesResponseStateImpl(
       itemPos: null == itemPos
           ? _value.itemPos
           : itemPos // ignore: cast_nullable_to_non_nullable
@@ -231,9 +231,9 @@ class __$$SpendTimePlaceResponseStateImplCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$SpendTimePlaceResponseStateImpl
-    implements _SpendTimePlaceResponseState {
-  const _$SpendTimePlaceResponseStateImpl(
+class _$SpendTimePlacesResponseStateImpl
+    implements _SpendTimePlacesResponseState {
+  const _$SpendTimePlacesResponseStateImpl(
       {this.itemPos = 0,
       this.diff = 0,
       this.baseDiff = '',
@@ -324,14 +324,14 @@ class _$SpendTimePlaceResponseStateImpl
 
   @override
   String toString() {
-    return 'SpendTimePlaceResponseState(itemPos: $itemPos, diff: $diff, baseDiff: $baseDiff, spendItem: $spendItem, spendTime: $spendTime, spendPlace: $spendPlace, spendPrice: $spendPrice, minusCheck: $minusCheck, spendTimePlaceList: $spendTimePlaceList, blinkingFlag: $blinkingFlag, monthlySpendItemMap: $monthlySpendItemMap)';
+    return 'SpendTimePlacesResponseState(itemPos: $itemPos, diff: $diff, baseDiff: $baseDiff, spendItem: $spendItem, spendTime: $spendTime, spendPlace: $spendPlace, spendPrice: $spendPrice, minusCheck: $minusCheck, spendTimePlaceList: $spendTimePlaceList, blinkingFlag: $blinkingFlag, monthlySpendItemMap: $monthlySpendItemMap)';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$SpendTimePlaceResponseStateImpl &&
+            other is _$SpendTimePlacesResponseStateImpl &&
             (identical(other.itemPos, itemPos) || other.itemPos == itemPos) &&
             (identical(other.diff, diff) || other.diff == diff) &&
             (identical(other.baseDiff, baseDiff) ||
@@ -372,14 +372,15 @@ class _$SpendTimePlaceResponseStateImpl
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$SpendTimePlaceResponseStateImplCopyWith<_$SpendTimePlaceResponseStateImpl>
-      get copyWith => __$$SpendTimePlaceResponseStateImplCopyWithImpl<
-          _$SpendTimePlaceResponseStateImpl>(this, _$identity);
+  _$$SpendTimePlacesResponseStateImplCopyWith<
+          _$SpendTimePlacesResponseStateImpl>
+      get copyWith => __$$SpendTimePlacesResponseStateImplCopyWithImpl<
+          _$SpendTimePlacesResponseStateImpl>(this, _$identity);
 }
 
-abstract class _SpendTimePlaceResponseState
-    implements SpendTimePlaceResponseState {
-  const factory _SpendTimePlaceResponseState(
+abstract class _SpendTimePlacesResponseState
+    implements SpendTimePlacesResponseState {
+  const factory _SpendTimePlacesResponseState(
           {final int itemPos,
           final int diff,
           final String baseDiff,
@@ -391,7 +392,7 @@ abstract class _SpendTimePlaceResponseState
           final AsyncValue<List<SpendTimePlace>> spendTimePlaceList,
           final bool blinkingFlag,
           final AsyncValue<Map<String, int>> monthlySpendItemMap}) =
-      _$SpendTimePlaceResponseStateImpl;
+      _$SpendTimePlacesResponseStateImpl;
 
   @override
   int get itemPos;
@@ -417,6 +418,7 @@ abstract class _SpendTimePlaceResponseState
   AsyncValue<Map<String, int>> get monthlySpendItemMap;
   @override
   @JsonKey(ignore: true)
-  _$$SpendTimePlaceResponseStateImplCopyWith<_$SpendTimePlaceResponseStateImpl>
+  _$$SpendTimePlacesResponseStateImplCopyWith<
+          _$SpendTimePlacesResponseStateImpl>
       get copyWith => throw _privateConstructorUsedError;
 }

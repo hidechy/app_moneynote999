@@ -3,11 +3,11 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import '../../models/bank_price.dart';
 
-part 'bank_price_response_state.freezed.dart';
+part 'bank_prices_response_state.freezed.dart';
 
 @freezed
-class BankPriceResponseState with _$BankPriceResponseState {
-  const factory BankPriceResponseState({
+class BankPricesResponseState with _$BankPricesResponseState {
+  const factory BankPricesResponseState({
     @Default(AsyncValue<List<BankPrice>>.loading()) AsyncValue<List<BankPrice>> bankPriceList,
 
     ///
@@ -17,5 +17,5 @@ class BankPriceResponseState with _$BankPriceResponseState {
     ///
     @Default(AsyncValue<Map<String, Map<String, int>>>.loading())
     AsyncValue<Map<String, Map<String, int>>> bankPriceDatePadMap,
-  }) = _BankPriceResponseState;
+  }) = _BankPricesResponseState;
 }

@@ -1,13 +1,13 @@
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:money_note/extensions/extensions.dart';
 import '../../models/bank_price.dart';
-import 'bank_price_response_state.dart';
+import 'bank_prices_response_state.dart';
 
-final bankPriceProvider = StateNotifierProvider.autoDispose<BankPriceSettingNotifier, BankPriceResponseState>((ref) {
-  return BankPriceSettingNotifier(const BankPriceResponseState());
+final bankPriceProvider = StateNotifierProvider.autoDispose<BankPriceSettingNotifier, BankPricesResponseState>((ref) {
+  return BankPriceSettingNotifier(const BankPricesResponseState());
 });
 
-class BankPriceSettingNotifier extends StateNotifier<BankPriceResponseState> {
+class BankPriceSettingNotifier extends StateNotifier<BankPricesResponseState> {
   BankPriceSettingNotifier(super.state);
 
   ///

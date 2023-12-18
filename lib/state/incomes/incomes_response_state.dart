@@ -3,11 +3,11 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import '../../models/income.dart';
 
-part 'income_response_state.freezed.dart';
+part 'incomes_response_state.freezed.dart';
 
 @freezed
-class IncomeResponseState with _$IncomeResponseState {
-  const factory IncomeResponseState({
+class IncomesResponseState with _$IncomesResponseState {
+  const factory IncomesResponseState({
     @Default(AsyncValue<List<Income>>.loading()) AsyncValue<List<Income>> incomeList,
-  }) = _IncomeResponseState;
+  }) = _IncomesResponseState;
 }

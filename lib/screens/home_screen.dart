@@ -4,10 +4,10 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import '../extensions/extensions.dart';
 import '../repository/spend_time_place_repository.dart';
-import '../state/app_param/app_param_notifier.dart';
-import '../state/calendar/calendar_notifier.dart';
-import '../state/holiday/holiday_notifier.dart';
-import '../state/spend_time_place/spend_time_place_notifier.dart';
+import '../state/app_params/app_params_notifier.dart';
+import '../state/calendars/calendars_notifier.dart';
+import '../state/holidays/holidays_notifier.dart';
+import '../state/spend_time_places/spend_time_places_notifier.dart';
 import '../utilities/utilities.dart';
 import 'components/___dummy_data_input_alert.dart';
 import 'components/_money_dialog.dart';
