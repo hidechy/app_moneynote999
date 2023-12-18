@@ -75,6 +75,7 @@ class _EmoneyNameInputAlertState extends ConsumerState<EmoneyNameInputAlert> {
                       controller: _emoneyNameEditingController,
                       decoration: const InputDecoration(labelText: '電子マネー名称'),
                       style: const TextStyle(fontSize: 13, color: Colors.white),
+                      onTapOutside: (event) => FocusManager.instance.primaryFocus?.unfocus(),
                     ),
                   ],
                 ),

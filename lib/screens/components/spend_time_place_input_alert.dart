@@ -290,12 +290,10 @@ class _SpendTimePlaceInputAlertState extends ConsumerState<SpendTimePlaceInputAl
                       style: const TextStyle(fontSize: 12),
                       onChanged: (value) {
                         if (value != '') {
-                          ref.read(spendTimePlaceProvider.notifier).setSpendPrice(
-                                pos: i,
-                                price: value.toInt(),
-                              );
+                          ref.read(spendTimePlaceProvider.notifier).setSpendPrice(pos: i, price: value.toInt());
                         }
                       },
+                      onTapOutside: (event) => FocusManager.instance.primaryFocus?.unfocus(),
                     ),
                   ),
                 ],
@@ -313,6 +311,7 @@ class _SpendTimePlaceInputAlertState extends ConsumerState<SpendTimePlaceInputAl
                 ),
                 style: const TextStyle(fontSize: 12),
                 onChanged: (value) => ref.read(spendTimePlaceProvider.notifier).setPlace(pos: i, place: value),
+                onTapOutside: (event) => FocusManager.instance.primaryFocus?.unfocus(),
               )
             ],
           ),

@@ -167,6 +167,7 @@ class _MoneyInputAlertState extends ConsumerState<MoneyInputAlert> {
         controller: tec,
         decoration: InputDecoration(labelText: name),
         style: const TextStyle(fontSize: 13, color: Colors.white),
+        onTapOutside: (event) => FocusManager.instance.primaryFocus?.unfocus(),
       ),
     );
   }

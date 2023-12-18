@@ -95,6 +95,7 @@ class _BankPriceInputAlertState extends ConsumerState<BankPriceInputAlert> {
                   controller: _bankPriceEditingController,
                   decoration: const InputDecoration(labelText: '金額'),
                   style: const TextStyle(fontSize: 13, color: Colors.white),
+                  onTapOutside: (event) => FocusManager.instance.primaryFocus?.unfocus(),
                 ),
               ),
               Row(
