@@ -3,13 +3,26 @@ import 'package:sqflite/sqflite.dart';
 
 import '../models/bank_price.dart';
 import '../state/bank_price/bank_price_notifier.dart';
+import '_repository.dart';
 import 'money_repository.dart';
 
 // ignore: avoid_classes_with_only_static_members
-class BankPriceRepository {
+class BankPriceRepository implements Repository {
   ///
-  static Future<void> insertBankPrice({required BankPrice bankPrice}) async {
+  @override
+  Future<void> getList({required WidgetRef ref}) async {
     final db = await MoneyRepository.database();
+    final List<Map<String, dynamic>> maps = await db.query('bank_price', orderBy: 'date asc');
+    final bankPriceList = List.generate(maps.length, (index) => BankPrice.fromJson(maps[index]));
+    await ref.read(bankPriceProvider.notifier).setBankPriceList(bankPriceList: bankPriceList);
+  }
+
+  ///
+  @override
+  Future<void> insert({required dynamic param}) async {
+    final db = await MoneyRepository.database();
+
+    final bankPrice = param as BankPrice;
 
     await db.delete(
       'bank_price',
@@ -17,27 +30,14 @@ class BankPriceRepository {
       whereArgs: [bankPrice.depositType, bankPrice.bankId, bankPrice.date],
     );
 
-    //deposit_type TEXT, date TEXT, bank_id integer
-
     await db.insert('bank_price', bankPrice.toMap(), conflictAlgorithm: ConflictAlgorithm.replace);
   }
 
   ///
-  static Future<void> getBankPriceList({required WidgetRef ref}) async {
-    final db = await MoneyRepository.database();
+  @override
+  Future<void> update({required dynamic param, required WidgetRef ref}) async {}
 
-    final List<Map<String, dynamic>> maps = await db.query('bank_price', orderBy: 'date asc');
-
-    final bankPriceList = List.generate(maps.length, (index) {
-      return BankPrice(
-        id: maps[index]['id'] as int,
-        date: maps[index]['date'] as String,
-        depositType: maps[index]['deposit_type'] as String,
-        bankId: maps[index]['bank_id'] as int,
-        price: maps[index]['price'] as int,
-      );
-    });
-
-    await ref.read(bankPriceProvider.notifier).setBankPriceList(bankPriceList: bankPriceList);
-  }
+  ///
+  @override
+  Future<void> delete({required dynamic param, required WidgetRef ref}) async {}
 }

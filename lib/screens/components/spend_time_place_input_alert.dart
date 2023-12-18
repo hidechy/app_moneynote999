@@ -29,6 +29,11 @@ class _SpendTimePlaceInputAlertState extends ConsumerState<SpendTimePlaceInputAl
     end: BoxDecoration(color: Colors.yellowAccent.withOpacity(0.1)),
   );
 
+  final List<TextEditingController> _placeTecs = [];
+  final List<TextEditingController> _priceTecs = [];
+
+  late BuildContext _context;
+
   ///
   @override
   void initState() {
@@ -48,21 +53,12 @@ class _SpendTimePlaceInputAlertState extends ConsumerState<SpendTimePlaceInputAl
     super.dispose();
   }
 
-  List<String> _spendItem = [];
-
-  final List<TextEditingController> _placeTecs = [];
-  final List<TextEditingController> _priceTecs = [];
-
-  late BuildContext _context;
-
   ///
   @override
   Widget build(BuildContext context) {
     _context = context;
 
     _makeTecs();
-
-    _makeSpendItem();
 
     final spendTimePlaceState = ref.watch(spendTimePlaceProvider);
 
@@ -157,23 +153,18 @@ class _SpendTimePlaceInputAlertState extends ConsumerState<SpendTimePlaceInputAl
   }
 
   ///
-  void _makeSpendItem() {
-    _spendItem = [];
-    SpendType.values.forEach((element) => _spendItem.add(element.japanName!));
-  }
-
-  ///
   Widget _spendItemSetPanel() {
-    final spendTimePlaceState = ref.watch(spendTimePlaceProvider);
+    final itemPos = ref.watch(spendTimePlaceProvider.select((value) => value.itemPos));
+    final spendItem = ref.watch(spendTimePlaceProvider.select((value) => value.spendItem));
 
     return SingleChildScrollView(
       child: Column(
-        children: _spendItem.map((e) {
+        children: SpendType.values.map((e) {
           return GestureDetector(
             onTap: () {
               ref.read(spendTimePlaceProvider.notifier).setBlinkingFlag(blinkingFlag: false);
 
-              ref.read(spendTimePlaceProvider.notifier).setSpendItem(pos: spendTimePlaceState.itemPos, item: e);
+              ref.read(spendTimePlaceProvider.notifier).setSpendItem(pos: itemPos, item: e.japanName!);
             },
             child: Container(
               width: double.infinity,
@@ -181,12 +172,12 @@ class _SpendTimePlaceInputAlertState extends ConsumerState<SpendTimePlaceInputAl
               padding: const EdgeInsets.all(5),
               alignment: Alignment.center,
               decoration: BoxDecoration(
-                color: (e == spendTimePlaceState.spendItem[spendTimePlaceState.itemPos])
+                color: (e.japanName == spendItem[itemPos])
                     ? Colors.yellowAccent.withOpacity(0.2)
                     : Colors.blueGrey.withOpacity(0.2),
                 borderRadius: BorderRadius.circular(20),
               ),
-              child: Text(e, style: const TextStyle(fontSize: 10)),
+              child: Text(e.japanName!, style: const TextStyle(fontSize: 10)),
             ),
           );
         }).toList(),
@@ -382,7 +373,8 @@ class _SpendTimePlaceInputAlertState extends ConsumerState<SpendTimePlaceInputAl
       return;
     }
 
-    await SpendTimePlaceRepository.deleteSpendTimePlace(date: widget.date.yyyymmdd, ref: ref);
+    await SpendTimePlaceRepository().delete(
+        param: SpendTimePlace(date: widget.date.yyyymmdd, spendType: '', time: '', place: '', price: 0), ref: ref);
 
     list.forEach((element) async {
       final spendTimePlace = SpendTimePlace(
@@ -393,7 +385,7 @@ class _SpendTimePlaceInputAlertState extends ConsumerState<SpendTimePlaceInputAl
         price: element['price'],
       );
 
-      await SpendTimePlaceRepository.insertSpendTimePlace(spendTimePlace: spendTimePlace);
+      await SpendTimePlaceRepository().insert(param: spendTimePlace);
     });
 
     await ref.read(spendTimePlaceProvider.notifier).clearInputValue();

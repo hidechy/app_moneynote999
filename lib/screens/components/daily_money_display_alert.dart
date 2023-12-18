@@ -47,7 +47,7 @@ class DailyMoneyDisplayAlert extends ConsumerWidget {
 
   ///
   Future<void> init({required WidgetRef ref}) async {
-    await MoneyRepository.getSingleMoney(
+    await MoneyRepository.getSingle(
       date: date.yyyymmdd,
       ref: ref,
       from: GetSingleMoneyFrom.dailyMoneyDisplayAlert,
@@ -57,7 +57,7 @@ class DailyMoneyDisplayAlert extends ConsumerWidget {
     //-----
     final beforeDate = DateTime(date.year, date.month, date.day - 1);
     await Future(
-      () => MoneyRepository.getSingleMoney(
+      () => MoneyRepository.getSingle(
         date: beforeDate.yyyymmdd,
         ref: ref,
         from: GetSingleMoneyFrom.dailyMoneyDisplayAlert,
@@ -66,12 +66,12 @@ class DailyMoneyDisplayAlert extends ConsumerWidget {
     );
     //-----
 
-    await BankNameRepository.getBankNamesList(ref: ref);
-    await EmoneyNameRepository.getEmoneyNamesList(ref: ref);
+    await BankNameRepository().getList(ref: ref);
+    await EmoneyNameRepository().getList(ref: ref);
 
-    await BankPriceRepository.getBankPriceList(ref: ref);
+    await BankPriceRepository().getList(ref: ref);
 
-    await SpendTimePlaceRepository.getSingleSpendTimePlace(date: date.yyyymmdd, ref: ref);
+    await SpendTimePlaceRepository.getSingle(date: date.yyyymmdd, ref: ref);
   }
 
   ///

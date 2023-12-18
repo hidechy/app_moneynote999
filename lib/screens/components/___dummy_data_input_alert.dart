@@ -68,7 +68,7 @@ class DummyDataInputAlert extends StatelessWidget {
       depositType: 'bank',
     );
 
-    await BankNameRepository.insertBankName(bankName: bankName1);
+    await BankNameRepository().insert(param: bankName1);
 
     final bankName2 = BankName(
       bankNumber: '0009',
@@ -80,7 +80,7 @@ class DummyDataInputAlert extends StatelessWidget {
       depositType: 'bank',
     );
 
-    await BankNameRepository.insertBankName(bankName: bankName2);
+    await BankNameRepository().insert(param: bankName2);
 
     final bankName3 = BankName(
       bankNumber: '0009',
@@ -92,7 +92,7 @@ class DummyDataInputAlert extends StatelessWidget {
       depositType: 'bank',
     );
 
-    await BankNameRepository.insertBankName(bankName: bankName3);
+    await BankNameRepository().insert(param: bankName3);
 
     final bankName4 = BankName(
       bankNumber: '0005',
@@ -104,7 +104,7 @@ class DummyDataInputAlert extends StatelessWidget {
       depositType: 'bank',
     );
 
-    await BankNameRepository.insertBankName(bankName: bankName4);
+    await BankNameRepository().insert(param: bankName4);
 
     final bankName5 = BankName(
       bankNumber: '0036',
@@ -116,7 +116,7 @@ class DummyDataInputAlert extends StatelessWidget {
       depositType: 'bank',
     );
 
-    await BankNameRepository.insertBankName(bankName: bankName5);
+    await BankNameRepository().insert(param: bankName5);
 
     // ignore: use_build_context_synchronously
     Navigator.pop(_context);
@@ -125,19 +125,19 @@ class DummyDataInputAlert extends StatelessWidget {
   ///
   Future<void> _setDummyEmoneyNameData() async {
     final emoneyName1 = EmoneyName(emoneyName: 'Suica1', depositType: 'emoney');
-    await EmoneyNameRepository.insertEmoneyName(emoneyName: emoneyName1);
+    await EmoneyNameRepository().insert(param: emoneyName1);
 
     final emoneyName2 = EmoneyName(emoneyName: 'PayPay', depositType: 'emoney');
-    await EmoneyNameRepository.insertEmoneyName(emoneyName: emoneyName2);
+    await EmoneyNameRepository().insert(param: emoneyName2);
 
     final emoneyName3 = EmoneyName(emoneyName: 'PASMO', depositType: 'emoney');
-    await EmoneyNameRepository.insertEmoneyName(emoneyName: emoneyName3);
+    await EmoneyNameRepository().insert(param: emoneyName3);
 
     final emoneyName4 = EmoneyName(emoneyName: 'Suica2', depositType: 'emoney');
-    await EmoneyNameRepository.insertEmoneyName(emoneyName: emoneyName4);
+    await EmoneyNameRepository().insert(param: emoneyName4);
 
     final emoneyName5 = EmoneyName(emoneyName: 'メルカリ', depositType: 'emoney');
-    await EmoneyNameRepository.insertEmoneyName(emoneyName: emoneyName5);
+    await EmoneyNameRepository().insert(param: emoneyName5);
 
     // ignore: use_build_context_synchronously
     Navigator.pop(_context);
@@ -151,7 +151,7 @@ class DummyDataInputAlert extends StatelessWidget {
         bankId: 1,
         price: 10000);
 
-    await BankPriceRepository.insertBankPrice(bankPrice: bankPrice1);
+    await BankPriceRepository().insert(param: bankPrice1);
 
     final bankPrice2 = BankPrice(
         date: DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day - 3).yyyymmdd,
@@ -159,7 +159,7 @@ class DummyDataInputAlert extends StatelessWidget {
         bankId: 2,
         price: 20000);
 
-    await BankPriceRepository.insertBankPrice(bankPrice: bankPrice2);
+    await BankPriceRepository().insert(param: bankPrice2);
 
     final bankPrice3 = BankPrice(
         date: DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day - 3).yyyymmdd,
@@ -167,7 +167,7 @@ class DummyDataInputAlert extends StatelessWidget {
         bankId: 3,
         price: 30000);
 
-    await BankPriceRepository.insertBankPrice(bankPrice: bankPrice3);
+    await BankPriceRepository().insert(param: bankPrice3);
 
     final bankPrice4 = BankPrice(
         date: DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day - 3).yyyymmdd,
@@ -175,7 +175,7 @@ class DummyDataInputAlert extends StatelessWidget {
         bankId: 4,
         price: 40000);
 
-    await BankPriceRepository.insertBankPrice(bankPrice: bankPrice4);
+    await BankPriceRepository().insert(param: bankPrice4);
 
     final bankPrice5 = BankPrice(
         date: DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day - 3).yyyymmdd,
@@ -183,7 +183,7 @@ class DummyDataInputAlert extends StatelessWidget {
         bankId: 5,
         price: 50000);
 
-    await BankPriceRepository.insertBankPrice(bankPrice: bankPrice5);
+    await BankPriceRepository().insert(param: bankPrice5);
 
     //////////////////////////////////
 
@@ -193,7 +193,7 @@ class DummyDataInputAlert extends StatelessWidget {
         bankId: 1,
         price: 10000);
 
-    await BankPriceRepository.insertBankPrice(bankPrice: bankPrice6);
+    await BankPriceRepository().insert(param: bankPrice6);
 
     final bankPrice7 = BankPrice(
         date: DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day - 3).yyyymmdd,
@@ -201,7 +201,7 @@ class DummyDataInputAlert extends StatelessWidget {
         bankId: 2,
         price: 20000);
 
-    await BankPriceRepository.insertBankPrice(bankPrice: bankPrice7);
+    await BankPriceRepository().insert(param: bankPrice7);
 
     final bankPrice8 = BankPrice(
         date: DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day - 3).yyyymmdd,
@@ -209,7 +209,7 @@ class DummyDataInputAlert extends StatelessWidget {
         bankId: 3,
         price: 30000);
 
-    await BankPriceRepository.insertBankPrice(bankPrice: bankPrice8);
+    await BankPriceRepository().insert(param: bankPrice8);
 
     final bankPrice9 = BankPrice(
         date: DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day - 3).yyyymmdd,
@@ -217,7 +217,7 @@ class DummyDataInputAlert extends StatelessWidget {
         bankId: 4,
         price: 40000);
 
-    await BankPriceRepository.insertBankPrice(bankPrice: bankPrice9);
+    await BankPriceRepository().insert(param: bankPrice9);
 
     final bankPrice10 = BankPrice(
         date: DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day - 3).yyyymmdd,
@@ -225,7 +225,7 @@ class DummyDataInputAlert extends StatelessWidget {
         bankId: 5,
         price: 50000);
 
-    await BankPriceRepository.insertBankPrice(bankPrice: bankPrice10);
+    await BankPriceRepository().insert(param: bankPrice10);
 
     // ignore: use_build_context_synchronously
     Navigator.pop(_context);
@@ -251,7 +251,7 @@ class DummyDataInputAlert extends StatelessWidget {
       yen_1: 7,
     );
 
-    await MoneyRepository.insertMoney(money: money1);
+    await MoneyRepository().insert(param: money1);
 
     ////////////////////
 
@@ -271,7 +271,7 @@ class DummyDataInputAlert extends StatelessWidget {
       yen_1: 8,
     );
 
-    await MoneyRepository.insertMoney(money: money2);
+    await MoneyRepository().insert(param: money2);
 
     ////////////////////
 
@@ -291,7 +291,7 @@ class DummyDataInputAlert extends StatelessWidget {
       yen_1: 9,
     );
 
-    await MoneyRepository.insertMoney(money: money3);
+    await MoneyRepository().insert(param: money3);
 
     // ignore: use_build_context_synchronously
     Navigator.pop(_context);
@@ -306,7 +306,7 @@ class DummyDataInputAlert extends StatelessWidget {
       SpendTimePlace(date: date1.yyyymmdd, spendType: '交通費', time: '09:00', place: 'bbb', price: 200),
       SpendTimePlace(date: date1.yyyymmdd, spendType: '支払い', time: '10:00', place: 'ccc', price: 300),
     ].forEach((element) {
-      SpendTimePlaceRepository.insertSpendTimePlace(spendTimePlace: element);
+      SpendTimePlaceRepository().insert(param: element);
     });
 
     ////////////////////
@@ -318,7 +318,7 @@ class DummyDataInputAlert extends StatelessWidget {
       SpendTimePlace(date: date2.yyyymmdd, spendType: '交通費', time: '09:00', place: 'bbb', price: 200),
       SpendTimePlace(date: date2.yyyymmdd, spendType: '支払い', time: '10:00', place: 'ccc', price: 300),
     ].forEach((element) {
-      SpendTimePlaceRepository.insertSpendTimePlace(spendTimePlace: element);
+      SpendTimePlaceRepository().insert(param: element);
     });
 
     ////////////////////
@@ -330,7 +330,7 @@ class DummyDataInputAlert extends StatelessWidget {
       SpendTimePlace(date: date3.yyyymmdd, spendType: '交通費', time: '09:00', place: 'bbb', price: 200),
       SpendTimePlace(date: date3.yyyymmdd, spendType: '支払い', time: '10:00', place: 'ccc', price: 300),
     ].forEach((element) {
-      SpendTimePlaceRepository.insertSpendTimePlace(spendTimePlace: element);
+      SpendTimePlaceRepository().insert(param: element);
     });
 
     // ignore: use_build_context_synchronously

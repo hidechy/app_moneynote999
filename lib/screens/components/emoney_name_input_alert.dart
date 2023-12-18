@@ -129,7 +129,7 @@ class _EmoneyNameInputAlertState extends ConsumerState<EmoneyNameInputAlert> {
       depositType: widget.depositType.japanName,
     );
 
-    await EmoneyNameRepository.insertEmoneyName(emoneyName: emoneyName).then((value) {
+    await EmoneyNameRepository().insert(param: emoneyName).then((value) {
       _emoneyNameEditingController.clear();
 
       Navigator.pop(_context);
@@ -138,14 +138,16 @@ class _EmoneyNameInputAlertState extends ConsumerState<EmoneyNameInputAlert> {
 
   ///
   Future<void> _updateEmoneyName() async {
-    await EmoneyNameRepository.updateEmoneyName(
-      emoneyName: EmoneyName(
+    await EmoneyNameRepository()
+        .update(
+      param: EmoneyName(
         id: widget.emoneyName!.id,
         emoneyName: _emoneyNameEditingController.text,
         depositType: widget.depositType.japanName,
       ),
       ref: ref,
-    ).then((value) {
+    )
+        .then((value) {
       _emoneyNameEditingController.clear();
 
       Navigator.pop(_context);
@@ -154,7 +156,6 @@ class _EmoneyNameInputAlertState extends ConsumerState<EmoneyNameInputAlert> {
 
   ///
   Future<void> _deleteEmoneyName() async {
-    await EmoneyNameRepository.deleteEmoneyName(emoneyName: widget.emoneyName!, ref: ref)
-        .then((value) => Navigator.pop(_context));
+    await EmoneyNameRepository().delete(param: widget.emoneyName, ref: ref).then((value) => Navigator.pop(_context));
   }
 }

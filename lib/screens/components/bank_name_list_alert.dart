@@ -22,7 +22,7 @@ class BankNameListAlert extends ConsumerWidget {
     _context = context;
     _ref = ref;
 
-    Future(() => BankNameRepository.getBankNamesList(ref: ref));
+    Future(() => BankNameRepository().getList(ref: ref));
 
     return AlertDialog(
       titlePadding: EdgeInsets.zero,
@@ -98,7 +98,7 @@ class BankNameListAlert extends ConsumerWidget {
                           const SizedBox(width: 10),
                           GestureDetector(
                             onTap: () {
-                              BankNameRepository.deleteBankName(bankName: element, ref: _ref);
+                              BankNameRepository().delete(param: element, ref: _ref);
                             },
                             child: const Icon(Icons.delete, size: 16, color: Colors.yellowAccent),
                           ),

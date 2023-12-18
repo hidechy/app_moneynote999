@@ -9,7 +9,5 @@ class Income {
 
   int price;
 
-  Map<String, dynamic> toMap() {
-    return {'date': date, 'sourceName': sourceName, 'price': price};
-  }
+  Map<String, dynamic> toMap() => {'date': date, 'sourceName': sourceName, 'price': price};
 }

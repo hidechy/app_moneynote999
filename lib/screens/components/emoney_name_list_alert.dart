@@ -22,7 +22,7 @@ class EmoneyNameListAlert extends ConsumerWidget {
     _context = context;
     _ref = ref;
 
-    Future(() => EmoneyNameRepository.getEmoneyNamesList(ref: ref));
+    Future(() => EmoneyNameRepository().getList(ref: ref));
 
     return AlertDialog(
       titlePadding: EdgeInsets.zero,
@@ -91,7 +91,7 @@ class EmoneyNameListAlert extends ConsumerWidget {
                           const SizedBox(width: 10),
                           GestureDetector(
                             onTap: () {
-                              EmoneyNameRepository.deleteEmoneyName(emoneyName: element, ref: _ref);
+                              EmoneyNameRepository().delete(param: element, ref: _ref);
                             },
                             child: const Icon(Icons.delete, size: 16, color: Colors.yellowAccent),
                           ),

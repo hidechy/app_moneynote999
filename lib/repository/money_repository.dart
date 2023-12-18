@@ -6,9 +6,10 @@ import '../enums/get_single_money_from.dart';
 import '../enums/get_single_money_when.dart';
 import '../models/money.dart';
 import '../state/money/money_notifier.dart';
+import '_repository.dart';
 
 // ignore: avoid_classes_with_only_static_members
-class MoneyRepository {
+class MoneyRepository implements Repository {
   static const _dbName = 'money_data.db';
 
   ///
@@ -64,25 +65,6 @@ class MoneyRepository {
           ')',
         );
 
-        // await db.execute(
-        //   'CREATE TABLE if not exists spend('
-        //   'id integer PRIMARY KEY,'
-        //   'date TEXT,'
-        //   'spend_type TEXT,'
-        //   'price TEXT'
-        //   ')',
-        // );
-        //
-        // await db.execute(
-        //   'CREATE TABLE if not exists time_place(id integer PRIMARY KEY, date TEXT, time TEXT, place TEXT, price integer)',
-        // );
-        //
-        //
-        //
-
-
-
-
         await db.execute(
           'CREATE TABLE if not exists incomes('
           'id integer PRIMARY KEY,'
@@ -110,13 +92,24 @@ class MoneyRepository {
   }
 
   ///
-  static Future<void> insertMoney({required Money money}) async {
+  @override
+  Future<void> insert({required dynamic param}) async {
     final db = await database();
+    final money = param as Money;
     await db.insert('moneies', money.toMap(), conflictAlgorithm: ConflictAlgorithm.replace);
   }
 
   ///
-  static Future<void> getSingleMoney(
+  @override
+  Future<void> update({required dynamic param, required WidgetRef ref}) async {
+    final db = await database();
+    final money = param as Money;
+    await db.update('moneies', money.toMap(), where: 'id = ?', whereArgs: [money.id]);
+    await ref.read(moneySingleProvider.notifier).setMoney(money: money);
+  }
+
+  ///
+  static Future<void> getSingle(
       {required String date,
       required WidgetRef ref,
       required GetSingleMoneyFrom from,
@@ -126,20 +119,7 @@ class MoneyRepository {
     final List<Map<String, dynamic>> maps = await db.query('moneies', where: 'date = ?', whereArgs: [date]);
 
     if (maps.isNotEmpty) {
-      final money = Money(
-        id: maps[0]['id'],
-        date: date,
-        yen_10000: maps[0]['yen_10000'],
-        yen_5000: maps[0]['yen_5000'],
-        yen_2000: maps[0]['yen_2000'],
-        yen_1000: maps[0]['yen_1000'],
-        yen_500: maps[0]['yen_500'],
-        yen_100: maps[0]['yen_100'],
-        yen_50: maps[0]['yen_50'],
-        yen_10: maps[0]['yen_10'],
-        yen_5: maps[0]['yen_5'],
-        yen_1: maps[0]['yen_1'],
-      );
+      final money = Money.fromJson(maps[0]);
 
       switch (from) {
         case GetSingleMoneyFrom.dailyMoneyDisplayAlert:
@@ -167,9 +147,10 @@ class MoneyRepository {
   }
 
   ///
-  static Future<void> updateMoney({required Money money, required WidgetRef ref}) async {
-    final db = await database();
-    await db.update('moneies', money.toMap(), where: 'id = ?', whereArgs: [money.id]);
-    await ref.read(moneySingleProvider.notifier).setMoney(money: money);
-  }
+  @override
+  Future<void> getList({required WidgetRef ref}) async {}
+
+  ///
+  @override
+  Future<void> delete({required dynamic param, required WidgetRef ref}) async {}
 }

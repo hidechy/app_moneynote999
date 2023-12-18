@@ -56,7 +56,7 @@ class _MoneyInputAlertState extends ConsumerState<MoneyInputAlert> {
     //-----
     final beforeDate = DateTime(widget.date.year, widget.date.month, widget.date.day - 1);
     Future(
-      () => MoneyRepository.getSingleMoney(
+      () => MoneyRepository.getSingle(
         date: beforeDate.yyyymmdd,
         ref: ref,
         from: GetSingleMoneyFrom.moneyInputAlert,
@@ -206,7 +206,7 @@ class _MoneyInputAlertState extends ConsumerState<MoneyInputAlert> {
       yen_1: (_tecYen1.text == '') ? 0 : _tecYen1.text.toInt(),
     );
 
-    await MoneyRepository.insertMoney(money: money).then((value) {
+    await MoneyRepository().insert(param: money).then((value) {
       _tecYen10000.clear();
       _tecYen5000.clear();
       _tecYen2000.clear();
@@ -239,7 +239,7 @@ class _MoneyInputAlertState extends ConsumerState<MoneyInputAlert> {
       yen_1: (_tecYen1.text == '') ? 0 : _tecYen1.text.toInt(),
     );
 
-    await MoneyRepository.updateMoney(money: updateMoney, ref: ref).then((value) {
+    await MoneyRepository().update(param: updateMoney, ref: ref).then((value) {
       _tecYen10000.clear();
       _tecYen5000.clear();
       _tecYen2000.clear();

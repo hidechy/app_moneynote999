@@ -1,7 +1,3 @@
-// To parse this JSON data, do
-//
-//     final holiday = holidayFromJson(jsonString);
-
 import 'dart:convert';
 
 // TODO エラー修正できない

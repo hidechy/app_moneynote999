@@ -157,7 +157,7 @@ class _BankPriceInputAlertState extends ConsumerState<BankPriceInputAlert> {
       price: _bankPriceEditingController.text.toInt(),
     );
 
-    await BankPriceRepository.insertBankPrice(bankPrice: bankPrice).then((value) {
+    await BankPriceRepository().insert(param: bankPrice).then((value) {
       Navigator.pop(context);
     });
   }

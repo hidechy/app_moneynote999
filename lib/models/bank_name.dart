@@ -10,6 +10,17 @@ class BankName {
     required this.depositType,
   });
 
+  factory BankName.fromJson(Map<String, dynamic> map) => BankName(
+        id: map['id'],
+        bankNumber: map['bank_number'],
+        bankName: map['bank_name'],
+        branchNumber: map['branch_number'],
+        branchName: map['branch_name'],
+        accountType: map['account_type'],
+        accountNumber: map['account_number'],
+        depositType: map['deposit_type'],
+      );
+
   int? id;
 
   String bankNumber;
@@ -23,15 +34,13 @@ class BankName {
 
   String depositType;
 
-  Map<String, dynamic> toMap() {
-    return {
-      'bank_number': bankNumber,
-      'bank_name': bankName,
-      'branch_number': branchNumber,
-      'branch_name': branchName,
-      'account_type': accountType,
-      'account_number': accountNumber,
-      'deposit_type': depositType,
-    };
-  }
+  Map<String, dynamic> toMap() => {
+        'bank_number': bankNumber,
+        'bank_name': bankName,
+        'branch_number': branchNumber,
+        'branch_name': branchName,
+        'account_type': accountType,
+        'account_number': accountNumber,
+        'deposit_type': depositType,
+      };
 }

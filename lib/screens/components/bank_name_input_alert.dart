@@ -240,7 +240,7 @@ class _BankNameInputAlertState extends ConsumerState<BankNameInputAlert> {
       depositType: widget.depositType.japanName,
     );
 
-    await BankNameRepository.insertBankName(bankName: bankName).then((value) {
+    await BankNameRepository().insert(param: bankName).then((value) {
       _bankNumberEditingController.clear();
       _bankNameEditingController.clear();
       _branchNumberEditingController.clear();
@@ -255,8 +255,8 @@ class _BankNameInputAlertState extends ConsumerState<BankNameInputAlert> {
   Future<void> _updateBankName() async {
     final accountType = ref.watch(bankNamesProvider.select((value) => value.accountType));
 
-    await BankNameRepository.updateBankName(
-      bankName: BankName(
+    await BankNameRepository().update(
+      param: BankName(
         id: widget.bankName!.id,
         bankNumber: _bankNumberEditingController.text,
         bankName: _bankNameEditingController.text,
@@ -280,7 +280,7 @@ class _BankNameInputAlertState extends ConsumerState<BankNameInputAlert> {
 
   ///
   Future<void> _deleteBankName() async {
-    await BankNameRepository.deleteBankName(bankName: widget.bankName!, ref: ref)
+    await BankNameRepository().delete(param: widget.bankName, ref: ref)
         .then((value) => Navigator.pop(_context));
   }
 }
