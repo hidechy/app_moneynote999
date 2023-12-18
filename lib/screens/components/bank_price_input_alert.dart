@@ -89,7 +89,11 @@ class _BankPriceInputAlertState extends ConsumerState<BankPriceInputAlert> {
               Container(
                 padding: const EdgeInsets.all(10),
                 margin: const EdgeInsets.symmetric(vertical: 5, horizontal: 3),
-                decoration: BoxDecoration(color: Colors.white.withOpacity(0.1)),
+                decoration: BoxDecoration(
+                  color: Colors.white.withOpacity(0.1),
+                  borderRadius: BorderRadius.circular(10),
+                  border: Border.all(color: Colors.white.withOpacity(0.4)),
+                ),
                 child: TextField(
                   keyboardType: TextInputType.number,
                   controller: _bankPriceEditingController,
@@ -157,8 +161,6 @@ class _BankPriceInputAlertState extends ConsumerState<BankPriceInputAlert> {
       price: _bankPriceEditingController.text.toInt(),
     );
 
-    await BankPriceRepository().insert(param: bankPrice).then((value) {
-      Navigator.pop(context);
-    });
+    await BankPriceRepository().insert(param: bankPrice).then((value) => Navigator.pop(context));
   }
 }

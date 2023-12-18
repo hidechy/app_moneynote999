@@ -297,7 +297,7 @@ class DailyMoneyDisplayAlert extends ConsumerWidget {
             const SizedBox(width: 10),
             GestureDetector(
               onTap: () {
-                MoneyDialog(context: _context, widget: const IncomeListAlert());
+                MoneyDialog(context: _context, widget: IncomeListAlert(date: date));
               },
               child: Text('OPEN', style: TextStyle(color: Theme.of(_context).colorScheme.primary)),
             ),

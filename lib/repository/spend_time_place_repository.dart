@@ -13,7 +13,7 @@ class SpendTimePlaceRepository implements Repository {
   Future<void> insert({required dynamic param}) async {
     final db = await MoneyRepository.database();
     final spendTimePlace = param as SpendTimePlace;
-    await db.insert('spend_time_place', spendTimePlace.toMap(), conflictAlgorithm: ConflictAlgorithm.replace);
+    await db.insert('spend_time_places', spendTimePlace.toMap(), conflictAlgorithm: ConflictAlgorithm.replace);
   }
 
   ///
@@ -21,7 +21,7 @@ class SpendTimePlaceRepository implements Repository {
   Future<void> delete({required dynamic param, required WidgetRef ref}) async {
     final db = await MoneyRepository.database();
     final spendTimePlace = param as SpendTimePlace;
-    await db.delete('spend_time_place', where: 'date = ?', whereArgs: [spendTimePlace.date]);
+    await db.delete('spend_time_places', where: 'date = ?', whereArgs: [spendTimePlace.date]);
     await ref.read(spendTimePlaceProvider.notifier).deleteSpendTimePlaceList(date: spendTimePlace.date);
   }
 
@@ -30,7 +30,7 @@ class SpendTimePlaceRepository implements Repository {
     final db = await MoneyRepository.database();
 
     final List<Map<String, dynamic>> maps = await db.query(
-      'spend_time_place',
+      'spend_time_places',
       where: 'date = ?',
       whereArgs: [date],
       orderBy: 'id asc',
@@ -53,7 +53,7 @@ class SpendTimePlaceRepository implements Repository {
     final exDate = date.split('-');
     final yearmonth = '${exDate[0]}-${exDate[1]}';
     final List<Map<String, dynamic>> maps = await db.rawQuery(
-      'SELECT * FROM spend_time_place WHERE date LIKE ?;',
+      'SELECT * FROM spend_time_places WHERE date LIKE ?;',
       ['$yearmonth%'],
     );
     final spendTimePlaceList = List.generate(maps.length, (index) => SpendTimePlace.fromJson(maps[index]));

@@ -18,8 +18,12 @@ final _privateConstructorUsedError = UnsupportedError(
 mixin _$BankPriceResponseState {
   AsyncValue<List<BankPrice>> get bankPriceList =>
       throw _privateConstructorUsedError;
+
+  ///
   AsyncValue<Map<String, List<BankPrice>>> get bankPriceListMap =>
       throw _privateConstructorUsedError;
+
+  ///
   AsyncValue<Map<String, Map<String, int>>> get bankPriceDatePadMap =>
       throw _privateConstructorUsedError;
 
@@ -137,9 +141,13 @@ class _$BankPriceResponseStateImpl implements _BankPriceResponseState {
   @override
   @JsonKey()
   final AsyncValue<List<BankPrice>> bankPriceList;
+
+  ///
   @override
   @JsonKey()
   final AsyncValue<Map<String, List<BankPrice>>> bankPriceListMap;
+
+  ///
   @override
   @JsonKey()
   final AsyncValue<Map<String, Map<String, int>>> bankPriceDatePadMap;
@@ -184,8 +192,12 @@ abstract class _BankPriceResponseState implements BankPriceResponseState {
   @override
   AsyncValue<List<BankPrice>> get bankPriceList;
   @override
+
+  ///
   AsyncValue<Map<String, List<BankPrice>>> get bankPriceListMap;
   @override
+
+  ///
   AsyncValue<Map<String, Map<String, int>>> get bankPriceDatePadMap;
   @override
   @JsonKey(ignore: true)

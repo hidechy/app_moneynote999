@@ -330,7 +330,7 @@ class HomeScreen extends ConsumerWidget {
                         ? Colors.white.withOpacity(0.1)
                         : (appParamState.calendarSelectedDate != null &&
                                 generateYmd == appParamState.calendarSelectedDate!.yyyymmdd)
-                            ? Colors.yellowAccent.withOpacity(0.1)
+                            ? Colors.yellowAccent.withOpacity(0.2)
                             : _utility.getYoubiColor(date: generateYmd, youbiStr: youbiStr, holidayMap: _holidayMap),
               ),
               child: (_calendarDays[i] == '')

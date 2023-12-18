@@ -56,7 +56,7 @@ class MoneyRepository implements Repository {
         );
 
         await db.execute(
-          'CREATE TABLE if not exists bank_price('
+          'CREATE TABLE if not exists bank_prices('
           'id integer PRIMARY KEY,'
           'deposit_type TEXT,'
           'date TEXT,'
@@ -66,21 +66,21 @@ class MoneyRepository implements Repository {
         );
 
         await db.execute(
-          'CREATE TABLE if not exists incomes('
-          'id integer PRIMARY KEY,'
-          'date TEXT,'
-          'source_name TEXT,'
-          'price integer'
-          ')',
-        );
-
-        await db.execute(
-          'CREATE TABLE if not exists spend_time_place('
+          'CREATE TABLE if not exists spend_time_places('
           'id integer PRIMARY KEY,'
           'date TEXT,'
           'spend_type TEXT,'
           'time TEXT,'
           'place TEXT,'
+          'price integer'
+          ')',
+        );
+
+        await db.execute(
+          'CREATE TABLE if not exists incomes('
+          'id integer PRIMARY KEY,'
+          'date TEXT,'
+          'source_name TEXT,'
           'price integer'
           ')',
         );

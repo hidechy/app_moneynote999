@@ -12,7 +12,7 @@ class BankPriceRepository implements Repository {
   @override
   Future<void> getList({required WidgetRef ref}) async {
     final db = await MoneyRepository.database();
-    final List<Map<String, dynamic>> maps = await db.query('bank_price', orderBy: 'date asc');
+    final List<Map<String, dynamic>> maps = await db.query('bank_prices', orderBy: 'date asc');
     final bankPriceList = List.generate(maps.length, (index) => BankPrice.fromJson(maps[index]));
     await ref.read(bankPriceProvider.notifier).setBankPriceList(bankPriceList: bankPriceList);
   }
@@ -25,12 +25,12 @@ class BankPriceRepository implements Repository {
     final bankPrice = param as BankPrice;
 
     await db.delete(
-      'bank_price',
+      'bank_prices',
       where: 'deposit_type = ? and bank_id = ? and date = ?',
       whereArgs: [bankPrice.depositType, bankPrice.bankId, bankPrice.date],
     );
 
-    await db.insert('bank_price', bankPrice.toMap(), conflictAlgorithm: ConflictAlgorithm.replace);
+    await db.insert('bank_prices', bankPrice.toMap(), conflictAlgorithm: ConflictAlgorithm.replace);
   }
 
   ///
