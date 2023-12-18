@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:money_note/state/app_params/app_params_notifier.dart';
 import 'package:money_note/state/incomes/incomes_notifier.dart';
 
 import '../../extensions/extensions.dart';
@@ -21,9 +22,20 @@ class _IncomeListAlertState extends ConsumerState<IncomeListAlert> {
   final TextEditingController _incomePriceEditingController = TextEditingController();
   final TextEditingController _incomeSourceEditingController = TextEditingController();
 
+  List<String> yearList = [];
+
+  ///
+  Future<void> init({required WidgetRef ref}) async {
+    await IncomeRepository().getList(ref: ref);
+  }
+
   ///
   @override
   Widget build(BuildContext context) {
+    Future(() => init(ref: ref));
+
+    _makeYearList();
+
     return AlertDialog(
       titlePadding: EdgeInsets.zero,
       contentPadding: EdgeInsets.zero,
@@ -88,10 +100,63 @@ class _IncomeListAlertState extends ConsumerState<IncomeListAlert> {
                   ),
                 ],
               ),
+              SizedBox(
+                height: 40,
+                child: _displayYearButton(),
+              ),
               Expanded(child: _displayIncomeList()),
             ],
           ),
         ),
+      ),
+    );
+  }
+
+  ///
+  void _makeYearList() {
+    yearList = [];
+
+    final incomeList = ref.watch(incomeProvider.select((value) => value.incomeList));
+
+    final map = <String, String>{};
+
+    incomeList.value?.forEach((element) {
+      final exDate = element.date.split('-');
+
+      map[exDate[0]] = '';
+    });
+
+    map.forEach((key, value) {
+      yearList.add(key);
+    });
+
+    yearList.sort((a, b) => -1 * a.compareTo(b));
+  }
+
+  ///
+  Widget _displayYearButton() {
+    final selectedIncomeYear = ref.watch(appParamProvider.select((value) => value.selectedIncomeYear));
+
+    return SingleChildScrollView(
+      scrollDirection: Axis.horizontal,
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: yearList.map((e) {
+          return GestureDetector(
+            onTap: () {
+              ref.read(appParamProvider.notifier).setSelectedIncomeYear(year: e);
+            },
+            child: Container(
+              margin: const EdgeInsets.all(5),
+              padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 10),
+              decoration: BoxDecoration(
+                color: (selectedIncomeYear == e) ? Colors.yellowAccent.withOpacity(0.2) : Colors.black,
+                borderRadius: BorderRadius.circular(20),
+              ),
+              child: Text(e),
+            ),
+          );
+        }).toList(),
       ),
     );
   }
@@ -103,6 +168,25 @@ class _IncomeListAlertState extends ConsumerState<IncomeListAlert> {
     return incomeList.when(
       data: (value) {
         final list = <Widget>[];
+
+        var sum = 0;
+        value.forEach((element) {
+          sum += element.price;
+        });
+
+        list.add(Container(
+          padding: const EdgeInsets.all(10),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Container(),
+              Text(
+                sum.toString().toCurrency(),
+                style: const TextStyle(color: Colors.yellowAccent),
+              ),
+            ],
+          ),
+        ));
 
         value.forEach((element) {
           list.add(Container(
@@ -153,11 +237,11 @@ class _IncomeListAlertState extends ConsumerState<IncomeListAlert> {
       price: _incomePriceEditingController.text.toInt(),
     );
 
-    await IncomeRepository().insert(param: income).then((value) {
+    await IncomeRepository().insert(param: income).then((value) async {
       _incomeSourceEditingController.clear();
       _incomePriceEditingController.clear();
 
-      Navigator.pop(context);
+      await IncomeRepository().getList(ref: ref);
     });
   }
 }
