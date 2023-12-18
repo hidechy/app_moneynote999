@@ -40,11 +40,11 @@ class SpendTimePlaceNotifier extends StateNotifier<SpendTimePlacesResponseState>
 
   ///
   Future<void> setSpendItem({required int pos, required String item}) async {
-    final items = <String>[...state.spendItem];
+    final spendItem = <String>[...state.spendItem];
 
-    items[pos] = item;
+    spendItem[pos] = item;
 
-    state = state.copyWith(spendItem: items);
+    state = state.copyWith(spendItem: spendItem);
   }
 
   ///
@@ -71,38 +71,36 @@ class SpendTimePlaceNotifier extends StateNotifier<SpendTimePlacesResponseState>
 
   ///
   Future<void> setSpendPrice({required int pos, required int price}) async {
-    final prices = <int>[...state.spendPrice];
-    prices[pos] = price;
+    final spendPrice = <int>[...state.spendPrice];
+    spendPrice[pos] = price;
 
     var sum = 0;
-    for (var i = 0; i < prices.length; i++) {
+    for (var i = 0; i < spendPrice.length; i++) {
       if (state.minusCheck[i]) {
-        sum -= prices[i];
+        sum -= spendPrice[i];
       } else {
-        sum += prices[i];
+        sum += spendPrice[i];
       }
     }
 
     final baseDiff = state.baseDiff.toInt();
     final diff = baseDiff - sum;
 
-    state = state.copyWith(spendPrice: prices, diff: diff);
+    state = state.copyWith(spendPrice: spendPrice, diff: diff);
   }
 
   ///
   Future<void> deleteSpendTimePlaceList({required String date}) async {
-    if (state.spendTimePlaceList.value != null) {
-      final spendTimePlaceList = state.spendTimePlaceList.value!;
+    final spendTimePlaceList = state.spendTimePlaceList.value!;
 
-      spendTimePlaceList.where((element) => element.date == date).toList().forEach((element) {
-        try {
-          spendTimePlaceList.removeAt(element.id!);
-          // ignore: avoid_catches_without_on_clauses, empty_catches
-        } catch (e) {}
-      });
+    spendTimePlaceList.where((element) => element.date == date).toList().forEach((element) {
+      try {
+        spendTimePlaceList.removeAt(element.id!);
+        // ignore: avoid_catches_without_on_clauses, empty_catches
+      } catch (e) {}
+    });
 
-      state = state.copyWith(spendTimePlaceList: AsyncValue.data(spendTimePlaceList));
-    }
+    state = state.copyWith(spendTimePlaceList: AsyncValue.data(spendTimePlaceList));
   }
 
   ///
@@ -154,5 +152,28 @@ class SpendTimePlaceNotifier extends StateNotifier<SpendTimePlacesResponseState>
     });
 
     state = state.copyWith(monthlySpendItemMap: AsyncValue.data(monthlySpendItemMap));
+  }
+
+  ///
+  Future<void> clearOneBox({required int pos}) async {
+    final spendItem = <String>[...state.spendItem];
+    final spendTime = <String>[...state.spendTime];
+    final spendPrice = <int>[...state.spendPrice];
+    final spendPlace = <String>[...state.spendPlace];
+    final minusChecks = <bool>[...state.minusCheck];
+
+    spendItem[pos] = '項目名';
+    spendTime[pos] = '時間';
+    spendPrice[pos] = 0;
+    spendPlace[pos] = '';
+    minusChecks[pos] = false;
+
+    state = state.copyWith(
+      spendTime: spendTime,
+      spendPlace: spendPlace,
+      spendItem: spendItem,
+      spendPrice: spendPrice,
+      minusCheck: minusChecks,
+    );
   }
 }

@@ -32,6 +32,8 @@ class _SpendTimePlaceInputAlertState extends ConsumerState<SpendTimePlaceInputAl
   final List<TextEditingController> _placeTecs = [];
   final List<TextEditingController> _priceTecs = [];
 
+  final List<String> _timeUnknownItem = ['クレジット', '共済代', '投資', '税金', '年金', '国民年金基金', '健康保険代', '利息'];
+
   late BuildContext _context;
 
   ///
@@ -161,10 +163,14 @@ class _SpendTimePlaceInputAlertState extends ConsumerState<SpendTimePlaceInputAl
       child: Column(
         children: SpendType.values.map((e) {
           return GestureDetector(
-            onTap: () {
-              ref.read(spendTimePlaceProvider.notifier).setBlinkingFlag(blinkingFlag: false);
+            onTap: () async {
+              await ref.read(spendTimePlaceProvider.notifier).setBlinkingFlag(blinkingFlag: false);
 
-              ref.read(spendTimePlaceProvider.notifier).setSpendItem(pos: itemPos, item: e.japanName!);
+              await ref.read(spendTimePlaceProvider.notifier).setSpendItem(pos: itemPos, item: e.japanName!);
+
+              if (_timeUnknownItem.contains(e.japanName)) {
+                await ref.read(spendTimePlaceProvider.notifier).setTime(pos: itemPos, time: '00:00');
+              }
             },
             child: Container(
               width: double.infinity,
@@ -239,7 +245,7 @@ class _SpendTimePlaceInputAlertState extends ConsumerState<SpendTimePlaceInputAl
                   const SizedBox(width: 10),
                   Expanded(
                     child: GestureDetector(
-                      onTap: () => showTP(pos: i),
+                      onTap: () => _showTP(pos: i),
                       child: Container(
                         padding: const EdgeInsets.all(5),
                         alignment: Alignment.center,
@@ -252,6 +258,13 @@ class _SpendTimePlaceInputAlertState extends ConsumerState<SpendTimePlaceInputAl
                         child: Text(time),
                       ),
                     ),
+                  ),
+                  const SizedBox(width: 10),
+                  GestureDetector(
+                    onTap: () {
+                      _clearOneBox(pos: i);
+                    },
+                    child: const Icon(Icons.close, color: Colors.redAccent),
                   ),
                 ],
               ),
@@ -314,7 +327,7 @@ class _SpendTimePlaceInputAlertState extends ConsumerState<SpendTimePlaceInputAl
   }
 
   ///
-  Future<void> showTP({required int pos}) async {
+  Future<void> _showTP({required int pos}) async {
     final selectedTime = await showTimePicker(
       context: _context,
       initialTime: const TimeOfDay(hour: 8, minute: 0),
@@ -392,5 +405,13 @@ class _SpendTimePlaceInputAlertState extends ConsumerState<SpendTimePlaceInputAl
 
     // ignore: use_build_context_synchronously
     Navigator.pop(_context);
+  }
+
+  ///
+  Future<void> _clearOneBox({required int pos}) async {
+    _priceTecs[pos].clear();
+    _placeTecs[pos].clear();
+
+    await ref.read(spendTimePlaceProvider.notifier).clearOneBox(pos: pos);
   }
 }
