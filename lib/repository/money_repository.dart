@@ -92,23 +92,6 @@ class MoneyRepository implements Repository {
   }
 
   ///
-  @override
-  Future<void> insert({required dynamic param}) async {
-    final db = await database();
-    final money = param as Money;
-    await db.insert('moneies', money.toMap(), conflictAlgorithm: ConflictAlgorithm.replace);
-  }
-
-  ///
-  @override
-  Future<void> update({required dynamic param, required WidgetRef ref}) async {
-    final db = await database();
-    final money = param as Money;
-    await db.update('moneies', money.toMap(), where: 'id = ?', whereArgs: [money.id]);
-    await ref.read(moneySingleProvider.notifier).setMoney(money: money);
-  }
-
-  ///
   Future<void> getSingle(
       {required String date,
       required WidgetRef ref,
@@ -149,6 +132,23 @@ class MoneyRepository implements Repository {
   ///
   @override
   Future<void> getList({required WidgetRef ref}) async {}
+
+  ///
+  @override
+  Future<void> insert({required dynamic param}) async {
+    final db = await database();
+    final money = param as Money;
+    await db.insert('moneies', money.toMap(), conflictAlgorithm: ConflictAlgorithm.replace);
+  }
+
+  ///
+  @override
+  Future<void> update({required dynamic param, required WidgetRef ref}) async {
+    final db = await database();
+    final money = param as Money;
+    await db.update('moneies', money.toMap(), where: 'id = ?', whereArgs: [money.id]);
+    await ref.read(moneySingleProvider.notifier).setMoney(money: money);
+  }
 
   ///
   @override

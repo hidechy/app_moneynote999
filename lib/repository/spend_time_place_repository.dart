@@ -9,23 +9,6 @@ import 'money_repository.dart';
 // ignore: avoid_classes_with_only_static_members
 class SpendTimePlaceRepository implements Repository {
   ///
-  @override
-  Future<void> insert({required dynamic param}) async {
-    final db = await MoneyRepository.database();
-    final spendTimePlace = param as SpendTimePlace;
-    await db.insert('spend_time_places', spendTimePlace.toMap(), conflictAlgorithm: ConflictAlgorithm.replace);
-  }
-
-  ///
-  @override
-  Future<void> delete({required dynamic param, required WidgetRef ref}) async {
-    final db = await MoneyRepository.database();
-    final spendTimePlace = param as SpendTimePlace;
-    await db.delete('spend_time_places', where: 'date = ?', whereArgs: [spendTimePlace.date]);
-    await ref.read(spendTimePlaceProvider.notifier).deleteSpendTimePlaceList(date: spendTimePlace.date);
-  }
-
-  ///
   Future<void> getSingle({required String date, required WidgetRef ref}) async {
     final db = await MoneyRepository.database();
 
@@ -41,12 +24,6 @@ class SpendTimePlaceRepository implements Repository {
     await ref.read(spendTimePlaceProvider.notifier).setSpendTimePlaceList(spendTimePlaceList: spendTimePlaceList);
   }
 
-  @override
-  Future<void> getList({required WidgetRef ref}) async {}
-
-  @override
-  Future<void> update({required dynamic param, required WidgetRef ref}) async {}
-
   ///
   Future<void> getMonthRecord({required String date, required WidgetRef ref}) async {
     final db = await MoneyRepository.database();
@@ -58,5 +35,29 @@ class SpendTimePlaceRepository implements Repository {
     );
     final spendTimePlaceList = List.generate(maps.length, (index) => SpendTimePlace.fromJson(maps[index]));
     await ref.read(spendTimePlaceProvider.notifier).setMonthlySpendItemMap(spendTimePlaceList: spendTimePlaceList);
+  }
+
+  ///
+  @override
+  Future<void> getList({required WidgetRef ref}) async {}
+
+  ///
+  @override
+  Future<void> insert({required dynamic param}) async {
+    final db = await MoneyRepository.database();
+    final spendTimePlace = param as SpendTimePlace;
+    await db.insert('spend_time_places', spendTimePlace.toMap(), conflictAlgorithm: ConflictAlgorithm.replace);
+  }
+
+  @override
+  Future<void> update({required dynamic param, required WidgetRef ref}) async {}
+
+  ///
+  @override
+  Future<void> delete({required dynamic param, required WidgetRef ref}) async {
+    final db = await MoneyRepository.database();
+    final spendTimePlace = param as SpendTimePlace;
+    await db.delete('spend_time_places', where: 'date = ?', whereArgs: [spendTimePlace.date]);
+    await ref.read(spendTimePlaceProvider.notifier).deleteSpendTimePlaceList(date: spendTimePlace.date);
   }
 }
