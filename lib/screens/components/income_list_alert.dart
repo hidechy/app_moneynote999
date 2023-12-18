@@ -3,6 +3,9 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import '../../extensions/extensions.dart';
+import '../../models/income.dart';
+import '../../repository/income_repository.dart';
+import 'parts/error_dialog.dart';
 
 class IncomeListAlert extends ConsumerStatefulWidget {
   const IncomeListAlert({super.key, required this.date});
@@ -79,7 +82,7 @@ class _IncomeListAlertState extends ConsumerState<IncomeListAlert> {
                 children: [
                   Container(),
                   TextButton(
-                    onPressed: () {},
+                    onPressed: _insertIncome,
                     child: const Text('入力する'),
                   ),
                 ],
@@ -89,5 +92,30 @@ class _IncomeListAlertState extends ConsumerState<IncomeListAlert> {
         ),
       ),
     );
+  }
+
+  ///
+  Future<void> _insertIncome() async {
+    if (_incomePriceEditingController.text == '' || _incomePriceEditingController.text == '') {
+      Future.delayed(
+        Duration.zero,
+        () => error_dialog(context: context, title: '登録できません。', content: '値を正しく入力してください。'),
+      );
+
+      return;
+    }
+
+    final income = Income(
+      date: widget.date.yyyymmdd,
+      sourceName: _incomeSourceEditingController.text,
+      price: _incomePriceEditingController.text.toInt(),
+    );
+
+    await IncomeRepository().insert(param: income).then((value) {
+      _incomeSourceEditingController.clear();
+      _incomePriceEditingController.clear();
+
+      Navigator.pop(context);
+    });
   }
 }

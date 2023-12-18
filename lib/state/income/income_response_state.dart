@@ -8,10 +8,6 @@ part 'income_response_state.freezed.dart';
 @freezed
 class IncomeResponseState with _$IncomeResponseState {
   const factory IncomeResponseState({
-    @Default(0) int incomePrice,
-    @Default('') String incomeFrom,
-
-    ///
     @Default(AsyncValue<List<Income>>.loading()) AsyncValue<List<Income>> incomeList,
   }) = _IncomeResponseState;
 }

@@ -16,10 +16,6 @@ final _privateConstructorUsedError = UnsupportedError(
 
 /// @nodoc
 mixin _$IncomeResponseState {
-  int get incomePrice => throw _privateConstructorUsedError;
-  String get incomeFrom => throw _privateConstructorUsedError;
-
-  ///
   AsyncValue<List<Income>> get incomeList => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
@@ -33,10 +29,7 @@ abstract class $IncomeResponseStateCopyWith<$Res> {
           IncomeResponseState value, $Res Function(IncomeResponseState) then) =
       _$IncomeResponseStateCopyWithImpl<$Res, IncomeResponseState>;
   @useResult
-  $Res call(
-      {int incomePrice,
-      String incomeFrom,
-      AsyncValue<List<Income>> incomeList});
+  $Res call({AsyncValue<List<Income>> incomeList});
 }
 
 /// @nodoc
@@ -52,19 +45,9 @@ class _$IncomeResponseStateCopyWithImpl<$Res, $Val extends IncomeResponseState>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? incomePrice = null,
-    Object? incomeFrom = null,
     Object? incomeList = null,
   }) {
     return _then(_value.copyWith(
-      incomePrice: null == incomePrice
-          ? _value.incomePrice
-          : incomePrice // ignore: cast_nullable_to_non_nullable
-              as int,
-      incomeFrom: null == incomeFrom
-          ? _value.incomeFrom
-          : incomeFrom // ignore: cast_nullable_to_non_nullable
-              as String,
       incomeList: null == incomeList
           ? _value.incomeList
           : incomeList // ignore: cast_nullable_to_non_nullable
@@ -81,10 +64,7 @@ abstract class _$$IncomeResponseStateImplCopyWith<$Res>
       __$$IncomeResponseStateImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call(
-      {int incomePrice,
-      String incomeFrom,
-      AsyncValue<List<Income>> incomeList});
+  $Res call({AsyncValue<List<Income>> incomeList});
 }
 
 /// @nodoc
@@ -98,19 +78,9 @@ class __$$IncomeResponseStateImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? incomePrice = null,
-    Object? incomeFrom = null,
     Object? incomeList = null,
   }) {
     return _then(_$IncomeResponseStateImpl(
-      incomePrice: null == incomePrice
-          ? _value.incomePrice
-          : incomePrice // ignore: cast_nullable_to_non_nullable
-              as int,
-      incomeFrom: null == incomeFrom
-          ? _value.incomeFrom
-          : incomeFrom // ignore: cast_nullable_to_non_nullable
-              as String,
       incomeList: null == incomeList
           ? _value.incomeList
           : incomeList // ignore: cast_nullable_to_non_nullable
@@ -123,25 +93,15 @@ class __$$IncomeResponseStateImplCopyWithImpl<$Res>
 
 class _$IncomeResponseStateImpl implements _IncomeResponseState {
   const _$IncomeResponseStateImpl(
-      {this.incomePrice = 0,
-      this.incomeFrom = '',
-      this.incomeList = const AsyncValue<List<Income>>.loading()});
+      {this.incomeList = const AsyncValue<List<Income>>.loading()});
 
-  @override
-  @JsonKey()
-  final int incomePrice;
-  @override
-  @JsonKey()
-  final String incomeFrom;
-
-  ///
   @override
   @JsonKey()
   final AsyncValue<List<Income>> incomeList;
 
   @override
   String toString() {
-    return 'IncomeResponseState(incomePrice: $incomePrice, incomeFrom: $incomeFrom, incomeList: $incomeList)';
+    return 'IncomeResponseState(incomeList: $incomeList)';
   }
 
   @override
@@ -149,17 +109,12 @@ class _$IncomeResponseStateImpl implements _IncomeResponseState {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$IncomeResponseStateImpl &&
-            (identical(other.incomePrice, incomePrice) ||
-                other.incomePrice == incomePrice) &&
-            (identical(other.incomeFrom, incomeFrom) ||
-                other.incomeFrom == incomeFrom) &&
             (identical(other.incomeList, incomeList) ||
                 other.incomeList == incomeList));
   }
 
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, incomePrice, incomeFrom, incomeList);
+  int get hashCode => Object.hash(runtimeType, incomeList);
 
   @JsonKey(ignore: true)
   @override
@@ -171,17 +126,9 @@ class _$IncomeResponseStateImpl implements _IncomeResponseState {
 
 abstract class _IncomeResponseState implements IncomeResponseState {
   const factory _IncomeResponseState(
-      {final int incomePrice,
-      final String incomeFrom,
-      final AsyncValue<List<Income>> incomeList}) = _$IncomeResponseStateImpl;
+      {final AsyncValue<List<Income>> incomeList}) = _$IncomeResponseStateImpl;
 
   @override
-  int get incomePrice;
-  @override
-  String get incomeFrom;
-  @override
-
-  ///
   AsyncValue<List<Income>> get incomeList;
   @override
   @JsonKey(ignore: true)
