@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:money_note/state/incomes/incomes_notifier.dart';
 
 import '../../extensions/extensions.dart';
 import '../../models/income.dart';
@@ -87,10 +88,51 @@ class _IncomeListAlertState extends ConsumerState<IncomeListAlert> {
                   ),
                 ],
               ),
+              Expanded(child: _displayIncomeList()),
             ],
           ),
         ),
       ),
+    );
+  }
+
+  ///
+  Widget _displayIncomeList() {
+    final incomeList = ref.watch(incomeProvider.select((value) => value.incomeList));
+
+    return incomeList.when(
+      data: (value) {
+        final list = <Widget>[];
+
+        value.forEach((element) {
+          list.add(Container(
+            padding: const EdgeInsets.all(10),
+            decoration: BoxDecoration(border: Border(bottom: BorderSide(color: Colors.white.withOpacity(0.3)))),
+            child: Column(
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(element.date),
+                    Text(element.price.toString().toCurrency()),
+                  ],
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Container(),
+                    Text(element.sourceName),
+                  ],
+                ),
+              ],
+            ),
+          ));
+        });
+
+        return SingleChildScrollView(child: Column(children: list));
+      },
+      error: (error, stackTrace) => const Center(child: CircularProgressIndicator()),
+      loading: () => const Center(child: CircularProgressIndicator()),
     );
   }
 

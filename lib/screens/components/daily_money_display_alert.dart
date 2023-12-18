@@ -2,6 +2,7 @@ import 'package:bubble/bubble.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:money_note/repository/income_repository.dart';
 
 import '../../enums/get_single_money_from.dart';
 import '../../enums/get_single_money_when.dart';
@@ -72,6 +73,8 @@ class DailyMoneyDisplayAlert extends ConsumerWidget {
     await BankPriceRepository().getList(ref: ref);
 
     await SpendTimePlaceRepository().getSingle(date: date.yyyymmdd, ref: ref);
+
+    await IncomeRepository().getList(ref: ref);
   }
 
   ///
