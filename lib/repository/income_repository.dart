@@ -12,7 +12,7 @@ class IncomeRepository implements Repository {
   Future<void> getList({required WidgetRef ref}) async {
     final db = await MoneyRepository.database();
     final List<Map<String, dynamic>> maps = await db.query('incomes');
-    var incomeList = List.generate(maps.length, (index) => Income.fromJson(maps[index]));
+    final incomeList = List.generate(maps.length, (index) => Income.fromJson(maps[index]));
     await ref.read(incomeProvider.notifier).setIncomeList(incomeList: incomeList);
   }
 
