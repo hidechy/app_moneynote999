@@ -39,7 +39,7 @@ class _IncomeListAlertState extends ConsumerState<IncomeListAlert> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text('収入履歴登録'),
+                  const Text('収入履歴登録'),
                   Text(widget.date.yyyymmdd),
                 ],
               ),
