@@ -47,6 +47,6 @@ class IncomeRepository implements Repository {
     final db = await MoneyRepository.database();
     final exDate = income.date.split('-');
     final yearmonth = '${exDate[0]}-${exDate[1]}';
-    await db.rawQuery('delete FROM income WHERE date LIKE ?;', ['$yearmonth%']);
+    await db.rawQuery('delete FROM incomes WHERE date LIKE ?;', ['$yearmonth%']);
   }
 }

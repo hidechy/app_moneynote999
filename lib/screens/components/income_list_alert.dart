@@ -91,7 +91,7 @@ class _IncomeListAlertState extends ConsumerState<IncomeListAlert> {
                                   : const Color(0xFFfffacd).withOpacity(0.1),
                               borderRadius: BorderRadius.circular(10),
                             ),
-                            child: const Text('同月データを入れ替え'),
+                            child: const Text('同月のデータを入れ替える'),
                           ),
                         ),
                       ],
