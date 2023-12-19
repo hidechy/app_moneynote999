@@ -23,6 +23,7 @@ mixin _$AppParamsResponseState {
   bool get openEmoneyArea => throw _privateConstructorUsedError;
   bool get openSpendTimePlaceArea => throw _privateConstructorUsedError;
   String get selectedIncomeYear => throw _privateConstructorUsedError;
+  bool get sameMonthIncomeDeleteFlag => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $AppParamsResponseStateCopyWith<AppParamsResponseState> get copyWith =>
@@ -42,7 +43,8 @@ abstract class $AppParamsResponseStateCopyWith<$Res> {
       bool openBankArea,
       bool openEmoneyArea,
       bool openSpendTimePlaceArea,
-      String selectedIncomeYear});
+      String selectedIncomeYear,
+      bool sameMonthIncomeDeleteFlag});
 }
 
 /// @nodoc
@@ -66,6 +68,7 @@ class _$AppParamsResponseStateCopyWithImpl<$Res,
     Object? openEmoneyArea = null,
     Object? openSpendTimePlaceArea = null,
     Object? selectedIncomeYear = null,
+    Object? sameMonthIncomeDeleteFlag = null,
   }) {
     return _then(_value.copyWith(
       calendarSelectedDate: freezed == calendarSelectedDate
@@ -96,6 +99,10 @@ class _$AppParamsResponseStateCopyWithImpl<$Res,
           ? _value.selectedIncomeYear
           : selectedIncomeYear // ignore: cast_nullable_to_non_nullable
               as String,
+      sameMonthIncomeDeleteFlag: null == sameMonthIncomeDeleteFlag
+          ? _value.sameMonthIncomeDeleteFlag
+          : sameMonthIncomeDeleteFlag // ignore: cast_nullable_to_non_nullable
+              as bool,
     ) as $Val);
   }
 }
@@ -116,7 +123,8 @@ abstract class _$$AppParamsResponseStateImplCopyWith<$Res>
       bool openBankArea,
       bool openEmoneyArea,
       bool openSpendTimePlaceArea,
-      String selectedIncomeYear});
+      String selectedIncomeYear,
+      bool sameMonthIncomeDeleteFlag});
 }
 
 /// @nodoc
@@ -139,6 +147,7 @@ class __$$AppParamsResponseStateImplCopyWithImpl<$Res>
     Object? openEmoneyArea = null,
     Object? openSpendTimePlaceArea = null,
     Object? selectedIncomeYear = null,
+    Object? sameMonthIncomeDeleteFlag = null,
   }) {
     return _then(_$AppParamsResponseStateImpl(
       calendarSelectedDate: freezed == calendarSelectedDate
@@ -169,6 +178,10 @@ class __$$AppParamsResponseStateImplCopyWithImpl<$Res>
           ? _value.selectedIncomeYear
           : selectedIncomeYear // ignore: cast_nullable_to_non_nullable
               as String,
+      sameMonthIncomeDeleteFlag: null == sameMonthIncomeDeleteFlag
+          ? _value.sameMonthIncomeDeleteFlag
+          : sameMonthIncomeDeleteFlag // ignore: cast_nullable_to_non_nullable
+              as bool,
     ));
   }
 }
@@ -183,7 +196,8 @@ class _$AppParamsResponseStateImpl implements _AppParamsResponseState {
       this.openBankArea = true,
       this.openEmoneyArea = true,
       this.openSpendTimePlaceArea = true,
-      this.selectedIncomeYear = ''});
+      this.selectedIncomeYear = '',
+      this.sameMonthIncomeDeleteFlag = false});
 
   @override
   final DateTime? calendarSelectedDate;
@@ -205,10 +219,13 @@ class _$AppParamsResponseStateImpl implements _AppParamsResponseState {
   @override
   @JsonKey()
   final String selectedIncomeYear;
+  @override
+  @JsonKey()
+  final bool sameMonthIncomeDeleteFlag;
 
   @override
   String toString() {
-    return 'AppParamsResponseState(calendarSelectedDate: $calendarSelectedDate, menuNumber: $menuNumber, openCurrencyArea: $openCurrencyArea, openBankArea: $openBankArea, openEmoneyArea: $openEmoneyArea, openSpendTimePlaceArea: $openSpendTimePlaceArea, selectedIncomeYear: $selectedIncomeYear)';
+    return 'AppParamsResponseState(calendarSelectedDate: $calendarSelectedDate, menuNumber: $menuNumber, openCurrencyArea: $openCurrencyArea, openBankArea: $openBankArea, openEmoneyArea: $openEmoneyArea, openSpendTimePlaceArea: $openSpendTimePlaceArea, selectedIncomeYear: $selectedIncomeYear, sameMonthIncomeDeleteFlag: $sameMonthIncomeDeleteFlag)';
   }
 
   @override
@@ -229,7 +246,10 @@ class _$AppParamsResponseStateImpl implements _AppParamsResponseState {
             (identical(other.openSpendTimePlaceArea, openSpendTimePlaceArea) ||
                 other.openSpendTimePlaceArea == openSpendTimePlaceArea) &&
             (identical(other.selectedIncomeYear, selectedIncomeYear) ||
-                other.selectedIncomeYear == selectedIncomeYear));
+                other.selectedIncomeYear == selectedIncomeYear) &&
+            (identical(other.sameMonthIncomeDeleteFlag,
+                    sameMonthIncomeDeleteFlag) ||
+                other.sameMonthIncomeDeleteFlag == sameMonthIncomeDeleteFlag));
   }
 
   @override
@@ -241,7 +261,8 @@ class _$AppParamsResponseStateImpl implements _AppParamsResponseState {
       openBankArea,
       openEmoneyArea,
       openSpendTimePlaceArea,
-      selectedIncomeYear);
+      selectedIncomeYear,
+      sameMonthIncomeDeleteFlag);
 
   @JsonKey(ignore: true)
   @override
@@ -259,7 +280,8 @@ abstract class _AppParamsResponseState implements AppParamsResponseState {
       final bool openBankArea,
       final bool openEmoneyArea,
       final bool openSpendTimePlaceArea,
-      final String selectedIncomeYear}) = _$AppParamsResponseStateImpl;
+      final String selectedIncomeYear,
+      final bool sameMonthIncomeDeleteFlag}) = _$AppParamsResponseStateImpl;
 
   @override
   DateTime? get calendarSelectedDate;
@@ -275,6 +297,8 @@ abstract class _AppParamsResponseState implements AppParamsResponseState {
   bool get openSpendTimePlaceArea;
   @override
   String get selectedIncomeYear;
+  @override
+  bool get sameMonthIncomeDeleteFlag;
   @override
   @JsonKey(ignore: true)
   _$$AppParamsResponseStateImplCopyWith<_$AppParamsResponseStateImpl>

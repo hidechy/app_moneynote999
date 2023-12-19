@@ -30,4 +30,8 @@ class AppParamNotifier extends StateNotifier<AppParamsResponseState> {
 
   ///
   Future<void> setSelectedIncomeYear({required String year}) async => state = state.copyWith(selectedIncomeYear: year);
+
+  ///
+  Future<void> setSameMonthIncomeDeleteFlag({required bool flag}) async =>
+      state = state.copyWith(sameMonthIncomeDeleteFlag: flag);
 }

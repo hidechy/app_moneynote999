@@ -116,7 +116,7 @@ class HomeScreen extends ConsumerWidget {
           ),
         ],
       ),
-      endDrawer: dispDrawer(),
+      endDrawer: _dispDrawer(),
     );
   }
 
@@ -133,21 +133,23 @@ class HomeScreen extends ConsumerWidget {
           sum += value;
         });
 
-        list.add(
-          Container(
-            padding: const EdgeInsets.all(10),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Container(),
-                Text(
-                  sum.toString().toCurrency(),
-                  style: const TextStyle(color: Colors.yellowAccent),
-                ),
-              ],
+        if (sum > 0) {
+          list.add(
+            Container(
+              padding: const EdgeInsets.all(10),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Container(),
+                  Text(
+                    sum.toString().toCurrency(),
+                    style: const TextStyle(color: Colors.yellowAccent),
+                  ),
+                ],
+              ),
             ),
-          ),
-        );
+          );
+        }
 
         value.forEach((key, value) {
           final percent = value / sum * 100;
@@ -182,7 +184,7 @@ class HomeScreen extends ConsumerWidget {
   }
 
   ///
-  Widget dispDrawer() {
+  Widget _dispDrawer() {
     return Drawer(
       backgroundColor: Colors.blueGrey.withOpacity(0.2),
       child: SingleChildScrollView(

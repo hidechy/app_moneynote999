@@ -12,5 +12,6 @@ class AppParamsResponseState with _$AppParamsResponseState {
     @Default(true) bool openEmoneyArea,
     @Default(true) bool openSpendTimePlaceArea,
     @Default('') String selectedIncomeYear,
+    @Default(false) bool sameMonthIncomeDeleteFlag,
   }) = _AppParamsResponseState;
 }

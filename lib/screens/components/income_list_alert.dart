@@ -36,6 +36,8 @@ class _IncomeListAlertState extends ConsumerState<IncomeListAlert> {
 
     _makeYearList();
 
+    final sameMonthIncomeDeleteFlag = ref.watch(appParamProvider.select((value) => value.sameMonthIncomeDeleteFlag));
+
     return AlertDialog(
       titlePadding: EdgeInsets.zero,
       contentPadding: EdgeInsets.zero,
@@ -73,6 +75,27 @@ class _IncomeListAlertState extends ConsumerState<IncomeListAlert> {
                 ),
                 child: Column(
                   children: [
+                    Row(
+                      children: [
+                        GestureDetector(
+                          onTap: () {
+                            ref
+                                .read(appParamProvider.notifier)
+                                .setSameMonthIncomeDeleteFlag(flag: !sameMonthIncomeDeleteFlag);
+                          },
+                          child: Container(
+                            padding: const EdgeInsets.all(5),
+                            decoration: BoxDecoration(
+                              color: sameMonthIncomeDeleteFlag
+                                  ? Colors.yellowAccent.withOpacity(0.2)
+                                  : const Color(0xFFfffacd).withOpacity(0.1),
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                            child: const Text('同月データを入れ替え'),
+                          ),
+                        ),
+                      ],
+                    ),
                     TextField(
                       keyboardType: TextInputType.number,
                       controller: _incomePriceEditingController,
@@ -174,19 +197,21 @@ class _IncomeListAlertState extends ConsumerState<IncomeListAlert> {
           sum += element.price;
         });
 
-        list.add(Container(
-          padding: const EdgeInsets.all(10),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Container(),
-              Text(
-                sum.toString().toCurrency(),
-                style: const TextStyle(color: Colors.yellowAccent),
-              ),
-            ],
-          ),
-        ));
+        if (sum > 0) {
+          list.add(Container(
+            padding: const EdgeInsets.all(10),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Container(),
+                Text(
+                  sum.toString().toCurrency(),
+                  style: const TextStyle(color: Colors.yellowAccent),
+                ),
+              ],
+            ),
+          ));
+        }
 
         value.forEach((element) {
           list.add(Container(
@@ -236,6 +261,12 @@ class _IncomeListAlertState extends ConsumerState<IncomeListAlert> {
       sourceName: _incomeSourceEditingController.text,
       price: _incomePriceEditingController.text.toInt(),
     );
+
+    final sameMonthIncomeDeleteFlag = ref.watch(appParamProvider.select((value) => value.sameMonthIncomeDeleteFlag));
+
+    if (sameMonthIncomeDeleteFlag) {
+      await IncomeRepository().deleteByYearMonth(income: income, ref: ref);
+    }
 
     await IncomeRepository().insert(param: income).then((value) async {
       _incomeSourceEditingController.clear();

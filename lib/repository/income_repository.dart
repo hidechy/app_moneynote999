@@ -27,18 +27,26 @@ class IncomeRepository implements Repository {
   ///
   @override
   Future<void> update({required dynamic param, required WidgetRef ref}) async {
-    final db = await MoneyRepository.database();
-    final income = param as Income;
-    await db.update('incomes', income.toMap(), where: 'id = ?', whereArgs: [income.id]);
-    await ref.read(incomeProvider.notifier).updateIncomeList(income: income);
+    // final db = await MoneyRepository.database();
+    // final income = param as Income;
+    // await db.update('incomes', income.toMap(), where: 'id = ?', whereArgs: [income.id]);
+    // await ref.read(incomeProvider.notifier).updateIncomeList(income: income);
   }
 
   ///
   @override
   Future<void> delete({required dynamic param, required WidgetRef ref}) async {
+    // final db = await MoneyRepository.database();
+    // final income = param as Income;
+    // await db.delete('incomes', where: 'id = ?', whereArgs: [income.id]);
+    // await ref.read(incomeProvider.notifier).deleteIncomeList(income: income);
+  }
+
+  ///
+  Future<void> deleteByYearMonth({required Income income, required WidgetRef ref}) async {
     final db = await MoneyRepository.database();
-    final income = param as Income;
-    await db.delete('incomes', where: 'id = ?', whereArgs: [income.id]);
-    await ref.read(incomeProvider.notifier).deleteIncomeList(income: income);
+    final exDate = income.date.split('-');
+    final yearmonth = '${exDate[0]}-${exDate[1]}';
+    await db.rawQuery('delete FROM income WHERE date LIKE ?;', ['$yearmonth%']);
   }
 }
