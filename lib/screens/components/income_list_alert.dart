@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:money_note/state/app_params/app_params_notifier.dart';
-import 'package:money_note/state/incomes/incomes_notifier.dart';
 
 import '../../extensions/extensions.dart';
 import '../../models/income.dart';
 import '../../repository/income_repository.dart';
+import '../../state/app_params/app_params_notifier.dart';
+import '../../state/incomes/incomes_notifier.dart';
 import 'parts/error_dialog.dart';
 
 class IncomeListAlert extends ConsumerStatefulWidget {
@@ -26,7 +26,13 @@ class _IncomeListAlertState extends ConsumerState<IncomeListAlert> {
 
   ///
   Future<void> init({required WidgetRef ref}) async {
-    await IncomeRepository().getList(ref: ref);
+    await IncomeRepository().getIncomeMinYear(ref: ref);
+
+    final selectedIncomeYear = ref.watch(appParamProvider.select((value) => value.selectedIncomeYear));
+
+    if (selectedIncomeYear == '') {
+      await IncomeRepository().getList(ref: ref);
+    }
   }
 
   ///
@@ -61,10 +67,7 @@ class _IncomeListAlertState extends ConsumerState<IncomeListAlert> {
                   Text(widget.date.yyyymmdd),
                 ],
               ),
-              Divider(
-                color: Colors.white.withOpacity(0.4),
-                thickness: 5,
-              ),
+              Divider(color: Colors.white.withOpacity(0.4), thickness: 5),
               Container(
                 padding: const EdgeInsets.all(10),
                 margin: const EdgeInsets.symmetric(vertical: 5, horizontal: 3),
@@ -117,16 +120,10 @@ class _IncomeListAlertState extends ConsumerState<IncomeListAlert> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Container(),
-                  TextButton(
-                    onPressed: _insertIncome,
-                    child: const Text('入力する'),
-                  ),
+                  TextButton(onPressed: _insertIncome, child: const Text('入力する')),
                 ],
               ),
-              SizedBox(
-                height: 40,
-                child: _displayYearButton(),
-              ),
+              SizedBox(height: 40, child: _displayYearButton()),
               Expanded(child: _displayIncomeList()),
             ],
           ),
@@ -137,22 +134,11 @@ class _IncomeListAlertState extends ConsumerState<IncomeListAlert> {
 
   ///
   void _makeYearList() {
+    final incomeMinYear = ref.watch(incomeProvider.select((value) => value.incomeMinYear));
     yearList = [];
-
-    final incomeList = ref.watch(incomeProvider.select((value) => value.incomeList));
-
-    final map = <String, String>{};
-
-    incomeList.value?.forEach((element) {
-      final exDate = element.date.split('-');
-
-      map[exDate[0]] = '';
-    });
-
-    map.forEach((key, value) {
-      yearList.add(key);
-    });
-
+    for (var i = incomeMinYear; i <= DateTime.now().year; i++) {
+      yearList.add(i.toString());
+    }
     yearList.sort((a, b) => -1 * a.compareTo(b));
   }
 
@@ -163,23 +149,43 @@ class _IncomeListAlertState extends ConsumerState<IncomeListAlert> {
     return SingleChildScrollView(
       scrollDirection: Axis.horizontal,
       child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: yearList.map((e) {
-          return GestureDetector(
-            onTap: () {
-              ref.read(appParamProvider.notifier).setSelectedIncomeYear(year: e);
+        children: [
+          GestureDetector(
+            onTap: () async {
+              await ref.read(appParamProvider.notifier).setSelectedIncomeYear(year: '');
+              await IncomeRepository().selectByYear(year: '', ref: ref);
             },
             child: Container(
               margin: const EdgeInsets.all(5),
               padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 10),
               decoration: BoxDecoration(
-                color: (selectedIncomeYear == e) ? Colors.yellowAccent.withOpacity(0.2) : Colors.black,
+                color: (selectedIncomeYear == '') ? Colors.yellowAccent.withOpacity(0.2) : Colors.black,
                 borderRadius: BorderRadius.circular(20),
               ),
-              child: Text(e),
+              child: const Icon(Icons.close, size: 14),
             ),
-          );
-        }).toList(),
+          ),
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: yearList.map((e) {
+              return GestureDetector(
+                onTap: () async {
+                  await ref.read(appParamProvider.notifier).setSelectedIncomeYear(year: e);
+                  await IncomeRepository().selectByYear(year: e, ref: ref);
+                },
+                child: Container(
+                  margin: const EdgeInsets.all(5),
+                  padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 10),
+                  decoration: BoxDecoration(
+                    color: (selectedIncomeYear == e) ? Colors.yellowAccent.withOpacity(0.2) : Colors.black,
+                    borderRadius: BorderRadius.circular(20),
+                  ),
+                  child: Text(e),
+                ),
+              );
+            }).toList(),
+          ),
+        ],
       ),
     );
   }
@@ -193,9 +199,7 @@ class _IncomeListAlertState extends ConsumerState<IncomeListAlert> {
         final list = <Widget>[];
 
         var sum = 0;
-        value.forEach((element) {
-          sum += element.price;
-        });
+        value.forEach((element) => sum += element.price);
 
         if (sum > 0) {
           list.add(Container(
@@ -204,10 +208,7 @@ class _IncomeListAlertState extends ConsumerState<IncomeListAlert> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Container(),
-                Text(
-                  sum.toString().toCurrency(),
-                  style: const TextStyle(color: Colors.yellowAccent),
-                ),
+                Text(sum.toString().toCurrency(), style: const TextStyle(color: Colors.yellowAccent)),
               ],
             ),
           ));

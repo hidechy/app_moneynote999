@@ -9,5 +9,6 @@ part 'incomes_response_state.freezed.dart';
 class IncomesResponseState with _$IncomesResponseState {
   const factory IncomesResponseState({
     @Default(AsyncValue<List<Income>>.loading()) AsyncValue<List<Income>> incomeList,
+    @Default(0) int incomeMinYear,
   }) = _IncomesResponseState;
 }

@@ -17,6 +17,7 @@ final _privateConstructorUsedError = UnsupportedError(
 /// @nodoc
 mixin _$IncomesResponseState {
   AsyncValue<List<Income>> get incomeList => throw _privateConstructorUsedError;
+  int get incomeMinYear => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $IncomesResponseStateCopyWith<IncomesResponseState> get copyWith =>
@@ -29,7 +30,7 @@ abstract class $IncomesResponseStateCopyWith<$Res> {
           $Res Function(IncomesResponseState) then) =
       _$IncomesResponseStateCopyWithImpl<$Res, IncomesResponseState>;
   @useResult
-  $Res call({AsyncValue<List<Income>> incomeList});
+  $Res call({AsyncValue<List<Income>> incomeList, int incomeMinYear});
 }
 
 /// @nodoc
@@ -47,12 +48,17 @@ class _$IncomesResponseStateCopyWithImpl<$Res,
   @override
   $Res call({
     Object? incomeList = null,
+    Object? incomeMinYear = null,
   }) {
     return _then(_value.copyWith(
       incomeList: null == incomeList
           ? _value.incomeList
           : incomeList // ignore: cast_nullable_to_non_nullable
               as AsyncValue<List<Income>>,
+      incomeMinYear: null == incomeMinYear
+          ? _value.incomeMinYear
+          : incomeMinYear // ignore: cast_nullable_to_non_nullable
+              as int,
     ) as $Val);
   }
 }
@@ -65,7 +71,7 @@ abstract class _$$IncomesResponseStateImplCopyWith<$Res>
       __$$IncomesResponseStateImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({AsyncValue<List<Income>> incomeList});
+  $Res call({AsyncValue<List<Income>> incomeList, int incomeMinYear});
 }
 
 /// @nodoc
@@ -80,12 +86,17 @@ class __$$IncomesResponseStateImplCopyWithImpl<$Res>
   @override
   $Res call({
     Object? incomeList = null,
+    Object? incomeMinYear = null,
   }) {
     return _then(_$IncomesResponseStateImpl(
       incomeList: null == incomeList
           ? _value.incomeList
           : incomeList // ignore: cast_nullable_to_non_nullable
               as AsyncValue<List<Income>>,
+      incomeMinYear: null == incomeMinYear
+          ? _value.incomeMinYear
+          : incomeMinYear // ignore: cast_nullable_to_non_nullable
+              as int,
     ));
   }
 }
@@ -94,15 +105,19 @@ class __$$IncomesResponseStateImplCopyWithImpl<$Res>
 
 class _$IncomesResponseStateImpl implements _IncomesResponseState {
   const _$IncomesResponseStateImpl(
-      {this.incomeList = const AsyncValue<List<Income>>.loading()});
+      {this.incomeList = const AsyncValue<List<Income>>.loading(),
+      this.incomeMinYear = 0});
 
   @override
   @JsonKey()
   final AsyncValue<List<Income>> incomeList;
+  @override
+  @JsonKey()
+  final int incomeMinYear;
 
   @override
   String toString() {
-    return 'IncomesResponseState(incomeList: $incomeList)';
+    return 'IncomesResponseState(incomeList: $incomeList, incomeMinYear: $incomeMinYear)';
   }
 
   @override
@@ -111,11 +126,13 @@ class _$IncomesResponseStateImpl implements _IncomesResponseState {
         (other.runtimeType == runtimeType &&
             other is _$IncomesResponseStateImpl &&
             (identical(other.incomeList, incomeList) ||
-                other.incomeList == incomeList));
+                other.incomeList == incomeList) &&
+            (identical(other.incomeMinYear, incomeMinYear) ||
+                other.incomeMinYear == incomeMinYear));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, incomeList);
+  int get hashCode => Object.hash(runtimeType, incomeList, incomeMinYear);
 
   @JsonKey(ignore: true)
   @override
@@ -128,10 +145,13 @@ class _$IncomesResponseStateImpl implements _IncomesResponseState {
 
 abstract class _IncomesResponseState implements IncomesResponseState {
   const factory _IncomesResponseState(
-      {final AsyncValue<List<Income>> incomeList}) = _$IncomesResponseStateImpl;
+      {final AsyncValue<List<Income>> incomeList,
+      final int incomeMinYear}) = _$IncomesResponseStateImpl;
 
   @override
   AsyncValue<List<Income>> get incomeList;
+  @override
+  int get incomeMinYear;
   @override
   @JsonKey(ignore: true)
   _$$IncomesResponseStateImplCopyWith<_$IncomesResponseStateImpl>

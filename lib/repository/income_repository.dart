@@ -1,6 +1,9 @@
+import 'dart:math';
+
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:sqflite/sqflite.dart';
 
+import '../extensions/extensions.dart';
 import '../models/income.dart';
 import '../state/incomes/incomes_notifier.dart';
 import '_repository.dart';
@@ -48,5 +51,23 @@ class IncomeRepository implements Repository {
     final exDate = income.date.split('-');
     final yearmonth = '${exDate[0]}-${exDate[1]}';
     await db.rawQuery('delete FROM incomes WHERE date LIKE ?;', ['$yearmonth%']);
+  }
+
+  ///
+  Future<void> selectByYear({required String year, required WidgetRef ref}) async {
+    final db = await MoneyRepository.database();
+    final List<Map<String, dynamic>> maps = await db.rawQuery('SELECT * FROM incomes WHERE date LIKE ?;', ['$year%']);
+    final incomeList = List.generate(maps.length, (index) => Income.fromJson(maps[index]));
+    await ref.read(incomeProvider.notifier).setIncomeList(incomeList: incomeList);
+  }
+
+  Future<void> getIncomeMinYear({required WidgetRef ref}) async {
+    final db = await MoneyRepository.database();
+    final List<Map<String, dynamic>> maps = await db.query('incomes');
+    final incomeList = List.generate(maps.length, (index) => Income.fromJson(maps[index]));
+    final yearList = <int>[];
+    incomeList.forEach((element) => yearList.add(element.date.split('-')[0].toInt()));
+    final minValue = yearList.reduce(min);
+    await ref.read(incomeProvider.notifier).setIncomeMinYear(year: minValue);
   }
 }

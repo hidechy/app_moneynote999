@@ -32,4 +32,7 @@ class IncomeNotifier extends StateNotifier<IncomesResponseState> {
   ///
   Future<void> setIncomeList({required List<Income> incomeList}) async =>
       state = state.copyWith(incomeList: AsyncValue.data(incomeList));
+
+  ///
+  Future<void> setIncomeMinYear({required int year}) async => state = state.copyWith(incomeMinYear: year);
 }
