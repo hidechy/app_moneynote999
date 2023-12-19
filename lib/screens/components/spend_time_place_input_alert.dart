@@ -56,6 +56,11 @@ class _SpendTimePlaceInputAlertState extends ConsumerState<SpendTimePlaceInputAl
   }
 
   ///
+  Future<void> init({required WidgetRef ref}) async {
+    await SpendTimePlaceRepository().getList(ref: ref);
+  }
+
+  ///
   @override
   Widget build(BuildContext context) {
     _context = context;
@@ -65,6 +70,8 @@ class _SpendTimePlaceInputAlertState extends ConsumerState<SpendTimePlaceInputAl
     final spendTimePlaceState = ref.watch(spendTimePlaceProvider);
 
     Future(() => ref.read(spendTimePlaceProvider.notifier).setBaseDiff(baseDiff: widget.spend.toString()));
+
+    Future(() => init(ref: ref));
 
     return AlertDialog(
       titlePadding: EdgeInsets.zero,
@@ -375,7 +382,17 @@ class _SpendTimePlaceInputAlertState extends ConsumerState<SpendTimePlaceInputAl
       errFlg = true;
     }
 
-    final diff = spendTimePlaceState.diff;
+    var diff = spendTimePlaceState.diff;
+
+    //============================//初回
+    final spendTimePlaceList = ref.watch(spendTimePlaceProvider.select((value) => value.spendTimePlaceList));
+
+    if (spendTimePlaceList.value != null) {
+      if (spendTimePlaceList.value!.isEmpty) {
+        diff = 0;
+      }
+    }
+    //============================//初回
 
     if (diff != 0 || errFlg) {
       Future.delayed(

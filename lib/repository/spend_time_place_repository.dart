@@ -39,7 +39,12 @@ class SpendTimePlaceRepository implements Repository {
 
   ///
   @override
-  Future<void> getList({required WidgetRef ref}) async {}
+  Future<void> getList({required WidgetRef ref}) async {
+    final db = await MoneyRepository.database();
+    final List<Map<String, dynamic>> maps = await db.query('spend_time_places');
+    final spendTimePlaceList = List.generate(maps.length, (index) => SpendTimePlace.fromJson(maps[index]));
+    await ref.read(spendTimePlaceProvider.notifier).setSpendTimePlaceList(spendTimePlaceList: spendTimePlaceList);
+  }
 
   ///
   @override
