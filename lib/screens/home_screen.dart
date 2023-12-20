@@ -1,16 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:money_note/repository/money_repository.dart';
-import 'package:money_note/state/bank_prices/bank_prices_notifier.dart';
-import 'package:money_note/state/moneies/moneies_notifier.dart';
 
+import '../enums/get_monthly_stp_from.dart';
+import '../enums/get_monthly_stp_usage.dart';
 import '../extensions/extensions.dart';
 import '../repository/bank_price_repository.dart';
+import '../repository/money_repository.dart';
 import '../repository/spend_time_place_repository.dart';
 import '../state/app_params/app_params_notifier.dart';
+import '../state/bank_prices/bank_prices_notifier.dart';
 import '../state/calendars/calendars_notifier.dart';
 import '../state/holidays/holidays_notifier.dart';
+import '../state/moneies/moneies_notifier.dart';
 import '../state/spend_time_places/spend_time_places_notifier.dart';
 import '../utilities/utilities.dart';
 import 'components/___dummy_data_input_alert.dart';
@@ -41,7 +43,12 @@ class HomeScreen extends ConsumerWidget {
 
   ///
   Future<void> init({required WidgetRef ref}) async {
-    await SpendTimePlaceRepository().getMonthRecord(yearmonth: baseYm ?? DateTime.now().yyyymm, ref: ref);
+    await SpendTimePlaceRepository().getMonthRecord(
+      yearmonth: baseYm ?? DateTime.now().yyyymm,
+      ref: ref,
+      from: GetMonthlyStpFrom.homeScreen,
+      usage: GetMonthlyStpUsage.sum,
+    );
 
     await BankPriceRepository().getList(ref: ref);
 
@@ -127,9 +134,9 @@ class HomeScreen extends ConsumerWidget {
 
   ///
   Widget _displaySpendList() {
-    final monthlySpendItemMap = _ref.watch(spendTimePlaceProvider.select((value) => value.monthlySpendItemMap));
+    final monthlySpendItemSumMap = _ref.watch(spendTimePlaceProvider.select((value) => value.monthlySpendItemSumMap));
 
-    return monthlySpendItemMap.when(
+    return monthlySpendItemSumMap.when(
       data: (value) {
         final list = <Widget>[];
 

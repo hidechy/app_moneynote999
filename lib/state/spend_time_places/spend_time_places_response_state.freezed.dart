@@ -27,7 +27,7 @@ mixin _$SpendTimePlacesResponseState {
   AsyncValue<List<SpendTimePlace>> get spendTimePlaceList =>
       throw _privateConstructorUsedError; //
   bool get blinkingFlag => throw _privateConstructorUsedError; //
-  AsyncValue<Map<String, int>> get monthlySpendItemMap =>
+  AsyncValue<Map<String, int>> get monthlySpendItemSumMap =>
       throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
@@ -54,7 +54,7 @@ abstract class $SpendTimePlacesResponseStateCopyWith<$Res> {
       List<bool> minusCheck,
       AsyncValue<List<SpendTimePlace>> spendTimePlaceList,
       bool blinkingFlag,
-      AsyncValue<Map<String, int>> monthlySpendItemMap});
+      AsyncValue<Map<String, int>> monthlySpendItemSumMap});
 }
 
 /// @nodoc
@@ -81,7 +81,7 @@ class _$SpendTimePlacesResponseStateCopyWithImpl<$Res,
     Object? minusCheck = null,
     Object? spendTimePlaceList = null,
     Object? blinkingFlag = null,
-    Object? monthlySpendItemMap = null,
+    Object? monthlySpendItemSumMap = null,
   }) {
     return _then(_value.copyWith(
       itemPos: null == itemPos
@@ -124,9 +124,9 @@ class _$SpendTimePlacesResponseStateCopyWithImpl<$Res,
           ? _value.blinkingFlag
           : blinkingFlag // ignore: cast_nullable_to_non_nullable
               as bool,
-      monthlySpendItemMap: null == monthlySpendItemMap
-          ? _value.monthlySpendItemMap
-          : monthlySpendItemMap // ignore: cast_nullable_to_non_nullable
+      monthlySpendItemSumMap: null == monthlySpendItemSumMap
+          ? _value.monthlySpendItemSumMap
+          : monthlySpendItemSumMap // ignore: cast_nullable_to_non_nullable
               as AsyncValue<Map<String, int>>,
     ) as $Val);
   }
@@ -152,7 +152,7 @@ abstract class _$$SpendTimePlacesResponseStateImplCopyWith<$Res>
       List<bool> minusCheck,
       AsyncValue<List<SpendTimePlace>> spendTimePlaceList,
       bool blinkingFlag,
-      AsyncValue<Map<String, int>> monthlySpendItemMap});
+      AsyncValue<Map<String, int>> monthlySpendItemSumMap});
 }
 
 /// @nodoc
@@ -178,7 +178,7 @@ class __$$SpendTimePlacesResponseStateImplCopyWithImpl<$Res>
     Object? minusCheck = null,
     Object? spendTimePlaceList = null,
     Object? blinkingFlag = null,
-    Object? monthlySpendItemMap = null,
+    Object? monthlySpendItemSumMap = null,
   }) {
     return _then(_$SpendTimePlacesResponseStateImpl(
       itemPos: null == itemPos
@@ -221,9 +221,9 @@ class __$$SpendTimePlacesResponseStateImplCopyWithImpl<$Res>
           ? _value.blinkingFlag
           : blinkingFlag // ignore: cast_nullable_to_non_nullable
               as bool,
-      monthlySpendItemMap: null == monthlySpendItemMap
-          ? _value.monthlySpendItemMap
-          : monthlySpendItemMap // ignore: cast_nullable_to_non_nullable
+      monthlySpendItemSumMap: null == monthlySpendItemSumMap
+          ? _value.monthlySpendItemSumMap
+          : monthlySpendItemSumMap // ignore: cast_nullable_to_non_nullable
               as AsyncValue<Map<String, int>>,
     ));
   }
@@ -245,7 +245,8 @@ class _$SpendTimePlacesResponseStateImpl
       this.spendTimePlaceList =
           const AsyncValue<List<SpendTimePlace>>.loading(),
       this.blinkingFlag = false,
-      this.monthlySpendItemMap = const AsyncValue<Map<String, int>>.loading()})
+      this.monthlySpendItemSumMap =
+          const AsyncValue<Map<String, int>>.loading()})
       : _spendItem = spendItem,
         _spendTime = spendTime,
         _spendPlace = spendPlace,
@@ -320,11 +321,11 @@ class _$SpendTimePlacesResponseStateImpl
 //
   @override
   @JsonKey()
-  final AsyncValue<Map<String, int>> monthlySpendItemMap;
+  final AsyncValue<Map<String, int>> monthlySpendItemSumMap;
 
   @override
   String toString() {
-    return 'SpendTimePlacesResponseState(itemPos: $itemPos, diff: $diff, baseDiff: $baseDiff, spendItem: $spendItem, spendTime: $spendTime, spendPlace: $spendPlace, spendPrice: $spendPrice, minusCheck: $minusCheck, spendTimePlaceList: $spendTimePlaceList, blinkingFlag: $blinkingFlag, monthlySpendItemMap: $monthlySpendItemMap)';
+    return 'SpendTimePlacesResponseState(itemPos: $itemPos, diff: $diff, baseDiff: $baseDiff, spendItem: $spendItem, spendTime: $spendTime, spendPlace: $spendPlace, spendPrice: $spendPrice, minusCheck: $minusCheck, spendTimePlaceList: $spendTimePlaceList, blinkingFlag: $blinkingFlag, monthlySpendItemSumMap: $monthlySpendItemSumMap)';
   }
 
   @override
@@ -350,8 +351,8 @@ class _$SpendTimePlacesResponseStateImpl
                 other.spendTimePlaceList == spendTimePlaceList) &&
             (identical(other.blinkingFlag, blinkingFlag) ||
                 other.blinkingFlag == blinkingFlag) &&
-            (identical(other.monthlySpendItemMap, monthlySpendItemMap) ||
-                other.monthlySpendItemMap == monthlySpendItemMap));
+            (identical(other.monthlySpendItemSumMap, monthlySpendItemSumMap) ||
+                other.monthlySpendItemSumMap == monthlySpendItemSumMap));
   }
 
   @override
@@ -367,7 +368,7 @@ class _$SpendTimePlacesResponseStateImpl
       const DeepCollectionEquality().hash(_minusCheck),
       spendTimePlaceList,
       blinkingFlag,
-      monthlySpendItemMap);
+      monthlySpendItemSumMap);
 
   @JsonKey(ignore: true)
   @override
@@ -391,7 +392,7 @@ abstract class _SpendTimePlacesResponseState
           final List<bool> minusCheck,
           final AsyncValue<List<SpendTimePlace>> spendTimePlaceList,
           final bool blinkingFlag,
-          final AsyncValue<Map<String, int>> monthlySpendItemMap}) =
+          final AsyncValue<Map<String, int>> monthlySpendItemSumMap}) =
       _$SpendTimePlacesResponseStateImpl;
 
   @override
@@ -415,7 +416,7 @@ abstract class _SpendTimePlacesResponseState
   @override //
   bool get blinkingFlag;
   @override //
-  AsyncValue<Map<String, int>> get monthlySpendItemMap;
+  AsyncValue<Map<String, int>> get monthlySpendItemSumMap;
   @override
   @JsonKey(ignore: true)
   _$$SpendTimePlacesResponseStateImplCopyWith<

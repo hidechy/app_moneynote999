@@ -4,7 +4,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import '../../enums/get_single_money_from.dart';
-import '../../enums/get_single_money_when.dart';
+import '../../enums/get_single_money_usage.dart';
 import '../../extensions/extensions.dart';
 import '../../models/bank_name.dart';
 import '../../models/bank_price.dart';
@@ -53,7 +53,7 @@ class DailyMoneyDisplayAlert extends ConsumerWidget {
       date: date.yyyymmdd,
       ref: ref,
       from: GetSingleMoneyFrom.dailyMoneyDisplayAlert,
-      when: GetSingleMoneyWhen.today,
+      when: GetSingleMoneyUsage.todayRecord,
     );
 
     //-----
@@ -63,7 +63,7 @@ class DailyMoneyDisplayAlert extends ConsumerWidget {
         date: beforeDate.yyyymmdd,
         ref: ref,
         from: GetSingleMoneyFrom.dailyMoneyDisplayAlert,
-        when: GetSingleMoneyWhen.yesterday,
+        when: GetSingleMoneyUsage.yesterdayRecord,
       ),
     );
     //-----
@@ -102,14 +102,6 @@ class DailyMoneyDisplayAlert extends ConsumerWidget {
     //================
 
     _getMoneyMinDate();
-
-/*
-
-
-    var bankPriceTotalPadMap=
-ref.watch(bankPriceProvider.select((value) => value.bankPriceTotalPadMap));
-
-    */
 
     return AlertDialog(
       titlePadding: EdgeInsets.zero,

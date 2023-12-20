@@ -3,7 +3,7 @@ import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 
 import '../enums/get_single_money_from.dart';
-import '../enums/get_single_money_when.dart';
+import '../enums/get_single_money_usage.dart';
 import '../models/money.dart';
 import '../state/moneies/moneies_notifier.dart';
 import '_repository.dart';
@@ -126,7 +126,7 @@ class MoneyRepository implements Repository {
       {required String date,
       required WidgetRef ref,
       required GetSingleMoneyFrom from,
-      required GetSingleMoneyWhen when}) async {
+      required GetSingleMoneyUsage when}) async {
     final db = await database();
 
     final List<Map<String, dynamic>> maps = await db.query('moneies', where: 'date = ?', whereArgs: [date]);
@@ -137,10 +137,10 @@ class MoneyRepository implements Repository {
       switch (from) {
         case GetSingleMoneyFrom.dailyMoneyDisplayAlert:
           switch (when) {
-            case GetSingleMoneyWhen.today:
+            case GetSingleMoneyUsage.todayRecord:
               await ref.read(moneyProvider.notifier).setMoney(money: money);
               break;
-            case GetSingleMoneyWhen.yesterday:
+            case GetSingleMoneyUsage.yesterdayRecord:
               await ref.read(moneyProvider.notifier).setBeforeDateMoneyForSum(money: money);
               break;
           }
@@ -148,9 +148,9 @@ class MoneyRepository implements Repository {
 
         case GetSingleMoneyFrom.moneyInputAlert:
           switch (when) {
-            case GetSingleMoneyWhen.today:
+            case GetSingleMoneyUsage.todayRecord:
               break;
-            case GetSingleMoneyWhen.yesterday:
+            case GetSingleMoneyUsage.yesterdayRecord:
               await ref.read(moneyProvider.notifier).setBeforeDateMoney(money: money);
               break;
           }

@@ -23,6 +23,6 @@ class SpendTimePlacesResponseState with _$SpendTimePlacesResponseState {
     //
     @Default(false) bool blinkingFlag,
     //
-    @Default(AsyncValue<Map<String, int>>.loading()) AsyncValue<Map<String, int>> monthlySpendItemMap,
+    @Default(AsyncValue<Map<String, int>>.loading()) AsyncValue<Map<String, int>> monthlySpendItemSumMap,
   }) = _SpendTimePlacesResponseState;
 }

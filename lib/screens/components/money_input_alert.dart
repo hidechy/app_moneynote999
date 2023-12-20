@@ -3,7 +3,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import '../../enums/get_single_money_from.dart';
-import '../../enums/get_single_money_when.dart';
+import '../../enums/get_single_money_usage.dart';
 import '../../extensions/extensions.dart';
 import '../../models/money.dart';
 import '../../repository/money_repository.dart';
@@ -60,7 +60,7 @@ class _MoneyInputAlertState extends ConsumerState<MoneyInputAlert> {
         date: beforeDate.yyyymmdd,
         ref: ref,
         from: GetSingleMoneyFrom.moneyInputAlert,
-        when: GetSingleMoneyWhen.yesterday,
+        when: GetSingleMoneyUsage.yesterdayRecord,
       ),
     );
     //-----

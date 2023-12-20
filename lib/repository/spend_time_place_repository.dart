@@ -1,6 +1,8 @@
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:sqflite/sqflite.dart';
 
+import '../enums/get_monthly_stp_from.dart';
+import '../enums/get_monthly_stp_usage.dart';
 import '../models/spend_time_place.dart';
 import '../state/spend_time_places/spend_time_places_notifier.dart';
 import '_repository.dart';
@@ -25,16 +27,43 @@ class SpendTimePlaceRepository implements Repository {
   }
 
   ///
-  Future<void> getMonthRecord({required String yearmonth, required WidgetRef ref}) async {
+  Future<void> getMonthRecord({
+    required String yearmonth,
+    required WidgetRef ref,
+    required GetMonthlyStpFrom from,
+    required GetMonthlyStpUsage usage,
+  }) async {
     final db = await MoneyRepository.database();
     final List<Map<String, dynamic>> maps = await db.rawQuery(
-      'SELECT * FROM spend_time_places WHERE date LIKE ?;',
+      'SELECT * FROM spend_time_places WHERE date LIKE ? order by date, time;',
       ['$yearmonth%'],
     );
     final spendTimePlaceList = List.generate(maps.length, (index) => SpendTimePlace.fromJson(maps[index]));
-    await ref
-        .read(spendTimePlaceProvider.notifier)
-        .setMonthlySpendTimePlaceList(spendTimePlaceList: spendTimePlaceList);
+
+    switch (from) {
+      case GetMonthlyStpFrom.homeScreen:
+        switch (usage) {
+          case GetMonthlyStpUsage.sum:
+            await ref
+                .read(spendTimePlaceProvider.notifier)
+                .setMonthlySpendItemSumMap(spendTimePlaceList: spendTimePlaceList);
+            break;
+          case GetMonthlyStpUsage.stpItemList:
+            break;
+        }
+        break;
+      case GetMonthlyStpFrom.spendTimePlaceListAlert:
+        switch (usage) {
+          case GetMonthlyStpUsage.sum:
+            break;
+          case GetMonthlyStpUsage.stpItemList:
+            await ref
+                .read(spendTimePlaceProvider.notifier)
+                .setSpendTimePlaceList(spendTimePlaceList: spendTimePlaceList);
+            break;
+        }
+        break;
+    }
   }
 
   ///

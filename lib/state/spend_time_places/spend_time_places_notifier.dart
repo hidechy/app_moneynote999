@@ -128,8 +128,8 @@ class SpendTimePlaceNotifier extends StateNotifier<SpendTimePlacesResponseState>
       state = state.copyWith(spendTimePlaceList: AsyncValue.data(spendTimePlaceList));
 
   ///
-  Future<void> setMonthlySpendTimePlaceList({required List<SpendTimePlace> spendTimePlaceList}) async {
-    final monthlySpendItemMap = <String, int>{};
+  Future<void> setMonthlySpendItemSumMap({required List<SpendTimePlace> spendTimePlaceList}) async {
+    final monthlySpendItemSumMap = <String, int>{};
 
     final list = <String>[];
     SpendType.values.forEach((element) => list.add(element.japanName!));
@@ -148,10 +148,10 @@ class SpendTimePlaceNotifier extends StateNotifier<SpendTimePlacesResponseState>
     map.forEach((key, value) {
       var sum = 0;
       value.forEach((element) => sum += element);
-      monthlySpendItemMap[key] = sum;
+      monthlySpendItemSumMap[key] = sum;
     });
 
-    state = state.copyWith(monthlySpendItemMap: AsyncValue.data(monthlySpendItemMap));
+    state = state.copyWith(monthlySpendItemSumMap: AsyncValue.data(monthlySpendItemSumMap));
   }
 
   ///
