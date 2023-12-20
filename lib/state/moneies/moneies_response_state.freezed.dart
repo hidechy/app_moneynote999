@@ -18,7 +18,11 @@ final _privateConstructorUsedError = UnsupportedError(
 mixin _$MoneiesResponseState {
   Money? get singleMoney => throw _privateConstructorUsedError;
   Money? get beforeDateMoney => throw _privateConstructorUsedError;
-  Money? get beforeDateMoneyForSum => throw _privateConstructorUsedError;
+  Money? get beforeDateMoneyForSum => throw _privateConstructorUsedError; //
+  AsyncValue<List<Money>> get moneyList =>
+      throw _privateConstructorUsedError; //
+  AsyncValue<Map<String, Money>> get moneyMap =>
+      throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $MoneiesResponseStateCopyWith<MoneiesResponseState> get copyWith =>
@@ -34,7 +38,9 @@ abstract class $MoneiesResponseStateCopyWith<$Res> {
   $Res call(
       {Money? singleMoney,
       Money? beforeDateMoney,
-      Money? beforeDateMoneyForSum});
+      Money? beforeDateMoneyForSum,
+      AsyncValue<List<Money>> moneyList,
+      AsyncValue<Map<String, Money>> moneyMap});
 }
 
 /// @nodoc
@@ -54,6 +60,8 @@ class _$MoneiesResponseStateCopyWithImpl<$Res,
     Object? singleMoney = freezed,
     Object? beforeDateMoney = freezed,
     Object? beforeDateMoneyForSum = freezed,
+    Object? moneyList = null,
+    Object? moneyMap = null,
   }) {
     return _then(_value.copyWith(
       singleMoney: freezed == singleMoney
@@ -68,6 +76,14 @@ class _$MoneiesResponseStateCopyWithImpl<$Res,
           ? _value.beforeDateMoneyForSum
           : beforeDateMoneyForSum // ignore: cast_nullable_to_non_nullable
               as Money?,
+      moneyList: null == moneyList
+          ? _value.moneyList
+          : moneyList // ignore: cast_nullable_to_non_nullable
+              as AsyncValue<List<Money>>,
+      moneyMap: null == moneyMap
+          ? _value.moneyMap
+          : moneyMap // ignore: cast_nullable_to_non_nullable
+              as AsyncValue<Map<String, Money>>,
     ) as $Val);
   }
 }
@@ -83,7 +99,9 @@ abstract class _$$MoneiesResponseStateImplCopyWith<$Res>
   $Res call(
       {Money? singleMoney,
       Money? beforeDateMoney,
-      Money? beforeDateMoneyForSum});
+      Money? beforeDateMoneyForSum,
+      AsyncValue<List<Money>> moneyList,
+      AsyncValue<Map<String, Money>> moneyMap});
 }
 
 /// @nodoc
@@ -100,6 +118,8 @@ class __$$MoneiesResponseStateImplCopyWithImpl<$Res>
     Object? singleMoney = freezed,
     Object? beforeDateMoney = freezed,
     Object? beforeDateMoneyForSum = freezed,
+    Object? moneyList = null,
+    Object? moneyMap = null,
   }) {
     return _then(_$MoneiesResponseStateImpl(
       singleMoney: freezed == singleMoney
@@ -114,6 +134,14 @@ class __$$MoneiesResponseStateImplCopyWithImpl<$Res>
           ? _value.beforeDateMoneyForSum
           : beforeDateMoneyForSum // ignore: cast_nullable_to_non_nullable
               as Money?,
+      moneyList: null == moneyList
+          ? _value.moneyList
+          : moneyList // ignore: cast_nullable_to_non_nullable
+              as AsyncValue<List<Money>>,
+      moneyMap: null == moneyMap
+          ? _value.moneyMap
+          : moneyMap // ignore: cast_nullable_to_non_nullable
+              as AsyncValue<Map<String, Money>>,
     ));
   }
 }
@@ -122,7 +150,11 @@ class __$$MoneiesResponseStateImplCopyWithImpl<$Res>
 
 class _$MoneiesResponseStateImpl implements _MoneiesResponseState {
   const _$MoneiesResponseStateImpl(
-      {this.singleMoney, this.beforeDateMoney, this.beforeDateMoneyForSum});
+      {this.singleMoney,
+      this.beforeDateMoney,
+      this.beforeDateMoneyForSum,
+      this.moneyList = const AsyncValue<List<Money>>.loading(),
+      this.moneyMap = const AsyncValue<Map<String, Money>>.loading()});
 
   @override
   final Money? singleMoney;
@@ -130,10 +162,18 @@ class _$MoneiesResponseStateImpl implements _MoneiesResponseState {
   final Money? beforeDateMoney;
   @override
   final Money? beforeDateMoneyForSum;
+//
+  @override
+  @JsonKey()
+  final AsyncValue<List<Money>> moneyList;
+//
+  @override
+  @JsonKey()
+  final AsyncValue<Map<String, Money>> moneyMap;
 
   @override
   String toString() {
-    return 'MoneiesResponseState(singleMoney: $singleMoney, beforeDateMoney: $beforeDateMoney, beforeDateMoneyForSum: $beforeDateMoneyForSum)';
+    return 'MoneiesResponseState(singleMoney: $singleMoney, beforeDateMoney: $beforeDateMoney, beforeDateMoneyForSum: $beforeDateMoneyForSum, moneyList: $moneyList, moneyMap: $moneyMap)';
   }
 
   @override
@@ -146,12 +186,16 @@ class _$MoneiesResponseStateImpl implements _MoneiesResponseState {
             (identical(other.beforeDateMoney, beforeDateMoney) ||
                 other.beforeDateMoney == beforeDateMoney) &&
             (identical(other.beforeDateMoneyForSum, beforeDateMoneyForSum) ||
-                other.beforeDateMoneyForSum == beforeDateMoneyForSum));
+                other.beforeDateMoneyForSum == beforeDateMoneyForSum) &&
+            (identical(other.moneyList, moneyList) ||
+                other.moneyList == moneyList) &&
+            (identical(other.moneyMap, moneyMap) ||
+                other.moneyMap == moneyMap));
   }
 
   @override
-  int get hashCode => Object.hash(
-      runtimeType, singleMoney, beforeDateMoney, beforeDateMoneyForSum);
+  int get hashCode => Object.hash(runtimeType, singleMoney, beforeDateMoney,
+      beforeDateMoneyForSum, moneyList, moneyMap);
 
   @JsonKey(ignore: true)
   @override
@@ -164,9 +208,12 @@ class _$MoneiesResponseStateImpl implements _MoneiesResponseState {
 
 abstract class _MoneiesResponseState implements MoneiesResponseState {
   const factory _MoneiesResponseState(
-      {final Money? singleMoney,
-      final Money? beforeDateMoney,
-      final Money? beforeDateMoneyForSum}) = _$MoneiesResponseStateImpl;
+          {final Money? singleMoney,
+          final Money? beforeDateMoney,
+          final Money? beforeDateMoneyForSum,
+          final AsyncValue<List<Money>> moneyList,
+          final AsyncValue<Map<String, Money>> moneyMap}) =
+      _$MoneiesResponseStateImpl;
 
   @override
   Money? get singleMoney;
@@ -174,6 +221,10 @@ abstract class _MoneiesResponseState implements MoneiesResponseState {
   Money? get beforeDateMoney;
   @override
   Money? get beforeDateMoneyForSum;
+  @override //
+  AsyncValue<List<Money>> get moneyList;
+  @override //
+  AsyncValue<Map<String, Money>> get moneyMap;
   @override
   @JsonKey(ignore: true)
   _$$MoneiesResponseStateImplCopyWith<_$MoneiesResponseStateImpl>

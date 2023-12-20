@@ -128,7 +128,7 @@ class SpendTimePlaceNotifier extends StateNotifier<SpendTimePlacesResponseState>
       state = state.copyWith(spendTimePlaceList: AsyncValue.data(spendTimePlaceList));
 
   ///
-  Future<void> setMonthlySpendItemMap({required List<SpendTimePlace> spendTimePlaceList}) async {
+  Future<void> setMonthlySpendTimePlaceList({required List<SpendTimePlace> spendTimePlaceList}) async {
     final monthlySpendItemMap = <String, int>{};
 
     final list = <String>[];

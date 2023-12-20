@@ -17,5 +17,8 @@ class BankPricesResponseState with _$BankPricesResponseState {
     ///
     @Default(AsyncValue<Map<String, Map<String, int>>>.loading())
     AsyncValue<Map<String, Map<String, int>>> bankPriceDatePadMap,
+
+    ///
+    @Default(AsyncValue<Map<String, int>>.loading()) AsyncValue<Map<String, int>> bankPriceTotalPadMap,
   }) = _BankPricesResponseState;
 }

@@ -1,4 +1,5 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import '../../models/money.dart';
 
@@ -10,5 +11,11 @@ class MoneiesResponseState with _$MoneiesResponseState {
     Money? singleMoney,
     Money? beforeDateMoney,
     Money? beforeDateMoneyForSum,
+
+    //
+    @Default(AsyncValue<List<Money>>.loading()) AsyncValue<List<Money>> moneyList,
+
+    //
+    @Default(AsyncValue<Map<String, Money>>.loading()) AsyncValue<Map<String, Money>> moneyMap,
   }) = _MoneiesResponseState;
 }

@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:money_note/repository/money_repository.dart';
+import 'package:money_note/state/bank_prices/bank_prices_notifier.dart';
+import 'package:money_note/state/moneies/moneies_notifier.dart';
 
 import '../extensions/extensions.dart';
+import '../repository/bank_price_repository.dart';
 import '../repository/spend_time_place_repository.dart';
 import '../state/app_params/app_params_notifier.dart';
 import '../state/calendars/calendars_notifier.dart';
@@ -37,10 +41,11 @@ class HomeScreen extends ConsumerWidget {
 
   ///
   Future<void> init({required WidgetRef ref}) async {
-    await SpendTimePlaceRepository().getMonthRecord(
-      date: baseYm ?? DateTime.now().yyyymm,
-      ref: ref,
-    );
+    await SpendTimePlaceRepository().getMonthRecord(yearmonth: baseYm ?? DateTime.now().yyyymm, ref: ref);
+
+    await BankPriceRepository().getList(ref: ref);
+
+    await MoneyRepository().getMonthRecord(yearmonth: baseYm ?? DateTime.now().yyyymm, ref: ref);
   }
 
   ///
@@ -278,6 +283,10 @@ class HomeScreen extends ConsumerWidget {
 
   ///
   Widget _getCalendarRow({required int week}) {
+    final bankPriceTotalPadMap = _ref.watch(bankPriceProvider.select((value) => value.bankPriceTotalPadMap));
+
+    final moneyMap = _ref.watch(moneyProvider.select((value) => value.moneyMap));
+
     final appParamState = _ref.watch(appParamProvider);
 
     final list = <Widget>[];
@@ -295,6 +304,20 @@ class HomeScreen extends ConsumerWidget {
       if (generateYmd != '') {
         final genDate = DateTime(_calendarMonthFirst.year, _calendarMonthFirst.month, _calendarDays[i].toInt());
         diff = genDate.difference(DateTime.now()).inSeconds;
+      }
+
+      var bankPrice = 0;
+      if (bankPriceTotalPadMap.value != null) {
+        if (bankPriceTotalPadMap.value![generateYmd] != null) {
+          bankPrice = bankPriceTotalPadMap.value![generateYmd]!;
+        }
+      }
+
+      var dateSum = 0;
+      if (moneyMap.value != null) {
+        if (moneyMap.value![generateYmd] != null) {
+          dateSum = _utility.makeCurrencySum(money: moneyMap.value![generateYmd]);
+        }
       }
 
       list.add(
@@ -343,6 +366,13 @@ class HomeScreen extends ConsumerWidget {
                         ConstrainedBox(
                           constraints: BoxConstraints(minHeight: _context.screenSize.height / 30),
                           child: Text(_calendarDays[i].padLeft(2, '0')),
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Container(),
+                            Text(((bankPrice + dateSum) == 0) ? '' : (bankPrice + dateSum).toString().toCurrency()),
+                          ],
                         ),
                       ],
                     ),

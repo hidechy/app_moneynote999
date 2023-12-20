@@ -257,7 +257,7 @@ class _MoneyInputAlertState extends ConsumerState<MoneyInputAlert> {
 
   ///
   Future<void> _callBeforeDateData() async {
-    final beforeDateMoney = ref.watch(moneySingleProvider.select((value) => value.beforeDateMoney));
+    final beforeDateMoney = ref.watch(moneyProvider.select((value) => value.beforeDateMoney));
 
     if (beforeDateMoney != null) {
       _tecYen10000.text = beforeDateMoney.yen_10000.toString();

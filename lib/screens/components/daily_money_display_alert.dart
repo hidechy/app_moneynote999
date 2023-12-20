@@ -42,6 +42,8 @@ class DailyMoneyDisplayAlert extends ConsumerWidget {
 
   final Utility _utility = Utility();
 
+  String moneyMinDate = '';
+
   late BuildContext _context;
   late WidgetRef _ref;
 
@@ -72,6 +74,8 @@ class DailyMoneyDisplayAlert extends ConsumerWidget {
     await BankPriceRepository().getList(ref: ref);
 
     await SpendTimePlaceRepository().getSingle(date: date.yyyymmdd, ref: ref);
+
+    await MoneyRepository().getList(ref: ref);
   }
 
   ///
@@ -83,19 +87,29 @@ class DailyMoneyDisplayAlert extends ConsumerWidget {
     Future(() => init(ref: ref));
 
     //================
-    final singleMoney = ref.watch(moneySingleProvider.select((value) => value.singleMoney));
+    final singleMoney = ref.watch(moneyProvider.select((value) => value.singleMoney));
     _currencySum = _utility.makeCurrencySum(money: singleMoney);
     _totalMoney = _utility.makeTotalMoney(currencySum: _currencySum, ref: ref, date: date);
     //================
 
     //================
-    final beforeDateMoneyForSum = ref.watch(moneySingleProvider.select((value) => value.beforeDateMoneyForSum));
+    final beforeDateMoneyForSum = ref.watch(moneyProvider.select((value) => value.beforeDateMoneyForSum));
     if (beforeDateMoneyForSum != null) {
       final beforeDate = DateTime(date.year, date.month, date.day - 1);
       final beforeDateSum = _utility.makeCurrencySum(money: beforeDateMoneyForSum);
       _totalMoneyBeforeDate = _utility.makeTotalMoney(currencySum: beforeDateSum, ref: ref, date: beforeDate);
     }
     //================
+
+    _getMoneyMinDate();
+
+/*
+
+
+    var bankPriceTotalPadMap=
+ref.watch(bankPriceProvider.select((value) => value.bankPriceTotalPadMap));
+
+    */
 
     return AlertDialog(
       titlePadding: EdgeInsets.zero,
@@ -116,67 +130,7 @@ class DailyMoneyDisplayAlert extends ConsumerWidget {
                 Container(width: context.screenSize.width),
                 Text(date.yyyymmdd),
                 Divider(color: Colors.white.withOpacity(0.4), thickness: 5),
-                Container(
-                  width: _context.screenSize.width,
-                  margin: const EdgeInsets.all(3),
-                  padding: const EdgeInsets.all(10),
-                  decoration: BoxDecoration(
-                    border: Border.all(color: Colors.white.withOpacity(0.4)),
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                  child: Column(
-                    children: [
-                      Container(
-                        padding: const EdgeInsets.all(10),
-                        decoration:
-                            BoxDecoration(border: Border(bottom: BorderSide(color: Colors.white.withOpacity(0.3)))),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            const Text('Start'),
-                            Text(_totalMoneyBeforeDate.toString().toCurrency()),
-                          ],
-                        ),
-                      ),
-                      Container(
-                        padding: const EdgeInsets.all(10),
-                        decoration:
-                            BoxDecoration(border: Border(bottom: BorderSide(color: Colors.white.withOpacity(0.3)))),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            const Text('End'),
-                            Text(_totalMoney.toString().toCurrency()),
-                          ],
-                        ),
-                      ),
-                      Container(
-                        padding: const EdgeInsets.all(10),
-                        decoration:
-                            BoxDecoration(border: Border(bottom: BorderSide(color: Colors.white.withOpacity(0.3)))),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            const Text('Spend'),
-                            Row(
-                              children: [
-                                if ((_totalMoneyBeforeDate - _totalMoney) < 0) ...[
-                                  Bubble(
-                                    color: Colors.indigoAccent.withOpacity(0.6),
-                                    nip: BubbleNip.rightTop,
-                                    child: const Text('増えた！'),
-                                  ),
-                                  const SizedBox(width: 10),
-                                ],
-                                Text((_totalMoneyBeforeDate - _totalMoney).toString().toCurrency()),
-                              ],
-                            ),
-                          ],
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
+                getTopInfoPlate(),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -239,10 +193,112 @@ class DailyMoneyDisplayAlert extends ConsumerWidget {
   }
 
   ///
+  Future<void> _getMoneyMinDate() async {
+    final moneyList = _ref.watch(moneyProvider.select((value) => value.moneyList));
+
+    final dateList = <String>[];
+    moneyList.value?.forEach((element) {
+      dateList.add(element.date);
+    });
+
+    dateList.sort((a, b) => a.compareTo(b));
+
+    if (dateList.isNotEmpty) {
+      moneyMinDate = dateList[0];
+    }
+  }
+
+  ///
+  Widget getTopInfoPlate() {
+    return Container(
+      width: _context.screenSize.width,
+      margin: const EdgeInsets.all(3),
+      padding: const EdgeInsets.all(10),
+      decoration: BoxDecoration(
+        border: Border.all(color: Colors.white.withOpacity(0.4)),
+        borderRadius: BorderRadius.circular(10),
+      ),
+      child: Column(
+        children: [
+          Container(
+            padding: const EdgeInsets.all(10),
+            decoration: BoxDecoration(border: Border(bottom: BorderSide(color: Colors.white.withOpacity(0.3)))),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                const Text('Start'),
+                Text(_totalMoneyBeforeDate.toString().toCurrency()),
+              ],
+            ),
+          ),
+          Container(
+            padding: const EdgeInsets.all(10),
+            decoration: BoxDecoration(border: Border(bottom: BorderSide(color: Colors.white.withOpacity(0.3)))),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                const Text('End'),
+                Text(_totalMoney.toString().toCurrency()),
+              ],
+            ),
+          ),
+          Container(
+            padding: const EdgeInsets.all(10),
+            decoration: BoxDecoration(border: Border(bottom: BorderSide(color: Colors.white.withOpacity(0.3)))),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                const Text('Spend'),
+                Row(
+                  children: [
+                    _getBubbleComment(),
+                    Text((_totalMoneyBeforeDate - _totalMoney).toString().toCurrency()),
+                  ],
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  ///
+  Widget _getBubbleComment() {
+    var text = '';
+    var color = Colors.transparent;
+
+    if ((_totalMoneyBeforeDate - _totalMoney) < 0 && date.yyyymmdd != moneyMinDate) {
+      text = '増えた！';
+      color = Colors.indigoAccent.withOpacity(0.6);
+    }
+
+    if (date.yyyymmdd == moneyMinDate) {
+      text = '初日';
+      color = Colors.orangeAccent.withOpacity(0.6);
+    }
+
+    if (text == '') {
+      return Container();
+    }
+
+    return Row(
+      children: [
+        Bubble(
+          color: color,
+          nip: BubbleNip.rightTop,
+          child: Text(text, style: const TextStyle(fontWeight: FontWeight.bold)),
+        ),
+        const SizedBox(width: 10),
+      ],
+    );
+  }
+
+  ///
   Widget _getMenuOpenStr() {
     final menuNumber = _ref.watch(appParamProvider.select((value) => value.menuNumber));
 
-    final singleMoney = _ref.watch(moneySingleProvider.select((value) => value.singleMoney));
+    final singleMoney = _ref.watch(moneyProvider.select((value) => value.singleMoney));
 
     final spendTimePlaceList = _ref.watch(spendTimePlaceProvider.select((value) => value.spendTimePlaceList));
 
@@ -310,7 +366,7 @@ class DailyMoneyDisplayAlert extends ConsumerWidget {
 
   ///
   Widget _displaySingleMoney() {
-    final singleMoney = _ref.watch(moneySingleProvider.select((value) => value.singleMoney));
+    final singleMoney = _ref.watch(moneyProvider.select((value) => value.singleMoney));
 
     final openCurrencyArea = _ref.watch(appParamProvider.select((value) => value.openCurrencyArea));
 

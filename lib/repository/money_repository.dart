@@ -92,6 +92,36 @@ class MoneyRepository implements Repository {
   }
 
   ///
+  @override
+  Future<void> getList({required WidgetRef ref}) async {
+    final db = await MoneyRepository.database();
+    final List<Map<String, dynamic>> maps = await db.query('moneies');
+    final moneyList = List.generate(maps.length, (index) => Money.fromJson(maps[index]));
+    await ref.read(moneyProvider.notifier).setMoneyList(moneyList: moneyList);
+  }
+
+  ///
+  @override
+  Future<void> insert({required dynamic param}) async {
+    final db = await database();
+    final money = param as Money;
+    await db.insert('moneies', money.toMap(), conflictAlgorithm: ConflictAlgorithm.replace);
+  }
+
+  ///
+  @override
+  Future<void> update({required dynamic param, required WidgetRef ref}) async {
+    final db = await database();
+    final money = param as Money;
+    await db.update('moneies', money.toMap(), where: 'id = ?', whereArgs: [money.id]);
+    await ref.read(moneyProvider.notifier).setMoney(money: money);
+  }
+
+  ///
+  @override
+  Future<void> delete({required dynamic param, required WidgetRef ref}) async {}
+
+  ///
   Future<void> getSingle(
       {required String date,
       required WidgetRef ref,
@@ -108,10 +138,10 @@ class MoneyRepository implements Repository {
         case GetSingleMoneyFrom.dailyMoneyDisplayAlert:
           switch (when) {
             case GetSingleMoneyWhen.today:
-              await ref.read(moneySingleProvider.notifier).setMoney(money: money);
+              await ref.read(moneyProvider.notifier).setMoney(money: money);
               break;
             case GetSingleMoneyWhen.yesterday:
-              await ref.read(moneySingleProvider.notifier).setBeforeDateMoneyForSum(money: money);
+              await ref.read(moneyProvider.notifier).setBeforeDateMoneyForSum(money: money);
               break;
           }
           break;
@@ -121,7 +151,7 @@ class MoneyRepository implements Repository {
             case GetSingleMoneyWhen.today:
               break;
             case GetSingleMoneyWhen.yesterday:
-              await ref.read(moneySingleProvider.notifier).setBeforeDateMoney(money: money);
+              await ref.read(moneyProvider.notifier).setBeforeDateMoney(money: money);
               break;
           }
           break;
@@ -130,27 +160,11 @@ class MoneyRepository implements Repository {
   }
 
   ///
-  @override
-  Future<void> getList({required WidgetRef ref}) async {}
-
-  ///
-  @override
-  Future<void> insert({required dynamic param}) async {
-    final db = await database();
-    final money = param as Money;
-    await db.insert('moneies', money.toMap(), conflictAlgorithm: ConflictAlgorithm.replace);
+  Future<void> getMonthRecord({required String yearmonth, required WidgetRef ref}) async {
+    final db = await MoneyRepository.database();
+    final List<Map<String, dynamic>> maps =
+        await db.rawQuery('SELECT * FROM moneies WHERE date LIKE ?;', ['$yearmonth%']);
+    final moneyList = List.generate(maps.length, (index) => Money.fromJson(maps[index]));
+    await ref.read(moneyProvider.notifier).setMonthlyMoneyList(moneyList: moneyList);
   }
-
-  ///
-  @override
-  Future<void> update({required dynamic param, required WidgetRef ref}) async {
-    final db = await database();
-    final money = param as Money;
-    await db.update('moneies', money.toMap(), where: 'id = ?', whereArgs: [money.id]);
-    await ref.read(moneySingleProvider.notifier).setMoney(money: money);
-  }
-
-  ///
-  @override
-  Future<void> delete({required dynamic param, required WidgetRef ref}) async {}
 }
