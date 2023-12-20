@@ -20,6 +20,7 @@ import 'components/_money_dialog.dart';
 import 'components/daily_money_display_alert.dart';
 import 'components/deposit_tab_alert.dart';
 import 'components/parts/back_ground_image.dart';
+import 'components/parts/custom_shape_clipper.dart';
 import 'components/parts/menu_head_icon.dart';
 import 'components/spend_time_place_list_alert.dart';
 
@@ -108,11 +109,31 @@ class HomeScreen extends ConsumerWidget {
       body: Stack(
         children: [
           const BackGroundImage(),
+
+
+
+
+
+          ClipPath(
+            clipper: CustomShapeClipper(),
+            child: Container(
+              height: context.screenSize.height * 0.9,
+              width: context.screenSize.width * 0.9,
+              margin: const EdgeInsets.only(top: 5, left: 6),
+              color: const Color(0xFFFBB6CE).withOpacity(0.6),
+              child: Text(
+                '■',
+                style: TextStyle(color: Colors.white.withOpacity(0.1)),
+              ),
+            ),
+          ),
+
           Container(
             width: context.screenSize.width,
             height: context.screenSize.height,
             decoration: BoxDecoration(color: Colors.black.withOpacity(0.7)),
           ),
+
           SafeArea(
             child: DefaultTextStyle(
               style: GoogleFonts.kiwiMaru(fontSize: 12),
