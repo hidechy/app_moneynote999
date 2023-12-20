@@ -624,12 +624,19 @@ class DailyMoneyDisplayAlert extends ConsumerWidget {
                         child: Column(
                           children: [
                             Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [Text(element.time), Container()],
-                            ),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [Text(element.spendType), Text(element.price.toString().toCurrency())],
+                              children: [
+                                SizedBox(
+                                  width: 60,
+                                  child: Text(element.time, style: const TextStyle(color: Colors.yellowAccent)),
+                                ),
+                                Expanded(child: Text(element.spendType)),
+                                Expanded(
+                                  child: Container(
+                                    alignment: Alignment.topRight,
+                                    child: Text(element.price.toString().toCurrency()),
+                                  ),
+                                ),
+                              ],
                             ),
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
