@@ -21,6 +21,7 @@ import 'components/daily_money_display_alert.dart';
 import 'components/deposit_tab_alert.dart';
 import 'components/parts/back_ground_image.dart';
 import 'components/parts/menu_head_icon.dart';
+import 'components/spend_time_place_list_alert.dart';
 
 // ignore: must_be_immutable
 class HomeScreen extends ConsumerWidget {
@@ -180,6 +181,23 @@ class HomeScreen extends ConsumerWidget {
                       width: 60,
                       alignment: Alignment.topRight,
                       child: Text('${percent.toStringAsFixed(1)} %'),
+                    ),
+                    const SizedBox(width: 10),
+                    GestureDetector(
+                      onTap: () {
+                        MoneyDialog(
+                          context: _context,
+                          widget: SpendTimePlaceListAlert(
+                            date: (baseYm != null) ? DateTime.parse('$baseYm-01 00:00:00') : DateTime.now(),
+                            item: key,
+                          ),
+                        );
+                      },
+                      child: Container(
+                        width: 40,
+                        alignment: Alignment.topRight,
+                        child: Icon(Icons.info_outline_rounded, color: Colors.white.withOpacity(0.6)),
+                      ),
                     ),
                   ],
                 ),

@@ -78,6 +78,7 @@ class DailyMoneyDisplayAlert extends ConsumerWidget {
       await EmoneyNameRepository().getList(ref: ref);
 
       await BankPriceRepository().getList(ref: ref);
+    // ignore: avoid_catches_without_on_clauses, empty_catches
     } catch (e) {}
   }
 
