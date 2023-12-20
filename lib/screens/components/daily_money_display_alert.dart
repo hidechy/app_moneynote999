@@ -189,10 +189,7 @@ class DailyMoneyDisplayAlert extends ConsumerWidget {
                             child: Icon(Icons.close, color: Colors.yellowAccent.withOpacity(0.6), size: 16),
                           ),
                         ),
-                        DecoratedBox(
-                          decoration: BoxDecoration(border: Border.all(color: Colors.white.withOpacity(0.4))),
-                          child: const Text(''),
-                        ),
+                        const SizedBox(width: 5),
                         GestureDetector(
                           onTap: () => _ref.read(appParamProvider.notifier).setMenuNumber(menuNumber: 1),
                           child: Container(
@@ -201,10 +198,7 @@ class DailyMoneyDisplayAlert extends ConsumerWidget {
                           ),
                         ),
                         if (_currencySum > 0) ...[
-                          DecoratedBox(
-                            decoration: BoxDecoration(border: Border.all(color: Colors.white.withOpacity(0.4))),
-                            child: const Text(''),
-                          ),
+                          const SizedBox(width: 5),
                           GestureDetector(
                             onTap: () => _ref.read(appParamProvider.notifier).setMenuNumber(menuNumber: 2),
                             child: Container(
@@ -214,10 +208,7 @@ class DailyMoneyDisplayAlert extends ConsumerWidget {
                             ),
                           ),
                         ],
-                        DecoratedBox(
-                          decoration: BoxDecoration(border: Border.all(color: Colors.white.withOpacity(0.4))),
-                          child: const Text(''),
-                        ),
+                        const SizedBox(width: 5),
                         GestureDetector(
                           onTap: () => _ref.read(appParamProvider.notifier).setMenuNumber(menuNumber: 3),
                           child: Container(
