@@ -244,6 +244,8 @@ class DailyMoneyDisplayAlert extends ConsumerWidget {
 
     final singleMoney = _ref.watch(moneySingleProvider.select((value) => value.singleMoney));
 
+    final spendTimePlaceList = _ref.watch(spendTimePlaceProvider.select((value) => value.spendTimePlaceList));
+
     switch (menuNumber) {
       case 1:
         return Row(
@@ -270,8 +272,13 @@ class DailyMoneyDisplayAlert extends ConsumerWidget {
             GestureDetector(
               onTap: () async {
                 await MoneyDialog(
-                    context: _context,
-                    widget: SpendTimePlaceInputAlert(date: date, spend: _totalMoneyBeforeDate - _totalMoney));
+                  context: _context,
+                  widget: SpendTimePlaceInputAlert(
+                    date: date,
+                    spend: _totalMoneyBeforeDate - _totalMoney,
+                    spendTimePlaceList: spendTimePlaceList.value,
+                  ),
+                );
               },
               child: Text(
                 'OPEN',

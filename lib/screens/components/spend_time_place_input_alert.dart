@@ -10,10 +10,11 @@ import '../../state/spend_time_places/spend_time_places_notifier.dart';
 import 'parts/error_dialog.dart';
 
 class SpendTimePlaceInputAlert extends ConsumerStatefulWidget {
-  const SpendTimePlaceInputAlert({super.key, required this.date, required this.spend});
+  const SpendTimePlaceInputAlert({super.key, required this.date, required this.spend, this.spendTimePlaceList});
 
   final DateTime date;
   final int spend;
+  final List<SpendTimePlace>? spendTimePlaceList;
 
   @override
   ConsumerState<SpendTimePlaceInputAlert> createState() => _SpendTimePlaceInputAlertState();
@@ -45,6 +46,28 @@ class _SpendTimePlaceInputAlertState extends ConsumerState<SpendTimePlaceInputAl
       vsync: this,
       duration: const Duration(milliseconds: 300),
     )..repeat(reverse: true);
+
+    _setUpdateSpendTimePlace();
+  }
+
+  ///
+  Future<void> _setUpdateSpendTimePlace() async {
+    for (var i = 0; i < 10; i++) {
+      _placeTecs.add(TextEditingController(text: ''));
+      _priceTecs.add(TextEditingController(text: ''));
+    }
+
+    if (widget.spendTimePlaceList != null) {
+      await Future(() => ref
+          .read(spendTimePlaceProvider.notifier)
+          .setUpdateSpendTimePlace(updateSpendTimePlace: widget.spendTimePlaceList!));
+
+      for (var i = 0; i < widget.spendTimePlaceList!.length; i++) {
+        _placeTecs[i].text = widget.spendTimePlaceList![i].place;
+
+        _priceTecs[i].text = widget.spendTimePlaceList![i].price.abs().toString();
+      }
+    }
   }
 
   ///
@@ -64,8 +87,6 @@ class _SpendTimePlaceInputAlertState extends ConsumerState<SpendTimePlaceInputAl
   @override
   Widget build(BuildContext context) {
     _context = context;
-
-    _makeTecs();
 
     final spendTimePlaceState = ref.watch(spendTimePlaceProvider);
 
@@ -151,14 +172,6 @@ class _SpendTimePlaceInputAlertState extends ConsumerState<SpendTimePlaceInputAl
         ),
       ),
     );
-  }
-
-  ///
-  void _makeTecs() {
-    for (var i = 0; i < 10; i++) {
-      _placeTecs.add(TextEditingController(text: ''));
-      _priceTecs.add(TextEditingController(text: ''));
-    }
   }
 
   ///
