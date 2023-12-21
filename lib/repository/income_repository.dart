@@ -13,18 +13,22 @@ class IncomeRepository implements Repository {
   ///
   @override
   Future<void> getList({required WidgetRef ref}) async {
-    final db = await MoneyRepository.database();
-    final List<Map<String, dynamic>> maps = await db.query('incomes');
-    final incomeList = List.generate(maps.length, (index) => Income.fromJson(maps[index]));
-    await ref.read(incomeProvider.notifier).setIncomeList(incomeList: incomeList);
+    try {
+      final db = await MoneyRepository.database();
+      final List<Map<String, dynamic>> maps = await db.query('incomes');
+      final incomeList = List.generate(maps.length, (index) => Income.fromJson(maps[index]));
+      await ref.read(incomeProvider.notifier).setIncomeList(incomeList: incomeList);
+    } catch (e) {}
   }
 
   ///
   @override
   Future<void> insert({required dynamic param}) async {
-    final db = await MoneyRepository.database();
-    final income = param as Income;
-    await db.insert('incomes', income.toMap(), conflictAlgorithm: ConflictAlgorithm.replace);
+    try {
+      final db = await MoneyRepository.database();
+      final income = param as Income;
+      await db.insert('incomes', income.toMap(), conflictAlgorithm: ConflictAlgorithm.replace);
+    } catch (e) {}
   }
 
   ///
@@ -47,27 +51,33 @@ class IncomeRepository implements Repository {
 
   ///
   Future<void> deleteByYearMonth({required Income income, required WidgetRef ref}) async {
-    final db = await MoneyRepository.database();
-    final exDate = income.date.split('-');
-    final yearmonth = '${exDate[0]}-${exDate[1]}';
-    await db.rawQuery('delete FROM incomes WHERE date LIKE ?;', ['$yearmonth%']);
+    try {
+      final db = await MoneyRepository.database();
+      final exDate = income.date.split('-');
+      final yearmonth = '${exDate[0]}-${exDate[1]}';
+      await db.rawQuery('delete FROM incomes WHERE date LIKE ?;', ['$yearmonth%']);
+    } catch (e) {}
   }
 
   ///
   Future<void> selectByYear({required String year, required WidgetRef ref}) async {
-    final db = await MoneyRepository.database();
-    final List<Map<String, dynamic>> maps = await db.rawQuery('SELECT * FROM incomes WHERE date LIKE ?;', ['$year%']);
-    final incomeList = List.generate(maps.length, (index) => Income.fromJson(maps[index]));
-    await ref.read(incomeProvider.notifier).setIncomeList(incomeList: incomeList);
+    try {
+      final db = await MoneyRepository.database();
+      final List<Map<String, dynamic>> maps = await db.rawQuery('SELECT * FROM incomes WHERE date LIKE ?;', ['$year%']);
+      final incomeList = List.generate(maps.length, (index) => Income.fromJson(maps[index]));
+      await ref.read(incomeProvider.notifier).setIncomeList(incomeList: incomeList);
+    } catch (e) {}
   }
 
   Future<void> getIncomeMinYear({required WidgetRef ref}) async {
-    final db = await MoneyRepository.database();
-    final List<Map<String, dynamic>> maps = await db.query('incomes');
-    final incomeList = List.generate(maps.length, (index) => Income.fromJson(maps[index]));
-    final yearList = <int>[];
-    incomeList.forEach((element) => yearList.add(element.date.split('-')[0].toInt()));
-    final minValue = yearList.reduce(min);
-    await ref.read(incomeProvider.notifier).setIncomeMinYear(year: minValue);
+    try {
+      final db = await MoneyRepository.database();
+      final List<Map<String, dynamic>> maps = await db.query('incomes');
+      final incomeList = List.generate(maps.length, (index) => Income.fromJson(maps[index]));
+      final yearList = <int>[];
+      incomeList.forEach((element) => yearList.add(element.date.split('-')[0].toInt()));
+      final minValue = yearList.reduce(min);
+      await ref.read(incomeProvider.notifier).setIncomeMinYear(year: minValue);
+    } catch (e) {}
   }
 }

@@ -44,6 +44,13 @@ flutter:
   assets:
     - assets/images/
 
+  fonts:
+    - family: KiwiMaru
+      fonts:
+        - asset: assets/fonts/KiwiMaru-Light.ttf
+        - asset: assets/fonts/KiwiMaru-Medium.ttf
+        - asset: assets/fonts/KiwiMaru-Regular.ttf
+
 flutter_native_splash:
   image: "assets/images/coinpig.png"
   color: "212121"

@@ -11,26 +11,27 @@ class BankPriceRepository implements Repository {
   ///
   @override
   Future<void> getList({required WidgetRef ref}) async {
-    final db = await MoneyRepository.database();
-    final List<Map<String, dynamic>> maps = await db.query('bank_prices', orderBy: 'date asc');
-    final bankPriceList = List.generate(maps.length, (index) => BankPrice.fromJson(maps[index]));
-    await ref.read(bankPriceProvider.notifier).setBankPriceList(bankPriceList: bankPriceList);
+    try {
+      final db = await MoneyRepository.database();
+      final List<Map<String, dynamic>> maps = await db.query('bank_prices', orderBy: 'date asc');
+      final bankPriceList = List.generate(maps.length, (index) => BankPrice.fromJson(maps[index]));
+      await ref.read(bankPriceProvider.notifier).setBankPriceList(bankPriceList: bankPriceList);
+    } catch (e) {}
   }
 
   ///
   @override
   Future<void> insert({required dynamic param}) async {
-    final db = await MoneyRepository.database();
-
-    final bankPrice = param as BankPrice;
-
-    await db.delete(
-      'bank_prices',
-      where: 'deposit_type = ? and bank_id = ? and date = ?',
-      whereArgs: [bankPrice.depositType, bankPrice.bankId, bankPrice.date],
-    );
-
-    await db.insert('bank_prices', bankPrice.toMap(), conflictAlgorithm: ConflictAlgorithm.replace);
+    try {
+      final db = await MoneyRepository.database();
+      final bankPrice = param as BankPrice;
+      await db.delete(
+        'bank_prices',
+        where: 'deposit_type = ? and bank_id = ? and date = ?',
+        whereArgs: [bankPrice.depositType, bankPrice.bankId, bankPrice.date],
+      );
+      await db.insert('bank_prices', bankPrice.toMap(), conflictAlgorithm: ConflictAlgorithm.replace);
+    } catch (e) {}
   }
 
   ///

@@ -21,6 +21,7 @@ class MyApp extends StatelessWidget {
         ),
         useMaterial3: false,
         colorScheme: ColorScheme.fromSwatch(brightness: Brightness.dark),
+        fontFamily: 'KiwiMaru',
       ),
       themeMode: ThemeMode.dark,
       title: 'money note',

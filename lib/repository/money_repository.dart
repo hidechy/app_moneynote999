@@ -94,27 +94,33 @@ class MoneyRepository implements Repository {
   ///
   @override
   Future<void> getList({required WidgetRef ref}) async {
-    final db = await MoneyRepository.database();
-    final List<Map<String, dynamic>> maps = await db.query('moneies');
-    final moneyList = List.generate(maps.length, (index) => Money.fromJson(maps[index]));
-    await ref.read(moneyProvider.notifier).setMoneyList(moneyList: moneyList);
+    try {
+      final db = await MoneyRepository.database();
+      final List<Map<String, dynamic>> maps = await db.query('moneies');
+      final moneyList = List.generate(maps.length, (index) => Money.fromJson(maps[index]));
+      await ref.read(moneyProvider.notifier).setMoneyList(moneyList: moneyList);
+    } catch (e) {}
   }
 
   ///
   @override
   Future<void> insert({required dynamic param}) async {
-    final db = await database();
-    final money = param as Money;
-    await db.insert('moneies', money.toMap(), conflictAlgorithm: ConflictAlgorithm.replace);
+    try {
+      final db = await database();
+      final money = param as Money;
+      await db.insert('moneies', money.toMap(), conflictAlgorithm: ConflictAlgorithm.replace);
+    } catch (e) {}
   }
 
   ///
   @override
   Future<void> update({required dynamic param, required WidgetRef ref}) async {
-    final db = await database();
-    final money = param as Money;
-    await db.update('moneies', money.toMap(), where: 'id = ?', whereArgs: [money.id]);
-    await ref.read(moneyProvider.notifier).setMoney(money: money);
+    try {
+      final db = await database();
+      final money = param as Money;
+      await db.update('moneies', money.toMap(), where: 'id = ?', whereArgs: [money.id]);
+      await ref.read(moneyProvider.notifier).setMoney(money: money);
+    } catch (e) {}
   }
 
   ///
@@ -127,44 +133,48 @@ class MoneyRepository implements Repository {
       required WidgetRef ref,
       required GetSingleMoneyFrom from,
       required GetSingleMoneyUsage when}) async {
-    final db = await database();
+    try {
+      final db = await database();
 
-    final List<Map<String, dynamic>> maps = await db.query('moneies', where: 'date = ?', whereArgs: [date]);
+      final List<Map<String, dynamic>> maps = await db.query('moneies', where: 'date = ?', whereArgs: [date]);
 
-    if (maps.isNotEmpty) {
-      final money = Money.fromJson(maps[0]);
+      if (maps.isNotEmpty) {
+        final money = Money.fromJson(maps[0]);
 
-      switch (from) {
-        case GetSingleMoneyFrom.dailyMoneyDisplayAlert:
-          switch (when) {
-            case GetSingleMoneyUsage.todayRecord:
-              await ref.read(moneyProvider.notifier).setMoney(money: money);
-              break;
-            case GetSingleMoneyUsage.yesterdayRecord:
-              await ref.read(moneyProvider.notifier).setBeforeDateMoneyForSum(money: money);
-              break;
-          }
-          break;
+        switch (from) {
+          case GetSingleMoneyFrom.dailyMoneyDisplayAlert:
+            switch (when) {
+              case GetSingleMoneyUsage.todayRecord:
+                await ref.read(moneyProvider.notifier).setMoney(money: money);
+                break;
+              case GetSingleMoneyUsage.yesterdayRecord:
+                await ref.read(moneyProvider.notifier).setBeforeDateMoneyForSum(money: money);
+                break;
+            }
+            break;
 
-        case GetSingleMoneyFrom.moneyInputAlert:
-          switch (when) {
-            case GetSingleMoneyUsage.todayRecord:
-              break;
-            case GetSingleMoneyUsage.yesterdayRecord:
-              await ref.read(moneyProvider.notifier).setBeforeDateMoney(money: money);
-              break;
-          }
-          break;
+          case GetSingleMoneyFrom.moneyInputAlert:
+            switch (when) {
+              case GetSingleMoneyUsage.todayRecord:
+                break;
+              case GetSingleMoneyUsage.yesterdayRecord:
+                await ref.read(moneyProvider.notifier).setBeforeDateMoney(money: money);
+                break;
+            }
+            break;
+        }
       }
-    }
+    } catch (e) {}
   }
 
   ///
   Future<void> getMonthRecord({required String yearmonth, required WidgetRef ref}) async {
-    final db = await MoneyRepository.database();
-    final List<Map<String, dynamic>> maps =
-        await db.rawQuery('SELECT * FROM moneies WHERE date LIKE ?;', ['$yearmonth%']);
-    final moneyList = List.generate(maps.length, (index) => Money.fromJson(maps[index]));
-    await ref.read(moneyProvider.notifier).setMonthlyMoneyList(moneyList: moneyList);
+    try {
+      final db = await MoneyRepository.database();
+      final List<Map<String, dynamic>> maps =
+          await db.rawQuery('SELECT * FROM moneies WHERE date LIKE ?;', ['$yearmonth%']);
+      final moneyList = List.generate(maps.length, (index) => Money.fromJson(maps[index]));
+      await ref.read(moneyProvider.notifier).setMonthlyMoneyList(moneyList: moneyList);
+    } catch (e) {}
   }
 }

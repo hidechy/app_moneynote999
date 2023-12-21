@@ -43,7 +43,9 @@ class _BankPriceInputAlertState extends ConsumerState<BankPriceInputAlert> {
   void initState() {
     super.initState();
 
-    _bankPriceEditingController.text = widget.bankPrice.toString();
+    if (widget.bankPrice != 0) {
+      _bankPriceEditingController.text = widget.bankPrice.toString();
+    }
   }
 
   ///
