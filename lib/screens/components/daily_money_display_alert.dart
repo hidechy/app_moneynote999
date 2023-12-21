@@ -78,7 +78,7 @@ class DailyMoneyDisplayAlert extends ConsumerWidget {
       await EmoneyNameRepository().getList(ref: ref);
 
       await BankPriceRepository().getList(ref: ref);
-    // ignore: avoid_catches_without_on_clauses, empty_catches
+      // ignore: avoid_catches_without_on_clauses, empty_catches
     } catch (e) {}
   }
 
@@ -105,7 +105,9 @@ class DailyMoneyDisplayAlert extends ConsumerWidget {
     }
     //================
 
-    _getMoneyMinDate();
+    _utility.getMoneyMinDate(ref: ref).then((value) {
+      moneyMinDate = value;
+    });
 
     return AlertDialog(
       titlePadding: EdgeInsets.zero,
@@ -186,22 +188,6 @@ class DailyMoneyDisplayAlert extends ConsumerWidget {
         ),
       ),
     );
-  }
-
-  ///
-  Future<void> _getMoneyMinDate() async {
-    final moneyList = _ref.watch(moneyProvider.select((value) => value.moneyList));
-
-    final dateList = <String>[];
-    moneyList.value?.forEach((element) {
-      dateList.add(element.date);
-    });
-
-    dateList.sort((a, b) => a.compareTo(b));
-
-    if (dateList.isNotEmpty) {
-      moneyMinDate = dateList[0];
-    }
   }
 
   ///

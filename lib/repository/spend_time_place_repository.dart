@@ -49,6 +49,9 @@ class SpendTimePlaceRepository implements Repository {
                 .setMonthlySpendItemSumMap(spendTimePlaceList: spendTimePlaceList);
             break;
           case GetMonthlyStpUsage.stpItemList:
+            await ref
+                .read(spendTimePlaceProvider.notifier)
+                .setSpendTimePlaceList(spendTimePlaceList: spendTimePlaceList);
             break;
         }
         break;

@@ -213,7 +213,7 @@ class DummyDataInputAlert extends StatelessWidget {
       yen_1: 7,
     );
 
-    await MoneyRepository().insert(param: money1);
+//    await MoneyRepository().insert(param: money1);
 
     ////////////////////
 
@@ -268,7 +268,7 @@ class DummyDataInputAlert extends StatelessWidget {
       SpendTimePlace(date: date1.yyyymmdd, spendType: '交通費', time: '09:00', place: 'bbb', price: 200),
       SpendTimePlace(date: date1.yyyymmdd, spendType: '支払い', time: '10:00', place: 'ccc', price: 300),
     ].forEach((element) async {
-      await SpendTimePlaceRepository().insert(param: element);
+//      await SpendTimePlaceRepository().insert(param: element);
     });
 
     ////////////////////

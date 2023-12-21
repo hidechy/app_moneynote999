@@ -40,6 +40,8 @@ class HomeScreen extends ConsumerWidget {
 
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
+  String moneyMinDate = '';
+
   late BuildContext _context;
   late WidgetRef _ref;
 
@@ -50,6 +52,13 @@ class HomeScreen extends ConsumerWidget {
       ref: ref,
       from: GetMonthlyStpFrom.homeScreen,
       usage: GetMonthlyStpUsage.sum,
+    );
+
+    await SpendTimePlaceRepository().getMonthRecord(
+      yearmonth: baseYm ?? DateTime.now().yyyymm,
+      ref: ref,
+      from: GetMonthlyStpFrom.homeScreen,
+      usage: GetMonthlyStpUsage.stpItemList,
     );
 
     await BankPriceRepository().getList(ref: ref);
@@ -78,26 +87,6 @@ class HomeScreen extends ConsumerWidget {
       appBar: AppBar(
         title: Text(calendarState.baseYearMonth),
         centerTitle: false,
-        leading: Row(
-          children: [
-            const SizedBox(width: 10),
-            GestureDetector(
-              onTap: _goPrevMonth,
-              child: Icon(Icons.arrow_back_ios, color: Colors.white.withOpacity(0.8), size: 14),
-            ),
-            const SizedBox(width: 10),
-            GestureDetector(
-              onTap: (DateTime.now().yyyymm == calendarState.baseYearMonth) ? null : _goNextMonth,
-              child: Icon(
-                Icons.arrow_forward_ios,
-                color: (DateTime.now().yyyymm == calendarState.baseYearMonth)
-                    ? Colors.grey.withOpacity(0.6)
-                    : Colors.white.withOpacity(0.8),
-                size: 14,
-              ),
-            ),
-          ],
-        ),
         backgroundColor: Colors.transparent,
         actions: [
           IconButton(
@@ -109,11 +98,6 @@ class HomeScreen extends ConsumerWidget {
       body: Stack(
         children: [
           const BackGroundImage(),
-
-
-
-
-
           ClipPath(
             clipper: CustomShapeClipper(),
             child: Container(
@@ -121,24 +105,42 @@ class HomeScreen extends ConsumerWidget {
               width: context.screenSize.width * 0.9,
               margin: const EdgeInsets.only(top: 5, left: 6),
               color: const Color(0xFFFBB6CE).withOpacity(0.6),
-              child: Text(
-                '■',
-                style: TextStyle(color: Colors.white.withOpacity(0.1)),
-              ),
+              child: Text('■', style: TextStyle(color: Colors.white.withOpacity(0.1))),
             ),
           ),
-
           Container(
             width: context.screenSize.width,
             height: context.screenSize.height,
             decoration: BoxDecoration(color: Colors.black.withOpacity(0.7)),
           ),
-
           SafeArea(
             child: DefaultTextStyle(
               style: GoogleFonts.kiwiMaru(fontSize: 12),
               child: Column(
                 children: [
+                  Container(
+                    width: context.screenSize.width,
+                    decoration: BoxDecoration(color: Colors.white.withOpacity(0.1)),
+                    margin: const EdgeInsets.only(bottom: 5),
+                    child: Row(
+                      children: [
+                        IconButton(
+                          onPressed: _goPrevMonth,
+                          icon: Icon(Icons.arrow_back_ios, color: Colors.white.withOpacity(0.8), size: 14),
+                        ),
+                        IconButton(
+                          onPressed: (DateTime.now().yyyymm == calendarState.baseYearMonth) ? null : _goNextMonth,
+                          icon: Icon(
+                            Icons.arrow_forward_ios,
+                            color: (DateTime.now().yyyymm == calendarState.baseYearMonth)
+                                ? Colors.grey.withOpacity(0.6)
+                                : Colors.white.withOpacity(0.8),
+                            size: 14,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
                   ConstrainedBox(
                     constraints: BoxConstraints(minHeight: _context.screenSize.height * 0.3),
                     child: _getCalendar(),
@@ -158,14 +160,18 @@ class HomeScreen extends ConsumerWidget {
   Widget _displaySpendList() {
     final monthlySpendItemSumMap = _ref.watch(spendTimePlaceProvider.select((value) => value.monthlySpendItemSumMap));
 
+    //================//
+    var lastDate = '';
+    final spendTimePlaceList = _ref.watch(spendTimePlaceProvider.select((value) => value.spendTimePlaceList));
+    spendTimePlaceList.value?.forEach((element) => lastDate = element.date);
+    //================//
+
     return monthlySpendItemSumMap.when(
       data: (value) {
         final list = <Widget>[];
 
         var sum = 0;
-        value.forEach((key, value) {
-          sum += value;
-        });
+        value.forEach((key, value) => sum += value);
 
         if (sum > 0) {
           list.add(
@@ -176,7 +182,7 @@ class HomeScreen extends ConsumerWidget {
                 children: [
                   Container(),
                   Text(
-                    sum.toString().toCurrency(),
+                    '${sum.toString().toCurrency()}（$lastDate）',
                     style: const TextStyle(color: Colors.yellowAccent),
                   ),
                 ],
@@ -227,7 +233,12 @@ class HomeScreen extends ConsumerWidget {
           ));
         });
 
-        return SingleChildScrollView(child: Column(children: list));
+        return SingleChildScrollView(
+          child: Container(
+            padding: const EdgeInsets.symmetric(horizontal: 10),
+            child: Column(children: list),
+          ),
+        );
       },
       error: (error, stackTrace) => const Center(child: CircularProgressIndicator()),
       loading: () => const Center(child: CircularProgressIndicator()),
@@ -335,6 +346,10 @@ class HomeScreen extends ConsumerWidget {
 
     final appParamState = _ref.watch(appParamProvider);
 
+    final moneyList = _ref.watch(moneyProvider.select((value) => value.moneyList));
+
+    _utility.getMoneyMinDate(ref: _ref).then((value) => moneyMinDate = value);
+
     final list = <Widget>[];
 
     for (var i = week * 7; i < ((week + 1) * 7); i++) {
@@ -359,26 +374,49 @@ class HomeScreen extends ConsumerWidget {
         }
       }
 
+      //-------------------------------------------
       var dateSum = 0;
+      var inputFlag = const Text('');
       if (moneyMap.value != null) {
         if (moneyMap.value![generateYmd] != null) {
           dateSum = _utility.makeCurrencySum(money: moneyMap.value![generateYmd]);
+          inputFlag = const Text('入力済', style: TextStyle(color: Colors.grey));
+        } else {
+          inputFlag = const Text('未入力', style: TextStyle(color: Colors.yellowAccent));
         }
       }
+
+      if (diff > 0) {
+        inputFlag = const Text('未入力', style: TextStyle(color: Colors.transparent));
+      }
+
+      if (generateYmd != '' && moneyMinDate != '') {
+        if (DateTime.parse('$generateYmd 00:00:00').isBefore(DateTime.parse('$moneyMinDate 00:00:00'))) {
+          inputFlag = const Text('未入力', style: TextStyle(color: Colors.transparent));
+        }
+      }
+
+      if (moneyList.value != null) {
+        if (moneyList.value!.isEmpty) {
+          inputFlag = const Text('未入力', style: TextStyle(color: Colors.transparent));
+        }
+      }
+      //-------------------------------------------
 
       list.add(
         Expanded(
           child: GestureDetector(
             onTap: (_calendarDays[i] == '' || diff > 0)
                 ? null
-                : () {
-                    _ref
+                : () async {
+                    await _ref
                         .read(appParamProvider.notifier)
                         .setCalendarSelectedDate(date: DateTime.parse('$generateYmd 00:00:00'));
 
-                    _ref.read(appParamProvider.notifier).setMenuNumber(menuNumber: 0);
+                    await _ref.read(appParamProvider.notifier).setMenuNumber(menuNumber: 0);
 
-                    MoneyDialog(
+                    // ignore: use_build_context_synchronously
+                    await MoneyDialog(
                       context: _context,
                       widget: DailyMoneyDisplayAlert(date: DateTime.parse('$generateYmd 00:00:00')),
                     );
@@ -420,6 +458,10 @@ class HomeScreen extends ConsumerWidget {
                             Text(((bankPrice + dateSum) == 0) ? '' : (bankPrice + dateSum).toString().toCurrency()),
                           ],
                         ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [Container(), inputFlag],
+                        )
                       ],
                     ),
             ),

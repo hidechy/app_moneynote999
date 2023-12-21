@@ -4,6 +4,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import '../extensions/extensions.dart';
 import '../models/money.dart';
 import '../state/bank_prices/bank_prices_notifier.dart';
+import '../state/moneies/moneies_notifier.dart';
 
 class Utility {
   Color getYoubiColor({
@@ -87,5 +88,25 @@ class Utility {
     list.forEach((element) => totalMoney += element);
 
     return totalMoney;
+  }
+
+  ///
+  Future<String> getMoneyMinDate({required WidgetRef ref}) async {
+    var moneyMinDate = '';
+
+    final moneyList = ref.watch(moneyProvider.select((value) => value.moneyList));
+
+    final dateList = <String>[];
+    moneyList.value?.forEach((element) {
+      dateList.add(element.date);
+    });
+
+    dateList.sort((a, b) => a.compareTo(b));
+
+    if (dateList.isNotEmpty) {
+      moneyMinDate = dateList[0];
+    }
+
+    return moneyMinDate;
   }
 }
