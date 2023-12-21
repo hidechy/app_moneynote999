@@ -1,3 +1,5 @@
+// ignore_for_file: avoid_catches_without_on_clauses, empty_catches
+
 import 'dart:math';
 
 import 'package:hooks_riverpod/hooks_riverpod.dart';

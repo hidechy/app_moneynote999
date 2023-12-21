@@ -1,3 +1,5 @@
+// ignore_for_file: avoid_catches_without_on_clauses, empty_catches
+
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
